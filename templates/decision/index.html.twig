@@ -125,7 +125,7 @@
             <div class="panel {% if upcomingMeetings is empty %}mt-0{% endif %}">
                 <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
                     <h3>{{ 'Meetings'|trans }}</h3>
-                    <ul class="nav nav-pills" role="tablist">
+                    <ul class="nav nav-pills nav-pills-compact" role="tablist">
                         {% for typeValue, meetings in recentMeetings %}
                             {% set meetingType = enum('App\\Entity\\Decision\\Enums\\MeetingTypes').from(typeValue) %}
                             <li class="nav-item" role="presentation">

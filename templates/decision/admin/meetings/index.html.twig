@@ -12,7 +12,7 @@
         {{ 'Meetings are synced from GEWISDB; pick one to manage its agenda, documents, and minutes.'|trans }}
     </p>
 
-    <ul class="nav nav-pills mb-3">
+    <ul class="nav nav-pills nav-pills-compact mb-3">
         <li class="nav-item">
             <a class="nav-link {% if type is null %}active{% endif %}" href="{{ path('admin/meetings/index') }}">
                 {{ 'All'|trans }}

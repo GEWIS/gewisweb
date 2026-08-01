@@ -44,15 +44,6 @@
     color: var(--#{$prefix}secondary-color);
 }
 
-.profile-address-tabs {
-    --#{$prefix}nav-pills-link-active-bg: #{$gewis-red};
-    --#{$prefix}nav-link-color: var(--#{$prefix}secondary-color);
-    --#{$prefix}nav-link-hover-color: var(--#{$prefix}body-color);
-
-    gap: 0.25rem;
-    margin-bottom: 0.75rem;
-}
-
 .profile-committee-group + .profile-committee-group {
     margin-top: 1.25rem;
 }

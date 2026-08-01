@@ -11,15 +11,14 @@
 
 {% block page_title %}{{ abbr ~ ' ' ~ meeting.number }}{{ ' - ' }}{{ 'Meetings'|trans|page_title }}{{ parent() }}{% endblock %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('members/index') }}">{{ 'Members'|trans }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('meetings/index') }}">{{ 'Meetings'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ abbr }} {{ meeting.number }}</li>
+{% endblock %}
+
 {% block pre_body %}
     {% embed 'partials/application/page-header.html.twig' %}
-        {% block header_top %}
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ path('members/index') }}">{{ 'Members'|trans }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ path('meetings/index') }}">{{ 'Meetings'|trans }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ abbr }} {{ meeting.number }}</li>
-            </ol>
-        {% endblock %}
         {% block header_status %}
             <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
                 {% include 'partials/decision/meeting-status-badge.html.twig' with {
@@ -144,7 +143,7 @@
                                 data-bs-toggle="pill" data-bs-target="#meeting-documents-pane" type="button" role="tab"
                                 aria-controls="meeting-documents-pane" aria-selected="{{ not showDecisionsFirst ? 'true' : 'false' }}">
                             {{ 'Documents'|trans }}
-                            <span class="badge text-bg-light ms-1">{{ view.documentCount }}</span>
+                            <span class="badge ms-1">{{ view.documentCount }}</span>
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -153,7 +152,7 @@
                                 aria-controls="meeting-decisions-pane" aria-selected="{{ showDecisionsFirst ? 'true' : 'false' }}">
                             {{ 'Decisions'|trans }}
                             {% if decisionCount > 0 %}
-                                <span class="badge text-bg-light ms-1">{{ decisionCount }}</span>
+                                <span class="badge ms-1">{{ decisionCount }}</span>
                             {% endif %}
                         </button>
                     </li>

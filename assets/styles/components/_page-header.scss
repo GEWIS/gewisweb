@@ -6,6 +6,7 @@
 .page-header {
     background-color: var(--#{$prefix}body-bg);
     border-bottom: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-translucent);
+    margin-bottom: map-get($spacers, 2);
 
     .breadcrumb {
         --#{$prefix}breadcrumb-bg: transparent;

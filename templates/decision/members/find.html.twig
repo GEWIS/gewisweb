@@ -2,14 +2,13 @@
 
 {% block page_title %}{{ 'Find a member'|trans|page_title }}{{ parent() }}{% endblock %}
 
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('members/index') }}">{{ 'Members'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Find a member'|trans }}</li>
+{% endblock %}
+
 {% block pre_body %}
     {% embed 'partials/application/page-header.html.twig' %}
-        {% block header_top %}
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ path('members/index') }}">{{ 'Members'|trans }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ 'Find a member'|trans }}</li>
-            </ol>
-        {% endblock %}
         {% block header_title %}{{ 'Find a member'|trans }}{% endblock %}
         {% block header_subtitle %}
             <p class="page-header-meta mb-0">

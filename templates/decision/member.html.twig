@@ -79,11 +79,9 @@
 
                 {% if isSelf and not member.getAddresses.isEmpty %}
                     <div class="panel">
-                        <div class="panel-heading">
+                        <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
                             <h3>{{ 'Address'|trans }}</h3>
-                        </div>
-                        <div class="panel-body">
-                            <ul class="nav nav-pills profile-address-tabs" role="tablist">
+                            <ul class="nav nav-pills nav-pills-compact" role="tablist">
                                 {% for address in member.getAddresses %}
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link {{ loop.first ? 'active' }}" type="button" role="tab"
@@ -93,6 +91,8 @@
                                     </li>
                                 {% endfor %}
                             </ul>
+                        </div>
+                        <div class="panel-body">
                             <div class="tab-content">
                                 {% for address in member.getAddresses %}
                                     <div class="tab-pane {{ loop.first ? 'show active' }}" id="address-{{ loop.index }}" role="tabpanel">

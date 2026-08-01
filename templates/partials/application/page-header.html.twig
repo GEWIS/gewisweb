@@ -1,12 +1,12 @@
 {#
-    Full-width header band for the top of a page: a breadcrumb or eyebrow line, the page title
-    with an optional status line and subtitle, actions on the right, and an optional stats strip
+    Full-width header band for the top of a page: an optional eyebrow line, the page title with
+    an optional status line and subtitle, actions on the right, and an optional stats strip
     along the bottom edge.
 
     Embed from a layout's `pre_body` block and fill the blocks as needed:
 
     {% embed 'partials/application/page-header.html.twig' %}
-        {% block header_top %}<ol class="breadcrumb">…</ol>{% endblock %}
+        {% block header_top %}<span class="page-header-eyebrow">…</span>{% endblock %}
         {% block header_status %}<div class="page-header-meta">…</div>{% endblock %}
         {% block header_title %}…{% endblock %}
         {% block header_subtitle %}<p class="page-header-meta">…</p>{% endblock %}
@@ -19,8 +19,8 @@
         {% endblock %}
     {% endembed %}
 
-    Pages that render a breadcrumb in `header_top` must not also define the layout's own
-    `breadcrumbs` block, otherwise the crumb shows twice.
+    Breadcrumbs go in the layout's own `breadcrumbs` block, which renders in the regular
+    breadcrumb bar above this band, like on every other page.
 #}
 <header class="page-header">
     <div class="container pt-3 pb-4">
