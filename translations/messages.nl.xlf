@@ -221,6 +221,10 @@
         <source>About %company%</source>
         <target>Over %company%</target>
       </trans-unit>
+      <trans-unit id="3XnQIRi" resname="About this activity">
+        <source>About this activity</source>
+        <target state="translated">Over deze activiteit</target>
+      </trans-unit>
       <trans-unit id="5DOuCi7" resname="Access Denied">
         <source>Access Denied</source>
         <target state="translated">Toegang geweigerd</target>
