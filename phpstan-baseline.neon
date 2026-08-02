@@ -223,18 +223,6 @@ parameters:
 			path: src/Entity/Photo/OrganTag.php
 
 		-
-			message: '#^Property App\\Entity\\User\\CompanyUser\:\:\$company is never written, only read\.$#'
-			identifier: property.onlyRead
-			count: 1
-			path: src/Entity/User/CompanyUser.php
-
-		-
-			message: '#^Property App\\Entity\\User\\CompanyUser\:\:\$id is never written, only read\.$#'
-			identifier: property.onlyRead
-			count: 1
-			path: src/Entity/User/CompanyUser.php
-
-		-
 			message: '#^Property App\\Entity\\User\\ExternalApp\:\:\$claims type mapping mismatch\: database can contain list\<App\\Entity\\User\\Enums\\JWTClaims\>\|null but property expects array\<App\\Entity\\User\\Enums\\JWTClaims\>\.$#'
 			identifier: doctrine.columnType
 			count: 1

@@ -1,0 +1,280 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% macro confirm_modal(id, action, token, title, body, label, variant) %}
+    <div class="modal fade" id="{{ id }}" tabindex="-1" aria-labelledby="{{ id }}-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="{{ id }}-label">{{ title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+                </div>
+                <form method="post" action="{{ action }}">
+                    <div class="modal-body">
+                        <p class="mb-0">{{ body }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="_csrf_token" value="{{ token }}">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                        <button type="submit" class="btn btn-{{ variant }}">{{ label }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% import _self as modals %}
+
+{% block page_title %}{{ 'Representatives'|trans|page_title }}{{ company.name|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/index') }}">
+            {{ 'Companies'|trans }}
+        </a>
+    </li>
+    <li class="breadcrumb-item">
+        {{ company.name }}
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Representatives'|trans }}
+    </li>
+{% endblock %}
+
+{% block pre_body %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_title %}{{ 'Representatives'|trans }}{% endblock %}
+        {% block header_subtitle %}
+            <p class="page-header-meta">{{ 'Who may act for %company% in the career portal.'|trans({'%company%': company.name}) }}</p>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel mb-3">
+                <div class="panel-heading">
+                    <h3>{{ 'Representatives'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if company.primaryContact is null %}
+                        <div class="alert alert-warning">
+                            {{ 'This company has no primary contact. Appoint one so the board knows who to write to.'|trans }}
+                        </div>
+                    {% endif %}
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>{{ 'Name'|trans }}</th>
+                                    <th>{{ 'Email'|trans }}</th>
+                                    <th>{{ 'Status'|trans }}</th>
+                                    <th class="text-end">{{ 'Actions'|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for representative in representatives %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ representative.name }}</strong>
+                                            {% if company.primaryContact is same as(representative) %}
+                                                <span class="badge badge-info">{{ 'Primary contact'|trans }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td><code class="small">{{ representative.email }}</code></td>
+                                        <td>
+                                            {% if representative.disabled %}
+                                                <span class="badge badge-danger">{{ 'No longer active'|trans }}</span>
+                                            {% else %}
+                                                <span class="badge badge-success">{{ 'Active'|trans }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-end">
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                {% if not representative.disabled and company.primaryContact is not same as(representative) %}
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                            data-bs-toggle="modal" data-bs-target="#modal-primary-{{ representative.id }}">
+                                                        <span class="fas fa-star"></span> {{ 'Make primary'|trans }}
+                                                    </button>
+                                                {% endif %}
+                                                {% if representative.disabled %}
+                                                    <button type="button" class="btn btn-outline-success"
+                                                            data-bs-toggle="modal" data-bs-target="#modal-enable-{{ representative.id }}">
+                                                        <span class="fas fa-unlock"></span> {{ 'Let back in'|trans }}
+                                                    </button>
+                                                {% else %}
+                                                    <button type="button" class="btn btn-outline-warning"
+                                                            data-bs-toggle="modal" data-bs-target="#modal-disable-{{ representative.id }}">
+                                                        <span class="fas fa-ban"></span> {{ 'Shut out'|trans }}
+                                                    </button>
+                                                {% endif %}
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                        data-bs-toggle="modal" data-bs-target="#modal-sessions-{{ representative.id }}">
+                                                    <span class="fas fa-display"></span> {{ 'End sessions'|trans }}
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                        data-bs-toggle="modal" data-bs-target="#modal-remove-{{ representative.id }}">
+                                                    <span class="fas fa-trash"></span> {{ 'Remove'|trans }}
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted py-4">
+                                            {{ 'Nobody represents this company yet.'|trans }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Pending invitations'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>{{ 'Name'|trans }}</th>
+                                    <th>{{ 'Email'|trans }}</th>
+                                    <th>{{ 'Valid until'|trans }}</th>
+                                    <th class="text-end">{{ 'Actions'|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for invite in invites %}
+                                    <tr>
+                                        <td><strong>{{ invite.name }}</strong></td>
+                                        <td><code class="small">{{ invite.email }}</code></td>
+                                        <td>
+                                            {% if invite.expired %}
+                                                <span class="badge badge-secondary">{{ 'Expired'|trans }}</span>
+                                            {% else %}
+                                                {{ invite.expiresAt|date('j F Y') }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-end">
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                        data-bs-toggle="modal" data-bs-target="#modal-resend-{{ invite.id }}">
+                                                    <span class="fas fa-paper-plane"></span> {{ 'Send again'|trans }}
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                        data-bs-toggle="modal" data-bs-target="#modal-revoke-{{ invite.id }}">
+                                                    <span class="fas fa-xmark"></span> {{ 'Withdraw'|trans }}
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted py-4">
+                                            {{ 'No invitations are outstanding.'|trans }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Invite a representative'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {{ form_start(form, { 'method': 'POST' }) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.email) }}
+
+                        <div class="d-grid">
+                            <button class="btn btn-gewis-primary" type="submit">
+                                <span class="fas fa-envelope"></span> {{ 'Send invitation'|trans }}
+                            </button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for representative in representatives %}
+        {{ modals.confirm_modal(
+            'modal-primary-' ~ representative.id,
+            path('admin/career/companies/representatives/primary', {'id': company.id, 'representativeId': representative.id}),
+            csrf_token('company_representative_primary-' ~ representative.id),
+            'Make primary contact?'|trans,
+            'The board will write to %name% when it needs one answer from this company.'|trans({'%name%': representative.name}),
+            'Make primary'|trans,
+            'gewis-primary'
+        ) }}
+        {{ modals.confirm_modal(
+            'modal-disable-' ~ representative.id,
+            path('admin/career/companies/representatives/disable', {'id': company.id, 'representativeId': representative.id}),
+            csrf_token('company_representative_disable-' ~ representative.id),
+            'Shut this representative out?'|trans,
+            '%name% will be signed out and cannot sign in again. Everything they wrote stays where it is.'|trans({'%name%': representative.name}),
+            'Shut out'|trans,
+            'warning'
+        ) }}
+        {{ modals.confirm_modal(
+            'modal-enable-' ~ representative.id,
+            path('admin/career/companies/representatives/enable', {'id': company.id, 'representativeId': representative.id}),
+            csrf_token('company_representative_enable-' ~ representative.id),
+            'Let this representative back in?'|trans,
+            '%name% will be able to sign in to the career portal again.'|trans({'%name%': representative.name}),
+            'Let back in'|trans,
+            'success'
+        ) }}
+        {{ modals.confirm_modal(
+            'modal-sessions-' ~ representative.id,
+            path('admin/career/companies/representatives/terminate-sessions', {'id': company.id, 'representativeId': representative.id}),
+            csrf_token('company_representative_sessions-' ~ representative.id),
+            'End all sessions?'|trans,
+            '%name% will be signed out everywhere and will have to sign in again.'|trans({'%name%': representative.name}),
+            'End sessions'|trans,
+            'gewis-primary'
+        ) }}
+        {{ modals.confirm_modal(
+            'modal-remove-' ~ representative.id,
+            path('admin/career/companies/representatives/remove', {'id': company.id, 'representativeId': representative.id}),
+            csrf_token('company_representative_remove-' ~ representative.id),
+            'Remove this representative?'|trans,
+            'The account of %name% is deleted. Their name disappears from the drafts and comments they left behind. Shutting them out instead keeps that history readable.'|trans({'%name%': representative.name}),
+            'Remove'|trans,
+            'danger'
+        ) }}
+    {% endfor %}
+
+    {% for invite in invites %}
+        {{ modals.confirm_modal(
+            'modal-resend-' ~ invite.id,
+            path('admin/career/companies/invites/resend', {'id': company.id, 'inviteId': invite.id}),
+            csrf_token('company_invite_resend-' ~ invite.id),
+            'Send the invitation again?'|trans,
+            'A new link is emailed to %email%. The previous link stops working.'|trans({'%email%': invite.email}),
+            'Send again'|trans,
+            'gewis-primary'
+        ) }}
+        {{ modals.confirm_modal(
+            'modal-revoke-' ~ invite.id,
+            path('admin/career/companies/invites/revoke', {'id': company.id, 'inviteId': invite.id}),
+            csrf_token('company_invite_revoke-' ~ invite.id),
+            'Withdraw this invitation?'|trans,
+            'The link emailed to %email% stops working and no account is created.'|trans({'%email%': invite.email}),
+            'Withdraw'|trans,
+            'danger'
+        ) }}
+    {% endfor %}
+{% endblock %}

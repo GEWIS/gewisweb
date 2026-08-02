@@ -17,19 +17,19 @@ final readonly class CompanyUserRow
         public string $representativeName,
         public string $representativeEmail,
         public bool $mfaEnabled,
+        public bool $disabled,
     ) {
     }
 
     public static function fromCompanyUser(CompanyUser $companyUser): self
     {
-        $company = $companyUser->getCompany();
-
         return new self(
             id: (int) $companyUser->getId(),
-            companyName: $company->getName(),
-            representativeName: $company->getRepresentativeName(),
-            representativeEmail: $company->getRepresentativeEmail(),
+            companyName: $companyUser->getCompany()->getName(),
+            representativeName: $companyUser->getName(),
+            representativeEmail: $companyUser->getEmail(),
             mfaEnabled: $companyUser->isTotpAuthenticationEnabled(),
+            disabled: $companyUser->isDisabled(),
         );
     }
 }

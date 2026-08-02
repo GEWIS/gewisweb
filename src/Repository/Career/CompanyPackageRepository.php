@@ -11,6 +11,7 @@ use App\Entity\Career\CompanyJobPackage;
 use App\Entity\Career\CompanyPackage;
 use App\Entity\Career\Enums\CompanyPackageTypes;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\Persistence\ManagerRegistry;
@@ -155,11 +156,37 @@ class CompanyPackageRepository extends ServiceEntityRepository
             ->andWhere('p.expires > CURRENT_DATE()')
             ->setParameter(
                 'company',
-                $company,
-                Company::class,
+                $company->getId(),
+                Types::INTEGER,
             );
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Whether the company still has a contract to stand on: a package of any type that has not expired yet. A package
+     * that has not started counts, so a company can prepare its profile in the run-up to its contract.
+     */
+    public function hasNonExpiredPackage(
+        Company $company,
+        DateTimeImmutable $now,
+    ): bool {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('COUNT(p.id)')
+            ->where('p.company = :company')
+            ->andWhere('p.expires > :now')
+            ->setParameter(
+                'company',
+                $company->getId(),
+                Types::INTEGER,
+            )
+            ->setParameter(
+                'now',
+                $now,
+                Types::DATETIME_IMMUTABLE,
+            );
+
+        return (int) $qb->getQuery()->getSingleScalarResult() > 0;
     }
 
     /**

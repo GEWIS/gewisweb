@@ -1,0 +1,31 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Accept your invitation'|trans }}{% endblock %}
+
+{% block contents %}
+<div class="row justify-content-center">
+    <div class="col col-sm-10 col-lg-6 col-xl-4">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'Accept your invitation'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    {{ 'You have been invited to represent %company% on the GEWIS website. Choose a password to finish setting up your account.'|trans({'%company%': invite.company.name}) }}
+                </p>
+
+                {{ form_start(form, { 'method': 'POST' }) }}
+                    {{ form_row(form.plainPassword.first) }}
+                    {{ form_row(form.plainPassword.second) }}
+
+                    <div class="d-grid">
+                        <button class="btn btn-gewis-primary" type="submit">
+                            {{ 'Create my account'|trans }}
+                        </button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

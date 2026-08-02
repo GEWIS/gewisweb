@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Entity\Application;
 
 use App\Entity\Activity\ActivityRevision;
-use App\Entity\Career\Company;
 use App\Entity\Decision\Member;
 use App\Entity\User\CompanyUser;
 use App\Entity\User\User;
@@ -54,7 +53,7 @@ final class AbstractRevisionInvariantsTest extends TestCase
         $revision->assertSingleActor();
     }
 
-    public function testAuthorDisplayNamePrefersTheMemberOtherwiseTheCompanyName(): void
+    public function testAuthorDisplayNamePrefersTheMemberOtherwiseTheCompanyUser(): void
     {
         $member = self::createStub(Member::class);
         $member->method('getFullName')->willReturn('Jane Member');
@@ -65,14 +64,12 @@ final class AbstractRevisionInvariantsTest extends TestCase
             $byMember->getAuthorDisplayName(),
         );
 
-        $company = self::createStub(Company::class);
-        $company->method('getName')->willReturn('ACME');
         $companyUser = self::createStub(CompanyUser::class);
-        $companyUser->method('getCompany')->willReturn($company);
+        $companyUser->method('getDisplayName')->willReturn('Jane Rep (ACME)');
         $byCompany = new ActivityRevision();
         $byCompany->setAuthorCompanyUser($companyUser);
         self::assertSame(
-            'ACME',
+            'Jane Rep (ACME)',
             $byCompany->getAuthorDisplayName(),
         );
     }

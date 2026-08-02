@@ -192,12 +192,4 @@ class CompanyRepository extends ServiceEntityRepository
 
         return $company;
     }
-
-    /**
-     * Return a company by a given representative's email address.
-     */
-    public function findCompanyByRepresentativeEmail(string $email): ?Company
-    {
-        return $this->findOneBy(['representativeEmail' => $email]);
-    }
 }

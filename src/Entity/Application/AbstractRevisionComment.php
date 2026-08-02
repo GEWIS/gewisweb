@@ -51,6 +51,7 @@ abstract class AbstractRevisionComment
     #[JoinColumn(
         referencedColumnName: 'id',
         nullable: true,
+        onDelete: 'SET NULL',
     )]
     private ?CompanyUserModel $authorCompanyUser = null;
 
@@ -98,18 +99,32 @@ abstract class AbstractRevisionComment
     }
 
     /**
-     * Enforce that a comment has exactly one author; never both and never neither.
+     * Enforce that a comment starts out with exactly one author; never both and never neither.
      *
      * Should be registered as a callback on every concrete subclass via its
      *
      * @see \Doctrine\ORM\Mapping\HasLifecycleCallbacks}.
      */
     #[PrePersist]
-    #[PreUpdate]
-    public function assertSingleAuthor(): void
+    public function assertAuthored(): void
     {
         if ((null === $this->author) === (null === $this->authorCompanyUser)) {
             throw new LogicException('A revision comment must have exactly one author (a user or a company user).');
+        }
+    }
+
+    /**
+     * A comment can lose its author afterwards, since removing a company user outright nulls out everything that
+     * points at it, but it never gains a second one.
+     */
+    #[PreUpdate]
+    public function assertSingleAuthor(): void
+    {
+        if (
+            null !== $this->author
+            && null !== $this->authorCompanyUser
+        ) {
+            throw new LogicException('A revision comment cannot be written by both a member and a company user.');
         }
     }
 

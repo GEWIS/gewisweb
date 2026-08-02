@@ -205,6 +205,33 @@ class CompanyFixture extends Fixture
             ],
         );
 
+        // Its contract lapsed, so it is invisible to the public and its representative can no longer sign in.
+        $this->createCompany(
+            $manager,
+            slug: 'halcyon-mobility',
+            name: 'Halcyon Mobility',
+            sloganEn: 'Moving the city, quietly',
+            sloganNl: 'De stad in beweging, zonder herrie',
+            descriptionEn: 'Halcyon Mobility designs electric drivetrains for urban logistics fleets.',
+            descriptionNl: 'Halcyon Mobility ontwerpt elektrische aandrijflijnen voor stedelijke logistiek.',
+            websiteEn: 'https://example.com/halcyon',
+            websiteNl: 'https://example.com/halcyon',
+            featured: false,
+            banner: false,
+            vacancies: [
+                [
+                    'slug' => 'drivetrain-engineer',
+                    'category' => VacancyCategories::Jobs,
+                    'nameEn' => 'Drivetrain Engineer',
+                    'nameNl' => 'Aandrijflijn-engineer',
+                    'descriptionEn' => 'Develop the motors and inverters behind our delivery vans.',
+                    'descriptionNl' => 'Ontwikkel de motoren en omvormers achter onze bestelbussen.',
+                    'labels' => ['fulltime'],
+                ],
+            ],
+            contractExpired: true,
+        );
+
         $manager->flush();
     }
 
@@ -254,12 +281,11 @@ class CompanyFixture extends Fixture
         bool $featured,
         bool $banner,
         array $vacancies,
+        bool $contractExpired = false,
     ): void {
         $company = new Company();
         $company->setName($name);
         $company->setSlugName($slug);
-        $company->setRepresentativeName('Recruitment ' . $name);
-        $company->setRepresentativeEmail('recruitment@' . $slug . '.example.com');
         $company->setPublished(true);
 
         $revision = new CompanyRevision();
@@ -286,6 +312,7 @@ class CompanyFixture extends Fixture
         $this->configurePackage(
             $jobPackage,
             $company,
+            $contractExpired,
         );
 
         foreach ($vacancies as $data) {
@@ -327,15 +354,17 @@ class CompanyFixture extends Fixture
     }
 
     /**
-     * Makes a package active: started in the past, expiring far in the future, and published.
+     * Makes a package active: started in the past, expiring far in the future, and published. An expired package keeps
+     * the same start but lapsed long ago.
      */
     private function configurePackage(
         CompanyPackage $package,
         Company $company,
+        bool $expired = false,
     ): void {
         $package->setCompany($company);
         $package->setStartingDate(new DateTime('2020-01-01'));
-        $package->setExpirationDate(new DateTime('2100-01-01'));
+        $package->setExpirationDate(new DateTime($expired ? '2021-01-01' : '2100-01-01'));
         $package->setPublished(true);
     }
 

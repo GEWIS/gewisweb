@@ -10,7 +10,7 @@
                     <a href="{{ path('user_login') }}" class="nav-link {{ ('user' === type) ? 'active' : '' }}">
                         {{ 'Members'|trans }}
                     </a>
-                    <a href="{{ path('company_user_login') }}" class="nav-link disabled {{ ('company_user' === type) ? 'active' : '' }}">
+                    <a href="{{ path('company_user_login') }}" class="nav-link {{ ('company_user' === type) ? 'active' : '' }}">
                         {{ 'Companies'|trans }}
                     </a>
                 </nav>

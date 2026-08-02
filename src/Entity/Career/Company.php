@@ -12,6 +12,7 @@ use App\Entity\Career\Enums\CompanyPackageTypes;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Decision\Member as MemberModel;
 use App\Entity\Decision\Organ as OrganModel;
+use App\Entity\User\CompanyUser as CompanyUserModel;
 use App\Repository\Career\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,6 +24,8 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OrderBy;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\PreUpdate;
 use Override;
 use RuntimeException;
 
@@ -34,7 +37,7 @@ use function count;
 /**
  * Company aggregate root.
  *
- * The stable identity, the name, slug, representative details, packages and publication flag live here and survive
+ * The stable identity, the name, slug, primary contact, packages and publication flag live here and survive
  * across edits. The revisable, reviewable content (localised texts, logo and contact details) lives on the chain of
  * {@see CompanyRevision}s. The publicly live version is {@see self::getLiveRevision()} (the latest approved revision);
  * the working head is {@see self::getCurrentRevision()}.
@@ -59,16 +62,15 @@ class Company implements RevisableInterface
     private string $slugName;
 
     /**
-     * The name of the person representing the company. Is used for communications with the company.
+     * The representative the board writes to when it needs one answer from the company. Null when nobody has been
+     * appointed yet, or when whoever held it was removed; the admin interface then asks for a new one.
      */
-    #[Column(type: Types::STRING)]
-    private string $representativeName;
-
-    /**
-     * The email address of the person representing the company. Is used for communications with the company.
-     */
-    #[Column(type: Types::STRING)]
-    private string $representativeEmail;
+    #[ManyToOne(targetEntity: CompanyUserModel::class)]
+    #[JoinColumn(
+        nullable: true,
+        onDelete: 'SET NULL',
+    )]
+    private ?CompanyUserModel $primaryContact = null;
 
     /**
      * Whether the company is published or not.
@@ -226,36 +228,31 @@ class Company implements RevisableInterface
         $this->slugName = $slugName;
     }
 
-    /**
-     * Get the name of the person representing the company.
-     */
-    public function getRepresentativeName(): string
+    public function getPrimaryContact(): ?CompanyUserModel
     {
-        return $this->representativeName;
+        return $this->primaryContact;
+    }
+
+    public function setPrimaryContact(?CompanyUserModel $primaryContact): void
+    {
+        $this->primaryContact = $primaryContact;
     }
 
     /**
-     * Set the name of the person representing the company.
+     * A company can only be represented towards the board by one of its own people.
      */
-    public function setRepresentativeName(string $name): void
+    #[PrePersist]
+    #[PreUpdate]
+    public function assertPrimaryContactBelongsToCompany(): void
     {
-        $this->representativeName = $name;
-    }
+        if (
+            null === $this->primaryContact
+            || $this->primaryContact->getCompany() === $this
+        ) {
+            return;
+        }
 
-    /**
-     * Get the email address of the person representing the company.
-     */
-    public function getRepresentativeEmail(): string
-    {
-        return $this->representativeEmail;
-    }
-
-    /**
-     * Set the email address of the person representing the company.
-     */
-    public function setRepresentativeEmail(string $email): void
-    {
-        $this->representativeEmail = $email;
+        throw new RuntimeException('The primary contact of a company must be one of its own representatives.');
     }
 
     /**
@@ -527,8 +524,6 @@ class Company implements RevisableInterface
      * @return array{
      *     name: string,
      *     slugName: string,
-     *     representativeName: string,
-     *     representativeEmail: string,
      *     logo: ?string,
      *     contactName: ?string,
      *     contactEmail: ?string,
@@ -549,9 +544,6 @@ class Company implements RevisableInterface
 
         $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
-
-        $arraycopy['representativeName'] = $this->getRepresentativeName();
-        $arraycopy['representativeEmail'] = $this->getRepresentativeEmail();
 
         $arraycopy['logo'] = $this->getLogo();
         $arraycopy['contactName'] = $this->getContactName();

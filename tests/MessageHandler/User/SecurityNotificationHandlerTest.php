@@ -96,7 +96,7 @@ final class SecurityNotificationHandlerTest extends TestCase
     {
         $this->handler()($this->message(
             firewallName: 'company',
-            userIdentifier: '3',
+            userIdentifier: 'rep@example.com',
         ));
 
         self::assertSame(
@@ -284,16 +284,14 @@ final class SecurityNotificationHandlerTest extends TestCase
 
     private function companyUsers(): CompanyUserRepository
     {
-        $company = self::createStub(Company::class);
-        $company->method('getRepresentativeEmail')->willReturn('rep@example.com');
-        $company->method('getRepresentativeName')->willReturn('Grace Hopper');
-
         $companyUser = self::createStub(CompanyUser::class);
-        $companyUser->method('getCompany')->willReturn($company);
+        $companyUser->method('getCompany')->willReturn(self::createStub(Company::class));
+        $companyUser->method('getEmail')->willReturn('rep@example.com');
+        $companyUser->method('getName')->willReturn('Grace Hopper');
 
         $companyUsers = self::createStub(CompanyUserRepository::class);
-        $companyUsers->method('find')->willReturnCallback(
-            static fn (mixed $id): ?CompanyUser => 3 === $id ? $companyUser : null,
+        $companyUsers->method('loadUserByIdentifier')->willReturnCallback(
+            static fn (string $identifier): ?CompanyUser => 'rep@example.com' === $identifier ? $companyUser : null,
         );
 
         return $companyUsers;

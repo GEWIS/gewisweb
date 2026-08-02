@@ -68,6 +68,7 @@ abstract class AbstractRevision implements RevisionInterface
     #[JoinColumn(
         referencedColumnName: 'id',
         nullable: true,
+        onDelete: 'SET NULL',
     )]
     private ?CompanyUserModel $authorCompanyUser = null;
 
@@ -118,6 +119,7 @@ abstract class AbstractRevision implements RevisionInterface
     #[JoinColumn(
         referencedColumnName: 'id',
         nullable: true,
+        onDelete: 'SET NULL',
     )]
     private ?CompanyUserModel $lastEditedByCompanyUser = null;
 
@@ -179,7 +181,7 @@ abstract class AbstractRevision implements RevisionInterface
         }
 
         if (null !== $this->authorCompanyUser) {
-            return $this->authorCompanyUser->getCompany()->getName();
+            return $this->authorCompanyUser->getDisplayName();
         }
 
         return '';
