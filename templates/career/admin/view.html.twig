@@ -1,0 +1,95 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% set current = company.currentRevision %}
+{% set live = company.liveRevision %}
+
+{% block page_title %}{{ company.name|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/index') }}">{{ 'Career'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ company.name }}</li>
+{% endblock %}
+
+{% block contents %}
+    {% include 'partials/career/admin/company-tabs.html.twig' with {
+        'company': company,
+        'active': 'profile',
+    } only %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel">
+                <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <h3>{{ 'Profile'|trans }}</h3>
+                    {% if current is not null and current.status.editableByAuthor %}
+                        <a href="{{ path('admin/career/companies/edit', {'company': company.id}) }}"
+                           class="btn btn-sm btn-gewis-primary">{{ 'Edit draft'|trans }}</a>
+                        <a href="{{ path('admin/career/approvals/company', {'revision': current.id}) }}"
+                           class="btn btn-sm btn-outline-success">{{ 'Submit for review'|trans }}</a>
+                    {% elseif current is not null %}
+                        <form method="post" action="{{ path('admin/career/companies/revise', {'company': company.id}) }}">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('company_revise-' ~ company.id) }}">
+                            <button type="submit" class="btn btn-sm btn-gewis-primary">{{ 'Revise'|trans }}</button>
+                        </form>
+                    {% endif %}
+                </div>
+                <div class="panel-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">{{ 'Working version'|trans }}</dt>
+                        <dd class="col-sm-8">
+                            {% if current is not null %}
+                                {% include 'partials/application/revision-status-badge.html.twig' with {'status': current.status} only %}
+                                <span class="text-muted small">{{ 'rev. #%n%'|trans({'%n%': current.revisionNumber}) }}</span>
+                            {% else %}
+                                <span class="text-muted">{{ 'None'|trans }}</span>
+                            {% endif %}
+                        </dd>
+                        <dt class="col-sm-4">{{ 'Live version'|trans }}</dt>
+                        <dd class="col-sm-8">
+                            {% if live is not null %}
+                                {{ 'rev. #%n%'|trans({'%n%': live.revisionNumber}) }}
+                            {% else %}
+                                <span class="text-muted">{{ 'Never approved'|trans }}</span>
+                            {% endif %}
+                        </dd>
+                        <dt class="col-sm-4">{{ 'Shown publicly'|trans }}</dt>
+                        <dd class="col-sm-8">{{ company.hidden ? 'No'|trans : 'Yes'|trans }}</dd>
+                        <dt class="col-sm-4">{{ 'Primary contact'|trans }}</dt>
+                        <dd class="col-sm-8">
+                            {% if company.primaryContact is not null %}
+                                {{ company.primaryContact.name }}
+                                <code class="small">{{ company.primaryContact.email }}</code>
+                            {% else %}
+                                <span class="text-danger">{{ 'Nobody appointed'|trans }}</span>
+                            {% endif %}
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <aside class="col-md-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Timeline'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled mb-0">
+                        {% for entry in timeline %}
+                            <li class="mb-2">
+                                <div>{{ entry.verb.message(entry.actorDisplayName ?? 'The website'|trans, entry.detail)|trans }}</div>
+                                <div class="text-muted small">
+                                    {{ entry.createdAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="text-muted small">{{ 'Nothing has happened yet.'|trans }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </aside>
+    </div>
+{% endblock %}

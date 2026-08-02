@@ -1,22 +1,18 @@
 {% extends 'layout-admin.html.twig' %}
 
-{% block page_title %}{{ 'Overview'|trans|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
+{% block page_title %}{{ 'Companies'|trans|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block admin_breadcrumbs %}
-    <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('admin/career/index') }}">
-            {{ 'Companies'|trans }}
-        </a>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">
-        {{ 'Overview'|trans }}
-    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Career'|trans }}</li>
 {% endblock %}
 
 {% block contents %}
-    <div class="row">
-        <div class="col-md-12">
-            {# TODO #}
-        </div>
-    </div>
+    {% include 'partials/career/admin/overview-tabs.html.twig' with {
+        'active': 'companies',
+        'counts': counts,
+        'actionPath': path('admin/career/companies/create'),
+        'actionLabel': 'Add a company'|trans,
+    } only %}
+
+    {{ component('Career:Admin:CompanyOverview') }}
 {% endblock %}

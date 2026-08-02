@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Career;
 
+use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\Career\Company;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Career\Vacancy;
@@ -12,6 +13,7 @@ use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 use function mb_strtolower;
@@ -349,6 +351,96 @@ class VacancyRepository extends ServiceEntityRepository
                 new DateTime('today'),
                 Types::DATE_MUTABLE,
             );
+    }
+
+    /**
+     * A page of the administrative overview, narrowed by the optional filters. The status and the category come off
+     * the working head rather than the live revision, since a vacancy that has never been approved is precisely the
+     * one somebody is looking for here.
+     *
+     * @return Paginator<Vacancy>
+     */
+    public function paginateForAdmin(
+        string $search,
+        ?RevisionStatus $status,
+        ?VacancyCategories $category,
+        ?int $companyId,
+        int $page,
+        int $pageSize,
+    ): Paginator {
+        $qb = $this->createQueryBuilder('v')
+            ->addSelect(
+                'cr',
+                'p',
+                'c',
+                'name',
+            )
+            ->join(
+                'v.currentRevision',
+                'cr',
+            )
+            ->join(
+                'cr.name',
+                'name',
+            )
+            ->join(
+                'v.package',
+                'p',
+            )
+            ->join(
+                'p.company',
+                'c',
+            )
+            ->orderBy(
+                'c.name',
+                'ASC',
+            )
+            ->addOrderBy(
+                'v.id',
+                'ASC',
+            );
+
+        $search = trim($search);
+        if ('' !== $search) {
+            $qb->andWhere(
+                'LOWER(name.valueEN) LIKE :needle'
+                . ' OR LOWER(name.valueNL) LIKE :needle'
+                . ' OR LOWER(v.slugName) LIKE :needle',
+            )
+                ->setParameter(
+                    'needle',
+                    '%' . mb_strtolower($search) . '%',
+                );
+        }
+
+        if (null !== $status) {
+            $qb->andWhere('cr.status = :status')
+                ->setParameter(
+                    'status',
+                    $status->value,
+                );
+        }
+
+        if (null !== $category) {
+            $qb->andWhere('cr.category = :category')
+                ->setParameter(
+                    'category',
+                    $category->value,
+                );
+        }
+
+        if (null !== $companyId) {
+            $qb->andWhere('c.id = :companyId')
+                ->setParameter(
+                    'companyId',
+                    $companyId,
+                    Types::INTEGER,
+                );
+        }
+
+        $qb->setFirstResult(($page - 1) * $pageSize)->setMaxResults($pageSize);
+
+        return new Paginator($qb);
     }
 
     /**

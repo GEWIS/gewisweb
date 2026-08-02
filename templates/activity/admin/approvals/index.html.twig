@@ -21,39 +21,48 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            {% if revisions is empty %}
-                <p class="text-muted">{{ 'There is nothing to review right now.'|trans }}</p>
-            {% else %}
-                <table class="table table-hover align-middle">
-                    <thead>
-                        <tr>
-                            <th>{{ 'Name'|trans }}</th>
-                            <th>{{ 'Submitted by'|trans }}</th>
-                            <th>{{ 'Revision'|trans }}</th>
-                            <th>{{ 'Status'|trans }}</th>
-                            <th class="text-end">{{ 'Actions'|trans }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for revision in revisions %}
-                            <tr>
-                                <td>{{ revision.name|localise_text }}</td>
-                                <td class="text-muted small">{{ revision.authorDisplayName }}</td>
-                                <td class="text-muted small">#{{ revision.revisionNumber }}</td>
-                                <td>
-                                    {% include 'partials/application/revision-status-badge.html.twig' with {'status': revision.status} only %}
-                                </td>
-                                <td class="text-end">
-                                    <a href="{{ path('admin/activities/approvals/review', {'revision': revision.getId}) }}"
-                                       class="btn btn-sm btn-gewis-primary">
-                                        {{ 'Review'|trans }}
-                                    </a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% endif %}
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Activities'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if revisions is empty %}
+                        <p class="text-muted mb-0">{{ 'There is nothing to review right now.'|trans }}</p>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'Name'|trans }}</th>
+                                        <th>{{ 'Submitted by'|trans }}</th>
+                                        <th>{{ 'Revision'|trans }}</th>
+                                        <th>{{ 'Status'|trans }}</th>
+                                        <th class="text-end">{{ 'Actions'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for revision in revisions %}
+                                        <tr>
+                                            <td>{{ revision.name|localise_text }}</td>
+                                            <td class="text-muted small">{{ revision.authorDisplayName }}</td>
+                                            <td class="text-muted small">#{{ revision.revisionNumber }}</td>
+                                            <td>
+                                                {% include 'partials/application/revision-status-badge.html.twig' with {'status': revision.status} only %}
+                                            </td>
+                                            <td class="text-end">
+                                                <a href="{{ path('admin/activities/approvals/review', {'revision': revision.getId}) }}"
+                                                   class="btn btn-sm btn-outline-gewis-primary">
+                                                    {{ 'Review'|trans }}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

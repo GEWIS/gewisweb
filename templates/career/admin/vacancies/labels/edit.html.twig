@@ -1,0 +1,30 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ label.name|localise_text|page_title }}{{ 'Labels'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/vacancies/labels/index') }}">{{ 'Labels'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Edit'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="mb-3">{{ 'Edit label'|trans }}</h3>
+            <div class="panel">
+                <div class="panel-body">
+                    {{ form_start(form, {'method': 'POST'}) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.abbreviation) }}
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-gewis-primary">{{ 'Save'|trans }}</button>
+                            <a href="{{ path('admin/career/vacancies/labels/index') }}" class="btn btn-secondary">{{ 'Cancel'|trans }}</a>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

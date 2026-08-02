@@ -29,10 +29,13 @@ class VacancyRevisionRepository extends ServiceEntityRepository
      */
     public function findForReview(): array
     {
+        // The queue says who put each one forward, which is either a member or a representative.
         return $this->createQueryBuilder('r')
             ->addSelect(
                 'n',
                 'j',
+                'a',
+                'acu',
             )
             ->join(
                 'r.name',
@@ -41,6 +44,14 @@ class VacancyRevisionRepository extends ServiceEntityRepository
             ->join(
                 'r.vacancy',
                 'j',
+            )
+            ->leftJoin(
+                'r.author',
+                'a',
+            )
+            ->leftJoin(
+                'r.authorCompanyUser',
+                'acu',
             )
             ->where('r.status IN (:statuses)')
             ->setParameter(

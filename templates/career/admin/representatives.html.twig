@@ -1,56 +1,27 @@
 {% extends 'layout-admin.html.twig' %}
 
-{% macro confirm_modal(id, action, token, title, body, label, variant) %}
-    <div class="modal fade" id="{{ id }}" tabindex="-1" aria-labelledby="{{ id }}-label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="{{ id }}-label">{{ title }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
-                </div>
-                <form method="post" action="{{ action }}">
-                    <div class="modal-body">
-                        <p class="mb-0">{{ body }}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="hidden" name="_csrf_token" value="{{ token }}">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
-                        <button type="submit" class="btn btn-{{ variant }}">{{ label }}</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-{% endmacro %}
-
-{% import _self as modals %}
+{% import 'partials/application/confirm-post-modal.html.twig' as modals %}
 
 {% block page_title %}{{ 'Representatives'|trans|page_title }}{{ company.name|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block admin_breadcrumbs %}
     <li class="breadcrumb-item">
-        <a href="{{ path('admin/career/index') }}">
-            {{ 'Companies'|trans }}
-        </a>
+        <a href="{{ path('admin/career/index') }}">{{ 'Career'|trans }}</a>
     </li>
     <li class="breadcrumb-item">
-        {{ company.name }}
+        <a href="{{ path('admin/career/companies/view', {'company': company.id}) }}">{{ company.name }}</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
         {{ 'Representatives'|trans }}
     </li>
 {% endblock %}
 
-{% block pre_body %}
-    {% embed 'partials/application/page-header.html.twig' %}
-        {% block header_title %}{{ 'Representatives'|trans }}{% endblock %}
-        {% block header_subtitle %}
-            <p class="page-header-meta">{{ 'Who may act for %company% in the career portal.'|trans({'%company%': company.name}) }}</p>
-        {% endblock %}
-    {% endembed %}
-{% endblock %}
-
 {% block contents %}
+    {% include 'partials/career/admin/company-tabs.html.twig' with {
+        'company': company,
+        'active': 'representatives',
+    } only %}
+
     <div class="row">
         <div class="col-md-8">
             <div class="panel mb-3">

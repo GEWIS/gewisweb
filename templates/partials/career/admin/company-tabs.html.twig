@@ -1,0 +1,37 @@
+{#
+    The heading and tabs shared by the four pages that manage one company. Pass `active` as 'profile', 'vacancies',
+    'packages' or 'representatives'.
+#}
+<div class="row mb-3">
+    <div class="col-md-12">
+        <h3 class="mb-0">{{ company.name }}</h3>
+        <code class="small">{{ company.slugName }}</code>
+    </div>
+</div>
+
+<ul class="nav nav-pills nav-pills-compact mb-3">
+    <li class="nav-item">
+        <a class="nav-link {% if 'profile' == active %}active{% endif %}"
+           href="{{ path('admin/career/companies/view', {'company': company.id}) }}">
+            {{ 'Profile'|trans }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if 'vacancies' == active %}active{% endif %}"
+           href="{{ path('admin/career/companies/vacancies', {'company': company.id}) }}">
+            {{ 'Vacancies'|trans }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if 'packages' == active %}active{% endif %}"
+           href="{{ path('admin/career/packages/company', {'company': company.id}) }}">
+            {{ 'Packages'|trans }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if 'representatives' == active %}active{% endif %}"
+           href="{{ path('admin/career/companies/representatives', {'id': company.id}) }}">
+            {{ 'Representatives'|trans }}
+        </a>
+    </li>
+</ul>

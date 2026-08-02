@@ -1,22 +1,112 @@
 {% extends 'layout-admin.html.twig' %}
 
-{% block page_title %}{{ 'Approvals'|trans|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
+{% macro queue(revisions, label, routeName, isCompany) %}
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>{{ label }}</h3>
+        </div>
+        <div class="panel-body">
+            {% if revisions is empty %}
+                <p class="text-muted mb-0">{{ 'There is nothing to review right now.'|trans }}</p>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Name'|trans }}</th>
+                                <th>{{ 'Proposed by'|trans }}</th>
+                                <th>{{ 'Revision'|trans }}</th>
+                                <th>{{ 'Status'|trans }}</th>
+                                <th class="text-end">{{ 'Actions'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for revision in revisions %}
+                                <tr>
+                                    <td><strong>{{ isCompany ? revision.company.name : revision.name|localise_text }}</strong></td>
+                                    <td class="text-muted small">{{ revision.authorDisplayName }}</td>
+                                    <td class="text-muted small">#{{ revision.revisionNumber }}</td>
+                                    <td>
+                                        {% include 'partials/application/revision-status-badge.html.twig' with {'status': revision.status} only %}
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="{{ path(routeName, {'revision': revision.getId}) }}"
+                                           class="btn btn-sm btn-outline-gewis-primary">{{ 'Review'|trans }}</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% import _self as queues %}
+
+{% block page_title %}{{ 'Review'|trans|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block admin_breadcrumbs %}
-    <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('admin/career/index') }}">
-            {{ 'Companies'|trans }}
-        </a>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/index') }}">{{ 'Career'|trans }}</a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">
-        {{ 'Approvals'|trans }}
-    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Review'|trans }}</li>
 {% endblock %}
 
 {% block contents %}
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h3 class="mb-0">{{ 'Waiting for review'|trans }}</h3>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
-            {# TODO #}
+            {{ queues.queue(companyRevisions, 'Company profiles'|trans, 'admin/career/approvals/company', true) }}
+            {{ queues.queue(vacancyRevisions, 'Vacancies'|trans, 'admin/career/approvals/vacancy', false) }}
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Banners'|trans }}</h3>
+                </div>
+                {#
+                    A banner is not a revision, so it has no queue row of its own; what it shares with one is that the
+                    decision is taken where the thing itself is, which for a banner is the package's own page.
+                #}
+                <div class="panel-body">
+                    {% if pendingBanners is empty %}
+                        <p class="text-muted mb-0">{{ 'There is nothing to review right now.'|trans }}</p>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'Name'|trans }}</th>
+                                        <th>{{ 'Proposed by'|trans }}</th>
+                                        <th>{{ 'Proposed on'|trans }}</th>
+                                        <th class="text-end">{{ 'Actions'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for banner in pendingBanners %}
+                                        <tr>
+                                            <td><strong>{{ banner.company.name }}</strong></td>
+                                            <td class="text-muted small">
+                                                {{ banner.pendingImageSubmittedBy ? banner.pendingImageSubmittedBy.name : ('Removed account'|trans) }}
+                                            </td>
+                                            <td class="text-muted small">{{ banner.pendingImageSubmittedAt|date('j F Y') }}</td>
+                                            <td class="text-end">
+                                                <a href="{{ path('admin/career/packages/banner', {'package': banner.id}) }}"
+                                                   class="btn btn-sm btn-outline-gewis-primary">{{ 'Review'|trans }}</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

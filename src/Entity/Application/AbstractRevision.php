@@ -153,10 +153,20 @@ abstract class AbstractRevision implements RevisionInterface
         return $this->author;
     }
 
+    /**
+     * Taking over authorship hands the revision to the other side entirely: a board member picking up a profile a
+     * company put forward is now its author, and the company user no longer is.
+     */
     #[Override]
     public function setAuthor(?MemberModel $author): void
     {
         $this->author = $author;
+
+        if (null === $author) {
+            return;
+        }
+
+        $this->authorCompanyUser = null;
     }
 
     #[Override]
@@ -169,6 +179,12 @@ abstract class AbstractRevision implements RevisionInterface
     public function setAuthorCompanyUser(?CompanyUserModel $authorCompanyUser): void
     {
         $this->authorCompanyUser = $authorCompanyUser;
+
+        if (null === $authorCompanyUser) {
+            return;
+        }
+
+        $this->author = null;
     }
 
     /**
@@ -225,6 +241,12 @@ abstract class AbstractRevision implements RevisionInterface
     public function setLastEditedBy(?UserModel $lastEditedBy): void
     {
         $this->lastEditedBy = $lastEditedBy;
+
+        if (null === $lastEditedBy) {
+            return;
+        }
+
+        $this->lastEditedByCompanyUser = null;
     }
 
     public function getLastEditedByCompanyUser(): ?CompanyUserModel
@@ -235,6 +257,12 @@ abstract class AbstractRevision implements RevisionInterface
     public function setLastEditedByCompanyUser(?CompanyUserModel $lastEditedByCompanyUser): void
     {
         $this->lastEditedByCompanyUser = $lastEditedByCompanyUser;
+
+        if (null === $lastEditedByCompanyUser) {
+            return;
+        }
+
+        $this->lastEditedBy = null;
     }
 
     /**
@@ -248,7 +276,8 @@ abstract class AbstractRevision implements RevisionInterface
 
     /**
      * Enforce the documented invariant that a revision is never authored, nor last edited, by both a member and a
-     * company user at once.
+     * company user at once. The setters hand the revision over rather than let both sides be set, so this catches only
+     * what reached the fields another way, such as a row hydrated from the database.
      */
     #[PrePersist]
     #[PreUpdate]

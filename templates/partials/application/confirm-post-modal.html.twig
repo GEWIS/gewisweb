@@ -1,0 +1,38 @@
+{#
+    A confirmation that posts. Anything irreversible is asked for here rather than through the browser's own dialog,
+    which cannot carry the form the action needs and cannot be styled to say which button is the dangerous one.
+
+    {% import 'partials/application/confirm-post-modal.html.twig' as modals %}
+
+    {{ modals.confirm_modal(
+        'modal-discard-draft',
+        path('admin/career/approvals/company/discard', {'revision': revision.getId}),
+        csrf_token('career_discard-' ~ revision.getId),
+        'Discard draft?'|trans,
+        'The changes in this draft will be lost and the live version restored.'|trans,
+        'Discard draft'|trans,
+        'gewis-primary',
+    ) }}
+#}
+{% macro confirm_modal(id, action, token, title, body, label, variant) %}
+    <div class="modal fade" id="{{ id }}" tabindex="-1" aria-labelledby="{{ id }}-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="{{ id }}-label">{{ title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+                </div>
+                <form method="post" action="{{ action }}">
+                    <div class="modal-body">
+                        <p class="mb-0">{{ body }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="_csrf_token" value="{{ token }}">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                        <button type="submit" class="btn btn-{{ variant }}">{{ label }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

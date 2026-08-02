@@ -1,0 +1,65 @@
+{#
+    The package form, shared by the add and edit pages. The format field only exists on the banner package and the
+    article fields only on the featured package, which are the two package types that carry anything of their own.
+#}
+{{ form_start(form, {'method': 'POST'}) }}
+<div data-controller="localised-fields">
+    <div class="panel">
+        <div class="panel-body">
+            {{ form_row(form.contractNumber) }}
+            <div class="row">
+                <div class="col-md-6">{{ form_row(form.startingDate) }}</div>
+                <div class="col-md-6">{{ form_row(form.expirationDate) }}</div>
+            </div>
+            {% if form.format is defined %}
+                {{ form_row(form.format) }}
+            {% endif %}
+            {{ form_row(form.published) }}
+        </div>
+    </div>
+
+    {% if form.article is defined %}
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'Article'|trans }}</h3>
+                <p class="text-muted small mb-0">
+                    {{ 'Enable Dutch and/or English and fill in the fields below. At least one language must be used.'|trans }}
+                </p>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.languageDutch, {
+                            'label': '<span class="flag-icon flag-icon-nl"></span> ' ~ ('Dutch'|trans),
+                            'label_html': true,
+                            'attr': {
+                                'data-localised-fields-target': 'dutchToggle',
+                                'data-action': 'change->localised-fields#apply',
+                            },
+                        }) }}
+                        <hr>
+                        {{ form_row(form.article.valueNL, {'label': 'Article'|trans, 'attr': {'data-localised-fields-target': 'dutch', 'data-controller': 'markdown-editor', 'data-markdown-editor-language-value': app.request.locale}}) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.languageEnglish, {
+                            'label': '<span class="flag-icon flag-icon-en"></span> ' ~ ('English'|trans),
+                            'label_html': true,
+                            'attr': {
+                                'data-localised-fields-target': 'englishToggle',
+                                'data-action': 'change->localised-fields#apply',
+                            },
+                        }) }}
+                        <hr>
+                        {{ form_row(form.article.valueEN, {'label': 'Article'|trans, 'attr': {'data-localised-fields-target': 'english', 'data-controller': 'markdown-editor', 'data-markdown-editor-language-value': app.request.locale}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-gewis-primary">{{ 'Save'|trans }}</button>
+        <a href="{{ cancelUrl }}" class="btn btn-secondary">{{ 'Cancel'|trans }}</a>
+    </div>
+</div>
+{{ form_end(form) }}

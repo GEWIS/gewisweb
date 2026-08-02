@@ -55,7 +55,7 @@ class CompanyPackageRepository extends ServiceEntityRepository
         CompanyPackageTypes $companyPackageType,
         DateTime $date,
     ): array {
-        $companyPackageClass = $this->resolvePackageClass($companyPackageType);
+        $companyPackageClass = CompanyPackageTypes::entityClass($companyPackageType);
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('p')
@@ -103,7 +103,7 @@ class CompanyPackageRepository extends ServiceEntityRepository
         CompanyPackageTypes $companyPackageType,
         DateTime $date,
     ): array {
-        $companyPackageClass = $this->resolvePackageClass($companyPackageType);
+        $companyPackageClass = CompanyPackageTypes::entityClass($companyPackageType);
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('p')
@@ -123,6 +123,43 @@ class CompanyPackageRepository extends ServiceEntityRepository
                 'date',
                 $date,
                 Types::DATETIME_MUTABLE,
+            );
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * The banner packages with a proposal waiting for the committee, oldest first so nothing sits unanswered.
+     *
+     * @return list<CompanyBannerPackage>
+     *
+     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
+     */
+    public function findPendingBanners(): array
+    {
+        // The queue names the company and whoever put the banner forward, so both come along with the packages.
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select(
+                'p',
+                'c',
+                's',
+            )
+            ->from(
+                CompanyBannerPackage::class,
+                'p',
+            )
+            ->join(
+                'p.company',
+                'c',
+            )
+            ->leftJoin(
+                'p.pendingImageSubmittedBy',
+                's',
+            )
+            ->where('p.pendingImage IS NOT NULL')
+            ->orderBy(
+                'p.pendingImageSubmittedAt',
+                'ASC',
             );
 
         return $qb->getQuery()->getResult();
@@ -196,30 +233,5 @@ class CompanyPackageRepository extends ServiceEntityRepository
             );
 
         return (int) $qb->getQuery()->getSingleScalarResult() > 0;
-    }
-
-    /**
-     * @psalm-return (
-     *     $type is CompanyPackageTypes::Banner
-     *     ? class-string<CompanyBannerPackage>
-     *     : (
-     *         $type is CompanyPackageTypes::Featured
-     *         ? class-string<CompanyFeaturedPackage>
-     *         : (
-     *             $type is CompanyPackageTypes::Highlight
-     *             ? class-string<CompanyHighlightPackage>
-     *             : class-string<CompanyJobPackage>
-     *         )
-     *     )
-     * )
-     */
-    private function resolvePackageClass(CompanyPackageTypes $type): string
-    {
-        return match ($type) {
-            CompanyPackageTypes::Banner => CompanyBannerPackage::class,
-            CompanyPackageTypes::Featured => CompanyFeaturedPackage::class,
-            CompanyPackageTypes::Highlight => CompanyHighlightPackage::class,
-            CompanyPackageTypes::Job => CompanyJobPackage::class,
-        };
     }
 }
