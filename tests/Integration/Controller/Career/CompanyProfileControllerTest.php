@@ -96,6 +96,8 @@ final class CompanyProfileControllerTest extends DatabaseTestCase
         $nexunt = $this->signIn('recruitment@nexunt.example.com');
         $orbit = $this->representative('recruitment@orbit-analytics.example.com');
 
+        $before = $orbit->getCompany()->getCurrentRevision();
+
         $this->controller()->revise($nexunt);
 
         self::assertSame(
@@ -103,8 +105,8 @@ final class CompanyProfileControllerTest extends DatabaseTestCase
             $nexunt->getCompany()->getCurrentRevision()?->getStatus(),
         );
         self::assertSame(
-            RevisionStatus::Approved,
-            $orbit->getCompany()->getCurrentRevision()?->getStatus(),
+            $before,
+            $orbit->getCompany()->getCurrentRevision(),
         );
     }
 

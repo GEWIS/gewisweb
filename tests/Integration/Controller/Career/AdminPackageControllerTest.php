@@ -220,9 +220,14 @@ final class AdminPackageControllerTest extends DatabaseTestCase
         $this->authenticate();
         $this->pushRequestWithSession();
 
+        // The seed leaves a proposal waiting, so clear it before asking about a banner that has none.
+        $banner = $this->bannerPackage();
+        $banner->rejectPendingImage();
+        $this->entityManager->flush();
+
         $this->expectException(NotFoundHttpException::class);
         $this->controller()->approveBanner(
-            $this->bannerPackage(),
+            $banner,
             $this->user(),
         );
     }

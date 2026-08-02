@@ -334,6 +334,10 @@ class CompanyFixture extends Fixture
             );
             $manager->persist($vacancy);
             $createdVacancies[] = $vacancy;
+            $this->addReference(
+                'career-vacancy-' . $data['slug'],
+                $vacancy,
+            );
         }
 
         $manager->persist($company);
