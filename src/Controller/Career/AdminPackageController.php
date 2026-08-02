@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Career;
 
 use App\Entity\Application\Enums\AlertTypes;
+use App\Entity\Application\Enums\NotificationType;
 use App\Entity\Career\Company;
 use App\Entity\Career\CompanyBannerPackage;
 use App\Entity\Career\CompanyJobPackage;
@@ -16,6 +17,7 @@ use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Form\Career\BannerImageType;
 use App\Form\Career\CompanyPackageType;
+use App\Repository\Application\NotificationRepository;
 use App\Repository\Career\CompanyPackageRepository;
 use App\Security\User\SudoVoter;
 use App\Service\Application\EditLockService;
@@ -63,6 +65,7 @@ class AdminPackageController extends AbstractController
 
     public function __construct(
         private readonly CompanyPackageRepository $packageRepository,
+        private readonly NotificationRepository $notificationRepository,
         private readonly CareerOverviewCountsProvider $overviewCounts,
         private readonly CompanyAuditLogger $auditLogger,
         private readonly CompanyBannerService $bannerService,
@@ -467,8 +470,8 @@ class AdminPackageController extends AbstractController
     }
 
     /**
-     * What both decisions do once the banner itself has been settled: record who decided and reclaim the image
-     * nothing points at any more.
+     * What both decisions do once the banner itself has been settled: record who decided, reclaim the image nothing
+     * points at any more, and take the queue notification down so the company's next proposal is announced again.
      */
     private function settleBanner(
         CompanyBannerPackage $banner,
@@ -486,6 +489,16 @@ class AdminPackageController extends AbstractController
         if (null !== $discardedImage) {
             $this->fileStorage->remove($discardedImage);
         }
+
+        $id = $banner->getId();
+        if (null === $id) {
+            return;
+        }
+
+        $this->notificationRepository->removeForSubject(
+            NotificationType::CompanyBannerAwaitingReview,
+            $id,
+        );
     }
 
     private function backToApprovals(): Response

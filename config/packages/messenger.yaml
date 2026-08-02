@@ -63,6 +63,7 @@ framework:
             'App\Message\Photo\ProcessImageVariantsMessage': images
             'App\Message\Photo\GenerateAlbumCoverMessage': images
             'App\Message\User\CompanyUserInviteEmail': high_priority
+            'App\Message\Career\CareerReviewDecisionEmail': normal_priority
             'App\Message\User\ExportUserDataMessage': bulk
             'App\Message\User\RevokeSessionsRealtimeMessage': high_priority
             # A security notice is worth little late, and it must not hold up whatever raised it.

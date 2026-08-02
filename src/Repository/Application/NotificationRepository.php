@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Application;
 
+use App\Entity\Application\Enums\NotificationType;
 use App\Entity\Application\Notification;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\NotificationInteraction;
@@ -81,5 +82,31 @@ class NotificationRepository extends ServiceEntityRepository
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * Take down the notification about a subject that has since been dealt with. Announcing is deduplicated per
+     * subject and type, so one that outlives what it was about would keep the next one from being published at all.
+     */
+    public function removeForSubject(
+        NotificationType $type,
+        int $subjectId,
+    ): void {
+        $this->createQueryBuilder('n')
+            ->delete()
+            ->where('n.type = :type')
+            ->andWhere('n.subjectId = :subjectId')
+            ->setParameter(
+                'type',
+                $type->value,
+                Types::STRING,
+            )
+            ->setParameter(
+                'subjectId',
+                $subjectId,
+                Types::INTEGER,
+            )
+            ->getQuery()
+            ->execute();
     }
 }

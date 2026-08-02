@@ -1,0 +1,20 @@
+{% extends 'emails/_base.html.twig' %}
+
+{% block emailTitle %}A decision on your submission{% endblock %}
+{% block preheader %}A&nbsp;decision&nbsp;on&nbsp;your&nbsp;submission{% endblock %}
+{% block heading %}{{ subjectName }}{% endblock %}
+{% block subheading %}Your contact at GEWIS has looked at what you submitted{% endblock %}
+{% block body %}
+    <p>Dear {{ fullName }},</p>
+    {% if outcome == 'approved' %}
+        <p>{% if isVacancy %}The vacancy{% else %}The profile{% endif %} you submitted for {{ companyName }} has been approved and is now on the GEWIS website.</p>
+    {% elseif outcome == 'changes-requested' %}
+        <p>Your contact at GEWIS has asked for changes to {% if isVacancy %}the vacancy{% else %}the profile{% endif %} you submitted for {{ companyName }}. What is currently on the website is unchanged in the meantime.</p>
+        <p>Their feedback is on the career portal, along with the version you submitted:<br><a href="{{ portalUrl }}" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow">{{ portalUrl }}</a></p>
+    {% else %}
+        <p>Your contact at GEWIS has not approved {% if isVacancy %}the vacancy{% else %}the profile{% endif %} you submitted for {{ companyName }}. What is currently on the website is unchanged.</p>
+        <p>You can read why on the career portal:<br><a href="{{ portalUrl }}" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow">{{ portalUrl }}</a></p>
+    {% endif %}
+    With kind regards,<br> The External Affairs Officer
+{% endblock %}
+{% block footerNoteSection %}{% endblock %}

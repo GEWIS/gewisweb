@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Application;
 
-use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\Enums\NotificationType;
 use App\Entity\Application\Notification;
-use App\Repository\Activity\ActivityRepository;
-use App\Repository\Activity\ActivityRevisionRepository;
-use App\Repository\Photo\AlbumRepository;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 use function array_values;
 
@@ -17,15 +14,21 @@ use function array_values;
  * Looks up the names of the subjects notifications point at. Notifications store only a key, so the notification
  * centre, the toasts and the digest emails all come through here to turn that key back into something readable.
  *
+ * What a key names is the domain's business, so each module registers a {@see NotificationSubjectNamerInterface} and
+ * this only decides who to ask. A kind nobody answers for has no subject to name, which is the right answer for the
+ * notifications that stand on their own.
+ *
  * Lookups are grouped per type, so showing a feed costs one query per kind of notification rather than one per row. A
  * subject that has since been removed simply drops out of the result and its notification is not shown.
  */
 final readonly class NotificationSubjectResolver
 {
+    /**
+     * @param iterable<NotificationSubjectNamerInterface> $namers
+     */
     public function __construct(
-        private AlbumRepository $albumRepository,
-        private ActivityRepository $activityRepository,
-        private ActivityRevisionRepository $revisionRepository,
+        #[AutowireIterator('app.notification_subject_namer')]
+        private iterable $namers,
     ) {
     }
 
@@ -97,92 +100,17 @@ final readonly class NotificationSubjectResolver
         NotificationType $type,
         array $subjectIds,
     ): array {
-        return match ($type) {
-            NotificationType::AlbumPublished => $this->albumNames($subjectIds),
-            NotificationType::ActivityPublished => $this->activityNames($subjectIds),
-            NotificationType::ActivityAwaitingReview => $this->revisionNames($subjectIds),
-            NotificationType::SignIn,
-            NotificationType::PasswordChanged,
-            NotificationType::MfaEnabled,
-            NotificationType::MfaDisabled,
-            NotificationType::BackupCodesRegenerated,
-            NotificationType::DataExportReady,
-            NotificationType::SignupClosing,
-            NotificationType::SignupClosingWithFields => [],
-        };
-    }
-
-    /**
-     * @param int[] $subjectIds
-     *
-     * @return array<int, array{en: string, nl: string}>
-     */
-    private function albumNames(array $subjectIds): array
-    {
-        $names = [];
-        foreach ($this->albumRepository->findBy(['id' => $subjectIds]) as $album) {
-            $id = $album->getId();
-            if (null === $id) {
+        foreach ($this->namers as $namer) {
+            if (!$namer->supports($type)) {
                 continue;
             }
 
-            $name = $album->getName();
-            $names[$id] = [
-                'en' => $name,
-                'nl' => $name,
-            ];
+            return $namer->namesFor(
+                $type,
+                $subjectIds,
+            );
         }
 
-        return $names;
-    }
-
-    /**
-     * Keyed by revision rather than by activity, since that is what a review points at.
-     *
-     * @param int[] $subjectIds
-     *
-     * @return array<int, array{en: string, nl: string}>
-     */
-    private function revisionNames(array $subjectIds): array
-    {
-        $names = [];
-        foreach ($this->revisionRepository->findBy(['id' => $subjectIds]) as $revision) {
-            $id = $revision->getId();
-            if (null === $id) {
-                continue;
-            }
-
-            $name = $revision->getName();
-            $names[$id] = [
-                'en' => $name->getText(Languages::English) ?? '',
-                'nl' => $name->getText(Languages::Dutch) ?? '',
-            ];
-        }
-
-        return $names;
-    }
-
-    /**
-     * @param int[] $subjectIds
-     *
-     * @return array<int, array{en: string, nl: string}>
-     */
-    private function activityNames(array $subjectIds): array
-    {
-        $names = [];
-        foreach ($this->activityRepository->findBy(['id' => $subjectIds]) as $activity) {
-            $id = $activity->getId();
-            if (null === $id) {
-                continue;
-            }
-
-            $name = $activity->getName();
-            $names[$id] = [
-                'en' => $name->getText(Languages::English) ?? '',
-                'nl' => $name->getText(Languages::Dutch) ?? '',
-            ];
-        }
-
-        return $names;
+        return [];
     }
 }

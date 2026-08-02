@@ -23,6 +23,7 @@ enum NotificationCategory implements TranslatableInterface
     case AccountSecurity;
     case DataExports;
     case ActivityReviews;
+    case CareerReviews;
     case SignupReminders;
 
     public function icon(): string
@@ -33,7 +34,7 @@ enum NotificationCategory implements TranslatableInterface
             self::SignIns => 'fa-right-to-bracket',
             self::AccountSecurity => 'fa-shield-halved',
             self::DataExports => 'fa-file-arrow-down',
-            self::ActivityReviews => 'fa-clipboard-check',
+            self::ActivityReviews, self::CareerReviews => 'fa-clipboard-check',
             self::SignupReminders => 'fa-hourglass-half',
         };
     }
@@ -47,7 +48,8 @@ enum NotificationCategory implements TranslatableInterface
         return match ($this) {
             self::SignIns, self::AccountSecurity, self::DataExports => new TranslatableMessage('Website and email'),
             self::SignupReminders => new TranslatableMessage('Website only'),
-            self::Albums, self::Activities, self::ActivityReviews => new TranslatableMessage('Website'),
+            self::Albums, self::Activities, self::ActivityReviews,
+            self::CareerReviews => new TranslatableMessage('Website'),
         };
     }
 
@@ -63,6 +65,7 @@ enum NotificationCategory implements TranslatableInterface
             self::AccountSecurity => new TranslatableMessage('When the way you sign in changes'),
             self::DataExports => new TranslatableMessage('When a data export you asked for is ready'),
             self::ActivityReviews => new TranslatableMessage('When an activity is waiting to be reviewed'),
+            self::CareerReviews => new TranslatableMessage('When a company has something waiting to be reviewed'),
             self::SignupReminders => new TranslatableMessage('Shortly before a sign-up you are on closes'),
         };
     }
@@ -95,6 +98,10 @@ enum NotificationCategory implements TranslatableInterface
             ),
             self::ActivityReviews => $translator->trans(
                 'Activities awaiting review',
+                locale: $locale,
+            ),
+            self::CareerReviews => $translator->trans(
+                'Companies awaiting review',
                 locale: $locale,
             ),
             self::SignupReminders => $translator->trans(

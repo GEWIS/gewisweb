@@ -34,7 +34,10 @@ final readonly class NotificationContextResolver
     ): ?string {
         return match ($type) {
             NotificationType::AlbumPublished, NotificationType::ActivityPublished,
-            NotificationType::ActivityAwaitingReview => null,
+            NotificationType::ActivityAwaitingReview,
+            NotificationType::CompanyRevisionAwaitingReview,
+            NotificationType::VacancyRevisionAwaitingReview,
+            NotificationType::CompanyBannerAwaitingReview => null,
             // Nothing to fill in: the sentence says all of it on its own.
             NotificationType::DataExportReady => '',
             NotificationType::SignupClosing,

@@ -8,6 +8,7 @@ use App\Entity\Career\Company;
 use App\Entity\User\CompanyUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Override;
@@ -61,7 +62,27 @@ class CompanyUserRepository extends ServiceEntityRepository implements PasswordU
      */
     public function findForCompany(Company $company): array
     {
-        $qb = $this->createQueryBuilder('u')
+        return $this->forCompany($company)->getQuery()->getResult();
+    }
+
+    /**
+     * Only the ones who can still sign in, which is who anything addressed to "the company" should reach.
+     *
+     * @return list<CompanyUser>
+     *
+     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
+     */
+    public function findActiveForCompany(Company $company): array
+    {
+        return $this->forCompany($company)
+            ->andWhere('u.disabledAt IS NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+    private function forCompany(Company $company): QueryBuilder
+    {
+        return $this->createQueryBuilder('u')
             ->where('u.company = :company')
             ->setParameter(
                 'company',
@@ -72,8 +93,6 @@ class CompanyUserRepository extends ServiceEntityRepository implements PasswordU
                 'u.id',
                 'ASC',
             );
-
-        return $qb->getQuery()->getResult();
     }
 
     /**
