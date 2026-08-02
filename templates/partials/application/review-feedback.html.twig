@@ -1,0 +1,29 @@
+{#
+    What a reviewer said about the earlier revisions, beside the form that answers it. Left out entirely when there is
+    nothing to show, so the form beside it takes the full width instead of leaving a gap.
+
+    {% include 'partials/application/review-feedback.html.twig' with {'comments': comments} only %}
+#}
+<div class="panel position-sticky mt-0">
+    <div class="panel-heading">
+        <h3>{{ 'Review feedback'|trans }}</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group list-group-flush">
+            {% for comment in comments %}
+                <li class="list-group-item px-0">
+                    <div class="d-flex justify-content-between">
+                        <strong>{{ comment.authorDisplayName ?: 'Removed account'|trans }}</strong>
+                        <span class="text-muted small">
+                            {{ 'rev. #%n%'|trans({'%n%': comment.revision.revisionNumber}) }}
+                        </span>
+                    </div>
+                    <div class="text-muted small">
+                        {{ comment.getCreatedAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
+                    </div>
+                    <div class="mt-1">{{ comment.body|nl2br }}</div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

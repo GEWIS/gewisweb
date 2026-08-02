@@ -1,0 +1,73 @@
+{#
+    Macros for showing what one revision changed against the one before it. Domain-agnostic: any review page can
+    import them and point them at its own fields.
+
+    {% import 'partials/application/revision-diff.html.twig' as diffmacro %}
+
+    The page is responsible for emitting `diff_styles()` into its stylesheets block once.
+#}
+
+{# Two columns of the same localised text, Dutch beside English. `old` null renders the new value plainly. #}
+{% macro localised_flag_diff(old, new, renderer, struck) %}
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <h6 class="text-muted small mb-1"><span class="flag-icon flag-icon-nl"></span> {{ 'Dutch'|trans }}</h6>
+            <div>{% if struck %}<s>{% endif %}{{ old is null ? new.valueNL : diff(old.valueNL, new.valueNL, renderer|default('Combined')) }}{% if struck %}</s>{% endif %}</div>
+        </div>
+        <div class="col-md-6">
+            <h6 class="text-muted small mb-1"><span class="flag-icon flag-icon-en"></span> {{ 'English'|trans }}</h6>
+            <div>{% if struck %}<s>{% endif %}{{ old is null ? new.valueEN : diff(old.valueEN, new.valueEN, renderer|default('Combined')) }}{% if struck %}</s>{% endif %}</div>
+        </div>
+    </div>
+{% endmacro %}
+
+{#
+    A panel body split into a Dutch and an English column, each headed by its flag once. Capture the per-language
+    fields with {% set %} and hand them over:
+
+    {% set dutch %}{{ diffmacro.field_diff('Name'|trans, previous ? previous.name.valueNL : null, revision.name.valueNL) }}{% endset %}
+#}
+{% macro language_columns(dutch, english) %}
+    <div class="row">
+        <div class="col-md-6">
+            <h6><span class="flag-icon flag-icon-nl"></span> {{ 'Dutch'|trans }}</h6>
+            <hr class="mt-1 mb-3">
+            {% if dutch|trim is empty %}
+                <span class="text-muted small">{{ 'Not used in this revision.'|trans }}</span>
+            {% else %}
+                {{ dutch }}
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h6><span class="flag-icon flag-icon-en"></span> {{ 'English'|trans }}</h6>
+            <hr class="mt-1 mb-3">
+            {% if english|trim is empty %}
+                <span class="text-muted small">{{ 'Not used in this revision.'|trans }}</span>
+            {% else %}
+                {{ english }}
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{# One labelled field, left out entirely when it renders to nothing. #}
+{% macro field_diff(label, old, new, renderer) %}
+    {% set rendered = diff(old, new, renderer|default('Combined')) %}
+    {% if rendered|trim is not empty %}
+        <div class="mb-2">
+            <div class="text-muted small">{{ label }}</div>
+            <div>{{ rendered }}</div>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{# A boolean, coloured by whether this revision turned it on, off, or left it alone. #}
+{% macro flag(label, old, new) %}
+    {% if old is not null and new and not old %}
+        <span class="badge badge-success">{{ label }}</span>
+    {% elseif old is not null and old and not new %}
+        <span class="badge badge-danger"><s>{{ label }}</s></span>
+    {% elseif new %}
+        <span class="badge badge-secondary">{{ label }}</span>
+    {% endif %}
+{% endmacro %}

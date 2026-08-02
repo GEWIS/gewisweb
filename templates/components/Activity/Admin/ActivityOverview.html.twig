@@ -30,15 +30,6 @@
 {% endmacro %}
 
 <div{{ attributes }}>
-    {% set statusBadge = {
-        'draft': 'badge-secondary',
-        'submitted': 'badge-info',
-        'in-review': 'badge-primary',
-        'changes-requested': 'badge-warning',
-        'rejected': 'badge-danger',
-        'closed': 'badge-secondary',
-        'approved': 'badge-success',
-    } %}
     {% if this.isBoard %}
         <div class="panel mb-3">
             <div class="panel-body">
@@ -76,7 +67,7 @@
                                 <tr>
                                     {% include 'partials/activity/admin/overview-row-cells.html.twig' with { row: row } only %}
                                     <td>
-                                        <span class="badge {{ statusBadge[row.status.value] ?? 'badge-secondary' }}">{{ row.status|trans }}</span>
+                                        {% include 'partials/application/revision-status-badge.html.twig' with {'status': row.status} only %}
                                         {% if row.changesRequested %}
                                             <span class="badge badge-warning">{{ 'Changes requested'|trans }}</span>
                                         {% endif %}
@@ -101,7 +92,7 @@
                                         </a>
                                         {% if row.status.value == 'draft' %}
                                             <a href="{{ path('admin/activities/approvals/review', {'revision': row.revisionId}) }}"
-                                               class="btn btn-sm btn-success">
+                                               class="btn btn-sm btn-outline-success">
                                                 {{ 'Submit for review'|trans }}
                                             </a>
                                         {% elseif row.status.value == 'rejected' %}

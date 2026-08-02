@@ -74,6 +74,22 @@ enum RevisionStatus: string implements TranslatableInterface
     }
 
     /**
+     * The `.badge-*` modifier this state's badge is drawn with, so a status reads the same wherever it is shown.
+     */
+    public function badgeClass(): string
+    {
+        return match ($this) {
+            self::Draft,
+            self::Closed => 'badge-secondary',
+            self::Submitted => 'badge-info',
+            self::InReview => 'badge-primary',
+            self::ChangesRequested => 'badge-warning',
+            self::Rejected => 'badge-danger',
+            self::Approved => 'badge-success',
+        };
+    }
+
+    /**
      * The states that make sense as a filter in the board's review queue.
      *
      * @return list<self>

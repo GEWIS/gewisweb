@@ -1,0 +1,7 @@
+{#
+    Where a revision stands, as a badge. The colour comes off the state itself, so a status reads the same in every
+    module that shows one.
+
+    {% include 'partials/application/revision-status-badge.html.twig' with {'status': revision.status} only %}
+#}
+<span class="badge {{ status.badgeClass }}">{{ status|trans }}</span>

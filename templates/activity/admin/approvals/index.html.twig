@@ -40,7 +40,9 @@
                                 <td>{{ revision.name|localise_text }}</td>
                                 <td class="text-muted small">{{ revision.authorDisplayName }}</td>
                                 <td class="text-muted small">#{{ revision.revisionNumber }}</td>
-                                <td><span class="badge badge-info">{{ revision.status|trans }}</span></td>
+                                <td>
+                                    {% include 'partials/application/revision-status-badge.html.twig' with {'status': revision.status} only %}
+                                </td>
                                 <td class="text-end">
                                     <a href="{{ path('admin/activities/approvals/review', {'revision': revision.getId}) }}"
                                        class="btn btn-sm btn-gewis-primary">
