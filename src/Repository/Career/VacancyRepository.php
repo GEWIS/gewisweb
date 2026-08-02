@@ -31,7 +31,8 @@ class VacancyRepository extends ServiceEntityRepository
     }
 
     /**
-     * Checks whether $vacancySlugName is still free within the given company and category.
+     * Checks whether $vacancySlugName is still free within the given company and category, leaving out the vacancy
+     * that is being edited.
      *
      * A slug is unique when no vacancy of the same company and category already uses it. This deliberately does NOT
      * route through {@see self::findVacancy()} (whose `liveRevision` inner join would hide not-yet-approved vacancies
@@ -39,30 +40,28 @@ class VacancyRepository extends ServiceEntityRepository
      * the working head ({@see Vacancy::getCurrentRevision()}), where the category now lives.
      */
     public function isSlugNameUnique(
-        string $companySlugName,
+        Company $company,
         string $vacancySlugName,
         VacancyCategories $category,
+        ?Vacancy $except = null,
     ): bool {
-        $count = $this->createQueryBuilder('v')
+        $qb = $this->createQueryBuilder('v')
             ->select('COUNT(v.id)')
             ->join(
                 'v.package',
                 'p',
             )
             ->join(
-                'p.company',
-                'c',
-            )
-            ->join(
                 'v.currentRevision',
                 'cr',
             )
-            ->where('c.slugName = :companySlugName')
+            ->where('p.company = :company')
             ->andWhere('v.slugName = :vacancySlugName')
             ->andWhere('cr.category = :category')
             ->setParameter(
-                'companySlugName',
-                $companySlugName,
+                'company',
+                $company->getId(),
+                Types::INTEGER,
             )
             ->setParameter(
                 'vacancySlugName',
@@ -71,11 +70,19 @@ class VacancyRepository extends ServiceEntityRepository
             ->setParameter(
                 'category',
                 $category->value,
-            )
-            ->getQuery()
-            ->getSingleScalarResult();
+            );
 
-        return 0 === (int) $count;
+        $exceptId = $except?->getId();
+        if (null !== $exceptId) {
+            $qb->andWhere('v.id != :except')
+                ->setParameter(
+                    'except',
+                    $exceptId,
+                    Types::INTEGER,
+                );
+        }
+
+        return 0 === (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     /**

@@ -163,9 +163,12 @@ class VacancyRevision extends AbstractRevision
      * regardless, since a vacancy cannot outlive the contract it was sold under.
      *
      * The window is part of the reviewed content, so moving it goes past the committee like anything else.
+     *
+     * PHP-nullable so a not-yet-filled draft renders an empty field; the column stays NOT NULL and the form's NotBlank
+     * constraint guarantees a value before persist, so a saved revision always has a closing day.
      */
     #[Column(type: Types::DATE_MUTABLE)]
-    private DateTime $endDate;
+    private ?DateTime $endDate = null;
 
     /**
      * The labels of this revision of the vacancy. Each revision owns its own assignments (carried forward when a draft
@@ -361,18 +364,19 @@ class VacancyRevision extends AbstractRevision
         $this->startDate = $startDate;
     }
 
-    public function getEndDate(): DateTime
+    public function getEndDate(): ?DateTime
     {
         return $this->endDate;
     }
 
-    public function setEndDate(DateTime $endDate): void
+    public function setEndDate(?DateTime $endDate): void
     {
         $this->endDate = $endDate;
     }
 
     /**
-     * Whether today falls inside the posting window. The last day counts.
+     * Whether today falls inside the posting window. The last day counts. A revision without a closing day has not
+     * been saved yet, so there is nothing to have fallen outside of.
      */
     public function isWithinPostingWindow(DateTime $now = new DateTime()): bool
     {
@@ -385,6 +389,7 @@ class VacancyRevision extends AbstractRevision
             return false;
         }
 
-        return $today <= $this->endDate;
+        return null === $this->endDate
+            || $today <= $this->endDate;
     }
 }

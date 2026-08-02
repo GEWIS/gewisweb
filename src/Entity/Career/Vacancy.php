@@ -301,7 +301,7 @@ class Vacancy implements RevisableInterface
     /**
      * Display proxy. The last day the vacancy is shown.
      */
-    public function getEndDate(): DateTime
+    public function getEndDate(): ?DateTime
     {
         return $this->getDisplayRevision()->getEndDate();
     }

@@ -29,14 +29,16 @@ final class VacancyRepositoryTest extends DatabaseTestCase
     public function testAVacancyInheritsItsPackagesExpiryAsItsClosingDay(): void
     {
         $vacancy = $this->vacancy('data-science-internship');
+        $endDate = $vacancy->getEndDate();
 
         self::assertContains(
             'data-science-internship',
             $this->slugsOnTheOverview(),
         );
+        self::assertNotNull($endDate);
         self::assertSame(
             $vacancy->getPackage()->getExpirationDate()->format('Y-m-d'),
-            $vacancy->getEndDate()->format('Y-m-d'),
+            $endDate->format('Y-m-d'),
         );
     }
 
