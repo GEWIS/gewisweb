@@ -1,5 +1,10 @@
 @import '../_variables.scss';
 
+.decision-reference {
+    color: $gewis-red;
+    font-weight: 600;
+}
+
 .decision-meeting {
     display: inline-block;
     width: 100%;
@@ -22,4 +27,37 @@
             width: calc(100% - 135px);
         }
     }
+}
+
+// The dashed drop targets of the meeting management page; `upload-dragover` is toggled by the `document-upload`
+// controller while a file hovers over the zone.
+.upload-dropzone {
+    border: 1px dashed var(--#{$prefix}border-color);
+    border-radius: var(--#{$prefix}border-radius);
+    cursor: pointer;
+
+    &.upload-dragover {
+        background-color: var(--#{$prefix}tertiary-bg);
+        border-color: $gewis-red;
+    }
+}
+
+.meeting-point-number-input {
+    max-width: 5rem;
+}
+
+// The "Revised only" chip on the meeting page hides single-version documents (and agenda points left without any
+// visible document) via the wrapper class the `revision-filter` controller toggles.
+.revised-only .meeting-documents {
+    [data-version-count='1'] {
+        display: none;
+    }
+
+    .meeting-point-panel:not(:has([data-version-count]:not([data-version-count='1']))) {
+        display: none;
+    }
+}
+
+.meeting-view-tabs:has(#meeting-documents-tab:not(.active)) .revision-filter-controls {
+    display: none;
 }

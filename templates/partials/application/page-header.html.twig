@@ -1,0 +1,48 @@
+{#
+    Full-width header band for the top of a page: an optional eyebrow line, the page title with
+    an optional status line and subtitle, actions on the right, and an optional stats strip
+    along the bottom edge.
+
+    Embed from a layout's `pre_body` block and fill the blocks as needed:
+
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_top %}<span class="page-header-eyebrow">…</span>{% endblock %}
+        {% block header_status %}<div class="page-header-meta">…</div>{% endblock %}
+        {% block header_title %}…{% endblock %}
+        {% block header_subtitle %}<p class="page-header-meta">…</p>{% endblock %}
+        {% block header_actions %}<a class="btn btn-outline-gewis-primary">…</a>{% endblock %}
+        {% block header_stats %}
+            <div class="page-header-stat">
+                <span class="page-header-stat-value">12</span>
+                <span class="page-header-stat-label">{{ 'Documents'|trans }}</span>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    Breadcrumbs go in the layout's own `breadcrumbs` block, which renders in the regular
+    breadcrumb bar above this band, like on every other page.
+#}
+<header class="page-header">
+    <div class="container pt-3 pb-4">
+        {% block header_top %}{% endblock %}
+        <div class="d-flex flex-wrap justify-content-between align-items-end column-gap-4 row-gap-3">
+            <div>
+                {% block header_status %}{% endblock %}
+                <h1 class="mb-0">{% block header_title %}{% endblock %}</h1>
+                {% block header_subtitle %}{% endblock %}
+            </div>
+            {% if block('header_actions') is defined and block('header_actions')|trim != '' %}
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    {{ block('header_actions') }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if block('header_stats') is defined and block('header_stats')|trim != '' %}
+        <div class="page-header-stats">
+            <div class="container d-flex flex-wrap column-gap-5 row-gap-2 py-2">
+                {{ block('header_stats') }}
+            </div>
+        </div>
+    {% endif %}
+</header>

@@ -1,0 +1,98 @@
+<div {{ attributes }}>
+    <div class="panel mb-3">
+        <div class="panel-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-6">
+                    <ul class="nav nav-pills nav-pills-compact">
+                        <li class="nav-item">
+                            <button type="button" class="nav-link {% if null == this.type %}active{% endif %}"
+                                    data-action="live#action"
+                                    data-live-action-param="filterType">
+                                {{ 'All'|trans }}
+                            </button>
+                        </li>
+                        {% for option in this.typeOptions %}
+                            <li class="nav-item">
+                                <button type="button" class="nav-link {% if this.type == option.token %}active{% endif %}"
+                                        data-action="live#action"
+                                        data-live-action-param="filterType"
+                                        data-live-type-param="{{ option.token }}">
+                                    {{ option.type.abbreviation|trans }}
+                                </button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label visually-hidden" for="meeting-overview-search">{{ 'Search'|trans }}</label>
+                    <input type="search" class="form-control" id="meeting-overview-search"
+                           placeholder="{{ 'Meeting number, for example “214” or “GMM 214”'|trans }}"
+                           data-model="debounce(300)|search"
+                           value="{{ this.search }}">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Meeting'|trans }}</th>
+                            <th>{{ 'Date'|trans }}</th>
+                            <th class="text-end">{{ 'Decisions'|trans }}</th>
+                            <th class="text-end">{{ 'Minutes'|trans }}</th>
+                            <th class="text-end">{{ 'Status'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in this.rows %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('meetings/view', {'type': row.meeting.type.urlToken, 'number': row.meeting.number}) }}" class="fw-semibold">
+                                        {{ row.meeting.type.abbreviation|trans }} {{ row.meeting.number }}
+                                    </a>
+                                    <div class="text-muted small">{{ row.meeting.type.label|trans }}</div>
+                                </td>
+                                <td>{{ row.meeting.date|format_date('full') }}</td>
+                                <td class="text-end">
+                                    {% if row.decisionCount > 0 %}
+                                        {{ row.decisionCount }}
+                                    {% else %}
+                                        <span class="text-muted">&ndash;</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    {% if row.hasMinutes %}
+                                        <span class="fas fa-check text-success" aria-hidden="true"></span>
+                                        <span class="visually-hidden">{{ 'Available'|trans }}</span>
+                                    {% else %}
+                                        <span class="text-muted">&ndash;</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    {% include 'partials/decision/meeting-status-badge.html.twig' with {
+                                        'status': row.status,
+                                    } only %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">{{ 'No meetings match the current filters.'|trans }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% include 'partials/application/pagination.html.twig' with {
+                'page': this.page,
+                'totalPages': this.totalPages,
+                'totalCount': this.totalCount,
+                'pageSize': this.pageSize,
+            } only %}
+        </div>
+    </div>
+</div>

@@ -157,6 +157,68 @@ class MemberRepository extends ServiceEntityRepository
     }
 
     /**
+     * Finds members by (part of) their name for the member directory. Unlike {@see searchByName} this does not
+     * exclude members who opted out of photo tagging; that preference is about tagging, not about being findable.
+     *
+     * @return array<array-key, array{
+     *     lidnr: int,
+     *     fullName: string,
+     *     generation: int,
+     * }>
+     */
+    public function searchDirectory(
+        string $name,
+        int $maxResults = 32,
+    ): array {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult(
+            'lidnr',
+            'lidnr',
+            'integer',
+        )
+            ->addScalarResult(
+                'fullName',
+                'fullName',
+            )
+            ->addScalarResult(
+                'generation',
+                'generation',
+                'integer',
+            );
+
+        $sql = <<<'QUERY'
+            SELECT `lidnr`,
+                CONCAT_WS(' ', `firstName`, IF(LENGTH(`middleName`), `middleName`, NULL), `lastName`) as `fullName`,
+                `generation`
+            FROM `Member`
+            WHERE
+                (
+                CONCAT(LOWER(`firstName`), ' ', LOWER(`lastName`)) LIKE :name
+                OR CONCAT(LOWER(`firstName`), ' ', LOWER(`middleName`), ' ', LOWER(`lastName`)) LIKE :name
+                )
+                AND deleted = 0
+                AND expiration >= NOW()
+                AND hidden = 0
+            ORDER BY `generation` DESC, `lidnr` ASC LIMIT :limit
+            QUERY;
+
+        $query = $this->getEntityManager()->createNativeQuery(
+            $sql,
+            $rsm,
+        );
+        $query->setParameter(
+            ':name',
+            '%' . strtolower($name) . '%',
+        )
+            ->setParameter(
+                ':limit',
+                $maxResults,
+            );
+
+        return $query->getArrayResult();
+    }
+
+    /**
      * Find all members with a birthday in the next $days days.
      *
      * When $days equals 0 or is not given, it will give all birthdays of today.

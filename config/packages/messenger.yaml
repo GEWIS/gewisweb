@@ -57,6 +57,8 @@ framework:
             'App\Message\Activity\ExternalSignupResendVerificationEmail': high_priority
             'App\Message\Activity\OrganiserAnnouncementEmail': bulk
             'App\Message\Application\PublishDomainNotificationMessage': normal_priority
+            'App\Message\Decision\AuthorizationCreatedEmail': normal_priority
+            'App\Message\Decision\AuthorizationRevokedEmail': normal_priority
             'App\Message\Application\SendNotificationDigestMessage': bulk
             'App\Message\Photo\ProcessImageVariantsMessage': images
             'App\Message\Photo\GenerateAlbumCoverMessage': images

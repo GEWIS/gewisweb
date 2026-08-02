@@ -7,8 +7,8 @@ namespace App\Controller\Application;
 use App\Entity\Application\Enums\ImageVariant;
 use App\Entity\Application\Enums\StorageNamespace;
 use App\Security\Application\ServingAccessCheckerInterface;
+use App\Service\Application\FilePathResolver;
 use App\Service\Application\FileStorage;
-use App\Service\Application\ImagePathResolver;
 use App\Service\Application\ImageSigner;
 use App\Service\Application\VariantGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,7 +39,7 @@ final class ImageController extends AbstractController
 {
     public function __construct(
         private readonly ImageSigner $imageSigner,
-        private readonly ImagePathResolver $pathResolver,
+        private readonly FilePathResolver $pathResolver,
         private readonly VariantGenerator $variantGenerator,
         private readonly FileStorage $fileStorage,
         /** @var iterable<ServingAccessCheckerInterface> */

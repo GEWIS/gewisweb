@@ -3,3 +3,74 @@
     --#{$prefix}nav-link-padding-y: #{$nav-padding-y};
     --#{$prefix}nav-link-font-size: #{$nav-font-size};
 }
+
+// Pills are a segmented control.
+.nav-pills {
+    --#{$prefix}nav-pills-track-bg: #{$nav-pills-track-bg};
+    --#{$prefix}nav-pills-border-radius: 0.5625rem;
+    --#{$prefix}nav-pills-link-active-color: var(--#{$prefix}body-color);
+    --#{$prefix}nav-pills-link-active-bg: #{$nav-pills-link-active-bg};
+    --#{$prefix}nav-link-padding-x: 0.9375rem;
+    --#{$prefix}nav-link-padding-y: 0.5rem;
+    --#{$prefix}nav-link-font-size: #{$font-size-sm};
+    --#{$prefix}nav-link-font-weight: 600;
+    --#{$prefix}nav-link-color: var(--#{$prefix}secondary-color);
+    --#{$prefix}nav-link-hover-color: var(--#{$prefix}body-color);
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.125rem;
+    padding: 0.25rem;
+    background-color: var(--#{$prefix}nav-pills-track-bg);
+    border: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-translucent);
+    border-radius: calc(var(--#{$prefix}nav-pills-border-radius) + 0.1875rem);
+
+    .nav-link {
+        white-space: nowrap;
+
+        &.active {
+            box-shadow: 0 1px 2px rgba($black, 0.08);
+        }
+    }
+
+    .nav-link .badge {
+        margin-left: 0.25rem;
+        padding: 0.125rem 0.4375rem;
+        border-radius: var(--#{$prefix}border-radius-pill);
+        font-size: 0.6875rem;
+        font-weight: 700;
+        background-color: #{$nav-pills-badge-bg};
+        color: var(--#{$prefix}secondary-color);
+    }
+
+    .nav-link.active .badge {
+        background-color: #{$nav-pills-badge-active-bg};
+        color: #{$nav-pills-badge-active-color};
+    }
+}
+
+// Shorter, fully rounded variant for filters and switchers.
+.nav-pills-compact {
+    --#{$prefix}nav-pills-border-radius: var(--#{$prefix}border-radius-pill);
+    --#{$prefix}nav-link-padding-x: 0.75rem;
+    --#{$prefix}nav-link-padding-y: 0.25rem;
+    --#{$prefix}nav-link-font-size: 0.8125rem;
+
+    padding: 0.1875rem;
+    border-radius: var(--#{$prefix}border-radius-pill);
+}
+
+@include color-mode(gewis-night) {
+    .nav-pills {
+        --#{$prefix}nav-pills-track-bg: #{$nav-pills-track-bg-dark};
+        --#{$prefix}nav-pills-link-active-bg: #{$nav-pills-link-active-bg-dark};
+
+        .nav-link .badge {
+            background-color: #{$nav-pills-badge-bg-dark};
+        }
+
+        .nav-link.active .badge {
+            background-color: #{$nav-pills-badge-active-bg-dark};
+        }
+    }
+}

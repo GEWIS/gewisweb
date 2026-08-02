@@ -1,0 +1,20 @@
+// Page canvas
+//
+// `--#{$prefix}body-bg` stays the surface colour: form controls, dropdowns, and modals derive their
+// background from it.
+
+body {
+    --#{$prefix}page-bg: #{$page-bg};
+
+    background-color: var(--#{$prefix}page-bg);
+}
+
+.footer {
+    background-color: var(--#{$prefix}body-bg);
+}
+
+@include color-mode(gewis-night) {
+    body {
+        --#{$prefix}page-bg: #{$page-bg-dark};
+    }
+}

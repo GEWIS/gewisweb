@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Twig\Extensions;
 
 use App\Entity\Application\Enums\ImageVariant;
-use App\Service\Application\ImagePathResolver;
+use App\Service\Application\FilePathResolver;
 use App\Service\Application\ImageSigner;
 use App\Service\Application\ImageUrlBuilder;
 use App\Twig\Extensions\ImageExtension;
@@ -67,7 +67,7 @@ final class ImageExtensionTest extends TestCase
         return new ImageExtension(
             new ImageUrlBuilder(
                 new ImageSigner('test-key'),
-                new ImagePathResolver(),
+                new FilePathResolver(),
             ),
         );
     }

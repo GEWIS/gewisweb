@@ -35,7 +35,7 @@ final class SettingsControllerTest extends DatabaseTestCase
             $user,
         );
 
-        $response = self::getContainer()->get(SettingsController::class)->settings(
+        $response = self::getContainer()->get(SettingsController::class)->privacy(
             $request,
             self::getContainer()->get(SudoMode::class),
             self::getContainer()->get(FileStorage::class),

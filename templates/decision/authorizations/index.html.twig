@@ -1,0 +1,121 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Authorizations'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('members/index') }}">{{ 'Members'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Authorizations'|trans }}</li>
+{% endblock %}
+
+{% block pre_body %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_title %}{{ 'Authorizations'|trans }}{% endblock %}
+        {% block header_subtitle %}
+            <p class="page-header-meta mb-0">
+                {{ 'Cannot attend the upcoming GMM? Authorize another member to vote on your behalf.'|trans }}
+            </p>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-lg-8">
+            {% if meetings|length > 1 %}
+                <ul class="nav nav-pills nav-pills-compact mb-3">
+                    {% for upcoming in meetings %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if meeting and upcoming.number == meeting.number %}active{% endif %}"
+                               href="{{ path('members/authorizations/index', {'meeting': upcoming.number}) }}">
+                                {{ upcoming.type.abbreviation|trans }} {{ upcoming.number }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if meeting is null %}
+                <div class="panel mt-0">
+                    <div class="panel-body text-center text-muted py-5">
+                        {{ 'There is no upcoming GMM planned to authorize someone for.'|trans }}
+                    </div>
+                </div>
+            {% else %}
+                <div class="panel mt-0">
+                    <div class="panel-heading">
+                        <h3>{{ meeting.type.abbreviation|trans }} {{ meeting.number }} &middot; {{ meeting.date|format_date('full') }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% if received > 0 %}
+                            <div class="alert alert-info py-2" role="alert">
+                                {{ 'You represent %count% other member during this GMM.|You represent %count% other members during this GMM.'|trans({'%count%': received}) }}
+                            </div>
+                        {% endif %}
+
+                        {% if authorization %}
+                            <p>
+                                {{ 'You have authorized %name% to vote on your behalf during this GMM.'|trans({'%name%': authorization.recipient.fullName}) }}
+                            </p>
+                            <button type="button" class="btn btn-outline-danger"
+                                    data-bs-toggle="modal" data-bs-target="#revoke-authorization-modal">
+                                <span class="fas fa-user-minus" aria-hidden="true"></span>
+                                {{ 'Revoke authorization'|trans }}
+                            </button>
+                        {% else %}
+                            <div data-controller="member-search"
+                                 data-member-search-mode-value="select"
+                                 data-member-search-url-value="{{ path('members/find/results') }}"
+                                 data-member-search-capped-value="{{ 'There are more matches than shown; refine your search.'|trans }}">
+                                {{ form_start(form, {'action': path('members/authorizations/index', {'meeting': meeting.number})}) }}
+                                    <div class="mb-3">
+                                        <label class="form-label" for="authorization-recipient-search">{{ 'Who do you want to authorize?'|trans }}</label>
+                                        <input type="search" class="form-control" id="authorization-recipient-search"
+                                               placeholder="{{ 'Start typing a name'|trans }}"
+                                               data-member-search-target="input"
+                                               data-action="input->member-search#search">
+                                        <div class="mt-1" data-member-search-target="results"></div>
+                                        {{ form_widget(form.recipient, {'attr': {'data-member-search-target': 'destination'}}) }}
+                                        {{ form_errors(form.recipient) }}
+                                    </div>
+                                    {{ form_row(form.agreement) }}
+                                    <button type="submit" class="btn btn-gewis-primary">
+                                        {{ 'Authorize'|trans }}
+                                    </button>
+                                {{ form_end(form) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if meeting and authorization %}
+        <div class="modal fade" id="revoke-authorization-modal" tabindex="-1"
+             aria-labelledby="revoke-authorization-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="revoke-authorization-modal-label">{{ 'Revoke authorization?'|trans }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
+                    </div>
+                    <form method="post" action="{{ path('members/authorizations/revoke') }}">
+                        <div class="modal-body">
+                            <p class="mb-0">
+                                {{ '%name% will no longer be allowed to vote on your behalf and will be notified by email.'|trans({'%name%': authorization.recipient.fullName}) }}
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authorization_revoke') }}">
+                            <input type="hidden" name="meeting" value="{{ meeting.number }}">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
+                            <button type="submit" class="btn btn-outline-danger">
+                                <span class="fas fa-user-minus" aria-hidden="true"></span>
+                                {{ 'Revoke authorization'|trans }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

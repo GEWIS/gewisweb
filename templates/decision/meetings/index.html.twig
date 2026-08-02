@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Meetings'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('members/index') }}">{{ 'Members'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Meetings'|trans }}</li>
+{% endblock %}
+
+{% block pre_body %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_title %}{{ 'Meetings'|trans }}{% endblock %}
+        {% block header_subtitle %}
+            <p class="page-header-meta mb-0">
+                {{ 'Every meeting of the association with its documents, minutes, and decisions.'|trans }}
+            </p>
+        {% endblock %}
+        {% block header_actions %}
+            <a href="{{ path('meetings/search') }}" class="btn btn-outline-gewis-primary">
+                <span class="fas fa-magnifying-glass" aria-hidden="true"></span>
+                {{ 'Search decisions'|trans }}
+            </a>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block contents %}
+    {{ component('Decision:MeetingOverview') }}
+{% endblock %}

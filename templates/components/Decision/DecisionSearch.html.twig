@@ -1,0 +1,65 @@
+<div {{ attributes }}>
+    <div class="panel mb-3">
+        <div class="panel-body">
+            <label class="form-label" for="decision-search-query">{{ 'Search decisions'|trans }}</label>
+            <input type="search" class="form-control" id="decision-search-query"
+                   placeholder="{{ 'Keyword or meeting reference, for example “budget” or “GMM 214.12.1”'|trans }}"
+                   data-model="debounce(300)|q"
+                   value="{{ this.q }}">
+            <div class="form-text">
+                {{ 'Searches the decision texts and understands meeting references such as “GMM 214” or “BM 1805.3.1”.'|trans }}
+                {{ 'Use “quotes” for exact phrases, -word to exclude, and type:bm to limit to one meeting type.'|trans }}
+            </div>
+        </div>
+    </div>
+
+    {% if this.hasQuery %}
+        {% if this.isCapped %}
+            <div class="alert alert-warning" role="alert">
+                {{ 'Only the first %limit% matches are shown; refine your search to narrow them down.'|trans({'%limit%': constant('App\\Twig\\Components\\Decision\\DecisionSearch::RESULT_CAP')}) }}
+            </div>
+        {% endif %}
+
+        {% for group in this.resultsByMeeting %}
+            <div class="panel">
+                <div class="panel-heading d-flex flex-wrap justify-content-between align-items-baseline gap-2">
+                    <h3>
+                        <a href="{{ path('meetings/view', {'type': group.meeting.type.urlToken, 'number': group.meeting.number}) }}">
+                            {{ group.meeting.type.abbreviation|trans }} {{ group.meeting.number }}
+                        </a>
+                    </h3>
+                    <span class="text-muted small">{{ group.meeting.date|format_date('full') }}</span>
+                </div>
+                <div class="panel-body">
+                    {% for decision in group.decisions %}
+                        <div class="d-flex gap-3 {% if not loop.first %}border-top pt-2 mt-2{% endif %}">
+                            <div class="flex-shrink-0 decision-reference text-nowrap">
+                                {{ decision.meetingType.abbreviation|trans }} {{ decision.meetingNumber }}.{{ decision.point }}.{{ decision.number }}
+                            </div>
+                            <div>
+                                <span {% if decision.isAnnulled %}class="text-decoration-line-through text-muted"{% endif %}>
+                                    {{ decision.getLocalisedContent(app.request.locale)|highlight_search(this.highlightTerms) }}
+                                </span>
+                                {% if decision.isAnnulled %}
+                                    <span class="badge text-bg-danger ms-1">{{ 'Annulled'|trans }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <div class="panel">
+                <div class="panel-body text-center text-muted py-4">
+                    {{ 'No decisions match your search.'|trans }}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="panel">
+            <div class="panel-body text-center text-muted py-4">
+                {{ 'Start typing to search all decisions ever taken.'|trans }}
+            </div>
+        </div>
+    {% endif %}
+</div>

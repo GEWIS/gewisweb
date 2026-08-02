@@ -1,0 +1,104 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Authorizations'|trans|page_title }}{{ 'Meetings'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/meetings/index') }}">{{ 'Meetings'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Authorizations'|trans }}</li>
+{% endblock %}
+
+{% macro authorization_table(authorizations, revoked) %}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>{{ 'Authorizer'|trans }}</th>
+                    <th>{{ 'Recipient'|trans }}</th>
+                    <th>{{ 'Created'|trans }}</th>
+                    {% if revoked %}
+                        <th>{{ 'Revoked'|trans }}</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for authorization in authorizations %}
+                    <tr>
+                        <td>{{ authorization.authorizer.fullName }}</td>
+                        <td>{{ authorization.recipient.fullName }}</td>
+                        <td>{{ authorization.createdAt|format_datetime('medium', 'short') }}</td>
+                        {% if revoked %}
+                            <td>{{ authorization.revokedAt|format_datetime('medium', 'short') }}</td>
+                        {% endif %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="{{ revoked ? 4 : 3 }}" class="text-center text-muted py-4">
+                            {{ 'None'|trans }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endmacro %}
+
+{% block contents %}
+    {% set selectedIndex = null %}
+    {% for meeting in meetings %}
+        {% if meeting.number == number %}{% set selectedIndex = loop.index0 %}{% endif %}
+    {% endfor %}
+    {% set newer = selectedIndex is not null and selectedIndex > 0 ? meetings[selectedIndex - 1] : null %}
+    {% set older = selectedIndex is not null and selectedIndex < meetings|length - 1 ? meetings[selectedIndex + 1] : null %}
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="mb-0">{{ 'Authorizations'|trans }}</h1>
+        <div class="btn-group">
+            <a class="btn btn-outline-secondary {{ newer is null ? 'disabled' }}"
+               href="{{ newer ? path('admin/meetings/authorizations', {'number': newer.number}) : '#' }}"
+               aria-label="{{ 'Newer'|trans }}">
+                <span class="fas fa-chevron-left"></span>
+            </a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-outline-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ meetings|first.type.abbreviation|trans }} {{ number }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end overflow-auto" style="max-height: 60vh;">
+                    {% for meeting in meetings %}
+                        <li>
+                            <a class="dropdown-item {{ meeting.number == number ? 'active' }}"
+                               href="{{ path('admin/meetings/authorizations', {'number': meeting.number}) }}">
+                                {{ meeting.type.abbreviation|trans }} {{ meeting.number }} &middot; {{ meeting.date|format_date('medium') }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <a class="btn btn-outline-secondary {{ older is null ? 'disabled' }}"
+               href="{{ older ? path('admin/meetings/authorizations', {'number': older.number}) : '#' }}"
+               aria-label="{{ 'Older'|trans }}">
+                <span class="fas fa-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>{{ 'Valid'|trans }} ({{ valid|length }})</h3>
+        </div>
+        <div class="panel-body">
+            {{ _self.authorization_table(valid, false) }}
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>{{ 'Revoked'|trans }} ({{ revoked|length }})</h3>
+        </div>
+        <div class="panel-body">
+            {{ _self.authorization_table(revoked, true) }}
+        </div>
+    </div>
+{% endblock %}

@@ -45,6 +45,32 @@
             </a>
         </li>
     {% endif %}
+    {% if is_granted('ROLE_BOARD') %}
+        {% set meetingsActive = is_module_active(['decision', 'adminmeeting']) or is_module_active(['decision', 'adminreferencedocument']) %}
+        <li class="nav-item dropdown dropend {{ meetingsActive ? 'active default open' : '' }}">
+            <a class="nav-link p-3 dropdown-toggle"
+               href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ meetingsActive ? 'true' : 'false' }}">
+                {{ 'Meetings'|trans }}
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="{{ path('admin/meetings/index') }}">
+                        {{ 'Overview'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ path('admin/meetings/authorizations') }}">
+                        {{ 'Authorizations'|trans }}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{{ path('admin/meetings/reference/index') }}">
+                        {{ 'Reference documents'|trans }}
+                    </a>
+                </li>
+            </ul>
+        </li>
+    {% endif %}
     {% if is_granted('ROLE_COMPANY_ADMIN') or is_granted('ROLE_BOARD') %}
         {% set companyActive = is_module_active(['career']) %}
         <li class="nav-item dropdown dropend {{ companyActive ? 'active default open' : '' }}">

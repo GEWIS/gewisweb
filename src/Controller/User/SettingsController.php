@@ -70,14 +70,14 @@ class SettingsController extends AbstractController
     private const string EXPORT_PENDING_WINDOW = '-15 minutes';
 
     #[Route(
-        path: '',
-        name: 'index',
+        path: '/privacy',
+        name: 'privacy',
         methods: [
             'GET',
             'POST',
         ],
     )]
-    public function settings(
+    public function privacy(
         Request $request,
         SudoMode $sudoMode,
         FileStorage $fileStorage,
@@ -101,7 +101,7 @@ class SettingsController extends AbstractController
                 $this->translator->trans('Your settings have been saved.'),
             );
 
-            return $this->redirectToRoute('user_settings_index');
+            return $this->redirectToRoute('user_settings_privacy');
         }
 
         $hasDataExport = ExportUserDataHandler::isAvailable(
@@ -115,7 +115,7 @@ class SettingsController extends AbstractController
             && $latestRequest->getRequestedAt() > new DateTimeImmutable(self::EXPORT_PENDING_WINDOW);
 
         return $this->render(
-            'user/settings/index.html.twig',
+            'user/settings/privacy.html.twig',
             [
                 'form' => $form,
                 // Removing tags requires sudo. The template opens the confirmation modal when sudo is active, and
@@ -128,8 +128,8 @@ class SettingsController extends AbstractController
     }
 
     #[Route(
-        path: '/general',
-        name: 'general',
+        path: '',
+        name: 'index',
         methods: [
             'GET',
             'POST',
@@ -157,7 +157,7 @@ class SettingsController extends AbstractController
                 $this->translator->trans('Your settings have been saved.'),
             );
 
-            return $this->redirectToRoute('user_settings_general');
+            return $this->redirectToRoute('user_settings_index');
         }
 
         return $this->render(
@@ -329,7 +329,7 @@ class SettingsController extends AbstractController
             $this->translator->trans('All photo tags of you have been removed.'),
         );
 
-        return $this->redirectToRoute('user_settings_index');
+        return $this->redirectToRoute('user_settings_privacy');
     }
 
     /**
@@ -366,7 +366,7 @@ class SettingsController extends AbstractController
                 $this->translator->trans('You already have a recent data export. You can download it below.'),
             );
 
-            return $this->redirectToRoute('user_settings_index');
+            return $this->redirectToRoute('user_settings_privacy');
         }
 
         $latestRequest = $this->dataExportRequestRepository->findLatestForUser($user);
@@ -379,7 +379,7 @@ class SettingsController extends AbstractController
                 $this->translator->trans('Your data export is already being prepared.'),
             );
 
-            return $this->redirectToRoute('user_settings_index');
+            return $this->redirectToRoute('user_settings_privacy');
         }
 
         $request = new DataExportRequest();
@@ -397,7 +397,7 @@ class SettingsController extends AbstractController
             ),
         );
 
-        return $this->redirectToRoute('user_settings_index');
+        return $this->redirectToRoute('user_settings_privacy');
     }
 
     /**

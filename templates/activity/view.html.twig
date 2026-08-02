@@ -48,8 +48,37 @@
                     <span class="badge badge-tag">{{ label.getName|localise_text }}</span>
                 {% endfor %}
             </div>
-            <div class="markdown">
-                {{ activity.getDescription|localise_text|markdown }}
+            <div class="panel mt-0">
+                <div class="panel-heading">
+                    <h3>{{ 'About this activity'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="markdown">
+                        {{ activity.getDescription|localise_text|markdown }}
+                    </div>
+
+                    {% set organ = activity.getOrgan %}
+                    {% set organInformation = organ is not null ? organ.getApprovedOrganInformation : null %}
+                    {% set organEmail = organInformation is not null ? organInformation.getEmail : null %}
+                    {# Obfuscate the @ so the addresses are not trivially scraped from the public page. #}
+                    {% set atSeparator = ' ' ~ '[at]'|trans ~ ' ' %}
+                    {% set boardEmail = ((isCareer ? 'ceb' : 'cib') ~ '@gewis.nl')|replace({'@': atSeparator}) %}
+                    <p class="text-muted small border-top pt-3 mt-3 mb-0">
+                        {% if organ is null %}
+                            {{ 'Please contact the board (%email%) with any questions or concerns. Have fun!'|trans({
+                                '%email%': boardEmail,
+                            }) }}
+                        {% else %}
+                            {% set organizer = organEmail is not empty
+                                ? organ.getAbbr ~ ' (' ~ organEmail|replace({'@': atSeparator}) ~ ')'
+                                : organ.getAbbr %}
+                            {{ 'Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!'|trans({
+                                '%organizer%': organizer,
+                                '%email%': boardEmail,
+                            }) }}
+                        {% endif %}
+                    </p>
+                </div>
             </div>
         </main>
         <aside class="col-md-4">
@@ -120,28 +149,6 @@
             </div>
         </aside>
     </div>
-
-    {% set organ = activity.getOrgan %}
-    {% set organInformation = organ is not null ? organ.getApprovedOrganInformation : null %}
-    {% set organEmail = organInformation is not null ? organInformation.getEmail : null %}
-    {# Obfuscate the @ so the addresses are not trivially scraped from the public page. #}
-    {% set atSeparator = ' ' ~ '[at]'|trans ~ ' ' %}
-    {% set boardEmail = ((isCareer ? 'ceb' : 'cib') ~ '@gewis.nl')|replace({'@': atSeparator}) %}
-    <p class="text-muted small mt-3">
-        {% if organ is null %}
-            {{ 'Please contact the board (%email%) with any questions or concerns. Have fun!'|trans({
-                '%email%': boardEmail,
-            }) }}
-        {% else %}
-            {% set organizer = organEmail is not empty
-                ? organ.getAbbr ~ ' (' ~ organEmail|replace({'@': atSeparator}) ~ ')'
-                : organ.getAbbr %}
-            {{ 'Please contact %organizer% or the board (%email%) with any questions or concerns. Have fun!'|trans({
-                '%organizer%': organizer,
-                '%email%': boardEmail,
-            }) }}
-        {% endif %}
-    </p>
 
     {% if signupListViews is not empty %}
         {% set activeLists = signupListViews|filter(list => not list.isClosed) %}

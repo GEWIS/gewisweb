@@ -7,19 +7,19 @@ namespace App\Tests\Service\Application;
 use App\Entity\Application\Enums\ImageProfile;
 use App\Entity\Application\Enums\ImageVariant;
 use App\Entity\Application\Enums\StorageNamespace;
-use App\Service\Application\ImagePathResolver;
+use App\Service\Application\FilePathResolver;
 use PHPUnit\Framework\TestCase;
 
 /**
  * The resolver maps a stored path back onto its namespace (which decides whether serving needs a signature) and, with
  * the variant, onto its encoding profile. The tricky case is the shared career namespace, which splits into logo vs.
- * banner purely by the requested variant's width.
+ * banner purely by the requested variant's width. PDF namespaces resolve to a namespace but never to a profile.
  */
-final class ImagePathResolverTest extends TestCase
+final class FilePathResolverTest extends TestCase
 {
     public function testMapsEachNamespacePrefix(): void
     {
-        $resolver = new ImagePathResolver();
+        $resolver = new FilePathResolver();
 
         self::assertSame(
             StorageNamespace::PhotoOriginal,
@@ -45,25 +45,40 @@ final class ImagePathResolverTest extends TestCase
             StorageNamespace::CompanyAttachment,
             $resolver->namespaceForPath('career/42/attachments/x.pdf'),
         );
+        self::assertSame(
+            StorageNamespace::MeetingDocument,
+            $resolver->namespaceForPath('meetings/documents/x.pdf'),
+        );
+        self::assertSame(
+            StorageNamespace::MeetingMinutes,
+            $resolver->namespaceForPath('meetings/minutes/x.pdf'),
+        );
+        self::assertSame(
+            StorageNamespace::ReferenceDocument,
+            $resolver->namespaceForPath('meetings/reference/x.pdf'),
+        );
     }
 
     public function testUnknownPathHasNoNamespace(): void
     {
-        self::assertNull(new ImagePathResolver()->namespaceForPath('something/else/x.jpg'));
+        self::assertNull(new FilePathResolver()->namespaceForPath('something/else/x.jpg'));
     }
 
-    public function testAlbumPhotosAndCoversArePrivate(): void
+    public function testAlbumPhotosCoversAndMeetingFilesArePrivate(): void
     {
         // A cover is a mosaic of members-only photos, so it is private too; the weekly copy and career assets are not.
         self::assertTrue(StorageNamespace::PhotoOriginal->isPrivate());
         self::assertTrue(StorageNamespace::PhotoCover->isPrivate());
+        self::assertTrue(StorageNamespace::MeetingDocument->isPrivate());
+        self::assertTrue(StorageNamespace::MeetingMinutes->isPrivate());
+        self::assertTrue(StorageNamespace::ReferenceDocument->isPrivate());
         self::assertFalse(StorageNamespace::PhotoWeekly->isPrivate());
         self::assertFalse(StorageNamespace::CompanyImage->isPrivate());
     }
 
     public function testCareerImagesSplitIntoLogoAndBannerByVariantWidth(): void
     {
-        $resolver = new ImagePathResolver();
+        $resolver = new FilePathResolver();
         $path = 'career/42/images/x.png';
 
         // Small variants are the logo profile (near-lossless); large ones the banner profile.
@@ -99,7 +114,7 @@ final class ImagePathResolverTest extends TestCase
 
     public function testPhotoAndOrganProfilesResolve(): void
     {
-        $resolver = new ImagePathResolver();
+        $resolver = new FilePathResolver();
 
         self::assertSame(
             ImageProfile::AlbumPhoto,
@@ -116,5 +131,6 @@ final class ImagePathResolverTest extends TestCase
             ),
         );
         self::assertNull($resolver->profileForPath('unknown/x.jpg', ImageVariant::W320));
+        self::assertNull($resolver->profileForPath('meetings/documents/x.pdf', ImageVariant::W320));
     }
 }

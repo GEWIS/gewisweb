@@ -1,0 +1,57 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Find a member'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('members/index') }}">{{ 'Members'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Find a member'|trans }}</li>
+{% endblock %}
+
+{% block pre_body %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_title %}{{ 'Find a member'|trans }}{% endblock %}
+        {% block header_subtitle %}
+            <p class="page-header-meta mb-0">
+                {{ 'Search the register of current members by name.'|trans }}
+            </p>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block contents %}
+    <div data-controller="member-search"
+         data-member-search-url-value="{{ path('members/find/results') }}"
+         data-member-search-capped-value="{{ 'There are more matches than shown; refine your search.'|trans }}">
+        <div class="panel mt-0 mb-3">
+            <div class="panel-body">
+                <label class="form-label" for="member-directory-search">{{ 'Name'|trans }}</label>
+                <input type="search" class="form-control" id="member-directory-search"
+                       placeholder="{{ 'Start typing a name'|trans }}"
+                       data-member-search-target="input"
+                       data-action="input->member-search#search">
+                <div class="form-text" data-member-search-target="hint">
+                    {{ 'Type at least two characters to search.'|trans }}
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'Results'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{ 'Name'|trans }}</th>
+                                <th>{{ 'Generation'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody data-member-search-target="results"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

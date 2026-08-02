@@ -40,6 +40,19 @@ enum MeetingTypes: string
     }
 
     /**
+     * The token used in member-facing URLs, the lowercase English abbreviation.
+     */
+    public function urlToken(): string
+    {
+        return match ($this) {
+            self::BV => 'bm',
+            self::ALV => 'gmm',
+            self::VV => 'cm',
+            self::VIRT => 'virt',
+        };
+    }
+
+    /**
      * @return string[]
      */
     public static function getSearchableStrings(): array
@@ -67,6 +80,7 @@ enum MeetingTypes: string
             'GMM' => MeetingTypes::ALV,
             'BM' => MeetingTypes::BV,
             'CM' => MeetingTypes::VV,
+            'VIRT' => MeetingTypes::VIRT,
             default => throw new InvalidArgumentException('MeetingType is not recognized'),
         };
     }

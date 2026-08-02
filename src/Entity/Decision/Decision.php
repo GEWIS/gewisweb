@@ -195,6 +195,22 @@ class Decision
     }
 
     /**
+     * The decision text for a locale. GEWISDB only started generating English content recently, so older decisions
+     * fall back to the Dutch text.
+     */
+    public function getLocalisedContent(string $locale): string
+    {
+        if (
+            'en' === $locale
+            && '' !== $this->contentEN
+        ) {
+            return $this->contentEN;
+        }
+
+        return $this->contentNL;
+    }
+
+    /**
      * Get decision content in English.
      */
     public function getContentEN(): string

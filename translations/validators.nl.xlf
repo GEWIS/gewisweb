@@ -89,6 +89,10 @@
         <source>Only one option can be preselected as the default.</source>
         <target state="translated">Er kan slechts één optie als standaard worden voorgeselecteerd.</target>
       </trans-unit>
+      <trans-unit id="RoGveoO" resname="Pick the member you want to authorize.">
+        <source>Pick the member you want to authorize.</source>
+        <target state="translated">Kies het lid dat je wilt machtigen.</target>
+      </trans-unit>
       <trans-unit id="0wZ1438" resname="Please enter a password.">
         <source>Please enter a password.</source>
         <target state="translated">Voer een wachtwoord in.</target>
@@ -140,6 +144,10 @@
       <trans-unit id="z.p0Rex" resname="This field is required.">
         <source>This field is required.</source>
         <target>Dit veld is verplicht.</target>
+      </trans-unit>
+      <trans-unit id="vZye7vY" resname="You have to agree to the authorization statement.">
+        <source>You have to agree to the authorization statement.</source>
+        <target state="translated">Je moet akkoord gaan met de machtigingsverklaring.</target>
       </trans-unit>
       <trans-unit id="7IsK8li" resname="You may only assign an organising organ that you are installed in.">
         <source>You may only assign an organising organ that you are installed in.</source>

@@ -1,0 +1,30 @@
+{#
+    The collapsible history of a versioned document: every version except the latest, newest first. Expects `versions`
+    (the full collection, upload order), `route` (a download route name taking a `version` parameter), and `collapseId`
+    (a unique id for the collapse). Pass `showUploader: true` on management pages to include who uploaded each version.
+#}
+{% set older = versions|slice(0, versions|length - 1)|reverse %}
+<div class="collapse" id="{{ collapseId }}">
+    <div class="border-top mt-2 pt-1">
+        {% for version in older %}
+            <div class="d-flex align-items-center gap-3 py-1 small">
+                <span class="fw-semibold">{{ version.versionLabel }}</span>
+                <span class="{% if not showUploader|default(false) %}flex-grow-1 {% endif %}text-muted">
+                    {% if version.uploadedAt %}
+                        {{ version.uploadedAt|format_date('medium') }}
+                    {% else %}
+                        &ndash;
+                    {% endif %}
+                </span>
+                {% if showUploader|default(false) %}
+                    <span class="flex-grow-1 text-muted">
+                        {{ version.uploadedBy ? version.uploadedBy.member.fullName : '' }}
+                    </span>
+                {% endif %}
+                <a href="{{ path(route, {'version': version.id}) }}" class="text-muted" aria-label="{{ 'Download'|trans }}">
+                    <span class="fas fa-download" aria-hidden="true"></span>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

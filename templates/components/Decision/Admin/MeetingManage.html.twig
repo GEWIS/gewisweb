@@ -1,0 +1,529 @@
+<div {{ attributes }}>
+    {% set view = this.view %}
+    {% set meeting = view.meeting %}
+    {% set readiness = this.readiness %}
+    {% set minutesLatest = view.minutes ? view.minutes.latestVersion : null %}
+
+    {% macro admin_document_row(document, this) %}
+        {% set latest = document.latestVersion %}
+        {% set versionCount = document.versions|length %}
+        <div class="border rounded p-2 bg-body" data-live-sortable-target="entry" data-live-sortable-id-param="{{ document.id }}">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <span class="sortable-handle fas fa-grip-vertical text-muted" draggable="true"
+                      data-action="dragstart->live-sortable#dragStart dragend->live-sortable#dragEnd"
+                      aria-hidden="true"></span>
+                <span class="fas fa-file-pdf" aria-hidden="true"></span>
+                <div class="flex-grow-1" style="min-width: 12rem;">
+                    <label class="visually-hidden" for="document-name-{{ document.id }}">{{ 'Document name'|trans }}</label>
+                    <input type="text" class="form-control form-control-sm fw-semibold" id="document-name-{{ document.id }}"
+                           data-model="on(change)|documentEdits.{{ document.id }}.name"
+                           value="{{ document.name }}">
+                    <span class="small text-muted">
+                        {% if latest %}
+                            {{ latest.versionLabel }}
+                            {%- if latest.uploadedAt %} &middot; {{ 'uploaded %date%'|trans({'%date%': latest.uploadedAt|format_date('medium')}) }}{% endif %}
+                            {%- if latest.uploadedBy %} &middot; {{ latest.uploadedBy.member.fullName }}{% endif %}
+                            {%- if versionCount > 1 %} &middot; {{ '%count% version|%count% versions'|trans({'%count%': versionCount}) }}{% endif %}
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="d-flex align-items-center gap-1">
+                    {% if versionCount > 1 %}
+                        <button type="button" class="btn btn-sm btn-outline-secondary collapsed"
+                                data-bs-toggle="collapse" data-bs-target="#admin-document-history-{{ document.id }}"
+                                aria-expanded="false" aria-controls="admin-document-history-{{ document.id }}">
+                            {{ 'History'|trans }}
+                        </button>
+                    {% endif %}
+                    {% if latest %}
+                        <a href="{{ path('meetings/document_download', {'version': latest.id}) }}"
+                           class="btn btn-sm btn-outline-secondary" aria-label="{{ 'Download'|trans }}">
+                            <span class="fas fa-download" aria-hidden="true"></span>
+                        </a>
+                    {% endif %}
+                    <div class="d-inline-block" data-controller="document-upload"
+                         data-document-upload-url-value="{{ path('admin/meetings/document_version_upload', {'document': document.id}) }}"
+                         data-document-upload-suggested-label-value="{{ this.suggestLabel(latest ? latest.versionLabel : null) }}"
+                         data-action="decision-upload:success->live#$render">
+                        <input type="file" accept="application/pdf" class="d-none"
+                               data-document-upload-target="input" data-action="document-upload#picked">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-document-upload-target="picker"
+                                data-action="document-upload#browse">
+                            {{ 'New version'|trans }}
+                        </button>
+                        <div class="d-none position-absolute bg-body border rounded shadow-sm p-2 mt-1 z-3" data-document-upload-target="form">
+                            <div class="small mb-1" data-document-upload-target="filename"></div>
+                            <div class="d-flex align-items-center gap-1">
+                                <label class="visually-hidden" for="document-version-label-{{ document.id }}">{{ 'Version label'|trans }}</label>
+                                <input type="text" class="form-control form-control-sm" id="document-version-label-{{ document.id }}"
+                                       data-document-upload-target="label" placeholder="{{ 'Version label'|trans }}">
+                                <button type="button" class="btn btn-sm btn-gewis-primary" data-action="document-upload#submit">
+                                    {{ 'Upload'|trans }}
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-action="document-upload#cancel">
+                                    {{ 'Cancel'|trans }}
+                                </button>
+                            </div>
+                            <div class="d-none small text-danger mt-1" data-document-upload-target="error"></div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline-danger"
+                            data-bs-toggle="modal" data-bs-target="#confirm-modal"
+                            data-confirm-title="{{ 'Remove document?'|trans }}"
+                            data-confirm-message="{{ 'This removes “%name%” with all its versions.'|trans({'%name%': document.name}) }}"
+                            data-confirm-label="{{ 'Remove'|trans }}"
+                            data-confirm-live-action="deleteDocument"
+                            data-confirm-live-args='{"id": {{ document.id }}}'
+                            aria-label="{{ 'Remove'|trans }}">
+                        <span class="far fa-trash-can" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+            {% if versionCount > 1 %}
+                {% include 'partials/decision/version-history.html.twig' with {
+                    'versions': document.versions,
+                    'route': 'meetings/document_download',
+                    'collapseId': 'admin-document-history-' ~ document.id,
+                    'showUploader': true,
+                } only %}
+            {% endif %}
+        </div>
+    {% endmacro %}
+
+    {% macro upload_dropzone(this, url, extra, withName, inputId) %}
+        <div class="upload-dropzone p-3 text-center text-muted" data-controller="document-upload"
+             data-document-upload-url-value="{{ url }}"
+             data-document-upload-suggested-label-value="{{ this.suggestLabel(null) }}"
+             {% if extra is not empty %}data-document-upload-extra-value="{{ extra|json_encode }}"{% endif %}
+             data-action="dragover->document-upload#dragOver dragleave->document-upload#dragLeave drop->document-upload#dropped decision-upload:success->live#$render">
+            <input type="file" accept="application/pdf" class="d-none"
+                   data-document-upload-target="input" data-action="document-upload#picked">
+            <button type="button" class="btn btn-link text-decoration-none text-muted p-0" data-document-upload-target="picker"
+                    data-action="document-upload#browse">
+                <span class="fas fa-arrow-up-from-bracket" aria-hidden="true"></span>
+                {{ 'Drop a PDF here or browse'|trans }}
+            </button>
+            <div class="d-none text-start" data-document-upload-target="form">
+                <div class="small mb-2 text-body" data-document-upload-target="filename"></div>
+                <div class="row g-2 align-items-center">
+                    {% if withName %}
+                        <div class="col-md-6">
+                            <label class="visually-hidden" for="{{ inputId }}-name">{{ 'Document name'|trans }}</label>
+                            <input type="text" class="form-control form-control-sm" id="{{ inputId }}-name"
+                                   data-document-upload-target="name" placeholder="{{ 'Document name'|trans }}">
+                        </div>
+                    {% endif %}
+                    <div class="col-md-3">
+                        <label class="visually-hidden" for="{{ inputId }}-label">{{ 'Version label'|trans }}</label>
+                        <input type="text" class="form-control form-control-sm" id="{{ inputId }}-label"
+                               data-document-upload-target="label" placeholder="{{ 'Version label'|trans }}">
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-sm btn-gewis-primary" data-action="document-upload#submit">
+                            {{ 'Upload'|trans }}
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-action="document-upload#cancel">
+                            {{ 'Cancel'|trans }}
+                        </button>
+                    </div>
+                </div>
+                <div class="d-none small text-danger mt-1" data-document-upload-target="error"></div>
+            </div>
+        </div>
+    {% endmacro %}
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="manage-agenda-tab" data-bs-toggle="pill"
+                        data-bs-target="#manage-agenda-pane" type="button" role="tab"
+                        aria-controls="manage-agenda-pane" aria-selected="true">
+                    {{ 'Agenda & documents'|trans }}
+                    <span class="badge ms-1">{{ readiness.pointCount }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="manage-reference-tab" data-bs-toggle="pill"
+                        data-bs-target="#manage-reference-pane" type="button" role="tab"
+                        aria-controls="manage-reference-pane" aria-selected="false">
+                    {{ 'Reference selection'|trans }}
+                    <span class="badge ms-1">{{ readiness.referenceCount }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="manage-minutes-tab" data-bs-toggle="pill"
+                        data-bs-target="#manage-minutes-pane" type="button" role="tab"
+                        aria-controls="manage-minutes-pane" aria-selected="false">
+                    {{ 'Minutes'|trans }}
+                    <span class="badge ms-1">{{ readiness.minutesUploaded ? 1 : 0 }}</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="manage-details-tab" data-bs-toggle="pill"
+                        data-bs-target="#manage-details-pane" type="button" role="tab"
+                        aria-controls="manage-details-pane" aria-selected="false">
+                    {{ 'Time & place'|trans }}
+                </button>
+            </li>
+        </ul>
+        {% if this.savedAt %}
+            <span class="small text-muted">{{ 'All changes saved'|trans }} &middot; {{ this.savedAt }}</span>
+        {% endif %}
+    </div>
+
+    {% if this.feedback %}
+        <div class="alert alert-warning" role="alert">{{ this.feedback }}</div>
+    {% endif %}
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="manage-agenda-pane" role="tabpanel"
+                     aria-labelledby="manage-agenda-tab" tabindex="0">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                        <p class="text-muted small mb-0">
+                            {{ 'Agenda points and the documents filed under them. Numbers are free-form, so gaps and suffixes like 7a are fine. Drag the handles to reorder.'|trans }}
+                        </p>
+                        <button type="button" class="btn btn-sm btn-gewis-primary"
+                                data-action="live#action" data-live-action-param="addPoint">
+                            <span class="fas fa-plus" aria-hidden="true"></span>
+                            {{ 'Add agenda point'|trans }}
+                        </button>
+                    </div>
+
+                    <div class="d-flex flex-column gap-3" data-controller="live-sortable"
+                         data-live-sortable-action-value="reorderPoints"
+                         data-action="dragover->live-sortable#dragOver drop->live-sortable#drop">
+                        {% for pointView in view.points %}
+                            {% set point = pointView.point %}
+                            <div class="panel my-0" data-live-sortable-target="entry" data-live-sortable-id-param="{{ point.id }}">
+                                <div class="panel-body">
+                                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                                        <span class="sortable-handle fas fa-grip-vertical text-muted" draggable="true"
+                                              data-action="dragstart->live-sortable#dragStart dragend->live-sortable#dragEnd"
+                                              aria-hidden="true"></span>
+                                        <label class="visually-hidden" for="point-number-{{ point.id }}">{{ 'Agenda point number'|trans }}</label>
+                                        <input type="text" class="form-control form-control-sm meeting-point-number-input fw-semibold" id="point-number-{{ point.id }}"
+                                               data-model="on(change)|pointEdits.{{ point.id }}.number"
+                                               value="{{ point.number }}" placeholder="{{ 'No.'|trans }}">
+                                        <label class="visually-hidden" for="point-title-{{ point.id }}">{{ 'Agenda point title'|trans }}</label>
+                                        <input type="text" class="form-control form-control-sm flex-grow-1 w-auto" id="point-title-{{ point.id }}"
+                                               data-model="on(change)|pointEdits.{{ point.id }}.title"
+                                               value="{{ point.title }}" placeholder="{{ 'Agenda point title'|trans }}">
+                                        <span class="small text-muted text-nowrap">
+                                            {{ '%count% document|%count% documents'|trans({'%count%': pointView.documents|length}) }}
+                                        </span>
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                                data-bs-toggle="modal" data-bs-target="#confirm-modal"
+                                                data-confirm-title="{{ 'Remove agenda point?'|trans }}"
+                                                data-confirm-message="{{ 'Documents under this agenda point are kept and move to the meeting-level group.'|trans }}"
+                                                data-confirm-label="{{ 'Remove'|trans }}"
+                                                data-confirm-live-action="deletePoint"
+                                                data-confirm-live-args='{"id": {{ point.id }}}'
+                                                aria-label="{{ 'Remove'|trans }}">
+                                            <span class="far fa-trash-can" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                    {% if pointView.decisions is not empty %}
+                                        <div class="small text-muted mt-1 ms-4">
+                                            {{ 'Matched decisions:'|trans }}
+                                            {% for decision in pointView.decisions %}
+                                                <span class="badge text-bg-light">{{ meeting.type.abbreviation|trans }} {{ meeting.number }}.{{ decision.point }}.{{ decision.number }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <div class="d-flex flex-column gap-2 mt-2 ms-4" data-controller="live-sortable"
+                                         data-live-sortable-action-value="reorderDocuments"
+                                         data-live-sortable-extra-value='{"pointId": {{ point.id }}}'
+                                         data-action="dragover->live-sortable#dragOver drop->live-sortable#drop">
+                                        {% for document in pointView.documents %}
+                                            {{ _self.admin_document_row(document, this) }}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="mt-2 ms-4">
+                                        {{ _self.upload_dropzone(this, path('admin/meetings/document_upload', {'type': this.type, 'number': this.number}), {'point': point.id}, true, 'point-upload-' ~ point.id) }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3>{{ 'Meeting-level documents'|trans }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <p class="text-muted small mb-2">{{ 'Documents not filed under an agenda point, including everything carried over from before agenda points existed.'|trans }}</p>
+                            <div class="d-flex flex-column gap-2" data-controller="live-sortable"
+                                 data-live-sortable-action-value="reorderDocuments"
+                                 data-action="dragover->live-sortable#dragOver drop->live-sortable#drop">
+                                {% for document in view.meetingLevelDocuments %}
+                                    {{ _self.admin_document_row(document, this) }}
+                                {% endfor %}
+                            </div>
+                            <div class="mt-2">
+                                {{ _self.upload_dropzone(this, path('admin/meetings/document_upload', {'type': this.type, 'number': this.number}), {}, true, 'meeting-upload') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="manage-reference-pane" role="tabpanel"
+                     aria-labelledby="manage-reference-tab" tabindex="0">
+                    <div class="panel my-0">
+                        <div class="panel-heading d-flex flex-wrap justify-content-between align-items-baseline gap-2">
+                            <h3>{{ 'Reference selection'|trans }}</h3>
+                            <a href="{{ path('admin/meetings/reference/index') }}" class="btn btn-sm btn-outline-secondary">
+                                <span class="fas fa-folder-open" aria-hidden="true"></span>
+                                {{ 'Manage library'|trans }}
+                            </a>
+                        </div>
+                        <div class="panel-body">
+                            <p class="text-muted small mb-2">
+                                {{ 'Pick which library documents apply to this meeting and exactly which version members see. Uploading and versioning happens in the library.'|trans }}
+                            </p>
+                            {% if view.references is empty %}
+                                <button type="button" class="btn btn-sm btn-outline-gewis-primary mb-2"
+                                        data-action="live#action" data-live-action-param="carryOver">
+                                    {{ 'Copy the selection from the previous meeting'|trans }}
+                                </button>
+                            {% endif %}
+                            {% for option in this.referenceOptions %}
+                                {% set document = option.document %}
+                                {% set selection = option.selection %}
+                                {% set latest = document.latestVersion %}
+                                <div class="d-flex align-items-center gap-2 flex-wrap py-2 {% if not loop.first %}border-top{% endif %}">
+                                    <div class="form-check mb-0">
+                                        <input class="form-check-input" type="checkbox" id="reference-select-{{ document.id }}"
+                                               {% if selection %}checked{% endif %}
+                                               data-action="live#action" data-live-action-param="toggleReference"
+                                               data-live-id-param="{{ document.id }}">
+                                        <label class="form-check-label visually-hidden" for="reference-select-{{ document.id }}">
+                                            {{ document.name }}
+                                        </label>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <span class="fw-semibold d-block {% if not selection %}text-muted{% endif %}">{{ document.name }}</span>
+                                        <span class="small text-muted">
+                                            {% if selection %}
+                                                {{ selection.pinnedVersion.versionLabel }}
+                                                {%- if selection.pinnedVersion.uploadedAt %} &middot; {{ selection.pinnedVersion.uploadedAt|format_date('medium') }}{% endif %}
+                                                {%- if latest and selection.pinnedVersion.id != latest.id %} &middot; {{ 'a newer version exists (%label%)'|trans({'%label%': latest.versionLabel}) }}{% endif %}
+                                            {% elseif latest %}
+                                                {{ 'Latest'|trans }} {{ latest.versionLabel }}
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    {% if selection %}
+                                        <label class="visually-hidden" for="reference-pin-{{ document.id }}">{{ 'Version'|trans }}</label>
+                                        <select class="form-select form-select-sm w-auto"
+                                                id="reference-pin-{{ document.id }}"
+                                                data-model="pins.{{ document.id }}">
+                                            {% for version in document.versions|reverse %}
+                                                <option value="{{ version.id }}" {% if selection.pinnedVersion.id == version.id %}selected{% endif %}>
+                                                    {{ version.versionLabel }}{% if version.uploadedAt %} &middot; {{ version.uploadedAt|format_date('short') }}{% endif %}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                                <p class="text-muted mb-0">{{ 'The library is still empty.'|trans }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="manage-minutes-pane" role="tabpanel"
+                     aria-labelledby="manage-minutes-tab" tabindex="0">
+                    <div class="panel my-0">
+                        <div class="panel-heading">
+                            <h3>{{ 'Minutes'|trans }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <p class="text-muted small mb-2">{{ 'The minutes of this meeting. Uploading them marks the meeting complete for members, even if no decisions were taken.'|trans }}</p>
+                            {% if minutesLatest %}
+                                <div class="border rounded p-2 d-flex align-items-center gap-2 flex-wrap">
+                                    <span class="fas fa-file-pdf" aria-hidden="true"></span>
+                                    <div class="flex-grow-1">
+                                        <span class="fw-semibold d-block">{{ 'Minutes %meeting%'|trans({'%meeting%': meeting.type.abbreviation|trans ~ ' ' ~ meeting.number}) }}</span>
+                                        <span class="small text-muted">
+                                            {{ minutesLatest.versionLabel }}
+                                            {%- if minutesLatest.uploadedAt %} &middot; {{ 'uploaded %date%'|trans({'%date%': minutesLatest.uploadedAt|format_date('medium')}) }}{% endif %}
+                                            {%- if minutesLatest.uploadedBy %} &middot; {{ minutesLatest.uploadedBy.member.fullName }}{% endif %}
+                                        </span>
+                                    </div>
+                                    {% if view.minutes.versions|length > 1 %}
+                                        <button type="button" class="btn btn-sm btn-outline-secondary collapsed"
+                                                data-bs-toggle="collapse" data-bs-target="#admin-minutes-history"
+                                                aria-expanded="false" aria-controls="admin-minutes-history">
+                                            {{ 'History'|trans }}
+                                        </button>
+                                    {% endif %}
+                                    <a href="{{ path('meetings/minutes_download', {'version': minutesLatest.id}) }}"
+                                       class="btn btn-sm btn-outline-secondary" aria-label="{{ 'Download'|trans }}">
+                                        <span class="fas fa-download" aria-hidden="true"></span>
+                                    </a>
+                                    <div class="d-inline-block" data-controller="document-upload"
+                                         data-document-upload-url-value="{{ path('admin/meetings/minutes_upload', {'type': this.type, 'number': this.number}) }}"
+                                         data-document-upload-suggested-label-value="{{ this.suggestLabel(minutesLatest.versionLabel) }}"
+                                         data-action="decision-upload:success->live#$render">
+                                        <input type="file" accept="application/pdf" class="d-none"
+                                               data-document-upload-target="input" data-action="document-upload#picked">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-document-upload-target="picker"
+                                                data-action="document-upload#browse">
+                                            {{ 'New version'|trans }}
+                                        </button>
+                                        <div class="d-none position-absolute bg-body border rounded shadow-sm p-2 mt-1 z-3" data-document-upload-target="form">
+                                            <div class="small mb-1" data-document-upload-target="filename"></div>
+                                            <div class="d-flex align-items-center gap-1">
+                                                <label class="visually-hidden" for="minutes-version-label">{{ 'Version label'|trans }}</label>
+                                                <input type="text" class="form-control form-control-sm" id="minutes-version-label"
+                                                       data-document-upload-target="label" placeholder="{{ 'Version label'|trans }}">
+                                                <button type="button" class="btn btn-sm btn-gewis-primary" data-action="document-upload#submit">
+                                                    {{ 'Upload'|trans }}
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" data-action="document-upload#cancel">
+                                                    {{ 'Cancel'|trans }}
+                                                </button>
+                                            </div>
+                                            <div class="d-none small text-danger mt-1" data-document-upload-target="error"></div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            data-bs-toggle="modal" data-bs-target="#confirm-modal"
+                                            data-confirm-title="{{ 'Remove minutes?'|trans }}"
+                                            data-confirm-message="{{ 'This removes the minutes with all their versions.'|trans }}"
+                                            data-confirm-label="{{ 'Remove'|trans }}"
+                                            data-confirm-live-action="deleteMinutes"
+                                            aria-label="{{ 'Remove'|trans }}">
+                                        <span class="far fa-trash-can" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                                {% if view.minutes.versions|length > 1 %}
+                                    {% include 'partials/decision/version-history.html.twig' with {
+                                        'versions': view.minutes.versions,
+                                        'route': 'meetings/minutes_download',
+                                        'collapseId': 'admin-minutes-history',
+                                        'showUploader': true,
+                                    } only %}
+                                {% endif %}
+                            {% else %}
+                                {{ _self.upload_dropzone(this, path('admin/meetings/minutes_upload', {'type': this.type, 'number': this.number}), {}, false, 'minutes-upload') }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="manage-details-pane" role="tabpanel"
+                     aria-labelledby="manage-details-tab" tabindex="0">
+                    <div class="panel my-0">
+                        <div class="panel-heading">
+                            <h3>{{ 'Time and place'|trans }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="details-start-time">{{ 'Start time'|trans }}</label>
+                                    <input type="time" class="form-control" id="details-start-time"
+                                           data-model="on(change)|details.startTime"
+                                           value="{{ view.localDetails and view.localDetails.startTime ? view.localDetails.startTime|date('H:i') : '' }}">
+                                    <div class="form-text">{{ 'No end time; meetings run until closed.'|trans }}</div>
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="form-label" for="details-location">{{ 'Location'|trans }}</label>
+                                    <input type="text" class="form-control" id="details-location"
+                                           data-model="on(change)|details.location"
+                                           value="{{ view.localDetails ? view.localDetails.location : '' }}"
+                                           placeholder="{{ 'Room or building'|trans }}">
+                                    <div class="form-text">{{ 'Shown on the member page while the meeting is upcoming.'|trans }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3>{{ 'Synced, not editable here'|trans }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="d-flex align-items-center gap-2 py-1">
+                                <span class="fas fa-lock text-muted small" aria-hidden="true"></span>
+                                <span class="text-muted small" style="width: 8rem;">{{ 'Meeting date'|trans }}</span>
+                                <span>{{ meeting.date|format_date('full') }}</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 py-1 border-top">
+                                <span class="fas fa-lock text-muted small" aria-hidden="true"></span>
+                                <span class="text-muted small" style="width: 8rem;">{{ 'Meeting'|trans }}</span>
+                                <span>{{ meeting.type.abbreviation|trans }} {{ meeting.number }}</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 py-1 border-top">
+                                <span class="fas fa-lock text-muted small" aria-hidden="true"></span>
+                                <span class="text-muted small" style="width: 8rem;">{{ 'Decisions'|trans }}</span>
+                                <span>{{ 'Synced after the meeting'|trans }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <aside class="col-lg-4">
+            <div class="panel mt-0">
+                <div class="panel-heading">
+                    <h3>{{ 'Readiness'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if readiness.unmatchedDecisionCount > 0 %}
+                        <div class="alert alert-warning py-2 small" role="alert">
+                            {{ '%count% decision does not line up with your agenda points. If the agenda shifted during the meeting, renumber the points to match.|%count% decisions do not line up with your agenda points. If the agenda shifted during the meeting, renumber the points to match.'|trans({'%count%': readiness.unmatchedDecisionCount}) }}
+                        </div>
+                    {% endif %}
+                    {% if readiness.duplicatePointNumbers is not empty %}
+                        <div class="alert alert-warning py-2 small" role="alert">
+                            {{ 'Multiple agenda points share the number %numbers%; decisions attach to the first one.'|trans({'%numbers%': readiness.duplicatePointNumbers|join(', ')}) }}
+                        </div>
+                    {% endif %}
+                    <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                        <li class="d-flex align-items-center gap-2">
+                            <span class="fas {{ readiness.pointCount > 0 ? 'fa-circle-check text-success' : 'fa-circle text-muted' }}" aria-hidden="true"></span>
+                            {{ '%count% agenda point|%count% agenda points'|trans({'%count%': readiness.pointCount}) }}
+                        </li>
+                        <li class="d-flex align-items-center gap-2">
+                            <span class="fas {{ readiness.documentCount > 0 ? 'fa-circle-check text-success' : 'fa-circle text-muted' }}" aria-hidden="true"></span>
+                            {{ '%count% document filed|%count% documents filed'|trans({'%count%': readiness.documentCount}) }}
+                        </li>
+                        <li class="d-flex align-items-center gap-2">
+                            <span class="fas {{ readiness.referenceCount > 0 ? 'fa-circle-check text-success' : 'fa-circle text-muted' }}" aria-hidden="true"></span>
+                            {{ '%count% reference document selected|%count% reference documents selected'|trans({'%count%': readiness.referenceCount}) }}
+                        </li>
+                        <li class="d-flex align-items-center gap-2">
+                            <span class="fas {{ readiness.minutesUploaded ? 'fa-circle-check text-success' : 'fa-circle text-muted' }}" aria-hidden="true"></span>
+                            {{ readiness.minutesUploaded ? 'Minutes uploaded'|trans : 'Minutes pending'|trans }}
+                        </li>
+                        <li class="d-flex align-items-center gap-2">
+                            <span class="fas {{ readiness.detailsSet ? 'fa-circle-check text-success' : 'fa-circle text-muted' }}" aria-hidden="true"></span>
+                            {{ readiness.detailsSet ? 'Time and place set'|trans : 'Time and place pending'|trans }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Recent activity'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% for entry in this.activity %}
+                        <div class="py-1 {% if not loop.first %}border-top{% endif %}">
+                            <span class="small d-block">
+                                {{ entry.verb.message(entry.actor ? entry.actor.member.fullName : 'System'|trans, entry.subject)|trans }}
+                            </span>
+                            <span class="small text-muted">{{ entry.createdAt|format_datetime('medium', 'short') }}</span>
+                        </div>
+                    {% else %}
+                        <span class="text-muted small">{{ 'Nothing has happened here yet.'|trans }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
