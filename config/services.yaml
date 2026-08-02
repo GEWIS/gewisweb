@@ -19,6 +19,9 @@ parameters:
     # Fallback contact for board/committee correspondence with no more specific sender/reply-to (e.g. a bulk email to
     # an activity's sign-ups when the organising organ has no public email).
     app.email.internal_affairs: 'cib@gewis.nl'
+    # Who a company writes to about its profile, vacancies, banner and package. Read by the company area templates
+    # through the `external_affairs_email` Twig global.
+    app.email.external_affairs: 'ceb@gewis.nl'
     # Regulations on the members-area dashboard: slug (used in the URL) to the document's path inside the
     # SFTP-mirrored public archive (`data/public-archive/`), without the `.pdf` extension.
     app.regulations:

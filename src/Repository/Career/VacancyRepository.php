@@ -17,6 +17,8 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
+use function intval;
+use function iterator_to_array;
 use function mb_strtolower;
 use function trim;
 
@@ -236,6 +238,97 @@ class VacancyRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * The most recently approved vacancies, for the taste of the list the career landing page gives. Ordered by when
+     * the live revision was approved, which is the moment a vacancy actually appeared, rather than by when the company
+     * started drafting it.
+     *
+     * @return Vacancy[]
+     */
+    public function findLatestForOverview(int $limit): array
+    {
+        $qb = $this->activeVacancyQueryBuilder()
+            ->orderBy(
+                'lr.reviewedAt',
+                'DESC',
+            )
+            ->addOrderBy(
+                'j.id',
+                'DESC',
+            )
+            ->setMaxResults($limit);
+
+        // The labels are fetch-joined, so a plain limit would cut rows rather than vacancies and return fewer than
+        // asked for. The paginator collects the ids first and hydrates those, which is what makes the limit count
+        // vacancies again.
+        return iterator_to_array(
+            new Paginator(
+                $qb,
+                true,
+            ),
+            false,
+        );
+    }
+
+    /**
+     * How many publicly visible vacancies there are per category, for the counts the navigation menu carries. Grouped
+     * in one query because the menu is on every page; categories nobody is hiring for are left out, so read a missing
+     * category as zero.
+     *
+     * @return array<string, int>
+     */
+    public function countActiveByCategory(): array
+    {
+        // A lean copy of the "active" predicate rather than `activeVacancyQueryBuilder()`, which fetch-joins
+        // everything a card renders and would drag all of that into a query that only counts.
+        $rows = $this->createQueryBuilder('j')
+            ->select(
+                'lr.category AS category',
+                'COUNT(j.id) AS total',
+            )
+            ->join(
+                'j.package',
+                'p',
+            )
+            ->join(
+                'p.company',
+                'c',
+            )
+            ->join(
+                'j.liveRevision',
+                'lr',
+            )
+            ->where('j.published = true')
+            ->andWhere('p.published = true')
+            ->andWhere('p.starts <= :now')
+            ->andWhere('p.expires > :now')
+            ->andWhere('c.published = true')
+            ->andWhere('c.liveRevision IS NOT NULL')
+            ->andWhere('lr.startDate IS NULL OR lr.startDate <= :today')
+            ->andWhere('lr.endDate >= :today')
+            ->setParameter(
+                'now',
+                new DateTime(),
+                Types::DATETIME_MUTABLE,
+            )
+            ->setParameter(
+                'today',
+                new DateTime('today'),
+                Types::DATE_MUTABLE,
+            )
+            ->groupBy('lr.category')
+            ->getQuery()
+            ->getArrayResult();
+
+        // The column is mapped with an `enumType`, so the grouped value comes back as the case rather than its string.
+        $counts = [];
+        foreach ($rows as $row) {
+            $counts[$row['category']->value] = intval($row['total']);
+        }
+
+        return $counts;
     }
 
     /**

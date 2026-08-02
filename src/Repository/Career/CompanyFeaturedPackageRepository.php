@@ -29,8 +29,22 @@ class CompanyFeaturedPackageRepository extends ServiceEntityRepository
      */
     public function getFeaturedPackage(): ?CompanyFeaturedPackage
     {
+        // The company is read wherever the pick is shown (the navigation menu names it, the career page also renders
+        // the article), so both come along instead of being lazy-loaded on every page that draws the menu.
         $qb = $this->createQueryBuilder('p');
-        $qb->where('p.published = 1')
+        $qb->addSelect(
+            'c',
+            'article',
+        )
+            ->join(
+                'p.company',
+                'c',
+            )
+            ->leftJoin(
+                'p.article',
+                'article',
+            )
+            ->where('p.published = 1')
             ->andWhere('p.starts <= CURRENT_DATE()')
             ->andWhere('p.expires > CURRENT_DATE()');
 

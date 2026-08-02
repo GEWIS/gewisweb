@@ -84,6 +84,10 @@ $dropdown-link-disabled-color-dark: $gray-600;
 $dropdown-link-hover-bg: $gray-200;
 $dropdown-link-hover-bg-dark: $gray-900;
 
+// Stacked date beside an activity, tinted with the brand red so it reads as GEWIS on any panel.
+$activity-date-badge-bg: rgba($gewis-red, 0.08);
+$activity-date-badge-bg-dark: rgba($gewis-red, 0.16);
+
 $navbar-dropdown-spacer: 0;
 
 $navbar-nav-link-padding-x: 0.75rem;

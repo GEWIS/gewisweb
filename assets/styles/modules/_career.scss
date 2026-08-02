@@ -1,0 +1,129 @@
+// Career landing page
+//
+// The band at the top of the career overview and the three kinds of row underneath it: a vacancy, a company, and an
+// upcoming event. Rows rather than cards, because the page is a set of tastes of longer lists.
+
+.career-hero {
+    background-color: var(--#{$prefix}body-bg);
+    border-bottom: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-translucent);
+    margin-bottom: map-get($spacers, 2);
+}
+
+.career-hero-search {
+    flex: 1 1 16rem;
+
+    .input-group-text {
+        background-color: transparent;
+        border-right: 0;
+        color: var(--#{$prefix}secondary-color);
+    }
+
+    .form-control {
+        border-left: 0;
+        padding-left: 0;
+    }
+}
+
+// The counts double as the way into each list, so they are links rather than figures.
+.career-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    height: 100%;
+    padding: 0.875rem 1rem;
+    border: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-translucent);
+    border-radius: var(--#{$prefix}border-radius-lg);
+    color: var(--#{$prefix}body-color);
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+        border-color: #{$gewis-red};
+        color: var(--#{$prefix}body-color);
+        text-decoration: none;
+    }
+}
+
+.career-stat-value {
+    font-size: 1.625rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.career-stat-label {
+    color: var(--#{$prefix}secondary-color);
+    font-size: $font-size-sm;
+}
+
+.career-company-name {
+    display: block;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.career-logo-xs {
+    flex: none;
+    width: 1.875rem;
+    height: 1.875rem;
+    border-radius: var(--#{$prefix}border-radius);
+    font-size: 0.8125rem;
+}
+
+.career-logo-lg {
+    flex: none;
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--#{$prefix}border-radius-lg);
+    font-size: 1.75rem;
+}
+
+// The featured company leads with whatever logo it has, on a tinted band.
+.career-featured-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 7rem;
+    padding: 1rem;
+    border-bottom: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-translucent);
+    background-color: var(--#{$prefix}secondary-bg);
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+}
+
+.career-featured-kicker {
+    color: #{$gewis-red};
+}
+
+// The one thing on the page addressed to a company rather than to a member, so it is the one brand-coloured surface.
+// Everything in it has to be set explicitly: headings are black site-wide, which is unreadable here.
+.career-cta {
+    padding: 1.0625rem;
+    border-radius: var(--#{$prefix}border-radius-lg);
+    background-color: #{$gewis-red-dark};
+    color: $white;
+
+    h1, h2, h3, h4, h5, h6 {
+        color: $white;
+    }
+
+    p {
+        color: rgba($white, 0.85);
+        font-size: $font-size-sm;
+    }
+
+    .btn {
+        --#{$prefix}btn-bg: #{$white};
+        --#{$prefix}btn-border-color: #{$white};
+        --#{$prefix}btn-color: #{$gewis-red-dark};
+        --#{$prefix}btn-hover-bg: #{$gewis-gray-light};
+        --#{$prefix}btn-hover-border-color: #{$gewis-gray-light};
+        --#{$prefix}btn-hover-color: #{$gewis-red-dark};
+        --#{$prefix}btn-font-weight: 600;
+    }
+}

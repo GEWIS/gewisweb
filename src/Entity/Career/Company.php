@@ -492,7 +492,20 @@ class Company implements RevisableInterface
      */
     public function isFeatured(): bool
     {
-        return null !== $this->getActivePackage(CompanyFeaturedPackage::class);
+        return null !== $this->getFeaturedPackage();
+    }
+
+    /**
+     * The company's running featured package, which carries the article written about it, or null when it is not being
+     * featured right now.
+     */
+    public function getFeaturedPackage(): ?CompanyFeaturedPackage
+    {
+        $package = $this->getActivePackage(CompanyFeaturedPackage::class);
+
+        return $package instanceof CompanyFeaturedPackage
+            ? $package
+            : null;
     }
 
     /**

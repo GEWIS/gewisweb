@@ -6,7 +6,7 @@
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('career/index') }}">{{ 'Companies'|trans }}</a>
+        <a href="{{ path('career/companies') }}">{{ 'Companies'|trans }}</a>
     </li>
     <li class="breadcrumb-item">
         <a href="{{ path('career/company', {slug: company.getSlugName}) }}">{{ company.getName }}</a>
@@ -26,8 +26,7 @@
                 </div>
                 <div class="card-body">
                     <p class="mb-1">
-                        <a href="{{ path('career/company', {slug: company.getSlugName}) }}"
-                           class="fw-semibold">{{ company.getName }}</a>
+                        <a href="{{ path('career/company', {slug: company.getSlugName}) }}">{{ company.getName }}</a>
                     </p>
                     {% set location = vacancy.getLocation|localise_text %}
                     {% if location is not empty %}
@@ -68,7 +67,7 @@
                     </div>
                     <div class="panel-body">
                         <p class="text-body-secondary">{{ companySlogan }}</p>
-                        <a href="{{ path('career/company', {slug: company.getSlugName}) }}" class="fw-semibold">
+                        <a href="{{ path('career/company', {slug: company.getSlugName}) }}">
                             {{ 'View company page'|trans }}
                         </a>
                     </div>

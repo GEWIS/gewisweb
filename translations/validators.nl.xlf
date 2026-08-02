@@ -201,6 +201,10 @@
         <source>Upload a PDF.</source>
         <target state="translated">Upload een pdf.</target>
       </trans-unit>
+      <trans-unit id="fcfNWQJ" resname="You can only highlight your own vacancies that are currently shown on the website.">
+        <source>You can only highlight your own vacancies that are currently shown on the website.</source>
+        <target state="translated">Je kunt alleen je eigen vacatures uitlichten die op dit moment op de website staan.</target>
+      </trans-unit>
       <trans-unit id="vZye7vY" resname="You have to agree to the authorization statement.">
         <source>You have to agree to the authorization statement.</source>
         <target state="translated">Je moet akkoord gaan met de machtigingsverklaring.</target>

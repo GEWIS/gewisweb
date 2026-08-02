@@ -10,6 +10,7 @@ twig:
     globals:
         supported_locales: '%kernel.enabled_locales%'
         matomo_domain: '%env(MATOMO_DOMAIN)%'
+        external_affairs_email: '%app.email.external_affairs%'
 
 when@test:
     twig:

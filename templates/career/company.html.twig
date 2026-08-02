@@ -4,7 +4,7 @@
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('career/index') }}">{{ 'Companies'|trans }}</a>
+        <a href="{{ path('career/companies') }}">{{ 'Companies'|trans }}</a>
     </li>
     <li class="breadcrumb-item active">{{ company.getName }}</li>
 {% endblock %}
@@ -33,7 +33,7 @@
                     <div class="card-body">
                         <h6 class="text-uppercase text-body-secondary">{{ 'Contact'|trans }}</h6>
                         {% if company.getContactName is not null %}
-                            <p class="mb-1 fw-semibold">{{ company.getContactName }}</p>
+                            <p class="mb-1"><strong>{{ company.getContactName }}</strong></p>
                         {% endif %}
                         {% if company.getContactAddress is not null %}
                             <p class="mb-1 text-body-secondary small">{{ company.getContactAddress|nl2br }}</p>
@@ -50,7 +50,7 @@
                         {% endif %}
                         {% if website is not empty %}
                             <p class="mb-0">
-                                <a href="{{ website }}" target="_blank" rel="noopener noreferrer" class="fw-semibold">
+                                <a href="{{ website }}" target="_blank" rel="noopener noreferrer">
                                     {{ 'Visit website'|trans }}
                                 </a>
                             </p>

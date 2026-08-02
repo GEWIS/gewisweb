@@ -1,94 +1,232 @@
 {% extends 'layout.html.twig' %}
 
-{% block page_title %}{{ 'Companies'|trans|page_title }}{{ parent() }}{% endblock %}
+{% set counts = career_menu_counts() %}
+{% set thesis = enum('App\\Entity\\Career\\Enums\\VacancyCategories').ThesisProjects %}
+
+{% block page_title %}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block pre_body %}
+    <div class="career-hero">
+        <div class="container py-4">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-7">
+                    <span class="page-header-eyebrow">{{ 'Career'|trans }}</span>
+                    <h2 class="mt-1 mb-2">{{ 'Find the job before you need one.'|trans }}</h2>
+                    <p class="lead text-body-secondary mb-3">
+                        {{ 'Internships, graduation projects and full-time positions, all of them from companies that know what a GEWIS member studies.'|trans }}
+                    </p>
+                    <form method="get" action="{{ path('career/vacancies') }}"
+                          class="d-flex flex-wrap gap-2 mb-3" role="search">
+                        <div class="input-group career-hero-search">
+                            <span class="input-group-text" aria-hidden="true">
+                                <span class="fas fa-magnifying-glass"></span>
+                            </span>
+                            <input type="search" name="search" class="form-control"
+                                   aria-label="{{ 'Search vacancies'|trans }}"
+                                   placeholder="{{ 'Search roles, companies, keywords'|trans }}">
+                        </div>
+                        <button type="submit" class="btn btn-gewis-primary">{{ 'Search vacancies'|trans }}</button>
+                    </form>
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        <span class="small text-body-secondary">{{ 'Popular:'|trans }}</span>
+                        {% for category in vacancy_categories() %}
+                            <a href="{{ path('career/vacancies', {category: category.value}) }}"
+                               class="badge badge-tag text-decoration-none">
+                                {{ category.pluralLabel|trans }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="row row-cols-2 g-2">
+                        {% for tile in [
+                            {'value': counts.vacancies, 'label': 'Open vacancies'|trans, 'href': path('career/vacancies')},
+                            {'value': counts.companies, 'label': 'Companies'|trans, 'href': path('career/companies')},
+                            {'value': counts.categories[thesis.value]|default(0), 'label': 'Graduation projects'|trans, 'href': path('career/vacancies', {category: thesis.value})},
+                            {'value': events|length, 'label': 'Upcoming events'|trans, 'href': path('activity/index', {category: 'career'})},
+                        ] %}
+                            <div class="col">
+                                <a href="{{ tile.href }}" class="career-stat">
+                                    <span class="career-stat-value">{{ tile.value }}</span>
+                                    <span class="career-stat-label">{{ tile.label }}</span>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
 {% block contents %}
-    <h1 class="mb-4">{{ 'Companies'|trans }}</h1>
-
-    {% set featuredPackage = featured_company() %}
-    {% if featuredPackage is not null %}
-        {% set featuredCompany = featuredPackage.getCompany %}
-        <div class="panel mb-4">
-            <div class="panel-heading">
-                <h4 class="mb-0">
-                    <span class="fas fa-star text-warning me-1"></span>
-                    <a href="{{ path('career/company', {slug: featuredCompany.getSlugName}) }}">
-                        {{ featuredCompany.getName }}
-                    </a>
-                    <small class="text-muted">{{ 'in the spotlight'|trans }}</small>
-                </h4>
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
+                <h3 class="mb-0">{{ 'Latest vacancies'|trans }}</h3>
+                <a href="{{ path('career/vacancies') }}" class="fw-semibold">
+                    {{ 'All %count% vacancies'|trans({'%count%': counts.vacancies}) }}
+                    <span class="fas fa-arrow-right small" aria-hidden="true"></span>
+                </a>
             </div>
-            <div class="panel-body markdown">
-                {{ featuredPackage.getArticle|localise_text|markdown }}
+
+            <div class="mb-4">
+                {% for vacancy in latestVacancies %}
+                    {% set company = vacancy.getCompany %}
+                    <div class="panel panel-surface {{ loop.first ? 'mt-0' : '' }}">
+                        <div class="panel-body d-flex gap-3">
+                            {% if company.getLogo %}
+                                <img class="career-logo-sm" style="object-fit: cover;" loading="lazy"
+                                     src="{{ image_url(company.getLogo, 'w320') }}" alt="">
+                            {% else %}
+                                <span class="career-logo career-logo-sm" aria-hidden="true">{{ company.getName|slice(0, 1)|upper }}</span>
+                            {% endif %}
+                            <div class="flex-grow-1 overflow-hidden">
+                                <h5 class="mb-0">
+                                    <a class="stretched-link" href="{{ path('career/vacancy', {
+                                        companySlug: company.getSlugName,
+                                        category: vacancy.getCategory.value,
+                                        vacancySlug: vacancy.getSlugName,
+                                    }) }}">{{ vacancy.getName|localise_text }}</a>
+                                </h5>
+                                <span class="d-block small text-body-secondary">
+                                    {{ company.getName }}
+                                    {% set location = vacancy.getLocation|localise_text %}
+                                    {% if location is not empty %}&middot; {{ location }}{% endif %}
+                                </span>
+                                <div class="d-flex flex-wrap gap-1 mt-2">
+                                    <span class="badge {{ vacancy.getCategory.badgeClass }}">{{ vacancy.getCategory.label|trans }}</span>
+                                    {% for label in vacancy.getLabels %}
+                                        <span class="badge badge-tag">{{ label.getName|localise_text }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% if vacancy.getEndDate is not null %}
+                                <div class="flex-shrink-0 text-end small text-body-secondary">
+                                    {{ 'Open until %date%'|trans({'%date%': vacancy.getEndDate|date('j M Y')}) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-body-secondary mb-0">{{ 'No vacancies are open right now.'|trans }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
+                <h3 class="mb-0">{{ 'Companies hiring GEWIS members'|trans }}</h3>
+                <a href="{{ path('career/companies') }}" class="fw-semibold">
+                    {{ 'All companies'|trans }}
+                    <span class="fas fa-arrow-right small" aria-hidden="true"></span>
+                </a>
+            </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-2">
+                {% for company in companies %}
+                    {% set openings = company.getNumberOfActiveJobs() %}
+                    <div class="col">
+                        <div class="panel panel-surface h-100 my-0">
+                            <div class="panel-body d-flex align-items-center gap-3">
+                                {% if company.getLogo %}
+                                    <img class="career-logo-xs" style="object-fit: cover;" loading="lazy"
+                                         src="{{ image_url(company.getLogo, 'w320') }}" alt="">
+                                {% else %}
+                                    <span class="career-logo career-logo-xs" aria-hidden="true">{{ company.getName|slice(0, 1)|upper }}</span>
+                                {% endif %}
+                                <div class="overflow-hidden">
+                                    <span class="career-company-name">
+                                        <a class="stretched-link text-body"
+                                           href="{{ path('career/company', {slug: company.getSlugName}) }}">
+                                            {{ company.getName }}
+                                        </a>
+                                    </span>
+                                    <span class="d-block small text-body-secondary">
+                                        {% if openings > 0 %}
+                                            {{ '%count% open role|%count% open roles'|trans({'%count%': openings}) }}
+                                        {% else %}
+                                            {{ 'No open vacancies'|trans }}
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col">
+                        <p class="text-body-secondary mb-0">{{ 'There are currently no companies to display.'|trans }}</p>
+                    </div>
+                {% endfor %}
             </div>
         </div>
-    {% endif %}
 
-    {% set highlighted = highlighted_vacancies() %}
-    {% if highlighted is not empty %}
-        <div class="panel mb-4">
-            <div class="panel-heading">
-                <h4 class="mb-0">
-                    <span class="fas fa-bolt text-warning me-1"></span>
-                    {{ 'Highlighted vacancies'|trans }}
-                </h4>
-            </div>
-            <div class="panel-body">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
-                    {% for vacancy in highlighted %}
-                        {% include 'partials/career/vacancy-card.html.twig' with {'vacancy': vacancy} only %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    {% endif %}
-
-    {% if companies is empty %}
-        <p class="text-muted">{{ 'There are currently no companies to display.'|trans }}</p>
-    {% endif %}
-
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
-        {% for company in companies %}
-            <div class="col">
-                <div class="card company-card h-100">
-                    <a href="{{ path('career/company', {slug: company.getSlugName}) }}"
-                       class="card-img-top d-flex align-items-center justify-content-center bg-body-secondary text-decoration-none overflow-hidden"
-                       style="height: 8rem;">
-                        {% if company.getLogo %}
-                            <img class="w-100 h-100" style="object-fit: contain;" loading="lazy"
-                                 src="{{ image_url(company.getLogo, 'w640') }}" alt="{{ company.getName }}">
+        <div class="col-lg-4">
+            {% set featuredPackage = featured_company() %}
+            {% if featuredPackage is not null %}
+                {% set featuredCompany = featuredPackage.getCompany %}
+                {% set featuredOpenings = featuredCompany.getNumberOfActiveJobs() %}
+                <div class="panel mt-0">
+                    <div class="career-featured-banner">
+                        {% if featuredCompany.getLogo %}
+                            <img loading="lazy" src="{{ image_url(featuredCompany.getLogo, 'w640') }}"
+                                 alt="{{ featuredCompany.getName }}">
                         {% else %}
-                            <span class="display-6 text-muted">{{ company.getName|slice(0, 1)|upper }}</span>
-                        {% endif %}
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title mb-1">
-                            <a href="{{ path('career/company', {slug: company.getSlugName}) }}">
-                                {{ company.getName }}
-                            </a>
-                        </h5>
-                        {% set slogan = company.getSlogan|localise_text %}
-                        {% if slogan is not empty %}
-                            <h6 class="card-subtitle text-muted fw-normal mb-0">{{ slogan }}</h6>
+                            <span class="career-logo career-logo-lg" aria-hidden="true">{{ featuredCompany.getName|slice(0, 1)|upper }}</span>
                         {% endif %}
                     </div>
-                    <ul class="list-group list-group-flush">
-                        {% for category in vacancy_categories() %}
-                            {% set amount = company.getNumberOfActiveJobs(category) %}
-                            {% if amount > 0 %}
-                                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                                   href="{{ path('career/vacancies', {category: category.value, company: company.getSlugName}) }}">
-                                    {{ (amount == 1 ? category.label : category.pluralLabel)|trans }}
-                                    <span class="badge badge-tag">{{ amount }}</span>
+                    <div class="panel-body">
+                        <span class="page-header-eyebrow career-featured-kicker">
+                            <span class="fas fa-star" aria-hidden="true"></span> {{ 'Featured this month'|trans }}
+                        </span>
+                        <h4 class="mt-1 mb-2">{{ featuredCompany.getName }}</h4>
+                        <div class="markdown small text-body-secondary vacancy-card-excerpt mb-3">
+                            {{ featuredPackage.getArticle|localise_text|markdown(['p']) }}
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="{{ path('career/company', {slug: featuredCompany.getSlugName}) }}"
+                               class="btn btn-sm btn-gewis-primary">{{ 'Read more'|trans }}</a>
+                            {% if featuredOpenings > 0 %}
+                                <a href="{{ path('career/vacancies', {company: featuredCompany.getSlugName}) }}"
+                                   class="btn btn-sm btn-outline-gewis-primary">
+                                    {{ '%count% open role|%count% open roles'|trans({'%count%': featuredOpenings}) }}
                                 </a>
                             {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if events is not empty %}
+                <div class="panel {{ featuredPackage is null ? 'mt-0' : '' }}">
+                    <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <h3>{{ 'Career events'|trans }}</h3>
+                        <a href="{{ path('activity/index', {category: 'career'}) }}"
+                           class="small fw-semibold">{{ 'All'|trans }}</a>
+                    </div>
+                    <div class="panel-body">
+                        {% for event in events %}
+                            {% include 'partials/activity/agenda-item.html.twig' with {'activity': event} only %}
                         {% endfor %}
-                        {% if company.getNumberOfActiveJobs() == 0 %}
-                            <li class="list-group-item text-muted small">{{ 'No open vacancies'|trans }}</li>
-                        {% endif %}
-                    </ul>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Staying at the university'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="text-body-secondary mb-0">
+                        {{ 'A career does not have to mean leaving. The TU/e takes on PhD candidates and PDEng trainees every year, and the departments our members graduate from are usually looking. Ask your supervisor, or the education committee, what is going on in your own group.'|trans }}
+                    </p>
                 </div>
             </div>
-        {% endfor %}
+
+            <div class="career-cta">
+                <h4 class="mb-2">{{ 'Hiring GEWIS members?'|trans }}</h4>
+                <p class="mb-3">
+                    {{ 'Post a vacancy or become a partner. Our External Affairs officer will get back to you.'|trans }}
+                </p>
+                <a href="mailto:{{ external_affairs_email }}" class="btn btn-sm">{{ 'Get in touch'|trans }}</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

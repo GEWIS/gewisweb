@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Career;
 
+use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Repository\Activity\ActivityRepository;
 use App\Repository\Career\CompanyRepository;
@@ -26,6 +27,11 @@ class CareerController extends AbstractController
      */
     private const int COMPANY_ACTIVITY_LIMIT = 3;
 
+    /**
+     * How much of the landing page's taste of the vacancies is shown before it sends the reader on to the full list.
+     */
+    private const int LATEST_VACANCY_LIMIT = 4;
+
     public function __construct(
         private readonly CompanyRepository $companyRepository,
         private readonly VacancyRepository $vacancyRepository,
@@ -34,7 +40,8 @@ class CareerController extends AbstractController
     }
 
     /**
-     * The public career landing page: an overview of all companies that are currently visible.
+     * Where somebody who is thinking about what comes after their degree lands: what GEWIS does about that, the events
+     * that go with it, the company in the spotlight and the vacancies companies have put forward.
      */
     #[Route(
         path: '',
@@ -44,11 +51,32 @@ class CareerController extends AbstractController
     {
         $companies = $this->companyRepository->findAllPublic();
 
+        return $this->render(
+            'career/index.html.twig',
+            [
+                'companies' => $companies,
+                'latestVacancies' => $this->vacancyRepository->findLatestForOverview(self::LATEST_VACANCY_LIMIT),
+                'events' => $this->activityRepository->findUpcoming(category: ActivityCategories::Career),
+            ],
+        );
+    }
+
+    /**
+     * Every company that is currently visible.
+     */
+    #[Route(
+        path: '/companies',
+        name: 'companies',
+    )]
+    public function companies(): Response
+    {
+        $companies = $this->companyRepository->findAllPublic();
+
         // Randomise the order so no company is structurally favoured.
         shuffle($companies);
 
         return $this->render(
-            'career/index.html.twig',
+            'career/companies.html.twig',
             ['companies' => $companies],
         );
     }

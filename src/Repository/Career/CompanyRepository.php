@@ -11,6 +11,7 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
+use function intval;
 use function mb_strtolower;
 use function trim;
 
@@ -77,6 +78,36 @@ class CompanyRepository extends ServiceEntityRepository
         $this->warmOverviewAssociations($companies);
 
         return $companies;
+    }
+
+    /**
+     * How many companies the public overview would list, for the count the navigation menu carries. The same three
+     * conditions as {@see self::findAllPublic()}, counted rather than hydrated, since the menu is on every page.
+     */
+    public function countPublic(): int
+    {
+        $sql = <<<'QUERY'
+            SELECT COUNT(*) FROM `Company` AS `t1`
+            LEFT JOIN (
+                SELECT `company_id`,
+                    COUNT(`company_id`) AS `totalPackages`,
+                    SUM(
+                        CASE WHEN `expires` <= CURRENT_TIMESTAMP
+                                OR `published` = 0
+                                OR `starts` > CURRENT_TIMESTAMP
+                            THEN 1
+                            ELSE 0
+                        END
+                    ) AS `expiredHiddenOrNotStartedPackages`
+                FROM `CompanyPackage`
+                GROUP BY `company_id`
+            ) `CompanyPackages` ON `CompanyPackages`.`company_id` = `t1`.`id`
+            WHERE `t1`.`published` = 1
+            AND `t1`.`liveRevision_id` IS NOT NULL
+            AND `CompanyPackages`.`totalPackages` > `CompanyPackages`.`expiredHiddenOrNotStartedPackages`
+            QUERY;
+
+        return intval($this->getEntityManager()->getConnection()->fetchOne($sql));
     }
 
     /**

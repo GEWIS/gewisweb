@@ -552,6 +552,59 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
+     * The upcoming activities, soonest first, for the panels that only list what is coming: the frontpage agenda, and
+     * (narrowed to the career category) the events on the career landing page. Three is what fits such a panel beside
+     * the page it sits next to, so that is what a caller gets unless it asks for something else.
+     *
+     * @return Activity[]
+     */
+    public function findUpcoming(
+        int $limit = 3,
+        ?ActivityCategories $category = null,
+    ): array {
+        $qb = $this->createQueryBuilder('a')
+            ->addSelect(
+                'lr',
+                'n',
+                'loc',
+            )
+            ->join(
+                'a.liveRevision',
+                'lr',
+            )
+            ->join(
+                'lr.name',
+                'n',
+            )
+            ->join(
+                'lr.location',
+                'loc',
+            )
+            ->andWhere('a.unpublishedAt IS NULL')
+            ->andWhere('lr.endTime > :now')
+            ->setParameter(
+                'now',
+                new DateTime(),
+                Types::DATETIME_MUTABLE,
+            )
+            ->orderBy(
+                'lr.beginTime',
+                'ASC',
+            )
+            ->setMaxResults($limit);
+
+        if (null !== $category) {
+            $qb->andWhere('lr.category = :category')
+                ->setParameter(
+                    'category',
+                    $category->value,
+                );
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Eager-loads the live revision's sign-up lists for the given activities in a single query, hydrating each
      * activity's (otherwise lazy) live-revision `signupLists` collection. This avoids the N+1 that the overview's
      * per-activity accessors ({@see Activity::getRelevantSignupList()}, {@see Activity::countPendingSignupLists()},
