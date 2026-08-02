@@ -1,12 +1,120 @@
 {% extends 'layout-sidebar.html.twig' %}
 
-{% block page_title %}{{ 'Your Company'|trans|page_title }}{{ parent() }}{% endblock %}
+{% block page_title %}{{ 'Dashboard'|trans|page_title }}{{ dashboard.company.name|page_title }}{{ parent() }}{% endblock %}
 
-{% block sidebar_label %}{{ 'Your Company'|trans }}{% endblock %}
+{% block sidebar_label %}{{ dashboard.company.name }}{% endblock %}
 
 {% block sidebar %}
     {% include 'partials/company-sidebar.html.twig' with {'activeRoute': 'overview'} %}
 {% endblock %}
 
 {% block contents %}
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h3 class="mb-0">{{ dashboard.company.name }}</h3>
+            <p class="text-muted mb-0">{{ 'Everything you can do for your company on the GEWIS website.'|trans }}</p>
+        </div>
+    </div>
+
+    {% if dashboard.profileNeedsAttention %}
+        <div class="alert alert-warning">
+            {% if dashboard.profileStatus is null or dashboard.company.liveRevision is null %}
+                {{ 'Your profile has not been approved yet, so your company is not shown on the website.'|trans }}
+            {% else %}
+                {{ 'Your contact at GEWIS asked for changes to your profile. Have a look at their feedback.'|trans }}
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="row g-3 mb-3">
+        {% for tile in [
+            {'label': 'Live vacancies'|trans, 'value': dashboard.liveVacancies|length},
+            {'label': 'Waiting for review'|trans, 'value': dashboard.awaitingReview|length},
+            {'label': 'Drafts'|trans, 'value': dashboard.drafts|length},
+            {'label': 'Highlighted'|trans, 'value': dashboard.highlightedVacancies},
+            {'label': 'Representatives'|trans, 'value': dashboard.representatives},
+        ] %}
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="panel h-100">
+                    <div class="panel-body text-center">
+                        <div class="fs-3">{{ tile.value }}</div>
+                        <div class="text-muted small">{{ tile.label }}</div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Your vacancies'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% set groups = [
+                        {'label': 'Live'|trans, 'items': dashboard.liveVacancies},
+                        {'label': 'Waiting for review'|trans, 'items': dashboard.awaitingReview},
+                        {'label': 'Drafts'|trans, 'items': dashboard.drafts},
+                    ] %}
+                    {% set anything = false %}
+                    {% for group in groups %}
+                        {% if group.items is not empty %}
+                            {% set anything = true %}
+                            <h6 class="text-muted small">{{ group.label }}</h6>
+                            <ul class="list-group mb-3">
+                                {% for vacancy in group.items %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>{{ vacancy.currentRevision.name|localise_text }}</span>
+                                        {% include 'partials/application/revision-status-badge.html.twig' with {
+                                            'status': vacancy.currentRevision.status,
+                                        } only %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                    {% if not anything %}
+                        <p class="text-muted mb-0">{{ 'You have not posted any vacancies yet.'|trans }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Your contract'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if dashboard.expiringPackages is empty %}
+                        <p class="text-muted mb-0">{{ 'Nothing runs out in the next three months.'|trans }}</p>
+                    {% else %}
+                        <ul class="list-group">
+                            {% for package in dashboard.expiringPackages %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>{{ package.type.label|trans }}</span>
+                                    <span class="text-muted small">
+                                        {{ 'until %date%'|trans({'%date%': package.expirationDate|date('j M Y')}) }}
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <p class="text-muted small mt-2 mb-0">
+                            {{ 'Get in touch with your contact at GEWIS to renew.'|trans }}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if dashboard.hasPendingBanner %}
+                <div class="panel">
+                    <div class="panel-body">
+                        <span class="badge badge-info">{{ 'Waiting'|trans }}</span>
+                        {{ 'Your proposed banner is with the committee.'|trans }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

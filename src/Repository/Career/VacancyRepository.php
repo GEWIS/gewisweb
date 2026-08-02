@@ -6,6 +6,7 @@ namespace App\Repository\Career;
 
 use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\Career\Company;
+use App\Entity\Career\CompanyHighlightPackage;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Career\Vacancy;
 use App\Entity\Career\VacancyLabel;
@@ -238,6 +239,45 @@ class VacancyRepository extends ServiceEntityRepository
     }
 
     /**
+     * What the companies with a running highlight package have put forward, for the career landing page. A pick that
+     * is no longer showable drops out on its own, since this is the same "active" predicate the overview uses.
+     *
+     * @return Vacancy[]
+     */
+    public function findHighlighted(): array
+    {
+        $qb = $this->activeVacancyQueryBuilder()
+            ->orderBy(
+                'c.name',
+                'ASC',
+            )
+            ->addOrderBy(
+                'j.id',
+                'ASC',
+            );
+
+        // An EXISTS rather than a selected join, so a vacancy picked by two packages is still listed once.
+        $subQuery = $this->getEntityManager()->createQueryBuilder()
+            ->select('1')
+            ->from(
+                CompanyHighlightPackage::class,
+                'highlight',
+            )
+            ->join(
+                'highlight.vacancies',
+                'highlighted',
+            )
+            ->where('highlighted = j')
+            ->andWhere('highlight.published = true')
+            ->andWhere('highlight.starts <= :now')
+            ->andWhere('highlight.expires > :now');
+
+        return $qb->andWhere($qb->expr()->exists($subQuery->getDQL()))
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Find a single publicly visible vacancy by its company, category and slug (the tuple that identifies it in a URL),
      * or null when it does not exist or is not currently active. Shares the "active" predicate and the fetch joins with
      * {@see self::findForOverview()}, so the detail page renders without lazy loads.
@@ -440,7 +480,60 @@ class VacancyRepository extends ServiceEntityRepository
 
         $qb->setFirstResult(($page - 1) * $pageSize)->setMaxResults($pageSize);
 
-        return new Paginator($qb);
+        // Nothing to-many is fetch-joined, so the page can be limited in the query itself rather than through the
+        // extra round trip that collects the ids first.
+        return new Paginator(
+            $qb,
+            false,
+        );
+    }
+
+    /**
+     * Every vacancy of one company, whatever state it is in, for the company's own overview.
+     *
+     * @return list<Vacancy>
+     *
+     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
+     */
+    public function findAllForCompany(Company $company): array
+    {
+        // Both the dashboard and the portal list ask every row whether it is live, which reads the package and the
+        // approved revision, so those come along instead of being fetched one row at a time.
+        $qb = $this->createQueryBuilder('v')
+            ->addSelect(
+                'cr',
+                'name',
+                'p',
+                'lr',
+            )
+            ->join(
+                'v.package',
+                'p',
+            )
+            ->join(
+                'v.currentRevision',
+                'cr',
+            )
+            ->join(
+                'cr.name',
+                'name',
+            )
+            ->leftJoin(
+                'v.liveRevision',
+                'lr',
+            )
+            ->where('p.company = :company')
+            ->setParameter(
+                'company',
+                $company->getId(),
+                Types::INTEGER,
+            )
+            ->orderBy(
+                'v.id',
+                'ASC',
+            );
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

@@ -1,6 +1,21 @@
 <li class="nav-item {{ activeRoute == 'overview' ? 'active' : '' }}">
     <a class="nav-link p-3" href="{{ path('company/index') }}">
-        {{ 'My Company'|trans }}
+        {{ 'Dashboard'|trans }}
+    </a>
+</li>
+<li class="nav-item {{ activeRoute == 'profile' ? 'active' : '' }}">
+    <a class="nav-link p-3" href="{{ path('company/profile') }}">
+        {{ 'Company profile'|trans }}
+    </a>
+</li>
+<li class="nav-item {{ activeRoute == 'vacancies' ? 'active' : '' }}">
+    <a class="nav-link p-3" href="{{ path('company/vacancies') }}">
+        {{ 'Vacancies'|trans }}
+    </a>
+</li>
+<li class="nav-item {{ activeRoute == 'representatives' ? 'active' : '' }}">
+    <a class="nav-link p-3" href="{{ path('company/representatives') }}">
+        {{ 'Representatives'|trans }}
     </a>
 </li>
 <li class="nav-item {{ activeRoute == 'security' ? 'active' : '' }}">

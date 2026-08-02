@@ -12,6 +12,8 @@ use App\Repository\Career\VacancyRepository;
 use App\Tests\Integration\DatabaseTestCase;
 use DateTime;
 
+use function ksort;
+
 final class CompanyHighlightPackageTest extends DatabaseTestCase
 {
     public function testOnlyACompanysOwnLiveVacanciesMayBeHighlighted(): void
@@ -106,6 +108,35 @@ final class CompanyHighlightPackageTest extends DatabaseTestCase
         self::assertNotContains(
             $active[0],
             $this->highlightPackages()->findActive(),
+        );
+    }
+
+    /**
+     * The landing page asks for the picks themselves rather than walking the packages, so what it puts on the page has
+     * to agree with what each package says it can show.
+     */
+    public function testTheHighlightsOnTheLandingPageAreThePicksThatAreStillShowable(): void
+    {
+        $expected = [];
+        foreach ($this->highlightPackages()->findActive() as $package) {
+            foreach ($package->getDisplayableVacancies() as $vacancy) {
+                $expected[$vacancy->getSlugName()] = true;
+            }
+        }
+
+        self::assertNotEmpty($expected);
+
+        $highlighted = [];
+        foreach ($this->vacancies()->findHighlighted() as $vacancy) {
+            $highlighted[$vacancy->getSlugName()] = true;
+        }
+
+        ksort($expected);
+        ksort($highlighted);
+
+        self::assertSame(
+            $expected,
+            $highlighted,
         );
     }
 

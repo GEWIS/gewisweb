@@ -1,0 +1,93 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% import 'partials/application/revision-diff.html.twig' as diffmacro %}
+
+{% block page_title %}{{ 'Status'|trans|page_title }}{{ company.name|page_title }}{{ parent() }}{% endblock %}
+
+{% block sidebar_label %}{{ company.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>{{ diff_styles() }}</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'partials/company-sidebar.html.twig' with {'activeRoute': 'profile'} %}
+{% endblock %}
+
+{% block contents %}
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h3 class="mb-0">{{ 'Your proposed profile'|trans }}</h3>
+            <p class="text-muted mb-0">
+                {{ 'Revision #%number%: %status%'|trans({
+                    '%number%': revision.revisionNumber,
+                    '%status%': revision.status|trans,
+                }) }}
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'What you changed'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if previous is null %}
+                        <p class="text-muted">{{ 'This is your first version, so there is nothing to compare it against.'|trans }}</p>
+                    {% endif %}
+                    {% set dutch %}
+                        {{ diffmacro.field_diff('Slogan'|trans, previous ? previous.slogan.valueNL : null, revision.slogan.valueNL) }}
+                        {{ diffmacro.field_diff('Website'|trans, previous ? previous.website.valueNL : null, revision.website.valueNL) }}
+                        {{ diffmacro.field_diff('Description'|trans, previous ? previous.description.valueNL : null, revision.description.valueNL, 'Inline') }}
+                    {% endset %}
+                    {% set english %}
+                        {{ diffmacro.field_diff('Slogan'|trans, previous ? previous.slogan.valueEN : null, revision.slogan.valueEN) }}
+                        {{ diffmacro.field_diff('Website'|trans, previous ? previous.website.valueEN : null, revision.website.valueEN) }}
+                        {{ diffmacro.field_diff('Description'|trans, previous ? previous.description.valueEN : null, revision.description.valueEN, 'Inline') }}
+                    {% endset %}
+                    {{ diffmacro.language_columns(dutch, english) }}
+                    <hr>
+                    {{ diffmacro.field_diff('Contact name'|trans, previous ? previous.contactName : null, revision.contactName) }}
+                    {{ diffmacro.field_diff('Contact email address'|trans, previous ? previous.contactEmail : null, revision.contactEmail) }}
+                    {{ diffmacro.field_diff('Contact phone number'|trans, previous ? previous.contactPhone : null, revision.contactPhone) }}
+                    {{ diffmacro.field_diff('Address'|trans, previous ? previous.contactAddress : null, revision.contactAddress) }}
+                </div>
+            </div>
+        </div>
+
+        <aside class="col-md-4">
+            <div class="panel p-3">
+                <h5>{{ 'What you can do'|trans }}</h5>
+                {{ form_start(decisionForm, {'action': path('company/profile/decide')}) }}
+                    {% if decisionForm.message is defined %}
+                        {{ form_row(decisionForm.message) }}
+                    {% endif %}
+                    <div class="d-grid gap-2">
+                        {% if decisionForm.submit is defined %}
+                            {{ form_widget(decisionForm.submit, {'attr': {'class': 'btn btn-success'}}) }}
+                        {% else %}
+                            <p class="text-muted small mb-0">
+                                {{ 'Nothing right now: your profile is with your contact at GEWIS.'|trans }}
+                            </p>
+                        {% endif %}
+                    </div>
+                {{ form_end(decisionForm) }}
+                {% if revision.status.editableByAuthor %}
+                    <a href="{{ path('company/profile/edit') }}" class="btn btn-sm btn-outline-gewis-primary w-100 mt-2">
+                        {{ 'Keep editing'|trans }}
+                    </a>
+                {% endif %}
+            </div>
+
+            {% include 'partials/application/revision-comments.html.twig' with {
+                'comments': comments,
+                'commentAction': path('company/profile/comment'),
+                'csrfToken': csrf_token('company_profile_comment'),
+                'audienceNote': 'Visible to you and your contact at GEWIS.'|trans,
+            } only %}
+        </aside>
+    </div>
+{% endblock %}

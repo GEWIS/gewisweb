@@ -1,0 +1,40 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ 'Edit your profile'|trans|page_title }}{{ company.name|page_title }}{{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/ckeditor5/ckeditor5.css') }}">
+{% endblock %}
+
+{% block sidebar_label %}{{ company.name }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'partials/company-sidebar.html.twig' with {'activeRoute': 'profile'} %}
+{% endblock %}
+
+{% block contents %}
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h3 class="mb-0">{{ 'Edit your profile'|trans }}</h3>
+            <p class="text-muted mb-0">
+                {{ 'Saving keeps this as a draft. It only reaches the website once the committee approves it.'|trans }}
+            </p>
+        </div>
+    </div>
+    {% set hasFeedback = comments is defined and comments is not empty %}
+    <div class="row">
+        <div class="{{ hasFeedback ? 'col-md-9' : 'col-md-12' }}">
+            {% include 'partials/career/company-form.html.twig' with {
+                'form': form,
+                'submitLabel': 'Save draft'|trans,
+                'cancelUrl': path('company/profile'),
+            } only %}
+        </div>
+        {% if hasFeedback %}
+            <div class="col-md-3">
+                {% include 'partials/application/review-feedback.html.twig' with {'comments': comments} only %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
