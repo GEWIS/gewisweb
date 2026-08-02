@@ -1,0 +1,61 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ 'Highlights'|trans|page_title }}{{ company.name|page_title }}{{ parent() }}{% endblock %}
+
+{% block sidebar_label %}{{ company.name }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'partials/company-sidebar.html.twig' with {'activeRoute': 'highlights'} %}
+{% endblock %}
+
+{% block contents %}
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h3 class="mb-0">{{ 'Highlighted vacancies'|trans }}</h3>
+            <p class="text-muted mb-0">
+                {{ 'Pick which of your vacancies appear on the career page. There is no limit per category.'|trans }}
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel">
+                <div class="panel-body">
+                    {% if package is null %}
+                        <p class="text-muted mb-0">
+                            {{ 'You do not have a highlight package running. Get in touch with your contact at GEWIS if you would like one.'|trans }}
+                        </p>
+                    {% else %}
+                        <p class="text-muted small">
+                            {{ 'A vacancy that closes, or that you take down, drops off the career page on its own.'|trans }}
+                        </p>
+                        {{ form_start(form, {'method': 'POST'}) }}
+                            {{ form_row(form.vacancies) }}
+                            <button type="submit" class="btn btn-gewis-primary">{{ 'Save selection'|trans }}</button>
+                        {{ form_end(form) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% if package is not null %}
+            <div class="col-md-4">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Currently on the career page'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            {% for vacancy in package.displayableVacancies %}
+                                <li class="list-group-item">{{ vacancy.getName|localise_text }}</li>
+                            {% else %}
+                                <li class="list-group-item text-muted">{{ 'Nothing is highlighted right now.'|trans }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

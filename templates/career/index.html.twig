@@ -24,6 +24,25 @@
         </div>
     {% endif %}
 
+    {% set highlighted = highlighted_vacancies() %}
+    {% if highlighted is not empty %}
+        <div class="panel mb-4">
+            <div class="panel-heading">
+                <h4 class="mb-0">
+                    <span class="fas fa-bolt text-warning me-1"></span>
+                    {{ 'Highlighted vacancies'|trans }}
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
+                    {% for vacancy in highlighted %}
+                        {% include 'partials/career/vacancy-card.html.twig' with {'vacancy': vacancy} only %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     {% if companies is empty %}
         <p class="text-muted">{{ 'There are currently no companies to display.'|trans }}</p>
     {% endif %}
