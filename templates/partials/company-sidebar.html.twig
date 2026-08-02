@@ -18,6 +18,11 @@
         {{ 'Highlights'|trans }}
     </a>
 </li>
+<li class="nav-item {{ activeRoute == 'banner' ? 'active' : '' }}">
+    <a class="nav-link p-3" href="{{ path('company/banner') }}">
+        {{ 'Banner'|trans }}
+    </a>
+</li>
 <li class="nav-item {{ activeRoute == 'representatives' ? 'active' : '' }}">
     <a class="nav-link p-3" href="{{ path('company/representatives') }}">
         {{ 'Representatives'|trans }}
