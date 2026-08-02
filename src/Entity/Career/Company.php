@@ -26,8 +26,10 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OrderBy;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Override;
 use RuntimeException;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use function array_filter;
 use function array_map;
@@ -44,6 +46,14 @@ use function count;
  */
 #[Entity(repositoryClass: CompanyRepository::class)]
 #[HasLifecycleCallbacks]
+#[UniqueConstraint(
+    name: 'company_slug_uniq',
+    columns: ['slugName'],
+)]
+#[UniqueEntity(
+    fields: ['slugName'],
+    message: 'Another company already uses this slug.',
+)]
 class Company implements RevisableInterface
 {
     use IdentifiableTrait;

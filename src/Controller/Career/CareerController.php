@@ -8,6 +8,7 @@ use App\Entity\Career\Enums\VacancyCategories;
 use App\Repository\Activity\ActivityRepository;
 use App\Repository\Career\CompanyRepository;
 use App\Repository\Career\VacancyRepository;
+use App\Util\Application\SlugRule;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -58,6 +59,7 @@ class CareerController extends AbstractController
     #[Route(
         path: '/company/{slug}',
         name: 'company',
+        requirements: ['slug' => SlugRule::ROUTE_REQUIREMENT],
     )]
     public function company(string $slug): Response
     {
@@ -100,6 +102,10 @@ class CareerController extends AbstractController
     #[Route(
         path: '/company/{companySlug}/{category}/{vacancySlug}',
         name: 'vacancy',
+        requirements: [
+            'companySlug' => SlugRule::ROUTE_REQUIREMENT,
+            'vacancySlug' => SlugRule::ROUTE_REQUIREMENT,
+        ],
     )]
     public function vacancy(
         string $companySlug,
