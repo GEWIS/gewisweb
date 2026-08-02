@@ -39,6 +39,11 @@
             <div class="vacancy-card-excerpt markdown small text-body-secondary">
                 {{ vacancy.getDescription|localise_text|markdown(['p']) }}
             </div>
+            {% if vacancy.getEndDate is not null %}
+                <div class="text-body-secondary small mt-auto">
+                    {{ 'Open until %date%'|trans({'%date%': vacancy.getEndDate|date('j F Y')}) }}
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

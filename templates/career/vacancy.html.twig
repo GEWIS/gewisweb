@@ -41,6 +41,11 @@
                             <span class="badge badge-tag">{{ label.getName|localise_text }}</span>
                         {% endfor %}
                     </div>
+                    {% if vacancy.getEndDate is not null %}
+                        <p class="text-body-secondary small mb-3">
+                            {{ 'Open until %date%'|trans({'%date%': vacancy.getEndDate|date('j F Y')}) }}
+                        </p>
+                    {% endif %}
                     {% if vacancyWebsite is not empty %}
                         <a href="{{ vacancyWebsite }}" target="_blank" rel="noopener noreferrer"
                            class="btn btn-gewis-primary w-100">

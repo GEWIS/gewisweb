@@ -8,7 +8,6 @@ use App\Entity\Application\RevisableInterface;
 use App\Entity\Application\RevisionInterface;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Application\Traits\TimestampableTrait;
-use App\Entity\Career\Enums\CompanyPackageTypes;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Decision\Member as MemberModel;
 use App\Entity\Decision\Organ as OrganModel;
@@ -463,18 +462,37 @@ class Company implements RevisableInterface
     }
 
     /**
+     * The company's running package of one kind, or null when it holds none. A company is not stopped from buying the
+     * same kind twice, so this answers with the first one that is running.
+     *
+     * @template T of CompanyPackage
+     *
+     * @param class-string<T> $class
+     *
+     * @return T|null
+     */
+    public function getActivePackage(string $class): ?CompanyPackage
+    {
+        foreach ($this->getPackages() as $package) {
+            if (
+                !$package instanceof $class
+                || !$package->isActive()
+            ) {
+                continue;
+            }
+
+            return $package;
+        }
+
+        return null;
+    }
+
+    /**
      * Returns true if company is featured.
      */
     public function isFeatured(): bool
     {
-        $featuredPackages = array_filter(
-            $this->getPackages()->toArray(),
-            static function (CompanyPackage $package) {
-                return CompanyPackageTypes::Featured === $package->getType() && $package->isActive();
-            },
-        );
-
-        return [] !== $featuredPackages;
+        return null !== $this->getActivePackage(CompanyFeaturedPackage::class);
     }
 
     /**
@@ -482,14 +500,7 @@ class Company implements RevisableInterface
      */
     public function isBannerActive(): bool
     {
-        $banners = array_filter(
-            $this->getPackages()->toArray(),
-            static function (CompanyPackage $package) {
-                return CompanyPackageTypes::Banner === $package->getType() && $package->isActive();
-            },
-        );
-
-        return [] !== $banners;
+        return null !== $this->getActivePackage(CompanyBannerPackage::class);
     }
 
     /**

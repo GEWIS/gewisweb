@@ -7,6 +7,7 @@ namespace App\Repository\Career;
 use App\Entity\Career\Company;
 use App\Entity\Career\CompanyBannerPackage;
 use App\Entity\Career\CompanyFeaturedPackage;
+use App\Entity\Career\CompanyHighlightPackage;
 use App\Entity\Career\CompanyJobPackage;
 use App\Entity\Career\CompanyPackage;
 use App\Entity\Career\Enums\CompanyPackageTypes;
@@ -42,7 +43,11 @@ class CompanyPackageRepository extends ServiceEntityRepository
      *     : (
      *         $companyPackageType is CompanyPackageTypes::Featured
      *         ? CompanyFeaturedPackage[]
-     *         : CompanyJobPackage[]
+     *         : (
+     *             $companyPackageType is CompanyPackageTypes::Highlight
+     *             ? CompanyHighlightPackage[]
+     *             : CompanyJobPackage[]
+     *         )
      *     )
      * )
      */
@@ -86,7 +91,11 @@ class CompanyPackageRepository extends ServiceEntityRepository
      *     : (
      *         $companyPackageType is CompanyPackageTypes::Featured
      *         ? CompanyFeaturedPackage[]
-     *         : CompanyJobPackage[]
+     *         : (
+     *             $companyPackageType is CompanyPackageTypes::Highlight
+     *             ? CompanyHighlightPackage[]
+     *             : CompanyJobPackage[]
+     *         )
      *     )
      * )
      */
@@ -196,7 +205,11 @@ class CompanyPackageRepository extends ServiceEntityRepository
      *     : (
      *         $type is CompanyPackageTypes::Featured
      *         ? class-string<CompanyFeaturedPackage>
-     *         : class-string<CompanyJobPackage>
+     *         : (
+     *             $type is CompanyPackageTypes::Highlight
+     *             ? class-string<CompanyHighlightPackage>
+     *             : class-string<CompanyJobPackage>
+     *         )
      *     )
      * )
      */
@@ -205,6 +218,7 @@ class CompanyPackageRepository extends ServiceEntityRepository
         return match ($type) {
             CompanyPackageTypes::Banner => CompanyBannerPackage::class,
             CompanyPackageTypes::Featured => CompanyFeaturedPackage::class,
+            CompanyPackageTypes::Highlight => CompanyHighlightPackage::class,
             CompanyPackageTypes::Job => CompanyJobPackage::class,
         };
     }

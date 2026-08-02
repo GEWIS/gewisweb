@@ -25,6 +25,12 @@ enum ImageVariant: string
     case Square = 'square';
     case Square2x = 'square2x';
 
+    // The company banner sizes, each at the box it is shown in and at twice that for a denser screen.
+    case Leaderboard = 'leaderboard';
+    case Leaderboard2x = 'leaderboard2x';
+    case Billboard = 'billboard';
+    case Billboard2x = 'billboard2x';
+
     /**
      * The target width, in pixels.
      */
@@ -39,6 +45,10 @@ enum ImageVariant: string
             self::W2560 => 2560,
             self::Square => 400,
             self::Square2x => 800,
+            self::Leaderboard => 728,
+            self::Leaderboard2x => 1456,
+            self::Billboard => 970,
+            self::Billboard2x => 1940,
         };
     }
 
@@ -53,6 +63,10 @@ enum ImageVariant: string
             self::Cover2x => 720,
             self::Square => 400,
             self::Square2x => 800,
+            self::Leaderboard => 90,
+            self::Leaderboard2x => 180,
+            self::Billboard => 250,
+            self::Billboard2x => 500,
             default => null,
         };
     }

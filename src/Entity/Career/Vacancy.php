@@ -12,6 +12,7 @@ use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Decision\Member as MemberModel;
 use App\Entity\Decision\Organ as OrganModel;
 use App\Repository\Career\VacancyRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -203,7 +204,10 @@ class Vacancy implements RevisableInterface
 
     public function isActive(): bool
     {
-        return null !== $this->getLiveRevision()
+        $live = $this->getLiveRevision();
+
+        return null !== $live
+            && $live->isWithinPostingWindow()
             && $this->isPublished()
             && $this->getPackage()->isActive()
             && !$this->getPackage()->getCompany()->isHidden();
@@ -284,6 +288,22 @@ class Vacancy implements RevisableInterface
     public function getAttachment(): CareerLocalisedText
     {
         return $this->getDisplayRevision()->getAttachment();
+    }
+
+    /**
+     * Display proxy. The day the vacancy starts being shown, or null for as soon as it is approved.
+     */
+    public function getStartDate(): ?DateTime
+    {
+        return $this->getDisplayRevision()->getStartDate();
+    }
+
+    /**
+     * Display proxy. The last day the vacancy is shown.
+     */
+    public function getEndDate(): DateTime
+    {
+        return $this->getDisplayRevision()->getEndDate();
     }
 
     /**

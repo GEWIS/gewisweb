@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Career;
 
+use App\Entity\Career\Company;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Career\Vacancy;
 use App\Entity\Career\VacancyLabel;
@@ -327,11 +328,49 @@ class VacancyRepository extends ServiceEntityRepository
             ->andWhere('p.expires > :now')
             ->andWhere('c.published = true')
             ->andWhere('c.liveRevision IS NOT NULL')
+            // No start date means the vacancy appears as soon as it is approved; the closing day is always set, and
+            // the package's own expiry above caps it regardless.
+            ->andWhere('lr.startDate IS NULL OR lr.startDate <= :today')
+            ->andWhere('lr.endDate >= :today')
             ->setParameter(
                 'now',
                 new DateTime(),
                 Types::DATETIME_MUTABLE,
+            )
+            ->setParameter(
+                'today',
+                new DateTime('today'),
+                Types::DATE_MUTABLE,
             );
+    }
+
+    /**
+     * The vacancies a company may put in a highlight package: its own, currently showable ones. There is no cap per
+     * category on purpose, so this is simply everything that is live for the company right now.
+     *
+     * @return list<Vacancy>
+     *
+     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
+     */
+    public function findHighlightableForCompany(Company $company): array
+    {
+        return $this->activeVacancyQueryBuilder()
+            ->andWhere('c.id = :companyId')
+            ->setParameter(
+                'companyId',
+                $company->getId(),
+                Types::INTEGER,
+            )
+            ->orderBy(
+                'lr.category',
+                'ASC',
+            )
+            ->addOrderBy(
+                'j.id',
+                'ASC',
+            )
+            ->getQuery()
+            ->getResult();
     }
 
     public function findByPackageAndCompany(

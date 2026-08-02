@@ -34,6 +34,7 @@ use function boolval;
         'job' => CompanyJobPackage::class,
         'banner' => CompanyBannerPackage::class,
         'featured' => CompanyFeaturedPackage::class,
+        'highlight' => CompanyHighlightPackage::class,
     ],
 )]
 abstract class CompanyPackage
@@ -169,15 +170,12 @@ abstract class CompanyPackage
 
     public function isActive(): bool
     {
-        $now = new DateTime();
         if ($this->isExpired()) {
-            // unpublish activity
-            $this->setPublished(false);
-
             return false;
         }
 
-        return $now >= $this->getStartingDate() && $this->isPublished();
+        return new DateTime() >= $this->getStartingDate()
+            && $this->isPublished();
     }
 
     /**

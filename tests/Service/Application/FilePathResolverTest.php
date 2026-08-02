@@ -81,7 +81,7 @@ final class FilePathResolverTest extends TestCase
         $resolver = new FilePathResolver();
         $path = 'career/42/images/x.png';
 
-        // Small variants are the logo profile (near-lossless); large ones the banner profile.
+        // A banner is asked for at one of its own two boxes; everything else on a company is the logo.
         self::assertSame(
             ImageProfile::CompanyLogo,
             $resolver->profileForPath(
@@ -97,17 +97,17 @@ final class FilePathResolverTest extends TestCase
             ),
         );
         self::assertSame(
-            ImageProfile::CompanyBanner,
+            ImageProfile::CompanyBannerLeaderboard,
             $resolver->profileForPath(
                 $path,
-                ImageVariant::W1280,
+                ImageVariant::Leaderboard2x,
             ),
         );
         self::assertSame(
-            ImageProfile::CompanyBanner,
+            ImageProfile::CompanyBannerBillboard,
             $resolver->profileForPath(
                 $path,
-                ImageVariant::W2560,
+                ImageVariant::Billboard,
             ),
         );
     }

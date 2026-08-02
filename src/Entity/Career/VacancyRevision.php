@@ -8,6 +8,7 @@ use App\Entity\Application\AbstractRevision;
 use App\Entity\Application\RevisableInterface;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Repository\Career\VacancyRevisionRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -146,6 +147,25 @@ class VacancyRevision extends AbstractRevision
         enumType: VacancyCategories::class,
     )]
     private VacancyCategories $category;
+
+    /**
+     * The day the vacancy starts being shown, or null to show it from the moment it is approved.
+     */
+    #[Column(
+        type: Types::DATE_MUTABLE,
+        nullable: true,
+    )]
+    private ?DateTime $startDate = null;
+
+    /**
+     * The last day the vacancy is shown. Required: a company knows when applications close before it knows anything
+     * else, and a posting nobody has to put an end to is one that quietly goes stale. The owning job package caps it
+     * regardless, since a vacancy cannot outlive the contract it was sold under.
+     *
+     * The window is part of the reviewed content, so moving it goes past the committee like anything else.
+     */
+    #[Column(type: Types::DATE_MUTABLE)]
+    private DateTime $endDate;
 
     /**
      * The labels of this revision of the vacancy. Each revision owns its own assignments (carried forward when a draft
@@ -329,5 +349,42 @@ class VacancyRevision extends AbstractRevision
     public function setCategory(VacancyCategories $category): void
     {
         $this->category = $category;
+    }
+
+    public function getStartDate(): ?DateTime
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(?DateTime $startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
+    public function getEndDate(): DateTime
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(DateTime $endDate): void
+    {
+        $this->endDate = $endDate;
+    }
+
+    /**
+     * Whether today falls inside the posting window. The last day counts.
+     */
+    public function isWithinPostingWindow(DateTime $now = new DateTime()): bool
+    {
+        $today = new DateTime($now->format('Y-m-d'));
+
+        if (
+            null !== $this->startDate
+            && $today < $this->startDate
+        ) {
+            return false;
+        }
+
+        return $today <= $this->endDate;
     }
 }

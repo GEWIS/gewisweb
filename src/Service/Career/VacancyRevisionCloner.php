@@ -15,7 +15,7 @@ use function assert;
 /**
  * Spawns the next Draft {@see VacancyRevision} from an existing one (for "changes requested", reopening, or editing
  * an approved vacancy). The localised texts are deep-copied into fresh rows so orphan-removal can never delete the
- * source revision's content; the contact details and category are copied by value. The shared workflow wiring
+ * source revision's content; the contact details, category and posting window are copied by value. The shared wiring
  * (authorship, revision number, chain link) lives in {@see AbstractRevisionCloner}.
  */
 final readonly class VacancyRevisionCloner extends AbstractRevisionCloner
@@ -58,6 +58,8 @@ final readonly class VacancyRevisionCloner extends AbstractRevisionCloner
         $draft->setContactPhone($source->getContactPhone());
         $draft->setContactEmail($source->getContactEmail());
         $draft->setCategory($source->getCategory());
+        $draft->setStartDate($source->getStartDate());
+        $draft->setEndDate($source->getEndDate());
         // Labels (reference entities) are carried over to the draft; without this, editing would blank them.
         $draft->addLabels($source->getLabels()->toArray());
     }
