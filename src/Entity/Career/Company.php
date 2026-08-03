@@ -12,6 +12,7 @@ use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Decision\Member as MemberModel;
 use App\Entity\Decision\Organ as OrganModel;
 use App\Entity\User\CompanyUser as CompanyUserModel;
+use App\Entity\User\Enums\UserRoles;
 use App\Repository\Career\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -184,6 +185,12 @@ class Company implements RevisableInterface
         }
 
         $this->setLiveRevision($revision);
+    }
+
+    #[Override]
+    public function restoreLiveRevision(): void
+    {
+        $this->setCurrentRevision($this->getLiveRevision());
     }
 
     /**
@@ -523,6 +530,17 @@ class Company implements RevisableInterface
     public function getResourceId(): string
     {
         return 'company';
+    }
+
+    /**
+     * On top of the board, C4 reviews everything in the career module.
+     *
+     * @return list<UserRoles>
+     */
+    #[Override]
+    public function getReviewerRoles(): array
+    {
+        return [UserRoles::CompanyAdmin];
     }
 
     /**

@@ -4,51 +4,42 @@ declare(strict_types=1);
 
 namespace App\Controller\Career;
 
-use App\Entity\Application\AbstractRevision;
+use App\Controller\Application\AbstractRevisionReviewController;
 use App\Entity\Application\Enums\AlertTypes;
-use App\Entity\Application\Enums\RevisionStatus;
+use App\Entity\Application\RevisionInterface;
 use App\Entity\Career\CompanyRevision;
-use App\Entity\Career\CompanyRevisionComment;
 use App\Entity\Career\VacancyRevision;
-use App\Entity\Career\VacancyRevisionComment;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
-use App\Form\Application\ReviewDecisionType;
 use App\Repository\Career\CompanyPackageRepository;
 use App\Repository\Career\CompanyRevisionCommentRepository;
 use App\Repository\Career\CompanyRevisionRepository;
 use App\Repository\Career\VacancyRevisionCommentRepository;
 use App\Repository\Career\VacancyRevisionRepository;
 use App\Security\Application\RevisionVoter;
-use App\Security\User\SudoVoter;
 use App\Service\Application\EditLockService;
-use App\Service\Career\CareerDraftDiscarder;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Target;
+use App\Service\Application\RevisionDiscarder;
+use App\ViewModel\Application\ReviewQueueRow;
+use App\ViewModel\Application\RevisionActions;
+use Override;
 use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Workflow\WorkflowInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-use function strval;
-use function trim;
+use function assert;
 
 /**
  * The review surface for the career module: one queue holding both the company profiles and the vacancies waiting for
  * the committee, and a per-revision screen showing what changed against the revision before it, the discussion, and
  * whichever transitions the workflow allows the person looking at it.
  *
- * The same screen serves the committee and the company that proposed the change. Which buttons appear is left to the
- * workflow guards rather than decided here, so a company only ever sees "submit for review" and never has to be told
- * apart from a reviewer in this code.
+ * Everything here is the committee's; a company follows its own proposal through the portal instead. Which buttons
+ * appear is still left to the workflow guards rather than decided here, so the screen does not have to tell a
+ * reviewer apart from an author.
  */
 #[IsGranted(
     attribute: UserRoles::CompanyAdmin->value,
@@ -58,7 +49,7 @@ use function trim;
     path: '/admin/career/approvals',
     name: 'admin/career/approvals/',
 )]
-class AdminApprovalController extends AbstractController
+class AdminApprovalController extends AbstractRevisionReviewController
 {
     public function __construct(
         private readonly CompanyRevisionRepository $companyRevisionRepository,
@@ -66,12 +57,8 @@ class AdminApprovalController extends AbstractController
         private readonly CompanyRevisionCommentRepository $companyCommentRepository,
         private readonly VacancyRevisionCommentRepository $vacancyCommentRepository,
         private readonly CompanyPackageRepository $packageRepository,
-        private readonly CareerDraftDiscarder $draftDiscarder,
+        private readonly RevisionDiscarder $draftDiscarder,
         private readonly EditLockService $editLockService,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly TranslatorInterface $translator,
-        #[Target('revisionStateMachine')]
-        private readonly WorkflowInterface $revisionStateMachine,
     ) {
     }
 
@@ -84,8 +71,24 @@ class AdminApprovalController extends AbstractController
         return $this->render(
             'career/admin/approvals/index.html.twig',
             [
-                'companyRevisions' => $this->companyRevisionRepository->findForReview(),
-                'vacancyRevisions' => $this->vacancyRevisionRepository->findForReview(),
+                'companyRows' => ReviewQueueRow::fromRevisions(
+                    $this->companyRevisionRepository->findForReview(),
+                    static function (RevisionInterface $revision): string {
+                        assert($revision instanceof CompanyRevision);
+
+                        return $revision->getCompany()->getName();
+                    },
+                    'admin/career/approvals/company',
+                ),
+                'vacancyRows' => ReviewQueueRow::fromRevisions(
+                    $this->vacancyRevisionRepository->findForReview(),
+                    static function (RevisionInterface $revision): string {
+                        assert($revision instanceof VacancyRevision);
+
+                        return $revision->getVacancy()->getSlugName();
+                    },
+                    'admin/career/approvals/vacancy',
+                ),
                 'pendingBanners' => $this->packageRepository->findPendingBanners(),
             ],
         );
@@ -98,10 +101,9 @@ class AdminApprovalController extends AbstractController
     )]
     public function reviewCompany(CompanyRevision $revision): Response
     {
-        return $this->renderReviewFor(
-            $revision,
-            $this->createDecisionForm($revision),
-        );
+        $this->assertMayReview($revision);
+
+        return $this->renderReview($revision);
     }
 
     #[Route(
@@ -111,10 +113,9 @@ class AdminApprovalController extends AbstractController
     )]
     public function reviewVacancy(VacancyRevision $revision): Response
     {
-        return $this->renderReviewFor(
-            $revision,
-            $this->createDecisionForm($revision),
-        );
+        $this->assertMayReview($revision);
+
+        return $this->renderReview($revision);
     }
 
     #[Route(
@@ -219,11 +220,11 @@ class AdminApprovalController extends AbstractController
         );
 
         $company = $revision->getCompany();
-        if (!$this->isDiscardable($revision)) {
+        if (!$this->revisionActions($revision)->isDiscardable) {
             return $this->refuseDiscard($revision);
         }
 
-        $this->draftDiscarder->discardCompanyDraft($revision);
+        $this->draftDiscarder->discardToLive($revision);
         $this->editLockService->purge($company);
         $this->entityManager->flush();
 
@@ -256,11 +257,11 @@ class AdminApprovalController extends AbstractController
         );
 
         $vacancy = $revision->getVacancy();
-        if (!$this->isDiscardable($revision)) {
+        if (!$this->revisionActions($revision)->isDiscardable) {
             return $this->refuseDiscard($revision);
         }
 
-        $this->draftDiscarder->discardVacancyDraft($revision);
+        $this->draftDiscarder->discardToLive($revision);
         $this->editLockService->purge($vacancy);
         $this->entityManager->flush();
 
@@ -282,7 +283,7 @@ class AdminApprovalController extends AbstractController
             $revision,
         );
 
-        $form = $this->createDecisionForm($revision)->handleRequest($request);
+        $form = $this->createDecisionForm($this->revisionActions($revision))->handleRequest($request);
 
         // The clicked button names the transition; the form's validation groups make feedback mandatory for a
         // rejection or a request for changes. On any error the review screen comes back with it.
@@ -290,59 +291,20 @@ class AdminApprovalController extends AbstractController
             !$form->isSubmitted()
             || !$form->isValid()
         ) {
-            return $this->renderReviewFor(
+            return $this->renderReview(
                 $revision,
                 $form,
             );
         }
 
-        $transition = '';
-        if ($form instanceof Form) {
-            $button = $form->getClickedButton();
-            $transition = $button instanceof FormInterface
-                ? $button->getName()
-                : '';
-        }
-
-        if (
-            !$this->revisionStateMachine->can(
-                $revision,
-                $transition,
-            )
-        ) {
-            $this->addFlash(
-                AlertTypes::Warning->value,
-                $this->translator->trans('That action is not available for this revision.'),
-            );
-
-            return $this->redirectToRoute(
-                $this->reviewRoute($revision),
-                ['revision' => $revision->getId()],
-            );
-        }
-
-        // Everything but the author's own submit is a reviewer action, so it needs a fresh sudo grant. Opening the
-        // screen already asked, so this normally passes; it fires when that grant has lapsed in the meantime.
-        if ('submit' !== $transition) {
-            $this->denyAccessUnlessGranted(SudoVoter::ATTRIBUTE);
-        }
-
-        $message = $form->has('message')
-            ? trim(strval($form->get('message')->getData()))
-            : '';
-        if ('' !== $message) {
-            $this->addComment(
-                $revision,
-                $user,
-                $message,
-            );
-        }
-
-        $this->revisionStateMachine->apply(
+        $transition = $this->applyDecision(
+            $form,
             $revision,
-            $transition,
+            $user,
         );
-        $this->entityManager->flush();
+        if (null === $transition) {
+            return $this->reviewResponse($revision);
+        }
 
         // trans() is called per arm (not around the match) so each literal stays statically extractable.
         $this->addFlash(
@@ -357,10 +319,7 @@ class AdminApprovalController extends AbstractController
         // Starting a review stays on the screen so the committee can decide straight away; every other decision
         // returns to the queue.
         if ('start_review' === $transition) {
-            return $this->redirectToRoute(
-                $this->reviewRoute($revision),
-                ['revision' => $revision->getId()],
-            );
+            return $this->reviewResponse($revision);
         }
 
         return $this->redirectToRoute('admin/career/approvals/index');
@@ -371,115 +330,63 @@ class AdminApprovalController extends AbstractController
         CompanyRevision|VacancyRevision $revision,
         User $user,
     ): Response {
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::COMMENT,
+        $this->handleCommentPost(
+            $request,
             $revision,
+            $user,
         );
 
-        $message = trim(strval($request->request->get('message', '')));
-        if ('' !== $message) {
-            $this->addComment(
-                $revision,
-                $user,
-                $message,
-            );
-            $this->entityManager->flush();
-        }
+        return $this->reviewResponse($revision);
+    }
 
-        return $this->redirectToRoute(
-            $this->reviewRoute($revision),
-            ['revision' => $revision->getId()],
-        );
+    #[Override]
+    protected function reviewTemplate(): string
+    {
+        return 'career/admin/approvals/review.html.twig';
     }
 
     /**
-     * @param FormInterface<array<string, mixed>> $form
+     * Both career aggregates share one screen, so the branch that used to sit inside the template's context array
+     * lives here: which subject is named, whose thread is shown, and which of the two route families the decision,
+     * comment and discard forms post to.
+     *
+     * @return array<string, mixed>
      */
-    private function renderReviewFor(
-        CompanyRevision|VacancyRevision $revision,
-        FormInterface $form,
-    ): Response {
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::VIEW,
-            $revision,
-        );
-
-        // Reviewing is sensitive, so a reviewer must be in sudo mode to open the screen. This is a GET, so the sudo
-        // listener brings them back here afterwards. Somebody who can only submit their own draft is never asked.
-        if (
-            $this->isGranted(
-                RevisionVoter::APPROVE,
-                $revision,
-            )
-        ) {
-            $this->denyAccessUnlessGranted(SudoVoter::ATTRIBUTE);
-        }
-
+    #[Override]
+    protected function reviewContext(
+        RevisionInterface $revision,
+        RevisionActions $actions,
+    ): array {
         if ($revision instanceof CompanyRevision) {
             $company = $revision->getCompany();
             $subjectName = $company->getName();
             $comments = $this->companyCommentRepository->findThreadForCompany($company);
-            $prefix = 'admin/career/approvals/company';
         } else {
+            assert($revision instanceof VacancyRevision);
             $vacancy = $revision->getVacancy();
             $subjectName = $vacancy->getSlugName();
             $comments = $this->vacancyCommentRepository->findThreadForVacancy($vacancy);
-            $prefix = 'admin/career/approvals/vacancy';
         }
 
-        return $this->render(
-            'career/admin/approvals/review.html.twig',
-            [
-                'revision' => $revision,
-                'previous' => $revision->getPreviousRevision(),
-                'isCompany' => $revision instanceof CompanyRevision,
-                'subjectName' => $subjectName,
-                'comments' => $comments,
-                'decisionForm' => $form->createView(),
-                'canDiscard' => $this->isDiscardable($revision),
-                'decideRoute' => $prefix . '/decide',
-                'commentRoute' => $prefix . '/comment',
-                'discardRoute' => $prefix . '/discard',
-            ],
-        );
+        $prefix = $this->reviewRoute($revision);
+
+        return [
+            'isCompany' => $revision instanceof CompanyRevision,
+            'subjectName' => $subjectName,
+            'comments' => $comments,
+            'decideRoute' => $prefix . '/decide',
+            'commentRoute' => $prefix . '/comment',
+            'discardRoute' => $prefix . '/discard',
+        ];
     }
 
-    /**
-     * @return FormInterface<array<string, mixed>>
-     */
-    private function createDecisionForm(AbstractRevision $revision): FormInterface
+    #[Override]
+    protected function reviewResponse(RevisionInterface $revision): Response
     {
-        // Ask the workflow which transitions are enabled for this revision and this user (it already applies the
-        // guards) rather than keeping a list here, so a newly added transition shows up on its own.
-        $enabled = [];
-        foreach ($this->revisionStateMachine->getEnabledTransitions($revision) as $transition) {
-            $enabled[] = $transition->getName();
-        }
-
-        return $this->createForm(
-            ReviewDecisionType::class,
-            null,
-            [
-                'enabled_transitions' => $enabled,
-                'resubmission' => RevisionStatus::Draft === $revision->getStatus()
-                    && RevisionStatus::ChangesRequested === $revision->getPreviousRevision()?->getStatus(),
-            ],
+        return $this->redirectToRoute(
+            $this->reviewRoute($revision),
+            ['revision' => $revision->getId()],
         );
-    }
-
-    /**
-     * A draft of something that is already live can be thrown away to get back to that live version. The very first
-     * draft has nothing behind it, so discarding it would be a deletion instead.
-     */
-    private function isDiscardable(CompanyRevision|VacancyRevision $revision): bool
-    {
-        $live = $revision instanceof CompanyRevision
-            ? $revision->getCompany()->getLiveRevision()
-            : $revision->getVacancy()->getLiveRevision();
-
-        return RevisionStatus::Draft === $revision->getStatus()
-            && null !== $live
-            && $live !== $revision;
     }
 
     private function refuseDiscard(CompanyRevision|VacancyRevision $revision): Response
@@ -489,35 +396,13 @@ class AdminApprovalController extends AbstractController
             $this->translator->trans('This draft cannot be discarded.'),
         );
 
-        return $this->redirectToRoute(
-            $this->reviewRoute($revision),
-            ['revision' => $revision->getId()],
-        );
+        return $this->reviewResponse($revision);
     }
 
-    private function reviewRoute(CompanyRevision|VacancyRevision $revision): string
+    private function reviewRoute(RevisionInterface $revision): string
     {
         return $revision instanceof CompanyRevision
             ? 'admin/career/approvals/company'
             : 'admin/career/approvals/vacancy';
-    }
-
-    private function addComment(
-        CompanyRevision|VacancyRevision $revision,
-        User $user,
-        string $message,
-    ): void {
-        if ($revision instanceof CompanyRevision) {
-            $comment = new CompanyRevisionComment();
-            $comment->setRevision($revision);
-        } else {
-            $comment = new VacancyRevisionComment();
-            $comment->setRevision($revision);
-        }
-
-        $comment->setAuthor($user);
-        $comment->setBody($message);
-
-        $this->entityManager->persist($comment);
     }
 }

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Controller\Career;
 
+use App\Controller\Application\AbstractRevisionReviewController;
 use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\Application\Enums\RevisionStatus;
+use App\Entity\Application\RevisionInterface;
 use App\Entity\Career\Company;
 use App\Entity\Career\CompanyRevision;
-use App\Entity\Career\CompanyRevisionComment;
 use App\Entity\Career\Enums\CompanyAuditVerbs;
 use App\Entity\User\CompanyUser;
 use App\Entity\User\Enums\UserRoles;
-use App\Form\Application\ReviewDecisionType;
 use App\Form\Career\CompanyType;
 use App\Repository\Career\CompanyAuditLogRepository;
 use App\Repository\Career\CompanyRevisionCommentRepository;
@@ -20,11 +20,9 @@ use App\Security\Application\RevisionVoter;
 use App\Service\Application\EditLockService;
 use App\Service\Career\CompanyAuditLogger;
 use App\Service\Career\CompanyImageUploadService;
+use App\ViewModel\Application\RevisionActions;
 use App\Workflow\RevisionClonerRegistry;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Target;
-use Symfony\Component\Form\Form;
+use Override;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,11 +31,8 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Workflow\WorkflowInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-use function strval;
-use function trim;
+use function assert;
 
 /**
  * A company's own profile: what is live, what it is working on, and how a proposal is getting on with the committee.
@@ -54,7 +49,7 @@ use function trim;
     path: '/company/profile',
     name: 'company/',
 )]
-class CompanyProfileController extends AbstractController
+class CompanyProfileController extends AbstractRevisionReviewController
 {
     public function __construct(
         private readonly CompanyRevisionCommentRepository $commentRepository,
@@ -63,10 +58,6 @@ class CompanyProfileController extends AbstractController
         private readonly CompanyImageUploadService $imageUploadService,
         private readonly EditLockService $editLockService,
         private readonly RevisionClonerRegistry $clonerRegistry,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly TranslatorInterface $translator,
-        #[Target('revisionStateMachine')]
-        private readonly WorkflowInterface $revisionStateMachine,
     ) {
     }
 
@@ -260,7 +251,7 @@ class CompanyProfileController extends AbstractController
 
         return $this->renderStatus(
             $company,
-            $this->createDecisionForm($company),
+            $this->createDecisionForm($this->revisionActions($this->requireCurrentRevision($company))),
         );
     }
 
@@ -277,7 +268,8 @@ class CompanyProfileController extends AbstractController
         $company = $companyUser->getCompany();
         $current = $this->requireCurrentRevision($company);
 
-        $form = $this->createDecisionForm($company)->handleRequest($request);
+        $form = $this->createDecisionForm($this->revisionActions($this->requireCurrentRevision($company)))
+            ->handleRequest($request);
 
         if (
             !$form->isSubmitted()
@@ -289,46 +281,15 @@ class CompanyProfileController extends AbstractController
             );
         }
 
-        $transition = '';
-        if ($form instanceof Form) {
-            $button = $form->getClickedButton();
-            $transition = $button instanceof FormInterface
-                ? $button->getName()
-                : '';
-        }
-
-        // The workflow guards already keep a company to its own transitions, so this only reports the ones that have
-        // become unavailable since the page was drawn.
         if (
-            !$this->revisionStateMachine->can(
-                $current,
-                $transition,
-            )
-        ) {
-            $this->addFlash(
-                AlertTypes::Warning->value,
-                $this->translator->trans('That action is not available right now.'),
-            );
-
-            return $this->redirectToRoute('company/profile/status');
-        }
-
-        $message = $form->has('message')
-            ? trim(strval($form->get('message')->getData()))
-            : '';
-        if ('' !== $message) {
-            $this->addComment(
+            null === $this->applyDecision(
+                $form,
                 $current,
                 $companyUser,
-                $message,
-            );
+            )
+        ) {
+            return $this->reviewResponse($current);
         }
-
-        $this->revisionStateMachine->apply(
-            $current,
-            $transition,
-        );
-        $this->entityManager->flush();
 
         $this->addFlash(
             AlertTypes::Success->value,
@@ -355,22 +316,13 @@ class CompanyProfileController extends AbstractController
         $company = $companyUser->getCompany();
         $current = $this->requireCurrentRevision($company);
 
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::COMMENT,
+        $this->handleCommentPost(
+            $request,
             $current,
+            $companyUser,
         );
 
-        $message = trim(strval($request->request->get('message', '')));
-        if ('' !== $message) {
-            $this->addComment(
-                $current,
-                $companyUser,
-                $message,
-            );
-            $this->entityManager->flush();
-        }
-
-        return $this->redirectToRoute('company/profile/status');
+        return $this->reviewResponse($current);
     }
 
     /**
@@ -378,43 +330,41 @@ class CompanyProfileController extends AbstractController
      */
     private function renderStatus(
         Company $company,
-        FormInterface $form,
+        ?FormInterface $form = null,
     ): Response {
-        $current = $this->requireCurrentRevision($company);
-
-        return $this->render(
-            'career/company/profile-status.html.twig',
-            [
-                'company' => $company,
-                'revision' => $current,
-                'previous' => $current->getPreviousRevision(),
-                'comments' => $this->commentRepository->findThreadForCompany($company),
-                'decisionForm' => $form->createView(),
-            ],
+        return $this->renderReview(
+            $this->requireCurrentRevision($company),
+            $form,
         );
     }
 
-    /**
-     * @return FormInterface<array<string, mixed>>
-     */
-    private function createDecisionForm(Company $company): FormInterface
+    #[Override]
+    protected function reviewTemplate(): string
     {
-        $current = $this->requireCurrentRevision($company);
+        return 'career/company/profile-status.html.twig';
+    }
 
-        $enabled = [];
-        foreach ($this->revisionStateMachine->getEnabledTransitions($current) as $transition) {
-            $enabled[] = $transition->getName();
-        }
+    /**
+     * @return array<string, mixed>
+     */
+    #[Override]
+    protected function reviewContext(
+        RevisionInterface $revision,
+        RevisionActions $actions,
+    ): array {
+        assert($revision instanceof CompanyRevision);
+        $company = $revision->getCompany();
 
-        return $this->createForm(
-            ReviewDecisionType::class,
-            null,
-            [
-                'enabled_transitions' => $enabled,
-                'resubmission' => RevisionStatus::Draft === $current->getStatus()
-                    && RevisionStatus::ChangesRequested === $current->getPreviousRevision()?->getStatus(),
-            ],
-        );
+        return [
+            'company' => $company,
+            'comments' => $this->commentRepository->findThreadForCompany($company),
+        ];
+    }
+
+    #[Override]
+    protected function reviewResponse(RevisionInterface $revision): Response
+    {
+        return $this->redirectToRoute('company/profile/status');
     }
 
     private function requireCurrentRevision(Company $company): CompanyRevision
@@ -425,18 +375,5 @@ class CompanyProfileController extends AbstractController
         }
 
         return $current;
-    }
-
-    private function addComment(
-        CompanyRevision $revision,
-        CompanyUser $companyUser,
-        string $message,
-    ): void {
-        $comment = new CompanyRevisionComment();
-        $comment->setRevision($revision);
-        $comment->setAuthorCompanyUser($companyUser);
-        $comment->setBody($message);
-
-        $this->entityManager->persist($comment);
     }
 }

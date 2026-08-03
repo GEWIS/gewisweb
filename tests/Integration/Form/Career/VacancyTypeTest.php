@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Form\Career;
 
-use App\Entity\Career\CareerLocalisedText;
 use App\Entity\Career\Company;
 use App\Entity\Career\CompanyJobPackage;
 use App\Entity\Career\Enums\VacancyCategories;
@@ -295,11 +294,6 @@ final class VacancyTypeTest extends DatabaseTestCase
     {
         $vacancy = new Vacancy();
         $revision = new VacancyRevision();
-        $revision->setName(new CareerLocalisedText(null, null));
-        $revision->setLocation(new CareerLocalisedText(null, null));
-        $revision->setWebsite(new CareerLocalisedText(null, null));
-        $revision->setDescription(new CareerLocalisedText(null, null));
-        $revision->setAttachment(new CareerLocalisedText(null, null));
         $vacancy->addRevision($revision);
         $vacancy->setCurrentRevision($revision);
 

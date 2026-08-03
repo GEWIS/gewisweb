@@ -4,29 +4,27 @@ declare(strict_types=1);
 
 namespace App\Controller\Career;
 
+use App\Controller\Application\AbstractRevisionReviewController;
 use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\Application\Enums\RevisionStatus;
+use App\Entity\Application\RevisionInterface;
 use App\Entity\Career\CareerLocalisedText;
 use App\Entity\Career\Company;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Career\Vacancy;
 use App\Entity\Career\VacancyRevision;
-use App\Entity\Career\VacancyRevisionComment;
 use App\Entity\User\CompanyUser;
 use App\Entity\User\Enums\UserRoles;
-use App\Form\Application\ReviewDecisionType;
 use App\Form\Career\VacancyType;
 use App\Repository\Career\VacancyRepository;
 use App\Repository\Career\VacancyRevisionCommentRepository;
 use App\Security\Application\RevisionVoter;
 use App\Service\Application\EditLockService;
-use App\Service\Career\CareerDraftDiscarder;
+use App\Service\Application\RevisionDiscarder;
+use App\ViewModel\Application\RevisionActions;
 use App\Workflow\RevisionClonerRegistry;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Target;
+use Override;
 use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,11 +33,8 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Workflow\WorkflowInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-use function strval;
-use function trim;
+use function assert;
 
 /**
  * A company's own vacancies: what it has posted, what it is working on, and where each proposal stands.
@@ -55,18 +50,14 @@ use function trim;
     path: '/company/vacancies',
     name: 'company/',
 )]
-class CompanyVacancyController extends AbstractController
+class CompanyVacancyController extends AbstractRevisionReviewController
 {
     public function __construct(
         private readonly VacancyRepository $vacancyRepository,
         private readonly VacancyRevisionCommentRepository $commentRepository,
         private readonly EditLockService $editLockService,
         private readonly RevisionClonerRegistry $clonerRegistry,
-        private readonly CareerDraftDiscarder $draftDiscarder,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly TranslatorInterface $translator,
-        #[Target('revisionStateMachine')]
-        private readonly WorkflowInterface $revisionStateMachine,
+        private readonly RevisionDiscarder $draftDiscarder,
     ) {
     }
 
@@ -308,7 +299,7 @@ class CompanyVacancyController extends AbstractController
 
         return $this->renderStatus(
             $vacancy,
-            $this->createDecisionForm($vacancy),
+            $this->createDecisionForm($this->revisionActions($this->requireCurrentRevision($vacancy))),
         );
     }
 
@@ -330,7 +321,8 @@ class CompanyVacancyController extends AbstractController
         );
         $current = $this->requireCurrentRevision($vacancy);
 
-        $form = $this->createDecisionForm($vacancy)->handleRequest($request);
+        $form = $this->createDecisionForm($this->revisionActions($this->requireCurrentRevision($vacancy)))
+            ->handleRequest($request);
 
         if (
             !$form->isSubmitted()
@@ -342,44 +334,15 @@ class CompanyVacancyController extends AbstractController
             );
         }
 
-        $transition = '';
-        if ($form instanceof Form) {
-            $button = $form->getClickedButton();
-            $transition = $button instanceof FormInterface
-                ? $button->getName()
-                : '';
-        }
-
         if (
-            !$this->revisionStateMachine->can(
-                $current,
-                $transition,
-            )
-        ) {
-            $this->addFlash(
-                AlertTypes::Warning->value,
-                $this->translator->trans('That action is not available right now.'),
-            );
-
-            return $this->backToStatus($vacancy);
-        }
-
-        $message = $form->has('message')
-            ? trim(strval($form->get('message')->getData()))
-            : '';
-        if ('' !== $message) {
-            $this->addComment(
+            null === $this->applyDecision(
+                $form,
                 $current,
                 $companyUser,
-                $message,
-            );
+            )
+        ) {
+            return $this->backToStatus($vacancy);
         }
-
-        $this->revisionStateMachine->apply(
-            $current,
-            $transition,
-        );
-        $this->entityManager->flush();
 
         $this->addFlash(
             AlertTypes::Success->value,
@@ -411,20 +374,11 @@ class CompanyVacancyController extends AbstractController
         );
         $current = $this->requireCurrentRevision($vacancy);
 
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::COMMENT,
+        $this->handleCommentPost(
+            $request,
             $current,
+            $companyUser,
         );
-
-        $message = trim(strval($request->request->get('message', '')));
-        if ('' !== $message) {
-            $this->addComment(
-                $current,
-                $companyUser,
-                $message,
-            );
-            $this->entityManager->flush();
-        }
 
         return $this->backToStatus($vacancy);
     }
@@ -472,7 +426,7 @@ class CompanyVacancyController extends AbstractController
             return $this->backToStatus($vacancy);
         }
 
-        $this->draftDiscarder->discardVacancyDraft($current);
+        $this->draftDiscarder->discardToLive($current);
         $this->editLockService->purge($vacancy);
         $this->entityManager->flush();
 
@@ -489,47 +443,43 @@ class CompanyVacancyController extends AbstractController
      */
     private function renderStatus(
         Vacancy $vacancy,
-        FormInterface $form,
+        ?FormInterface $form = null,
     ): Response {
-        $current = $this->requireCurrentRevision($vacancy);
-        $live = $vacancy->getLiveRevision();
-
-        return $this->render(
-            'career/company/vacancy-status.html.twig',
-            [
-                'vacancy' => $vacancy,
-                'revision' => $current,
-                'previous' => $current->getPreviousRevision(),
-                'comments' => $this->commentRepository->findThreadForVacancy($vacancy),
-                'decisionForm' => $form->createView(),
-                'canDiscard' => RevisionStatus::Draft === $current->getStatus()
-                    && null !== $live
-                    && $live !== $current,
-            ],
+        return $this->renderReview(
+            $this->requireCurrentRevision($vacancy),
+            $form,
         );
     }
 
-    /**
-     * @return FormInterface<array<string, mixed>>
-     */
-    private function createDecisionForm(Vacancy $vacancy): FormInterface
+    #[Override]
+    protected function reviewTemplate(): string
     {
-        $current = $this->requireCurrentRevision($vacancy);
+        return 'career/company/vacancy-status.html.twig';
+    }
 
-        $enabled = [];
-        foreach ($this->revisionStateMachine->getEnabledTransitions($current) as $transition) {
-            $enabled[] = $transition->getName();
-        }
+    /**
+     * @return array<string, mixed>
+     */
+    #[Override]
+    protected function reviewContext(
+        RevisionInterface $revision,
+        RevisionActions $actions,
+    ): array {
+        assert($revision instanceof VacancyRevision);
+        $vacancy = $revision->getVacancy();
 
-        return $this->createForm(
-            ReviewDecisionType::class,
-            null,
-            [
-                'enabled_transitions' => $enabled,
-                'resubmission' => RevisionStatus::Draft === $current->getStatus()
-                    && RevisionStatus::ChangesRequested === $current->getPreviousRevision()?->getStatus(),
-            ],
-        );
+        return [
+            'vacancy' => $vacancy,
+            'comments' => $this->commentRepository->findThreadForVacancy($vacancy),
+        ];
+    }
+
+    #[Override]
+    protected function reviewResponse(RevisionInterface $revision): Response
+    {
+        assert($revision instanceof VacancyRevision);
+
+        return $this->backToStatus($revision->getVacancy());
     }
 
     /**
@@ -564,19 +514,6 @@ class CompanyVacancyController extends AbstractController
             'company/vacancies/status',
             ['vacancy' => $vacancy->getId()],
         );
-    }
-
-    private function addComment(
-        VacancyRevision $revision,
-        CompanyUser $companyUser,
-        string $message,
-    ): void {
-        $comment = new VacancyRevisionComment();
-        $comment->setRevision($revision);
-        $comment->setAuthorCompanyUser($companyUser);
-        $comment->setBody($message);
-
-        $this->entityManager->persist($comment);
     }
 
     private function newDraftRevision(): VacancyRevision

@@ -7,6 +7,7 @@ namespace App\Entity\Application;
 use App\Entity\Career\Company;
 use App\Entity\Decision\Member;
 use App\Entity\Decision\Organ;
+use App\Entity\User\Enums\UserRoles;
 
 /**
  * A stable aggregate root whose content is versioned through a chain of {@see RevisionInterface}s.
@@ -28,6 +29,15 @@ interface RevisableInterface
      * A short, stable string identifying the resource type (e.g. 'activity', 'company', or 'vacancy').
      */
     public function getResourceId(): string;
+
+    /**
+     * The roles that may review this resource on top of the board, which reviews everything. An activity answers with
+     * nothing; the career resources answer with C4. Declaring it here rather than listing resource ids inside
+     * {@see \App\Security\Application\RevisionVoter} means a new revisable domain never has to edit the voter.
+     *
+     * @return list<UserRoles>
+     */
+    public function getReviewerRoles(): array;
 
     /**
      * The organ that owns/organises this resource, if any (used for organ-scoped edit rights).
@@ -70,4 +80,11 @@ interface RevisableInterface
      * live revision.
      */
     public function markRevisionLive(RevisionInterface $revision): void;
+
+    /**
+     * Put the working head back on the publicly live revision, dropping whatever draft sat in front of it. The
+     * counterpart of {@see self::markRevisionLive()}, used when a draft is discarded rather than reviewed. Callers
+     * must have established that there is a live revision to fall back to.
+     */
+    public function restoreLiveRevision(): void;
 }

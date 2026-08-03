@@ -76,4 +76,12 @@ interface RevisionInterface
      * The stable aggregate this revision belongs to.
      */
     public function getRevisable(): RevisableInterface;
+
+    /**
+     * The comment entity this revision's discussion is written in, so code that works across domains can read and
+     * write the thread without knowing which domain it is in.
+     *
+     * @return class-string<AbstractRevisionComment>
+     */
+    public function getCommentClass(): string;
 }

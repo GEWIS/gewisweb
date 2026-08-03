@@ -11,21 +11,15 @@ use App\Entity\Career\Vacancy;
 use App\Entity\User\Enums\UserRoles;
 use App\Repository\Career\CompanyRepository;
 use App\Repository\Career\VacancyRepository;
-use App\Twig\Components\Concerns\PageSizeTrait;
+use App\Twig\Components\Application\AbstractPaginatedOverview;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Override;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\Attribute\LiveAction;
-use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
-use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Metadata\UrlMapping;
 
-use function ceil;
 use function intval;
-use function iterator_to_array;
-use function max;
-use function min;
 use function strval;
 
 /**
@@ -34,17 +28,16 @@ use function strval;
  *
  * Rendered twice: on its own tab, where the company can be picked, and on a single company's page, where {@see
  * $company} is passed in and pins the list to that company.
+ *
+ * @extends AbstractPaginatedOverview<Vacancy>
  */
 #[AsLiveComponent(
     name: 'Career:Admin:VacancyOverview',
     template: 'components/Career/Admin/VacancyOverview.html.twig',
 )]
 #[IsGranted(UserRoles::CompanyAdmin->value)]
-final class VacancyOverview
+final class VacancyOverview extends AbstractPaginatedOverview
 {
-    use DefaultActionTrait;
-    use PageSizeTrait;
-
     #[LiveProp]
     public ?Company $company = null;
 
@@ -80,12 +73,6 @@ final class VacancyOverview
     )]
     public ?string $companyFilter = null;
 
-    #[LiveProp(writable: true)]
-    public int $page = 1;
-
-    /** @var Paginator<Vacancy>|null */
-    private ?Paginator $paginator = null;
-
     public function __construct(
         private readonly VacancyRepository $vacancyRepository,
         private readonly CompanyRepository $companyRepository,
@@ -94,7 +81,7 @@ final class VacancyOverview
 
     public function onFilterUpdated(): void
     {
-        $this->page = 1;
+        $this->resetToFirstPage();
     }
 
     public function isPinnedToACompany(): bool
@@ -107,23 +94,7 @@ final class VacancyOverview
      */
     public function getVacancies(): array
     {
-        return iterator_to_array(
-            $this->getPaginator()->getIterator(),
-            false,
-        );
-    }
-
-    public function getTotalCount(): int
-    {
-        return $this->getPaginator()->count();
-    }
-
-    public function getTotalPages(): int
-    {
-        return max(
-            1,
-            (int) ceil($this->getTotalCount() / $this->pageSize()),
-        );
+        return $this->getRows();
     }
 
     /**
@@ -143,24 +114,11 @@ final class VacancyOverview
     }
 
     /**
-     * @return list<Company>
+     * @return array<int, string>
      */
     public function getCompanies(): array
     {
-        return $this->companyRepository->findForAdminOverview();
-    }
-
-    #[LiveAction]
-    public function gotoPage(#[LiveArg]
-    int $page,): void
-    {
-        $this->page = max(
-            1,
-            min(
-                $page,
-                $this->getTotalPages(),
-            ),
-        );
+        return $this->companyRepository->findNamesForFilter();
     }
 
     private function companyId(): ?int
@@ -177,9 +135,12 @@ final class VacancyOverview
     /**
      * @return Paginator<Vacancy>
      */
-    private function getPaginator(): Paginator
-    {
-        return $this->paginator ??= $this->vacancyRepository->paginateForAdmin(
+    #[Override]
+    protected function createPaginator(
+        int $page,
+        int $pageSize,
+    ): Paginator {
+        return $this->vacancyRepository->paginateForAdmin(
             search: $this->search,
             status: null !== $this->status
                 ? RevisionStatus::tryFrom($this->status)
@@ -188,11 +149,8 @@ final class VacancyOverview
                 ? VacancyCategories::tryFrom($this->category)
                 : null,
             companyId: $this->companyId(),
-            page: max(
-                1,
-                $this->page,
-            ),
-            pageSize: $this->pageSize(),
+            page: $page,
+            pageSize: $pageSize,
         );
     }
 }

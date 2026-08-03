@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Entity\Career;
 
 use App\Entity\Application\AbstractRevisionComment;
+use App\Entity\Application\RevisionInterface;
 use App\Repository\Career\VacancyRevisionCommentRepository;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Override;
+use RuntimeException;
 
 /**
  * A single message in the review discussion thread of a {@see VacancyRevision}.
@@ -32,5 +34,15 @@ class VacancyRevisionComment extends AbstractRevisionComment
     public function setRevision(VacancyRevision $revision): void
     {
         $this->revision = $revision;
+    }
+
+    #[Override]
+    public function attachTo(RevisionInterface $revision): void
+    {
+        if (!$revision instanceof VacancyRevision) {
+            throw new RuntimeException('A comment on a vacancy can only belong to one of its own revisions.');
+        }
+
+        $this->setRevision($revision);
     }
 }

@@ -14,7 +14,7 @@ use App\Entity\User\User;
 use App\Repository\Career\CompanyRepository;
 use App\Repository\Career\CompanyRevisionRepository;
 use App\Repository\Career\VacancyRevisionRepository;
-use App\Service\Career\CareerDraftDiscarder;
+use App\Service\Application\RevisionDiscarder;
 use App\Tests\Integration\DatabaseTestCase;
 use App\Workflow\RevisionClonerRegistry;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -185,7 +185,7 @@ final class CareerApprovalWiringTest extends DatabaseTestCase
         $this->entityManager->flush();
         $draftId = (int) $draft->getId();
 
-        self::getContainer()->get(CareerDraftDiscarder::class)->discardCompanyDraft($draft);
+        self::getContainer()->get(RevisionDiscarder::class)->discardToLive($draft);
         $this->entityManager->flush();
 
         self::assertSame(

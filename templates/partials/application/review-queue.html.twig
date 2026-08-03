@@ -1,0 +1,49 @@
+{#
+    A queue of revisions waiting for a decision. Every module's queue says the same four things, so they all render
+    through this one; pass a list of ReviewQueueRow.
+
+    {% include 'partials/application/review-queue.html.twig' with {
+        'heading': 'Vacancies'|trans,
+        'rows': rows,
+    } only %}
+#}
+<div class="panel">
+    <div class="panel-heading">
+        <h3>{{ heading }}</h3>
+    </div>
+    <div class="panel-body">
+        {% if rows is empty %}
+            <p class="text-muted mb-0">{{ 'There is nothing to review right now.'|trans }}</p>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Name'|trans }}</th>
+                            <th>{{ 'Proposed by'|trans }}</th>
+                            <th>{{ 'Revision'|trans }}</th>
+                            <th>{{ 'Status'|trans }}</th>
+                            <th class="text-end">{{ 'Actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in rows %}
+                            <tr>
+                                <td><strong>{{ row.subject }}</strong></td>
+                                <td class="text-muted small">{{ row.author ?: 'Removed account'|trans }}</td>
+                                <td class="text-muted small">#{{ row.revisionNumber }}</td>
+                                <td>
+                                    {% include 'partials/application/revision-status-badge.html.twig' with {'status': row.status} only %}
+                                </td>
+                                <td class="text-end">
+                                    <a href="{{ path(row.reviewRoute, {'revision': row.revisionId}) }}"
+                                       class="btn btn-sm btn-outline-gewis-primary">{{ 'Review'|trans }}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</div>

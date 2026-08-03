@@ -132,4 +132,11 @@ abstract class AbstractRevisionComment
      * The revision this comment belongs to.
      */
     abstract public function getRevision(): RevisionInterface;
+
+    /**
+     * Bind a freshly constructed comment to the revision it belongs to, so code that works across domains can start a
+     * thread entry without knowing the concrete types. Subclasses reject a revision of another domain, the way
+     * {@see RevisableInterface::markRevisionLive()} does.
+     */
+    abstract public function attachTo(RevisionInterface $revision): void;
 }

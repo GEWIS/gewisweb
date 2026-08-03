@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity\Career;
 
 use App\Entity\Application\AbstractRevision;
+use App\Entity\Application\AbstractRevisionComment;
 use App\Entity\Application\RevisableInterface;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Repository\Career\VacancyRevisionRepository;
@@ -142,11 +143,15 @@ class VacancyRevision extends AbstractRevision
     )]
     private ?string $contactEmail = null;
 
+    /**
+     * Which of the four kinds of posting this is. Jobs until somebody says otherwise, so a blank revision is complete
+     * enough for a form to bind to.
+     */
     #[Column(
         type: Types::STRING,
         enumType: VacancyCategories::class,
     )]
-    private VacancyCategories $category;
+    private VacancyCategories $category = VacancyCategories::Jobs;
 
     /**
      * The day the vacancy starts being shown, or null to show it from the moment it is approved.
@@ -187,12 +192,44 @@ class VacancyRevision extends AbstractRevision
     public function __construct()
     {
         $this->labels = new ArrayCollection();
+
+        // Which localised texts a revision has is its own business, and a form cannot bind to one that has none.
+        // Doctrine does not run this when it hydrates a stored revision, so nothing is thrown away.
+        $this->name = new CareerLocalisedText(
+            null,
+            null,
+        );
+        $this->location = new CareerLocalisedText(
+            null,
+            null,
+        );
+        $this->website = new CareerLocalisedText(
+            null,
+            null,
+        );
+        $this->description = new CareerLocalisedText(
+            null,
+            null,
+        );
+        $this->attachment = new CareerLocalisedText(
+            null,
+            null,
+        );
     }
 
     #[Override]
     public function getRevisable(): RevisableInterface
     {
         return $this->vacancy;
+    }
+
+    /**
+     * @return class-string<AbstractRevisionComment>
+     */
+    #[Override]
+    public function getCommentClass(): string
+    {
+        return VacancyRevisionComment::class;
     }
 
     public function getVacancy(): Vacancy
@@ -378,9 +415,9 @@ class VacancyRevision extends AbstractRevision
      * Whether today falls inside the posting window. The last day counts. A revision without a closing day has not
      * been saved yet, so there is nothing to have fallen outside of.
      */
-    public function isWithinPostingWindow(DateTime $now = new DateTime()): bool
+    public function isWithinPostingWindow(): bool
     {
-        $today = new DateTime($now->format('Y-m-d'));
+        $today = new DateTime('today');
 
         if (
             null !== $this->startDate

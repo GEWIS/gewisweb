@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity\Career;
 
 use App\Entity\Application\AbstractRevision;
+use App\Entity\Application\AbstractRevisionComment;
 use App\Entity\Application\RevisableInterface;
 use App\Repository\Career\CompanyRevisionRepository;
 use Doctrine\DBAL\Types\Types;
@@ -117,10 +118,37 @@ class CompanyRevision extends AbstractRevision
     )]
     private ?string $contactPhone = null;
 
+    public function __construct()
+    {
+        // Which localised texts a revision has is its own business, and a form cannot bind to one that has none.
+        // Doctrine does not run this when it hydrates a stored revision, so nothing is thrown away.
+        $this->slogan = new CareerLocalisedText(
+            null,
+            null,
+        );
+        $this->description = new CareerLocalisedText(
+            null,
+            null,
+        );
+        $this->website = new CareerLocalisedText(
+            null,
+            null,
+        );
+    }
+
     #[Override]
     public function getRevisable(): RevisableInterface
     {
         return $this->company;
+    }
+
+    /**
+     * @return class-string<AbstractRevisionComment>
+     */
+    #[Override]
+    public function getCommentClass(): string
+    {
+        return CompanyRevisionComment::class;
     }
 
     public function getCompany(): Company

@@ -11,6 +11,7 @@ use App\Entity\Application\Traits\TimestampableTrait;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Decision\Member as MemberModel;
 use App\Entity\Decision\Organ as OrganModel;
+use App\Entity\User\Enums\UserRoles;
 use App\Repository\Career\VacancyRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -151,6 +152,12 @@ class Vacancy implements RevisableInterface
         }
 
         $this->setLiveRevision($revision);
+    }
+
+    #[Override]
+    public function restoreLiveRevision(): void
+    {
+        $this->setCurrentRevision($this->getLiveRevision());
     }
 
     /**
@@ -345,6 +352,17 @@ class Vacancy implements RevisableInterface
     public function getResourceId(): string
     {
         return 'vacancy';
+    }
+
+    /**
+     * On top of the board, C4 reviews everything in the career module.
+     *
+     * @return list<UserRoles>
+     */
+    #[Override]
+    public function getReviewerRoles(): array
+    {
+        return [UserRoles::CompanyAdmin];
     }
 
     /**
