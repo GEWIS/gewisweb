@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Controller\Career;
 
 use App\Controller\Application\AbstractRevisionReviewController;
+use App\Controller\Application\HoldsEditLockTrait;
 use App\Entity\Application\Enums\AlertTypes;
-use App\Entity\Application\Enums\RevisionStatus;
+use App\Entity\Application\Enums\ReviseRefusal;
 use App\Entity\Application\RevisionInterface;
-use App\Entity\Career\CareerLocalisedText;
 use App\Entity\Career\Company;
-use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Career\Vacancy;
 use App\Entity\Career\VacancyRevision;
 use App\Entity\User\CompanyUser;
@@ -19,10 +18,10 @@ use App\Form\Career\VacancyType;
 use App\Repository\Career\VacancyRepository;
 use App\Repository\Career\VacancyRevisionCommentRepository;
 use App\Security\Application\RevisionVoter;
-use App\Service\Application\EditLockService;
 use App\Service\Application\RevisionDiscarder;
+use App\Service\Application\RevisionReviser;
+use App\ViewModel\Application\Review\RevisionAudience;
 use App\ViewModel\Application\RevisionActions;
-use App\Workflow\RevisionClonerRegistry;
 use Override;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
@@ -53,11 +52,12 @@ use function assert;
 )]
 class CompanyVacancyController extends AbstractRevisionReviewController
 {
+    use HoldsEditLockTrait;
+
     public function __construct(
         private readonly VacancyRepository $vacancyRepository,
         private readonly VacancyRevisionCommentRepository $commentRepository,
-        private readonly EditLockService $editLockService,
-        private readonly RevisionClonerRegistry $clonerRegistry,
+        private readonly RevisionReviser $reviser,
         private readonly RevisionDiscarder $draftDiscarder,
     ) {
     }
@@ -100,7 +100,7 @@ class CompanyVacancyController extends AbstractRevisionReviewController
         $vacancy = new Vacancy();
         $vacancy->setPublished(true);
 
-        $revision = $this->newDraftRevision();
+        $revision = new VacancyRevision();
         $revision->setAuthorCompanyUser($companyUser);
         $vacancy->addRevision($revision);
         $vacancy->setCurrentRevision($revision);
@@ -249,17 +249,11 @@ class CompanyVacancyController extends AbstractRevisionReviewController
             $vacancy,
             $companyUser,
         );
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::SUBMIT,
-            $vacancy,
-        );
 
-        return new JsonResponse([
-            'held' => $this->editLockService->ping(
-                $vacancy,
-                $companyUser,
-            ),
-        ]);
+        return $this->pingLock(
+            $vacancy,
+            $companyUser,
+        );
     }
 
     #[Route(
@@ -281,17 +275,11 @@ class CompanyVacancyController extends AbstractRevisionReviewController
             $vacancy,
             $companyUser,
         );
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::SUBMIT,
-            $vacancy,
-        );
 
-        $this->editLockService->release(
+        return $this->releaseLock(
             $vacancy,
             $companyUser,
         );
-
-        return new JsonResponse(['released' => true]);
     }
 
     #[Route(
@@ -320,14 +308,28 @@ class CompanyVacancyController extends AbstractRevisionReviewController
 
         $current = $this->requireCurrentRevision($vacancy);
 
-        if ($current->getStatus()->isEditableByAuthor()) {
+        $refusal = $current->getStatus()->reviseRefusal();
+
+        // A draft that is already there is what the representative wants to work on, which is not worth a warning.
+        if (ReviseRefusal::AlreadyADraft === $refusal) {
             return $this->redirectToRoute(
                 'company/vacancies/edit',
                 ['vacancy' => $vacancy->getId()],
             );
         }
 
-        if (RevisionStatus::Closed === $current->getStatus()) {
+        if (ReviseRefusal::UnderReview === $refusal) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans(
+                    'This vacancy is with the committee. Wait for their decision before revising it again.',
+                ),
+            );
+
+            return $this->backToStatus($vacancy);
+        }
+
+        if (ReviseRefusal::Closed === $refusal) {
             $this->addFlash(
                 AlertTypes::Warning->value,
                 $this->translator->trans('This vacancy was closed. Get in touch with the committee to reopen it.'),
@@ -336,12 +338,10 @@ class CompanyVacancyController extends AbstractRevisionReviewController
             return $this->backToStatus($vacancy);
         }
 
-        $draft = $this->clonerRegistry->cloneAsDraft($current);
-        if (!$draft instanceof VacancyRevision) {
-            throw $this->createNotFoundException();
-        }
-
-        $draft->setAuthorCompanyUser($companyUser);
+        $draft = $this->reviser->spawnDraft(
+            $current,
+            $companyUser,
+        );
         $this->entityManager->persist($draft);
         $this->entityManager->flush();
 
@@ -389,37 +389,12 @@ class CompanyVacancyController extends AbstractRevisionReviewController
             $vacancy,
             $companyUser,
         );
-        $current = $this->requireCurrentRevision($vacancy);
 
-        $form = $this->createDecisionForm($this->revisionActions($this->requireCurrentRevision($vacancy)))
-            ->handleRequest($request);
-
-        if (
-            !$form->isSubmitted()
-            || !$form->isValid()
-        ) {
-            return $this->renderStatus(
-                $vacancy,
-                $form,
-            );
-        }
-
-        if (
-            null === $this->applyDecision(
-                $form,
-                $current,
-                $companyUser,
-            )
-        ) {
-            return $this->backToStatus($vacancy);
-        }
-
-        $this->addFlash(
-            AlertTypes::Success->value,
-            $this->translator->trans('Your vacancy was submitted for review.'),
+        return $this->handleDecision(
+            $request,
+            $this->requireCurrentRevision($vacancy),
+            $companyUser,
         );
-
-        return $this->backToStatus($vacancy);
     }
 
     #[Route(
@@ -482,12 +457,7 @@ class CompanyVacancyController extends AbstractRevisionReviewController
             $current,
         );
 
-        $live = $vacancy->getLiveRevision();
-        if (
-            RevisionStatus::Draft !== $current->getStatus()
-            || null === $live
-            || $live === $current
-        ) {
+        if (!$this->revisionActions($current)->isDiscardable) {
             $this->addFlash(
                 AlertTypes::Warning->value,
                 $this->translator->trans('This draft cannot be discarded.'),
@@ -497,7 +467,6 @@ class CompanyVacancyController extends AbstractRevisionReviewController
         }
 
         $this->draftDiscarder->discardToLive($current);
-        $this->editLockService->purge($vacancy);
         $this->entityManager->flush();
 
         $this->addFlash(
@@ -525,6 +494,24 @@ class CompanyVacancyController extends AbstractRevisionReviewController
     protected function reviewTemplate(): string
     {
         return 'career/company/vacancy-status.html.twig';
+    }
+
+    /**
+     * Submitting is the only decision a company gets, so the other wording is only ever reached if the workflow grows
+     * one that is theirs to make.
+     */
+    #[Override]
+    protected function decisionFlash(string $transition): string
+    {
+        return 'submit' === $transition
+            ? $this->translator->trans('Your vacancy was submitted for review.')
+            : $this->translator->trans('Your vacancy was updated.');
+    }
+
+    #[Override]
+    protected function reviewAudience(): RevisionAudience
+    {
+        return RevisionAudience::Everyone;
     }
 
     /**
@@ -584,33 +571,5 @@ class CompanyVacancyController extends AbstractRevisionReviewController
             'company/vacancies/status',
             ['vacancy' => $vacancy->getId()],
         );
-    }
-
-    private function newDraftRevision(): VacancyRevision
-    {
-        $revision = new VacancyRevision();
-        $revision->setName(new CareerLocalisedText(
-            null,
-            null,
-        ));
-        $revision->setLocation(new CareerLocalisedText(
-            null,
-            null,
-        ));
-        $revision->setWebsite(new CareerLocalisedText(
-            null,
-            null,
-        ));
-        $revision->setDescription(new CareerLocalisedText(
-            null,
-            null,
-        ));
-        $revision->setAttachment(new CareerLocalisedText(
-            null,
-            null,
-        ));
-        $revision->setCategory(VacancyCategories::Jobs);
-
-        return $revision;
     }
 }

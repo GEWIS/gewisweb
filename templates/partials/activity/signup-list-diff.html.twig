@@ -1,0 +1,107 @@
+{#
+    How this revision's sign-up lists differ from the ones before it: which were added, which were dropped, and per
+    list what changed about its window, its flags and its custom fields.
+
+    A sign-up list is a repeated sub-entity with fields of its own, which the flat RevisionSection/RevisionField model
+    a describer builds cannot express, so the activity module says it here instead of through its describer.
+
+    {% include 'partials/activity/signup-list-diff.html.twig' with {'signupListDiff': signupListDiff} only %}
+
+    The page is responsible for emitting `diff_styles()` into its stylesheets block once.
+#}
+{% import 'partials/application/revision-diff.html.twig' as diffmacro %}
+{% import _self as listmacro %}
+
+{% macro signup_list_body(list, previous) %}
+    {% import 'partials/application/revision-diff.html.twig' as diffmacro %}
+    <div class="small mb-1">
+        <span class="text-muted">{{ 'Opens'|trans }}:</span> {{ list.openDate|date('M j, Y H:i') }}
+        {% if previous is not null and previous.openDate != list.openDate %}
+            <del class="text-danger">{{ previous.openDate|date('M j, Y H:i') }}</del>
+        {% endif %}
+        <span class="text-muted ms-2">{{ 'Closes'|trans }}:</span> {{ list.closeDate|date('M j, Y H:i') }}
+        {% if previous is not null and previous.closeDate != list.closeDate %}
+            <del class="text-danger">{{ previous.closeDate|date('M j, Y H:i') }}</del>
+        {% endif %}
+    </div>
+
+    {% set flags %}
+        {{ diffmacro.flag('Members only'|trans, previous ? previous.onlyGEWIS : null, list.onlyGEWIS) }}
+        {{ diffmacro.flag('Show sign-up count'|trans, previous ? previous.displaySubscribedNumber : null, list.displaySubscribedNumber) }}
+        {{ diffmacro.flag('Limited capacity'|trans, previous ? previous.limitedCapacity : null, list.limitedCapacity) }}
+        {{ diffmacro.flag('Promoted'|trans, previous ? previous.promoted : null, list.promoted) }}
+    {% endset %}
+    {% if flags|trim is not empty %}
+        <div class="mb-1">{{ flags }}</div>
+    {% endif %}
+
+    {% set previousFields = previous is not null ? previous.fields.values : [] %}
+    {% if list.fields|length > 0 or previousFields|length > 0 %}
+        <ul class="list-unstyled small mb-0">
+            {% for field in list.fields %}
+                {% set prevField = previousFields[loop.index0] ?? null %}
+                <li class="mb-1">
+                    {% if previous is not null and prevField is null %}
+                        <span class="badge badge-success">{{ 'New field'|trans }}</span>
+                    {% endif %}
+                    <strong>
+                        {{ diff(prevField ? prevField.name.valueNL : null, field.name.valueNL) }}
+                        <span class="text-muted">/</span>
+                        {{ diff(prevField ? prevField.name.valueEN : null, field.name.valueEN) }}
+                    </strong>
+                    <span class="badge badge-secondary">{{ field.type|trans }}</span>
+                    {% if prevField is not null and prevField.type != field.type %}
+                        <span class="text-muted">({{ 'was'|trans }} {{ prevField.type|trans }})</span>
+                    {% endif %}
+                    {% if field.isSensitive %}<span class="badge badge-warning">{{ 'Sensitive'|trans }}</span>{% endif %}
+                    {% if 'number' == field.type.value and (field.minimumValue is not null or field.maximumValue is not null) %}
+                        <span class="text-muted">[{{ field.minimumValue ?? '...' }}, {{ field.maximumValue ?? '...' }}]</span>
+                    {% endif %}
+                    {% if field.options|length > 0 %}
+                        <div>{{ field.options|map(option => option.value|localise_text)|join(', ') }}</div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            {% for prevField in previousFields|slice(list.fields|length) %}
+                <li class="mb-1 text-danger">
+                    <span class="badge badge-danger">{{ 'Removed field'|trans }}</span>
+                    <s>{{ prevField.name|localise_text }}</s>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <span class="text-muted small">{{ 'No custom fields.'|trans }}</span>
+    {% endif %}
+{% endmacro %}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>{{ 'Sign-up lists'|trans }}</h3>
+    </div>
+    <div class="panel-body">
+        {% if signupListDiff.present is empty and signupListDiff.removed is empty %}
+            <p class="text-muted small mb-0">{{ 'This activity has no sign-up lists.'|trans }}</p>
+        {% else %}
+            <div class="d-flex flex-column gap-3">
+                {% for entry in signupListDiff.present %}
+                    <div class="border rounded p-3">
+                        {% if entry.previous is null %}
+                            <div class="mb-2"><span class="badge badge-success">{{ 'New list'|trans }}</span></div>
+                            {{ diffmacro.localised_flag_diff(null, entry.list.name) }}
+                        {% else %}
+                            {{ diffmacro.localised_flag_diff(entry.previous.name, entry.list.name) }}
+                        {% endif %}
+                        {{ listmacro.signup_list_body(entry.list, entry.previous) }}
+                    </div>
+                {% endfor %}
+                {% for list in signupListDiff.removed %}
+                    <div class="border rounded p-3 opacity-75">
+                        <div class="mb-2"><span class="badge badge-danger">{{ 'Removed list'|trans }}</span></div>
+                        {{ diffmacro.localised_flag_diff(null, list.name, struck=true) }}
+                        {{ listmacro.signup_list_body(list) }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>

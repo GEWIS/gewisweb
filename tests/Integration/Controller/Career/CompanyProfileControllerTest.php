@@ -122,8 +122,14 @@ final class CompanyProfileControllerTest extends DatabaseTestCase
             $response->getStatusCode(),
         );
         $content = (string) $response->getContent();
+        // The company is shown the same sections its reviewer is. Its contact details and its logo used to be diffed
+        // on the committee's screen only, so a company could not see what it had proposed for them.
         self::assertStringContainsString(
-            'What you changed',
+            'Contact details',
+            $content,
+        );
+        self::assertStringContainsString(
+            'Logo',
             $content,
         );
         // A draft is the company's to submit, so the workflow offers exactly that.

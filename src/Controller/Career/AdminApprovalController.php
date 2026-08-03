@@ -17,7 +17,6 @@ use App\Repository\Career\CompanyRevisionRepository;
 use App\Repository\Career\VacancyRevisionCommentRepository;
 use App\Repository\Career\VacancyRevisionRepository;
 use App\Security\Application\RevisionVoter;
-use App\Service\Application\EditLockService;
 use App\Service\Application\RevisionDiscarder;
 use App\ViewModel\Application\ReviewQueueRow;
 use App\ViewModel\Application\RevisionActions;
@@ -58,7 +57,6 @@ class AdminApprovalController extends AbstractRevisionReviewController
         private readonly VacancyRevisionCommentRepository $vacancyCommentRepository,
         private readonly CompanyPackageRepository $packageRepository,
         private readonly RevisionDiscarder $draftDiscarder,
-        private readonly EditLockService $editLockService,
     ) {
     }
 
@@ -130,7 +128,7 @@ class AdminApprovalController extends AbstractRevisionReviewController
         #[CurrentUser]
         User $user,
     ): Response {
-        return $this->decide(
+        return $this->handleDecision(
             $request,
             $revision,
             $user,
@@ -149,7 +147,7 @@ class AdminApprovalController extends AbstractRevisionReviewController
         #[CurrentUser]
         User $user,
     ): Response {
-        return $this->decide(
+        return $this->handleDecision(
             $request,
             $revision,
             $user,
@@ -214,28 +212,10 @@ class AdminApprovalController extends AbstractRevisionReviewController
     )]
     public function discardCompany(CompanyRevision $revision): Response
     {
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::EDIT,
+        return $this->discardDraft(
             $revision,
-        );
-
-        $company = $revision->getCompany();
-        if (!$this->revisionActions($revision)->isDiscardable) {
-            return $this->refuseDiscard($revision);
-        }
-
-        $this->draftDiscarder->discardToLive($revision);
-        $this->editLockService->purge($company);
-        $this->entityManager->flush();
-
-        $this->addFlash(
-            AlertTypes::Success->value,
-            $this->translator->trans('The draft was discarded and the live version restored.'),
-        );
-
-        return $this->redirectToRoute(
             'admin/career/companies/view',
-            ['company' => $company->getId()],
+            ['company' => $revision->getCompany()->getId()],
         );
     }
 
@@ -251,78 +231,10 @@ class AdminApprovalController extends AbstractRevisionReviewController
     )]
     public function discardVacancy(VacancyRevision $revision): Response
     {
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::EDIT,
+        return $this->discardDraft(
             $revision,
+            'admin/career/vacancies/index',
         );
-
-        $vacancy = $revision->getVacancy();
-        if (!$this->revisionActions($revision)->isDiscardable) {
-            return $this->refuseDiscard($revision);
-        }
-
-        $this->draftDiscarder->discardToLive($revision);
-        $this->editLockService->purge($vacancy);
-        $this->entityManager->flush();
-
-        $this->addFlash(
-            AlertTypes::Success->value,
-            $this->translator->trans('The draft was discarded and the live version restored.'),
-        );
-
-        return $this->redirectToRoute('admin/career/vacancies/index');
-    }
-
-    private function decide(
-        Request $request,
-        CompanyRevision|VacancyRevision $revision,
-        User $user,
-    ): Response {
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::VIEW,
-            $revision,
-        );
-
-        $form = $this->createDecisionForm($this->revisionActions($revision))->handleRequest($request);
-
-        // The clicked button names the transition; the form's validation groups make feedback mandatory for a
-        // rejection or a request for changes. On any error the review screen comes back with it.
-        if (
-            !$form->isSubmitted()
-            || !$form->isValid()
-        ) {
-            return $this->renderReview(
-                $revision,
-                $form,
-            );
-        }
-
-        $transition = $this->applyDecision(
-            $form,
-            $revision,
-            $user,
-        );
-        if (null === $transition) {
-            return $this->reviewResponse($revision);
-        }
-
-        // trans() is called per arm (not around the match) so each literal stays statically extractable.
-        $this->addFlash(
-            AlertTypes::Success->value,
-            match ($transition) {
-                'submit' => $this->translator->trans('Submitted for review.'),
-                'start_review' => $this->translator->trans('Review started.'),
-                default => $this->translator->trans('The revision was updated.'),
-            },
-        );
-
-        // Starting a review stays on the screen so the committee can decide straight away; every other decision
-        // returns to the queue.
-        if ('start_review' === $transition) {
-            return $this->reviewResponse($revision);
-        }
-
-        return $this->redirectToRoute('admin/career/approvals/index');
     }
 
     private function comment(
@@ -343,6 +255,33 @@ class AdminApprovalController extends AbstractRevisionReviewController
     protected function reviewTemplate(): string
     {
         return 'career/admin/approvals/review.html.twig';
+    }
+
+    /**
+     * trans() is called per arm (not around the match) so each literal stays statically extractable.
+     */
+    #[Override]
+    protected function decisionFlash(string $transition): string
+    {
+        return match ($transition) {
+            'submit' => $this->translator->trans('Submitted for review.'),
+            'start_review' => $this->translator->trans('Review started.'),
+            default => $this->translator->trans('The revision was updated.'),
+        };
+    }
+
+    /**
+     * Starting a review stays on the screen so the committee can decide straight away; every other decision returns
+     * to the queue.
+     */
+    #[Override]
+    protected function decisionResponse(
+        RevisionInterface $revision,
+        string $transition,
+    ): Response {
+        return 'start_review' === $transition
+            ? $this->reviewResponse($revision)
+            : $this->redirectToRoute('admin/career/approvals/index');
     }
 
     /**
@@ -371,7 +310,6 @@ class AdminApprovalController extends AbstractRevisionReviewController
         $prefix = $this->reviewRoute($revision);
 
         return [
-            'isCompany' => $revision instanceof CompanyRevision,
             'subjectName' => $subjectName,
             'comments' => $comments,
             'decideRoute' => $prefix . '/decide',
@@ -389,14 +327,43 @@ class AdminApprovalController extends AbstractRevisionReviewController
         );
     }
 
-    private function refuseDiscard(CompanyRevision|VacancyRevision $revision): Response
-    {
-        $this->addFlash(
-            AlertTypes::Warning->value,
-            $this->translator->trans('This draft cannot be discarded.'),
+    /**
+     * Throwing a draft away and pointing the aggregate back at what is live. Which aggregate it hangs off is the
+     * revision's own business, so only where the reviewer lands afterwards differs per domain.
+     *
+     * @param array<string, int|string|null> $routeParameters
+     */
+    private function discardDraft(
+        CompanyRevision|VacancyRevision $revision,
+        string $route,
+        array $routeParameters = [],
+    ): Response {
+        $this->denyAccessUnlessGranted(
+            RevisionVoter::EDIT,
+            $revision,
         );
 
-        return $this->reviewResponse($revision);
+        if (!$this->revisionActions($revision)->isDiscardable) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This draft cannot be discarded.'),
+            );
+
+            return $this->reviewResponse($revision);
+        }
+
+        $this->draftDiscarder->discardToLive($revision);
+        $this->entityManager->flush();
+
+        $this->addFlash(
+            AlertTypes::Success->value,
+            $this->translator->trans('The draft was discarded and the live version restored.'),
+        );
+
+        return $this->redirectToRoute(
+            $route,
+            $routeParameters,
+        );
     }
 
     private function reviewRoute(RevisionInterface $revision): string

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\Career;
 
 use App\Controller\Application\AbstractRevisionReviewController;
+use App\Controller\Application\HoldsEditLockTrait;
 use App\Entity\Application\Enums\AlertTypes;
-use App\Entity\Application\Enums\RevisionStatus;
+use App\Entity\Application\Enums\ReviseRefusal;
 use App\Entity\Application\RevisionInterface;
 use App\Entity\Career\Company;
 use App\Entity\Career\CompanyRevision;
@@ -17,11 +18,12 @@ use App\Form\Career\CompanyType;
 use App\Repository\Career\CompanyAuditLogRepository;
 use App\Repository\Career\CompanyRevisionCommentRepository;
 use App\Security\Application\RevisionVoter;
-use App\Service\Application\EditLockService;
+use App\Service\Application\RevisionDiscarder;
+use App\Service\Application\RevisionReviser;
 use App\Service\Career\CompanyAuditLogger;
 use App\Service\Career\CompanyImageUploadService;
+use App\ViewModel\Application\Review\RevisionAudience;
 use App\ViewModel\Application\RevisionActions;
-use App\Workflow\RevisionClonerRegistry;
 use Override;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -52,13 +54,15 @@ use function assert;
 )]
 class CompanyProfileController extends AbstractRevisionReviewController
 {
+    use HoldsEditLockTrait;
+
     public function __construct(
         private readonly CompanyRevisionCommentRepository $commentRepository,
         private readonly CompanyAuditLogRepository $auditLogRepository,
         private readonly CompanyAuditLogger $auditLogger,
         private readonly CompanyImageUploadService $imageUploadService,
-        private readonly EditLockService $editLockService,
-        private readonly RevisionClonerRegistry $clonerRegistry,
+        private readonly RevisionReviser $reviser,
+        private readonly RevisionDiscarder $draftDiscarder,
     ) {
     }
 
@@ -203,18 +207,10 @@ class CompanyProfileController extends AbstractRevisionReviewController
         #[CurrentUser]
         CompanyUser $companyUser,
     ): JsonResponse {
-        $company = $companyUser->getCompany();
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::SUBMIT,
-            $company,
+        return $this->pingLock(
+            $companyUser->getCompany(),
+            $companyUser,
         );
-
-        return new JsonResponse([
-            'held' => $this->editLockService->ping(
-                $company,
-                $companyUser,
-            ),
-        ]);
     }
 
     #[Route(
@@ -230,18 +226,10 @@ class CompanyProfileController extends AbstractRevisionReviewController
         #[CurrentUser]
         CompanyUser $companyUser,
     ): JsonResponse {
-        $company = $companyUser->getCompany();
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::SUBMIT,
-            $company,
-        );
-
-        $this->editLockService->release(
-            $company,
+        return $this->releaseLock(
+            $companyUser->getCompany(),
             $companyUser,
         );
-
-        return new JsonResponse(['released' => true]);
     }
 
     #[Route(
@@ -268,11 +256,25 @@ class CompanyProfileController extends AbstractRevisionReviewController
             throw $this->createNotFoundException();
         }
 
-        if ($current->getStatus()->isEditableByAuthor()) {
+        $refusal = $current->getStatus()->reviseRefusal();
+
+        // A draft that is already there is what the representative wants to work on, which is not worth a warning.
+        if (ReviseRefusal::AlreadyADraft === $refusal) {
             return $this->redirectToRoute('company/profile/edit');
         }
 
-        if (RevisionStatus::Closed === $current->getStatus()) {
+        if (ReviseRefusal::UnderReview === $refusal) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans(
+                    'Your profile is with the committee. Wait for their decision before revising it again.',
+                ),
+            );
+
+            return $this->redirectToRoute('company/profile/status');
+        }
+
+        if (ReviseRefusal::Closed === $refusal) {
             $this->addFlash(
                 AlertTypes::Warning->value,
                 $this->translator->trans('Your profile was closed. Get in touch with the committee to reopen it.'),
@@ -281,13 +283,10 @@ class CompanyProfileController extends AbstractRevisionReviewController
             return $this->redirectToRoute('company/profile');
         }
 
-        // The registry is typed to the shared revision contract; for a company it always yields a CompanyRevision.
-        $draft = $this->clonerRegistry->cloneAsDraft($current);
-        if (!$draft instanceof CompanyRevision) {
-            throw $this->createNotFoundException();
-        }
-
-        $draft->setAuthorCompanyUser($companyUser);
+        $draft = $this->reviser->spawnDraft(
+            $current,
+            $companyUser,
+        );
         $this->entityManager->persist($draft);
         $this->entityManager->flush();
 
@@ -325,38 +324,56 @@ class CompanyProfileController extends AbstractRevisionReviewController
         #[CurrentUser]
         CompanyUser $companyUser,
     ): Response {
+        return $this->handleDecision(
+            $request,
+            $this->requireCurrentRevision($companyUser->getCompany()),
+            $companyUser,
+        );
+    }
+
+    /**
+     * Throw away a draft and go back to what is live, for when a change turns out not to be worth making. Without it
+     * the only way out of a draft nobody wants is to submit it anyway.
+     */
+    #[Route(
+        path: '/discard',
+        name: 'profile/discard',
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: 'company_profile_discard',
+        tokenKey: '_csrf_token',
+    )]
+    public function discard(
+        #[CurrentUser]
+        CompanyUser $companyUser,
+    ): Response {
         $company = $companyUser->getCompany();
         $current = $this->requireCurrentRevision($company);
 
-        $form = $this->createDecisionForm($this->revisionActions($this->requireCurrentRevision($company)))
-            ->handleRequest($request);
+        $this->denyAccessUnlessGranted(
+            RevisionVoter::EDIT,
+            $current,
+        );
 
-        if (
-            !$form->isSubmitted()
-            || !$form->isValid()
-        ) {
-            return $this->renderStatus(
-                $company,
-                $form,
+        if (!$this->revisionActions($current)->isDiscardable) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This draft cannot be discarded.'),
             );
+
+            return $this->redirectToRoute('company/profile/status');
         }
 
-        if (
-            null === $this->applyDecision(
-                $form,
-                $current,
-                $companyUser,
-            )
-        ) {
-            return $this->reviewResponse($current);
-        }
+        $this->draftDiscarder->discardToLive($current);
+        $this->entityManager->flush();
 
         $this->addFlash(
             AlertTypes::Success->value,
-            $this->translator->trans('Your profile was submitted for review.'),
+            $this->translator->trans('The draft was discarded and your live profile restored.'),
         );
 
-        return $this->redirectToRoute('company/profile/status');
+        return $this->redirectToRoute('company/profile');
     }
 
     #[Route(
@@ -402,6 +419,24 @@ class CompanyProfileController extends AbstractRevisionReviewController
     protected function reviewTemplate(): string
     {
         return 'career/company/profile-status.html.twig';
+    }
+
+    /**
+     * Submitting is the only decision a company gets, so the other wording is only ever reached if the workflow grows
+     * one that is theirs to make.
+     */
+    #[Override]
+    protected function decisionFlash(string $transition): string
+    {
+        return 'submit' === $transition
+            ? $this->translator->trans('Your profile was submitted for review.')
+            : $this->translator->trans('Your profile was updated.');
+    }
+
+    #[Override]
+    protected function reviewAudience(): RevisionAudience
+    {
+        return RevisionAudience::Everyone;
     }
 
     /**

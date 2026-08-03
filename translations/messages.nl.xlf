@@ -269,18 +269,6 @@
         <source>%name% has submitted a new profile for review.</source>
         <target state="translated">%name% heeft een nieuw profiel ter beoordeling ingediend.</target>
       </trans-unit>
-      <trans-unit id="d7ApGYU" resname="%name% is currently editing this activity (last active %time%).">
-        <source>%name% is currently editing this activity (last active %time%).</source>
-        <target state="translated">%name% bewerkt deze activiteit op dit moment (laatst actief %time%).</target>
-      </trans-unit>
-      <trans-unit id="bkthuxW" resname="%name% is currently editing this company (last active %time%).">
-        <source>%name% is currently editing this company (last active %time%).</source>
-        <target state="translated">%name% bewerkt dit bedrijf op dit moment (laatst actief %time%).</target>
-      </trans-unit>
-      <trans-unit id="lJ4Jb6h" resname="%name% is currently editing this vacancy (last active %time%).">
-        <source>%name% is currently editing this vacancy (last active %time%).</source>
-        <target state="translated">%name% bewerkt deze vacature op dit moment (laatst actief %time%).</target>
-      </trans-unit>
       <trans-unit id="G7xodsD" resname="%name% turns %age% today!">
         <source>%name% turns %age% today!</source>
         <target state="translated">%name% wordt vandaag %age%!</target>
@@ -784,10 +772,6 @@
       <trans-unit id="5H6RLlk" resname="Association magazine">
         <source>Association magazine</source>
         <target state="translated">Verenigingsblad</target>
-      </trans-unit>
-      <trans-unit id="_cQf6ql" resname="Attachment">
-        <source>Attachment</source>
-        <target state="translated">Bijlage</target>
       </trans-unit>
       <trans-unit id="_fp6hpn" resname="Attachment link">
         <source>Attachment link</source>
@@ -3817,6 +3801,10 @@
         <source>Remove this representative?</source>
         <target state="translated">Deze vertegenwoordiger verwijderen?</target>
       </trans-unit>
+      <trans-unit id="5yBqYN5" resname="Removed account">
+        <source>Removed account</source>
+        <target state="translated">Verwijderd account</target>
+      </trans-unit>
       <trans-unit id="Sg9.yIf" resname="Removed field">
         <source>Removed field</source>
         <target state="translated">Verwijderd veld</target>
@@ -4401,18 +4389,6 @@
         <source>Somebody who cannot sign in cannot be the primary contact.</source>
         <target state="translated">Iemand die niet kan inloggen kan geen hoofdcontactpersoon zijn.</target>
       </trans-unit>
-      <trans-unit id="rEFt4Rj" resname="Someone is currently editing this activity.">
-        <source>Someone is currently editing this activity.</source>
-        <target state="translated">Iemand bewerkt deze activiteit op dit moment.</target>
-      </trans-unit>
-      <trans-unit id="zs_7bMi" resname="Someone is currently editing this company.">
-        <source>Someone is currently editing this company.</source>
-        <target state="translated">Iemand bewerkt dit bedrijf op dit moment.</target>
-      </trans-unit>
-      <trans-unit id="N_47LIB" resname="Someone is currently editing this vacancy.">
-        <source>Someone is currently editing this vacancy.</source>
-        <target state="translated">Iemand bewerkt deze vacature op dit moment.</target>
-      </trans-unit>
       <trans-unit id="20ktwc_" resname="Someone with this email address is already signed up for this list.">
         <source>Someone with this email address is already signed up for this list.</source>
         <target state="translated">Er is al iemand met dit e-mailadres aangemeld voor deze lijst.</target>
@@ -4689,6 +4665,10 @@
         <source>The changes in this draft will be lost and the live version restored.</source>
         <target state="translated">De wijzigingen in dit concept gaan verloren en de online versie wordt hersteld.</target>
       </trans-unit>
+      <trans-unit id="3u959hf" resname="The changes in this draft will be lost and your live profile restored.">
+        <source>The changes in this draft will be lost and your live profile restored.</source>
+        <target>De wijzigingen in dit concept gaan verloren en je gepubliceerde profiel wordt hersteld.</target>
+      </trans-unit>
       <trans-unit id="WeK9RdD" resname="The changes in this draft will be lost and your live vacancy restored.">
         <source>The changes in this draft will be lost and your live vacancy restored.</source>
         <target state="translated">De wijzigingen in dit concept gaan verloren en je online vacature wordt hersteld.</target>
@@ -4720,6 +4700,10 @@
       <trans-unit id="iMYUZQ1" resname="The draft was discarded and the live version restored.">
         <source>The draft was discarded and the live version restored.</source>
         <target state="translated">Het concept is verworpen en de online versie is hersteld.</target>
+      </trans-unit>
+      <trans-unit id="T.hL_h2" resname="The draft was discarded and your live profile restored.">
+        <source>The draft was discarded and your live profile restored.</source>
+        <target>Het concept is verwijderd en je gepubliceerde profiel is hersteld.</target>
       </trans-unit>
       <trans-unit id="UmzOsYI" resname="The draft was discarded and your live vacancy restored.">
         <source>The draft was discarded and your live vacancy restored.</source>
@@ -5005,10 +4989,6 @@
         <source>This activity has no sign-up lists.</source>
         <target state="translated">Deze activiteit heeft geen inschrijflijsten.</target>
       </trans-unit>
-      <trans-unit id="WjQEFR6" resname="This activity is being edited">
-        <source>This activity is being edited</source>
-        <target state="translated">Deze activiteit wordt bewerkt</target>
-      </trans-unit>
       <trans-unit id="hKNDl1M" resname="This activity is being reviewed and cannot be edited right now.">
         <source>This activity is being reviewed and cannot be edited right now.</source>
         <target state="translated">Deze activiteit wordt beoordeeld en kan op dit moment niet worden bewerkt.</target>
@@ -5060,10 +5040,6 @@
       <trans-unit id="0HNl.sQ" resname="This company has no primary contact. Appoint one so the board knows who to write to.">
         <source>This company has no primary contact. Appoint one so the board knows who to write to.</source>
         <target state="translated">Dit bedrijf heeft geen hoofdcontactpersoon. Wijs er een aan zodat het bestuur weet wie het moet aanschrijven.</target>
-      </trans-unit>
-      <trans-unit id="1bVq31t" resname="This company is being edited">
-        <source>This company is being edited</source>
-        <target state="translated">Dit bedrijf wordt bewerkt</target>
       </trans-unit>
       <trans-unit id="83TctTv" resname="This device">
         <source>This device</source>
@@ -5157,6 +5133,10 @@
         <source>This profile is not a draft. Revise it to start a new one.</source>
         <target state="translated">Dit profiel is geen concept. Stel wijzigingen voor om een nieuw concept te beginnen.</target>
       </trans-unit>
+      <trans-unit id="Ezhwnu2" resname="This profile is with the committee and cannot be revised until they have decided.">
+        <source>This profile is with the committee and cannot be revised until they have decided.</source>
+        <target>Dit profiel ligt bij de commissie en kan pas worden herzien nadat zij een besluit hebben genomen.</target>
+      </trans-unit>
       <trans-unit id="2WMhoCE" resname="This profile was closed by the board and can no longer be revised.">
         <source>This profile was closed by the board and can no longer be revised.</source>
         <target state="translated">Dit profiel is door het bestuur gesloten en kan niet meer herzien worden.</target>
@@ -5193,10 +5173,6 @@
         <source>This sign-up list is not open, so you cannot add a subscriber.</source>
         <target>Deze inschrijflijst is niet open, dus je kunt geen inschrijver toevoegen.</target>
       </trans-unit>
-      <trans-unit id="4smD83g" resname="This vacancy is being edited">
-        <source>This vacancy is being edited</source>
-        <target state="translated">Deze vacature wordt bewerkt</target>
-      </trans-unit>
       <trans-unit id="UiCI.LN" resname="This vacancy is not a draft right now. Revise it to start a new one.">
         <source>This vacancy is not a draft right now. Revise it to start a new one.</source>
         <target state="translated">Deze vacature is op dit moment geen concept. Herzie die om een nieuw concept te beginnen.</target>
@@ -5204,6 +5180,14 @@
       <trans-unit id="J.E92v9" resname="This vacancy is not a draft. Revise it to start a new one.">
         <source>This vacancy is not a draft. Revise it to start a new one.</source>
         <target state="translated">Deze vacature is geen concept. Stel wijzigingen voor om een nieuw concept te beginnen.</target>
+      </trans-unit>
+      <trans-unit id="03izKQt" resname="This vacancy is with the committee and cannot be revised until they have decided.">
+        <source>This vacancy is with the committee and cannot be revised until they have decided.</source>
+        <target>Deze vacature ligt bij de commissie en kan pas worden herzien nadat zij een besluit hebben genomen.</target>
+      </trans-unit>
+      <trans-unit id="LVRsOZJ" resname="This vacancy is with the committee. Wait for their decision before revising it again.">
+        <source>This vacancy is with the committee. Wait for their decision before revising it again.</source>
+        <target>Deze vacature ligt bij de commissie. Wacht op hun besluit voordat je hem opnieuw herziet.</target>
       </trans-unit>
       <trans-unit id="qGHY2Z_" resname="This vacancy was closed by the board and can no longer be revised.">
         <source>This vacancy was closed by the board and can no longer be revised.</source>
@@ -5673,10 +5657,6 @@
         <source>What you can do</source>
         <target state="translated">Wat je kunt doen</target>
       </trans-unit>
-      <trans-unit id="upfLcVm" resname="What you changed">
-        <source>What you changed</source>
-        <target state="translated">Wat je gewijzigd hebt</target>
-      </trans-unit>
       <trans-unit id="Ke53rYN" resname="When a company has something waiting to be reviewed">
         <source>When a company has something waiting to be reviewed</source>
         <target state="translated">Wanneer een bedrijf iets heeft dat op beoordeling wacht</target>
@@ -5881,6 +5861,10 @@
         <source>You will no longer appear in the birthday panel on the home page.</source>
         <target>Je verschijnt niet meer in het verjaardagspaneel op de homepagina.</target>
       </trans-unit>
+      <trans-unit id="7dplKZg" resname="Your account is ready, but your company has no running contract with GEWIS. You can sign in once the board has entered it.">
+        <source>Your account is ready, but your company has no running contract with GEWIS. You can sign in once the board has entered it.</source>
+        <target state="translated">Je account is klaar, maar je bedrijf heeft geen lopend contract met GEWIS. Je kunt inloggen zodra het bestuur dit heeft ingevoerd.</target>
+      </trans-unit>
       <trans-unit id="FSsHSES" resname="Your account was signed in %count% times.">
         <source>Your account was signed in %count% times.</source>
         <target state="translated">Er is %count% keer op je account ingelogd.</target>
@@ -5961,6 +5945,10 @@
         <source>Your profile is not a draft right now. Revise it to start a new one.</source>
         <target state="translated">Je profiel is op dit moment geen concept. Herzie het om een nieuw concept te beginnen.</target>
       </trans-unit>
+      <trans-unit id="yyroP1d" resname="Your profile is with the committee. Wait for their decision before revising it again.">
+        <source>Your profile is with the committee. Wait for their decision before revising it again.</source>
+        <target>Je profiel ligt bij de commissie. Wacht op hun besluit voordat je het opnieuw herziet.</target>
+      </trans-unit>
       <trans-unit id="OYTj_EO" resname="Your profile was closed. Get in touch with the committee to reopen it.">
         <source>Your profile was closed. Get in touch with the committee to reopen it.</source>
         <target state="translated">Je profiel is gesloten. Neem contact op met de commissie om het te heropenen.</target>
@@ -5968,6 +5956,10 @@
       <trans-unit id="Pe1Nxjy" resname="Your profile was submitted for review.">
         <source>Your profile was submitted for review.</source>
         <target state="translated">Je profiel is ter beoordeling ingediend.</target>
+      </trans-unit>
+      <trans-unit id="Su_Dddk" resname="Your profile was updated.">
+        <source>Your profile was updated.</source>
+        <target>Je profiel is bijgewerkt.</target>
       </trans-unit>
       <trans-unit id="klSRMC." resname="Your proposed banner is with the committee.">
         <source>Your proposed banner is with the committee.</source>
@@ -6012,6 +6004,10 @@
       <trans-unit id="RAtt1Di" resname="Your vacancy was submitted for review.">
         <source>Your vacancy was submitted for review.</source>
         <target state="translated">Je vacature is ter beoordeling ingediend.</target>
+      </trans-unit>
+      <trans-unit id="KNmf6uO" resname="Your vacancy was updated.">
+        <source>Your vacancy was updated.</source>
+        <target>Je vacature is bijgewerkt.</target>
       </trans-unit>
       <trans-unit id="ScQ2_ao" resname="Zettle">
         <source>Zettle</source>
@@ -6093,10 +6089,6 @@
         <source>more deadlines</source>
         <target>meer deadlines</target>
       </trans-unit>
-      <trans-unit id="nNhr74f" resname="none">
-        <source>none</source>
-        <target state="translated">geen</target>
-      </trans-unit>
       <trans-unit id="fl1sHmm" resname="on approval">
         <source>on approval</source>
         <target state="translated">bij goedkeuring</target>
@@ -6132,6 +6124,14 @@
       <trans-unit id="q7soSeR" resname="the secretary of GEWIS">
         <source>the secretary of GEWIS</source>
         <target>de secretaris van GEWIS</target>
+      </trans-unit>
+      <trans-unit id=".Jt3caL" resname="this activity">
+        <source>this activity</source>
+        <target>deze activiteit</target>
+      </trans-unit>
+      <trans-unit id="8uyKHwB" resname="this company">
+        <source>this company</source>
+        <target>dit bedrijf</target>
       </trans-unit>
       <trans-unit id="PpyRnaW" resname="this vacancy">
         <source>this vacancy</source>

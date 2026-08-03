@@ -1,0 +1,55 @@
+{#
+    Everything one revision changed, as the panels a review screen shows. The sections come from the domain's
+    describer, already filtered to what this reader may see, so the author's screen and the reviewer's cannot drift
+    apart by accident.
+
+    {% include 'partials/application/revision-comparison.html.twig' with {'sections': sections} only %}
+
+    The page is responsible for emitting `diff_styles()` into its stylesheets block once.
+#}
+{% import 'partials/application/revision-diff.html.twig' as diffmacro %}
+
+{% for section in sections %}
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>{{ section.heading|trans }}</h3>
+        </div>
+        <div class="panel-body">
+            {% set plainFields = section.plainFields %}
+            {% if plainFields is not empty %}
+                <div class="row">
+                    {% for field in plainFields %}
+                        {% set width = field.option('width') %}
+                        <div class="{{ 'half' == width ? 'col-md-6' : ('third' == width ? 'col-md-4' : 'col-md-12') }}">
+                            {% include 'partials/application/revision-field.html.twig' with {
+                                'field': field,
+                                'value': field.value,
+                            } only %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% set localisedFields = section.localisedFields %}
+            {% if localisedFields is not empty %}
+                {% set dutch %}
+                    {% for field in localisedFields %}
+                        {% include 'partials/application/revision-field.html.twig' with {
+                            'field': field,
+                            'value': field.dutch,
+                        } only %}
+                    {% endfor %}
+                {% endset %}
+                {% set english %}
+                    {% for field in localisedFields %}
+                        {% include 'partials/application/revision-field.html.twig' with {
+                            'field': field,
+                            'value': field.english,
+                        } only %}
+                    {% endfor %}
+                {% endset %}
+                {{ diffmacro.language_columns(dutch, english) }}
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

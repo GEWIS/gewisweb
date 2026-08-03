@@ -13,6 +13,14 @@
         <source>A slug starts with a letter and contains only lowercase letters, digits, underscores and hyphens.</source>
         <target state="translated">A slug starts with a letter and contains only lowercase letters, digits, underscores and hyphens.</target>
       </trans-unit>
+      <trans-unit id="Z4xvutl" resname="Another company already uses this slug.">
+        <source>Another company already uses this slug.</source>
+        <target state="translated">Another company already uses this slug.</target>
+      </trans-unit>
+      <trans-unit id="5.N8c6E" resname="Another vacancy of this company already uses this slug in this category.">
+        <source>Another vacancy of this company already uses this slug in this category.</source>
+        <target state="translated">Another vacancy of this company already uses this slug in this category.</target>
+      </trans-unit>
       <trans-unit id="mUY7qf3" resname="At least one language must be used.">
         <source>At least one language must be used.</source>
         <target>At least one language must be used.</target>
@@ -196,10 +204,6 @@
       <trans-unit id="Q5RHBE_" resname="Upload a JPEG, PNG or WebP image.">
         <source>Upload a JPEG, PNG or WebP image.</source>
         <target state="translated">Upload a JPEG, PNG or WebP image.</target>
-      </trans-unit>
-      <trans-unit id="RQWpEO8" resname="Upload a PDF.">
-        <source>Upload a PDF.</source>
-        <target state="translated">Upload a PDF.</target>
       </trans-unit>
       <trans-unit id="fcfNWQJ" resname="You can only highlight your own vacancies that are currently shown on the website.">
         <source>You can only highlight your own vacancies that are currently shown on the website.</source>

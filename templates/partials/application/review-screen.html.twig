@@ -1,0 +1,111 @@
+{#
+    The review screen every revisable domain has: what this revision is, what it changed, what may be done about it
+    and the discussion beside it. Embed it, since the page around it (its layout, breadcrumbs or sidebar) is the one
+    thing that genuinely belongs to the module.
+
+    {% embed 'partials/application/review-screen.html.twig' with {
+        'subjectName': subjectName,
+        'revision': revision,
+        'previous': previous,
+        'sections': sections,
+        'decisionForm': decisionForm,
+        'canDiscard': canDiscard,
+        'showAuthor': true,
+        'firstRevisionNote': 'This is the first revision; nothing to compare against.'|trans,
+        'actionsHeading': 'Actions'|trans,
+        'decideAction': path('...'),
+        'commentAction': path('...'),
+        'commentToken': csrf_token('...'),
+        'commentAudienceNote': '...'|trans,
+        'discardAction': path('...'),
+        'discardToken': csrf_token('...'),
+        'discardBody': '...'|trans,
+    } only %}
+        {% block review_body %}...{% endblock %}
+    {% endembed %}
+
+    Blocks, all optional: `review_body` for anything the comparison cannot express (an activity's sign-up lists),
+    `review_notices` for what a reviewer should read before deciding, and `review_actions` for a control beside the
+    decision buttons. `mainWidth`/`asideWidth` default to the admin split; the portal passes its own.
+
+    The page is responsible for emitting `diff_styles()` into its stylesheets block once.
+#}
+{% import 'partials/application/confirm-post-modal.html.twig' as modals %}
+
+<div class="row mb-3">
+    <div class="col-md-12 d-flex flex-wrap justify-content-between align-items-start gap-2">
+        <div>
+            <h3 class="mb-1">{{ subjectName }}</h3>
+            <p class="text-muted mb-0">
+                {% if showAuthor|default(false) %}
+                    {{ 'Revision #%number% by %author%: %status%'|trans({
+                        '%number%': revision.revisionNumber,
+                        '%author%': revision.authorDisplayName ?: 'Removed account'|trans,
+                        '%status%': revision.status|trans,
+                    }) }}
+                {% else %}
+                    {{ 'Revision #%number%: %status%'|trans({
+                        '%number%': revision.revisionNumber,
+                        '%status%': revision.status|trans,
+                    }) }}
+                {% endif %}
+                <br>
+                <span class="small">
+                    {% if previous is not null %}
+                        {{ 'Compared with revision #%number%.'|trans({'%number%': previous.revisionNumber}) }}
+                    {% else %}
+                        {{ firstRevisionNote }}
+                    {% endif %}
+                </span>
+            </p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            {% block review_header_actions %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-{{ mainWidth|default(9) }}">
+        {% include 'partials/application/revision-comparison.html.twig' with {'sections': sections} only %}
+        {% block review_body %}{% endblock %}
+    </div>
+
+    <aside class="col-md-{{ asideWidth|default(3) }}">
+        <div class="panel p-3">
+            <h5>{{ actionsHeading }}</h5>
+            {% block review_notices %}{% endblock %}
+            {% include 'partials/application/revision-decisions.html.twig' with {
+                'decisionForm': decisionForm,
+                'action': decideAction,
+                'emptyNote': decisionsEmptyNote|default(null),
+            } only %}
+            {% block review_actions %}{% endblock %}
+            {% if canDiscard %}
+                <button type="button" class="btn btn-sm btn-outline-gewis-primary w-100 mt-2"
+                        data-bs-toggle="modal" data-bs-target="#modal-discard-draft">
+                    {{ 'Discard draft'|trans }}
+                </button>
+            {% endif %}
+        </div>
+
+        {% include 'partials/application/revision-comments.html.twig' with {
+            'comments': comments,
+            'commentAction': commentAction,
+            'csrfToken': commentToken,
+            'audienceNote': commentAudienceNote,
+        } only %}
+    </aside>
+</div>
+
+{% if canDiscard %}
+    {{ modals.confirm_modal(
+        'modal-discard-draft',
+        discardAction,
+        discardToken,
+        'Discard draft?'|trans,
+        discardBody,
+        'Discard draft'|trans,
+        'gewis-primary',
+    ) }}
+{% endif %}

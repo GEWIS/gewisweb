@@ -10,6 +10,7 @@ use App\Entity\User\CompanyUser;
 use App\Entity\User\User;
 use App\Security\Application\RevisionVoter;
 use App\Security\User\SudoVoter;
+use App\ViewModel\Application\Review\RevisionAudience;
 use App\ViewModel\Application\RevisionActions;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,6 +51,15 @@ abstract class AbstractRevisionReviewController extends AbstractRevisionControll
     abstract protected function reviewResponse(RevisionInterface $revision): Response;
 
     /**
+     * Who this domain's review screen is written for. An admin surface is read by somebody deciding; the company
+     * portal shows the same revision to the author who wrote it, and is told apart here rather than in the template.
+     */
+    protected function reviewAudience(): RevisionAudience
+    {
+        return RevisionAudience::ReviewerOnly;
+    }
+
+    /**
      * Opening a review screen is gated on being allowed to see it, and reviewers additionally on sudo. This is a GET,
      * so the sudo listener brings them back here afterwards. Somebody who can only submit their own draft is never
      * asked.
@@ -82,12 +92,17 @@ abstract class AbstractRevisionReviewController extends AbstractRevisionControll
     ): Response {
         $actions = $this->revisionActions($revision);
         $form ??= $this->createDecisionForm($actions);
+        $previous = $revision->getPreviousRevision();
 
         return $this->render(
             $this->reviewTemplate(),
             [
                 'revision' => $revision,
-                'previous' => $revision->getPreviousRevision(),
+                'previous' => $previous,
+                'sections' => $this->revisionDescribers->describe(
+                    $revision,
+                    $previous,
+                )->sectionsFor($this->reviewAudience()),
                 'decisionForm' => $form->createView(),
                 'canDiscard' => $actions->isDiscardable,
                 ...$this->reviewContext(

@@ -28,7 +28,7 @@
                            class="btn btn-sm btn-gewis-primary">{{ 'Edit draft'|trans }}</a>
                         <a href="{{ path('admin/career/approvals/company', {'revision': current.id}) }}"
                            class="btn btn-sm btn-outline-success">{{ 'Submit for review'|trans }}</a>
-                    {% elseif current is not null %}
+                    {% elseif current is not null and current.status.revisable %}
                         <form method="post" action="{{ path('admin/career/companies/revise', {'company': company.id}) }}">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('company_revise-' ~ company.id) }}">
                             <button type="submit" class="btn btn-sm btn-gewis-primary">{{ 'Revise'|trans }}</button>

@@ -1,7 +1,5 @@
 {% extends 'layout-admin.html.twig' %}
 
-{% import 'partials/application/revision-diff.html.twig' as diffmacro %}
-
 {% block page_title %}{{ subjectName|page_title }}{{ 'Review'|trans|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block stylesheets %}
@@ -20,241 +18,23 @@
 {% endblock %}
 
 {% block contents %}
-    <div class="row">
-        <div class="col-md-9">
-            <h3 class="mb-1">{{ subjectName }}</h3>
-            <p class="text-muted">
-                {{ 'Revision #%number% by %author%: %status%'|trans({
-                    '%number%': revision.revisionNumber,
-                    '%author%': revision.authorDisplayName,
-                    '%status%': revision.status|trans,
-                }) }}
-                {% if previous is not null %}
-                    <br><span class="small">{{ 'Compared with revision #%number%.'|trans({'%number%': previous.revisionNumber}) }}</span>
-                {% else %}
-                    <br><span class="small">{{ 'This is the first revision; nothing to compare against.'|trans }}</span>
-                {% endif %}
-            </p>
-
-            {% if isCompany %}
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3>{{ 'Profile'|trans }}</h3>
-                    </div>
-                    <div class="panel-body">
-                        {% set dutch %}
-                            {{ diffmacro.field_diff('Slogan'|trans, previous ? previous.slogan.valueNL : null, revision.slogan.valueNL) }}
-                            {{ diffmacro.field_diff('Website'|trans, previous ? previous.website.valueNL : null, revision.website.valueNL) }}
-                            {{ diffmacro.field_diff('Description'|trans, previous ? previous.description.valueNL : null, revision.description.valueNL, 'Inline') }}
-                        {% endset %}
-                        {% set english %}
-                            {{ diffmacro.field_diff('Slogan'|trans, previous ? previous.slogan.valueEN : null, revision.slogan.valueEN) }}
-                            {{ diffmacro.field_diff('Website'|trans, previous ? previous.website.valueEN : null, revision.website.valueEN) }}
-                            {{ diffmacro.field_diff('Description'|trans, previous ? previous.description.valueEN : null, revision.description.valueEN, 'Inline') }}
-                        {% endset %}
-                        {{ diffmacro.language_columns(dutch, english) }}
-                    </div>
-                </div>
-
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3>{{ 'Contact details'|trans }}</h3>
-                    </div>
-                    <div class="panel-body">
-                        {{ diffmacro.field_diff('Contact name'|trans, previous ? previous.contactName : null, revision.contactName) }}
-                        {{ diffmacro.field_diff('Contact email address'|trans, previous ? previous.contactEmail : null, revision.contactEmail) }}
-                        {{ diffmacro.field_diff('Contact phone number'|trans, previous ? previous.contactPhone : null, revision.contactPhone) }}
-                        {{ diffmacro.field_diff('Address'|trans, previous ? previous.contactAddress : null, revision.contactAddress) }}
-                    </div>
-                </div>
-
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3>{{ 'Logo'|trans }}</h3>
-                    </div>
-                    <div class="panel-body d-flex flex-wrap gap-4">
-                        {% if previous is not null and previous.logo is not null and previous.logo != revision.logo %}
-                            <div>
-                                <h6 class="text-muted small mb-1">{{ 'Was'|trans }}</h6>
-                                <img class="career-logo-sm" style="object-fit: cover;" src="{{ image_url(previous.logo, 'w320') }}" alt="">
-                            </div>
-                        {% endif %}
-                        {% if revision.logo is not null %}
-                            <div>
-                                <h6 class="text-muted small mb-1">{{ 'Now'|trans }}</h6>
-                                <img class="career-logo-sm" style="object-fit: cover;" src="{{ image_url(revision.logo, 'w320') }}" alt="">
-                            </div>
-                        {% else %}
-                            <span class="text-muted small">{{ 'No logo.'|trans }}</span>
-                        {% endif %}
-                    </div>
-                </div>
-            {% else %}
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3>{{ 'General information'|trans }}</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-4 mb-2">
-                                <h6 class="text-muted small mb-1">{{ 'Company'|trans }}</h6>
-                                <div>{{ revision.vacancy.company.name }}</div>
-                            </div>
-                            <div class="col-md-4 mb-2">
-                                <h6 class="text-muted small mb-1">{{ 'Category'|trans }}</h6>
-                                <div>
-                                    <span class="badge {{ revision.category.badgeClass }}">{{ revision.category.label|trans }}</span>
-                                    {% if previous is not null and previous.category != revision.category %}
-                                        <span class="text-muted small">({{ 'was'|trans }} {{ previous.category.label|trans }})</span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-2">
-                                <h6 class="text-muted small mb-1">{{ 'Posting window'|trans }}</h6>
-                                <div>
-                                    {{ revision.startDate is not null ? revision.startDate|date('j M Y') : 'on approval'|trans }}
-                                    &ndash;
-                                    {{ revision.endDate is not null ? revision.endDate|date('j M Y') : '-' }}
-                                </div>
-                                {% if previous is not null and (previous.startDate != revision.startDate or previous.endDate != revision.endDate) %}
-                                    <div class="text-muted small">
-                                        {{ 'Was:'|trans }}
-                                        {{ previous.startDate is not null ? previous.startDate|date('j M Y') : 'on approval'|trans }}
-                                        &ndash;
-                                        {{ previous.endDate is not null ? previous.endDate|date('j M Y') : '-' }}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="mb-0">
-                            <h6 class="text-muted small mb-1">{{ 'Labels'|trans }}</h6>
-                            <div>
-                                {% set previousLabelIds = previous is not null ? previous.labels|map(label => label.id) : [] %}
-                                {% set currentLabelIds = revision.labels|map(label => label.id) %}
-                                {% for label in revision.labels %}
-                                    <span class="badge {{ previous is not null and label.id not in previousLabelIds ? 'badge-success' : 'badge-tag' }}">
-                                        {{ label.name|localise_text }}
-                                    </span>
-                                {% else %}
-                                    <span class="text-muted small">{{ 'No labels.'|trans }}</span>
-                                {% endfor %}
-                                {% if previous is not null %}
-                                    {% for label in previous.labels|filter(label => label.id not in currentLabelIds) %}
-                                        <span class="badge badge-danger"><s>{{ label.name|localise_text }}</s></span>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3>{{ 'Details'|trans }}</h3>
-                    </div>
-                    <div class="panel-body">
-                        {% set dutch %}
-                            {{ diffmacro.field_diff('Title'|trans, previous ? previous.name.valueNL : null, revision.name.valueNL) }}
-                            {{ diffmacro.field_diff('Location'|trans, previous ? previous.location.valueNL : null, revision.location.valueNL) }}
-                            {{ diffmacro.field_diff('Website'|trans, previous ? previous.website.valueNL : null, revision.website.valueNL) }}
-                            {{ diffmacro.field_diff('Attachment link'|trans, previous ? previous.attachment.valueNL : null, revision.attachment.valueNL) }}
-                            {{ diffmacro.field_diff('Description'|trans, previous ? previous.description.valueNL : null, revision.description.valueNL, 'Inline') }}
-                        {% endset %}
-                        {% set english %}
-                            {{ diffmacro.field_diff('Title'|trans, previous ? previous.name.valueEN : null, revision.name.valueEN) }}
-                            {{ diffmacro.field_diff('Location'|trans, previous ? previous.location.valueEN : null, revision.location.valueEN) }}
-                            {{ diffmacro.field_diff('Website'|trans, previous ? previous.website.valueEN : null, revision.website.valueEN) }}
-                            {{ diffmacro.field_diff('Attachment link'|trans, previous ? previous.attachment.valueEN : null, revision.attachment.valueEN) }}
-                            {{ diffmacro.field_diff('Description'|trans, previous ? previous.description.valueEN : null, revision.description.valueEN, 'Inline') }}
-                        {% endset %}
-                        {{ diffmacro.language_columns(dutch, english) }}
-                    </div>
-                </div>
-
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3>{{ 'Contact details'|trans }}</h3>
-                    </div>
-                    <div class="panel-body">
-                        {{ diffmacro.field_diff('Contact name'|trans, previous ? previous.contactName : null, revision.contactName) }}
-                        {{ diffmacro.field_diff('Contact email address'|trans, previous ? previous.contactEmail : null, revision.contactEmail) }}
-                        {{ diffmacro.field_diff('Contact phone number'|trans, previous ? previous.contactPhone : null, revision.contactPhone) }}
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-
-        <aside class="col-md-3">
-            <div class="panel p-3">
-                <h5>{{ 'Actions'|trans }}</h5>
-                {{ form_start(decisionForm, {'action': path(decideRoute, {'revision': revision.getId})}) }}
-                    {# The message field is only present for a decision (feedback) or a resubmission (required response). #}
-                    {% if decisionForm.message is defined %}
-                        {{ form_row(decisionForm.message) }}
-                    {% endif %}
-                    <div class="d-grid gap-2">
-                        {% if decisionForm.submit is defined %}
-                            {{ form_widget(decisionForm.submit, {'attr': {'class': 'btn btn-success'}}) }}
-                        {% endif %}
-                        {% if decisionForm.start_review is defined %}
-                            {{ form_widget(decisionForm.start_review, {'attr': {'class': 'btn btn-gewis-primary'}}) }}
-                        {% endif %}
-                        {% if decisionForm.approve is defined %}
-                            {{ form_widget(decisionForm.approve, {'attr': {'class': 'btn btn-success'}}) }}
-                        {% endif %}
-                    </div>
-                    {% if decisionForm.request_changes is defined or decisionForm.reject is defined or decisionForm.close is defined %}
-                        <div class="d-flex flex-wrap gap-2 mt-2">
-                            {% if decisionForm.request_changes is defined %}
-                                {{ form_widget(decisionForm.request_changes, {'attr': {'class': 'btn btn-sm btn-outline-warning'}}) }}
-                            {% endif %}
-                            {% if decisionForm.reject is defined %}
-                                {{ form_widget(decisionForm.reject, {'attr': {'class': 'btn btn-sm btn-outline-gewis-primary'}}) }}
-                            {% endif %}
-                            {% if decisionForm.close is defined %}
-                                {{ form_widget(decisionForm.close, {'attr': {'class': 'btn btn-sm btn-outline-gewis-primary'}}) }}
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                {{ form_end(decisionForm) }}
-                {% if canDiscard %}
-                    <button type="button" class="btn btn-sm btn-outline-gewis-primary w-100 mt-2"
-                            data-bs-toggle="modal" data-bs-target="#modal-discard-draft">
-                        {{ 'Discard draft'|trans }}
-                    </button>
-                {% endif %}
-            </div>
-
-            {% include 'partials/application/revision-comments.html.twig' with {
-                'comments': comments,
-                'commentAction': path(commentRoute, {'revision': revision.getId}),
-                'csrfToken': csrf_token('career_review_comment-' ~ revision.getId),
-                'audienceNote': 'Visible to the company and the committee. Use it to ask a question or leave a note.'|trans,
-            } only %}
-        </aside>
-    </div>
-
-    {% if canDiscard %}
-        <div class="modal fade" id="modal-discard-draft" tabindex="-1" aria-labelledby="modal-discard-draft-label" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modal-discard-draft-label">{{ 'Discard draft?'|trans }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'Close'|trans }}"></button>
-                    </div>
-                    <form method="post" action="{{ path(discardRoute, {'revision': revision.getId}) }}">
-                        <div class="modal-body">
-                            <p class="mb-0">{{ 'The changes in this draft will be lost and the live version restored.'|trans }}</p>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('career_discard-' ~ revision.getId) }}">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Cancel'|trans }}</button>
-                            <button type="submit" class="btn btn-gewis-primary">{{ 'Discard draft'|trans }}</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    {% include 'partials/application/review-screen.html.twig' with {
+        'subjectName': subjectName,
+        'revision': revision,
+        'previous': previous,
+        'sections': sections,
+        'comments': comments,
+        'decisionForm': decisionForm,
+        'canDiscard': canDiscard,
+        'showAuthor': true,
+        'firstRevisionNote': 'This is the first revision; nothing to compare against.'|trans,
+        'actionsHeading': 'Actions'|trans,
+        'decideAction': path(decideRoute, {'revision': revision.getId}),
+        'commentAction': path(commentRoute, {'revision': revision.getId}),
+        'commentToken': csrf_token('career_review_comment-' ~ revision.getId),
+        'commentAudienceNote': 'Visible to the company and the committee. Use it to ask a question or leave a note.'|trans,
+        'discardAction': path(discardRoute, {'revision': revision.getId}),
+        'discardToken': csrf_token('career_discard-' ~ revision.getId),
+        'discardBody': 'The changes in this draft will be lost and the live version restored.'|trans,
+    } only %}
 {% endblock %}
