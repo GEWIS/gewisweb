@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Career;
 
+use App\Controller\Application\HoldsEditLockTrait;
 use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\Application\Enums\ReviseRefusal;
-use App\Entity\Career\CareerLocalisedText;
-use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Career\Vacancy;
 use App\Entity\Career\VacancyRevision;
 use App\Entity\User\Enums\UserRoles;
@@ -15,12 +14,12 @@ use App\Entity\User\User;
 use App\Form\Career\VacancyType;
 use App\Repository\Career\VacancyRevisionCommentRepository;
 use App\Security\Application\RevisionVoter;
-use App\Service\Application\EditLockService;
 use App\Service\Application\RevisionReviser;
 use App\Service\Career\CareerOverviewCountsProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -43,10 +42,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 )]
 class AdminVacancyController extends AbstractController
 {
+    use HoldsEditLockTrait;
+
     public function __construct(
         private readonly CareerOverviewCountsProvider $overviewCounts,
         private readonly VacancyRevisionCommentRepository $commentRepository,
-        private readonly EditLockService $editLockService,
         private readonly RevisionReviser $reviser,
         private readonly EntityManagerInterface $entityManager,
         private readonly TranslatorInterface $translator,
@@ -81,7 +81,7 @@ class AdminVacancyController extends AbstractController
         $vacancy = new Vacancy();
         $vacancy->setPublished(true);
 
-        $revision = $this->newDraftRevision();
+        $revision = new VacancyRevision();
         $revision->setAuthor($user->getMember());
         $vacancy->addRevision($revision);
         $vacancy->setCurrentRevision($revision);
@@ -112,6 +112,48 @@ class AdminVacancyController extends AbstractController
         );
 
         return $this->redirectToRoute('admin/career/vacancies/index');
+    }
+
+    #[Route(
+        path: '/{vacancy}/edit/ping',
+        name: 'edit_ping',
+        requirements: ['vacancy' => '\\d+'],
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: new Expression('"career_vacancy_edit_lock-" ~ args["vacancy"].getId()'),
+        tokenKey: '_csrf_token',
+    )]
+    public function editPing(
+        #[CurrentUser]
+        User $user,
+        Vacancy $vacancy,
+    ): JsonResponse {
+        return $this->pingLock(
+            $vacancy,
+            $user,
+        );
+    }
+
+    #[Route(
+        path: '/{vacancy}/edit/release',
+        name: 'edit_release',
+        requirements: ['vacancy' => '\\d+'],
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: new Expression('"career_vacancy_edit_lock-" ~ args["vacancy"].getId()'),
+        tokenKey: '_csrf_token',
+    )]
+    public function editRelease(
+        #[CurrentUser]
+        User $user,
+        Vacancy $vacancy,
+    ): JsonResponse {
+        return $this->releaseLock(
+            $vacancy,
+            $user,
+        );
     }
 
     #[Route(
@@ -274,36 +316,5 @@ class AdminVacancyController extends AbstractController
             'admin/career/vacancies/edit',
             ['vacancy' => $vacancy->getId()],
         );
-    }
-
-    /**
-     * A blank draft revision with its localised texts initialised, so the create form can bind to it.
-     */
-    private function newDraftRevision(): VacancyRevision
-    {
-        $revision = new VacancyRevision();
-        $revision->setName(new CareerLocalisedText(
-            null,
-            null,
-        ));
-        $revision->setLocation(new CareerLocalisedText(
-            null,
-            null,
-        ));
-        $revision->setWebsite(new CareerLocalisedText(
-            null,
-            null,
-        ));
-        $revision->setDescription(new CareerLocalisedText(
-            null,
-            null,
-        ));
-        $revision->setAttachment(new CareerLocalisedText(
-            null,
-            null,
-        ));
-        $revision->setCategory(VacancyCategories::Jobs);
-
-        return $revision;
     }
 }

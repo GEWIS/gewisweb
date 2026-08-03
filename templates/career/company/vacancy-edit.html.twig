@@ -25,11 +25,26 @@
     {% set hasFeedback = comments is defined and comments is not empty %}
     <div class="row">
         <div class="{{ hasFeedback ? 'col-md-9' : 'col-md-12' }}">
-            {% include 'partials/career/vacancy-form.html.twig' with {
-                'form': form,
-                'submitLabel': 'Save draft'|trans,
-                'cancelUrl': path('company/vacancies'),
-            } only %}
+            {# A vacancy being created has no id yet, so there is nothing to hold a lock on. #}
+            {% if vacancy is not null %}
+                <div data-controller="edit-lock"
+                     data-edit-lock-ping-url-value="{{ path('company/vacancies/edit_ping', {'vacancy': vacancy.id}) }}"
+                     data-edit-lock-release-url-value="{{ path('company/vacancies/edit_release', {'vacancy': vacancy.id}) }}"
+                     data-edit-lock-csrf-token-value="{{ csrf_token('company_vacancy_edit_lock-' ~ vacancy.id) }}"
+                     data-edit-lock-lost-message-value="{{ 'You no longer hold the edit lock; it was taken over or expired. Reload the page to continue editing.'|trans }}">
+                    {% include 'partials/career/vacancy-form.html.twig' with {
+                        'form': form,
+                        'submitLabel': 'Save draft'|trans,
+                        'cancelUrl': path('company/vacancies'),
+                    } only %}
+                </div>
+            {% else %}
+                {% include 'partials/career/vacancy-form.html.twig' with {
+                    'form': form,
+                    'submitLabel': 'Save draft'|trans,
+                    'cancelUrl': path('company/vacancies'),
+                } only %}
+            {% endif %}
         </div>
         {% if hasFeedback %}
             <div class="col-md-3">

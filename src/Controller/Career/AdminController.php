@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Career;
 
+use App\Controller\Application\HoldsEditLockTrait;
 use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\Application\Enums\ReviseRefusal;
-use App\Entity\Career\CareerLocalisedText;
 use App\Entity\Career\Company;
 use App\Entity\Career\CompanyRevision;
 use App\Entity\Career\Enums\CompanyAuditVerbs;
@@ -16,7 +16,6 @@ use App\Form\Career\CompanyType;
 use App\Repository\Career\CompanyAuditLogRepository;
 use App\Repository\Career\CompanyRevisionCommentRepository;
 use App\Security\Application\RevisionVoter;
-use App\Service\Application\EditLockService;
 use App\Service\Application\RevisionReviser;
 use App\Service\Career\CareerOverviewCountsProvider;
 use App\Service\Career\CompanyAuditLogger;
@@ -25,6 +24,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -48,13 +48,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 )]
 class AdminController extends AbstractController
 {
+    use HoldsEditLockTrait;
+
     public function __construct(
         private readonly CompanyAuditLogRepository $auditLogRepository,
         private readonly CompanyRevisionCommentRepository $commentRepository,
         private readonly CareerOverviewCountsProvider $overviewCounts,
         private readonly CompanyAuditLogger $auditLogger,
         private readonly CompanyImageUploadService $imageUploadService,
-        private readonly EditLockService $editLockService,
         private readonly RevisionReviser $reviser,
         private readonly EntityManagerInterface $entityManager,
         private readonly TranslatorInterface $translator,
@@ -89,7 +90,7 @@ class AdminController extends AbstractController
         $company = new Company();
         $company->setPublished(false);
 
-        $revision = $this->newDraftRevision();
+        $revision = new CompanyRevision();
         $revision->setAuthor($user->getMember());
         $company->addRevision($revision);
         $company->setCurrentRevision($revision);
@@ -264,6 +265,48 @@ class AdminController extends AbstractController
         return $this->backToCompany($company);
     }
 
+    #[Route(
+        path: '/companies/{company}/edit/ping',
+        name: 'companies/edit_ping',
+        requirements: ['company' => '\\d+'],
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: new Expression('"career_company_edit_lock-" ~ args["company"].getId()'),
+        tokenKey: '_csrf_token',
+    )]
+    public function editPing(
+        #[CurrentUser]
+        User $user,
+        Company $company,
+    ): JsonResponse {
+        return $this->pingLock(
+            $company,
+            $user,
+        );
+    }
+
+    #[Route(
+        path: '/companies/{company}/edit/release',
+        name: 'companies/edit_release',
+        requirements: ['company' => '\\d+'],
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: new Expression('"career_company_edit_lock-" ~ args["company"].getId()'),
+        tokenKey: '_csrf_token',
+    )]
+    public function editRelease(
+        #[CurrentUser]
+        User $user,
+        Company $company,
+    ): JsonResponse {
+        return $this->releaseLock(
+            $company,
+            $user,
+        );
+    }
+
     /**
      * Start a new draft from the profile as it stands, which is how an approved profile is changed at all.
      */
@@ -371,27 +414,5 @@ class AdminController extends AbstractController
             'admin/career/companies/view',
             ['company' => $company->getId()],
         );
-    }
-
-    /**
-     * A blank draft revision with its localised texts initialised, so the create form can bind to it.
-     */
-    private function newDraftRevision(): CompanyRevision
-    {
-        $revision = new CompanyRevision();
-        $revision->setSlogan(new CareerLocalisedText(
-            null,
-            null,
-        ));
-        $revision->setWebsite(new CareerLocalisedText(
-            null,
-            null,
-        ));
-        $revision->setDescription(new CareerLocalisedText(
-            null,
-            null,
-        ));
-
-        return $revision;
     }
 }

@@ -22,11 +22,17 @@
     <div class="row">
         <div class="{{ hasFeedback ? 'col-md-9' : 'col-md-12' }}">
             <h3 class="mb-3">{{ 'Edit %company%'|trans({'%company%': company.name}) }}</h3>
-            {% include 'partials/career/company-form.html.twig' with {
-                'form': form,
-                'submitLabel': 'Save changes'|trans,
-                'cancelUrl': path('admin/career/companies/view', {'company': company.id}),
-            } only %}
+            <div data-controller="edit-lock"
+                 data-edit-lock-ping-url-value="{{ path('admin/career/companies/edit_ping', {'company': company.id}) }}"
+                 data-edit-lock-release-url-value="{{ path('admin/career/companies/edit_release', {'company': company.id}) }}"
+                 data-edit-lock-csrf-token-value="{{ csrf_token('career_company_edit_lock-' ~ company.id) }}"
+                 data-edit-lock-lost-message-value="{{ 'You no longer hold the edit lock; it was taken over or expired. Reload the page to continue editing.'|trans }}">
+                {% include 'partials/career/company-form.html.twig' with {
+                    'form': form,
+                    'submitLabel': 'Save changes'|trans,
+                    'cancelUrl': path('admin/career/companies/view', {'company': company.id}),
+                } only %}
+            </div>
         </div>
         {% if hasFeedback %}
             <div class="col-md-3">

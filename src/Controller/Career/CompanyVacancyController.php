@@ -26,6 +26,7 @@ use App\Workflow\RevisionClonerRegistry;
 use Override;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -180,12 +181,17 @@ class CompanyVacancyController extends AbstractRevisionReviewController
                 $companyUser,
             )
         ) {
-            $this->addFlash(
-                AlertTypes::Warning->value,
-                $this->translator->trans('Somebody else is editing this vacancy right now.'),
+            return $this->render(
+                'career/company/edit-locked.html.twig',
+                [
+                    'lock' => $this->editLockService->blockingLock(
+                        $vacancy,
+                        $companyUser,
+                    ),
+                    'backRoute' => 'company/vacancies',
+                    'subject' => $this->translator->trans('this vacancy'),
+                ],
             );
-
-            return $this->backToStatus($vacancy);
         }
 
         $form = $this->createForm(
@@ -222,6 +228,70 @@ class CompanyVacancyController extends AbstractRevisionReviewController
         );
 
         return $this->backToStatus($vacancy);
+    }
+
+    #[Route(
+        path: '/{vacancy}/edit/ping',
+        name: 'vacancies/edit_ping',
+        requirements: ['vacancy' => '\\d+'],
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: new Expression('"company_vacancy_edit_lock-" ~ args["vacancy"].getId()'),
+        tokenKey: '_csrf_token',
+    )]
+    public function editPing(
+        #[CurrentUser]
+        CompanyUser $companyUser,
+        Vacancy $vacancy,
+    ): JsonResponse {
+        $this->requireOwn(
+            $vacancy,
+            $companyUser,
+        );
+        $this->denyAccessUnlessGranted(
+            RevisionVoter::SUBMIT,
+            $vacancy,
+        );
+
+        return new JsonResponse([
+            'held' => $this->editLockService->ping(
+                $vacancy,
+                $companyUser,
+            ),
+        ]);
+    }
+
+    #[Route(
+        path: '/{vacancy}/edit/release',
+        name: 'vacancies/edit_release',
+        requirements: ['vacancy' => '\\d+'],
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: new Expression('"company_vacancy_edit_lock-" ~ args["vacancy"].getId()'),
+        tokenKey: '_csrf_token',
+    )]
+    public function editRelease(
+        #[CurrentUser]
+        CompanyUser $companyUser,
+        Vacancy $vacancy,
+    ): JsonResponse {
+        $this->requireOwn(
+            $vacancy,
+            $companyUser,
+        );
+        $this->denyAccessUnlessGranted(
+            RevisionVoter::SUBMIT,
+            $vacancy,
+        );
+
+        $this->editLockService->release(
+            $vacancy,
+            $companyUser,
+        );
+
+        return new JsonResponse(['released' => true]);
     }
 
     #[Route(

@@ -25,11 +25,17 @@
     {% set hasFeedback = comments is defined and comments is not empty %}
     <div class="row">
         <div class="{{ hasFeedback ? 'col-md-9' : 'col-md-12' }}">
-            {% include 'partials/career/company-form.html.twig' with {
-                'form': form,
-                'submitLabel': 'Save draft'|trans,
-                'cancelUrl': path('company/profile'),
-            } only %}
+            <div data-controller="edit-lock"
+                 data-edit-lock-ping-url-value="{{ path('company/profile/edit_ping') }}"
+                 data-edit-lock-release-url-value="{{ path('company/profile/edit_release') }}"
+                 data-edit-lock-csrf-token-value="{{ csrf_token('company_profile_edit_lock') }}"
+                 data-edit-lock-lost-message-value="{{ 'You no longer hold the edit lock; it was taken over or expired. Reload the page to continue editing.'|trans }}">
+                {% include 'partials/career/company-form.html.twig' with {
+                    'form': form,
+                    'submitLabel': 'Save draft'|trans,
+                    'cancelUrl': path('company/profile'),
+                } only %}
+            </div>
         </div>
         {% if hasFeedback %}
             <div class="col-md-3">

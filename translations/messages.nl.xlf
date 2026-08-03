@@ -245,6 +245,10 @@
         <source>%label% disappears from the label picker. Vacancies that already carry it keep it.</source>
         <target state="translated">%label% verdwijnt uit de labelkiezer. Vacatures die het label al hebben, behouden het.</target>
       </trans-unit>
+      <trans-unit id="Fn3xhKO" resname="%name% has been editing %subject% since %time%.">
+        <source>%name% has been editing %subject% since %time%.</source>
+        <target state="translated">%name% is %subject% aan het bewerken sinds %time%.</target>
+      </trans-unit>
       <trans-unit id="E9ZBpIE" resname="%name% has hidden their tagged photos.">
         <source>%name% has hidden their tagged photos.</source>
         <target state="translated">%name% heeft de getagde foto's verborgen.</target>
@@ -653,6 +657,10 @@
         <source>Almost there! Check your email to confirm your sign-up.</source>
         <target state="translated">Je bent er bijna! Kijk even in je e-mail om je aanmelding te bevestigen.</target>
       </trans-unit>
+      <trans-unit id="bZq75mg" resname="Already being edited">
+        <source>Already being edited</source>
+        <target state="translated">Wordt al bewerkt</target>
+      </trans-unit>
       <trans-unit id="3eX.3WJ" resname="Analytics are currently">
         <source>Analytics are currently</source>
         <target state="translated">Analytics zijn momenteel</target>
@@ -964,6 +972,10 @@
       <trans-unit id="U.zrbEp" resname="Career Development and External Affairs Officer">
         <source>Career Development and External Affairs Officer</source>
         <target state="translated">Commissaris Carrièreontwikkeling en Externe Betrekkingen</target>
+      </trans-unit>
+      <trans-unit id="QNUTcQ_" resname="Career portal">
+        <source>Career portal</source>
+        <target state="translated">Bedrijvenportaal</target>
       </trans-unit>
       <trans-unit id="kUnrHOO" resname="Career events">
         <source>Career events</source>
@@ -2052,6 +2064,10 @@
       <trans-unit id="3cwxgDa" resname="Given name">
         <source>Given name</source>
         <target state="translated">Voornaam</target>
+      </trans-unit>
+      <trans-unit id="u_d4d47" resname="Go back">
+        <source>Go back</source>
+        <target state="translated">Terug</target>
       </trans-unit>
       <trans-unit id="AUgafTZ" resname="Go to security">
         <source>Go to security</source>
@@ -4377,13 +4393,9 @@
         <source>Social drink</source>
         <target>Borrel</target>
       </trans-unit>
-      <trans-unit id="EwEc22U" resname="Somebody else is editing the profile right now.">
-        <source>Somebody else is editing the profile right now.</source>
-        <target state="translated">Iemand anders bewerkt het profiel op dit moment.</target>
-      </trans-unit>
-      <trans-unit id="REpsYu2" resname="Somebody else is editing this vacancy right now.">
-        <source>Somebody else is editing this vacancy right now.</source>
-        <target state="translated">Iemand anders bewerkt deze vacature op dit moment.</target>
+      <trans-unit id="LTyr6e2" resname="Somebody else is editing %subject% right now.">
+        <source>Somebody else is editing %subject% right now.</source>
+        <target state="translated">Iemand anders is %subject% op dit moment aan het bewerken.</target>
       </trans-unit>
       <trans-unit id="2mPSd6n" resname="Somebody who cannot sign in cannot be the primary contact.">
         <source>Somebody who cannot sign in cannot be the primary contact.</source>
@@ -4584,10 +4596,6 @@
       <trans-unit id="3UcLqDl" resname="That action is not available for this revision.">
         <source>That action is not available for this revision.</source>
         <target state="translated">Die actie is niet beschikbaar voor deze revisie.</target>
-      </trans-unit>
-      <trans-unit id="P4gDnC4" resname="That action is not available right now.">
-        <source>That action is not available right now.</source>
-        <target state="translated">Die actie is op dit moment niet beschikbaar.</target>
       </trans-unit>
       <trans-unit id="Nv.ShUE" resname="That device will be signed out immediately.">
         <source>That device will be signed out immediately.</source>
@@ -6125,6 +6133,10 @@
         <source>the secretary of GEWIS</source>
         <target>de secretaris van GEWIS</target>
       </trans-unit>
+      <trans-unit id="PpyRnaW" resname="this vacancy">
+        <source>this vacancy</source>
+        <target state="translated">deze vacature</target>
+      </trans-unit>
       <trans-unit id="W3MzJgn" resname="unavailable">
         <source>unavailable</source>
         <target state="translated">niet beschikbaar</target>
@@ -6152,6 +6164,10 @@
       <trans-unit id="LK8qg03" resname="you">
         <source>you</source>
         <target state="translated">jij</target>
+      </trans-unit>
+      <trans-unit id="2jEJs_H" resname="your profile">
+        <source>your profile</source>
+        <target state="translated">je profiel</target>
       </trans-unit>
       <trans-unit id="AdY3YcR" resname="¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.">
         <source>¹ Fields marked with this symbol are only shared with the board and the organiser of the activity.</source>

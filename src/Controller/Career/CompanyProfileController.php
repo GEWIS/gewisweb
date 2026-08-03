@@ -25,6 +25,7 @@ use App\Workflow\RevisionClonerRegistry;
 use Override;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -120,12 +121,17 @@ class CompanyProfileController extends AbstractRevisionReviewController
                 $companyUser,
             )
         ) {
-            $this->addFlash(
-                AlertTypes::Warning->value,
-                $this->translator->trans('Somebody else is editing the profile right now.'),
+            return $this->render(
+                'career/company/edit-locked.html.twig',
+                [
+                    'lock' => $this->editLockService->blockingLock(
+                        $company,
+                        $companyUser,
+                    ),
+                    'backRoute' => 'company/profile',
+                    'subject' => $this->translator->trans('your profile'),
+                ],
             );
-
-            return $this->redirectToRoute('company/profile');
         }
 
         $form = $this->createForm(
@@ -182,6 +188,60 @@ class CompanyProfileController extends AbstractRevisionReviewController
         );
 
         return $this->redirectToRoute('company/profile/status');
+    }
+
+    #[Route(
+        path: '/edit/ping',
+        name: 'profile/edit_ping',
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: 'company_profile_edit_lock',
+        tokenKey: '_csrf_token',
+    )]
+    public function editPing(
+        #[CurrentUser]
+        CompanyUser $companyUser,
+    ): JsonResponse {
+        $company = $companyUser->getCompany();
+        $this->denyAccessUnlessGranted(
+            RevisionVoter::SUBMIT,
+            $company,
+        );
+
+        return new JsonResponse([
+            'held' => $this->editLockService->ping(
+                $company,
+                $companyUser,
+            ),
+        ]);
+    }
+
+    #[Route(
+        path: '/edit/release',
+        name: 'profile/edit_release',
+        methods: ['POST'],
+    )]
+    #[IsCsrfTokenValid(
+        id: 'company_profile_edit_lock',
+        tokenKey: '_csrf_token',
+    )]
+    public function editRelease(
+        #[CurrentUser]
+        CompanyUser $companyUser,
+    ): JsonResponse {
+        $company = $companyUser->getCompany();
+        $this->denyAccessUnlessGranted(
+            RevisionVoter::SUBMIT,
+            $company,
+        );
+
+        $this->editLockService->release(
+            $company,
+            $companyUser,
+        );
+
+        return new JsonResponse(['released' => true]);
     }
 
     #[Route(

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Activity;
 
+use App\Controller\Application\HoldsEditLockTrait;
 use App\Entity\Activity\Activity;
 use App\Entity\Activity\ActivityLocalisedText;
 use App\Entity\Activity\ActivityRevision;
@@ -19,7 +20,6 @@ use App\Repository\Activity\ActivityRevisionCommentRepository;
 use App\Repository\Activity\ExternalSignupRepository;
 use App\Security\Application\RevisionVoter;
 use App\Service\Activity\SignupManager;
-use App\Service\Application\EditLockService;
 use App\Service\Application\RevisionReviser;
 use App\Util\Activity\PastActivityRule;
 use App\Util\Activity\SignupAdminWindow;
@@ -49,12 +49,13 @@ use function strval;
 )]
 class AdminController extends AbstractController
 {
+    use HoldsEditLockTrait;
+
     public function __construct(
         private readonly ActivityRevisionCommentRepository $commentRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly TranslatorInterface $translator,
         private readonly RevisionReviser $reviser,
-        private readonly EditLockService $editLockService,
     ) {
     }
 
@@ -343,17 +344,10 @@ class AdminController extends AbstractController
         User $user,
         Activity $activity,
     ): JsonResponse {
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::SUBMIT,
+        return $this->pingLock(
             $activity,
+            $user,
         );
-
-        return new JsonResponse([
-            'held' => $this->editLockService->ping(
-                $activity,
-                $user,
-            ),
-        ]);
     }
 
     #[Route(
@@ -371,17 +365,10 @@ class AdminController extends AbstractController
         User $user,
         Activity $activity,
     ): JsonResponse {
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::SUBMIT,
-            $activity,
-        );
-
-        $this->editLockService->release(
+        return $this->releaseLock(
             $activity,
             $user,
         );
-
-        return new JsonResponse(['released' => true]);
     }
 
     #[Route(

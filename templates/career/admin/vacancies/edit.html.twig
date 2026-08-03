@@ -19,11 +19,17 @@
     <div class="row">
         <div class="{{ hasFeedback ? 'col-md-9' : 'col-md-12' }}">
             <h3 class="mb-3">{{ vacancy.currentRevision.name|localise_text }}</h3>
-            {% include 'partials/career/vacancy-form.html.twig' with {
-                'form': form,
-                'submitLabel': 'Save changes'|trans,
-                'cancelUrl': path('admin/career/vacancies/index'),
-            } only %}
+            <div data-controller="edit-lock"
+                 data-edit-lock-ping-url-value="{{ path('admin/career/vacancies/edit_ping', {'vacancy': vacancy.id}) }}"
+                 data-edit-lock-release-url-value="{{ path('admin/career/vacancies/edit_release', {'vacancy': vacancy.id}) }}"
+                 data-edit-lock-csrf-token-value="{{ csrf_token('career_vacancy_edit_lock-' ~ vacancy.id) }}"
+                 data-edit-lock-lost-message-value="{{ 'You no longer hold the edit lock; it was taken over or expired. Reload the page to continue editing.'|trans }}">
+                {% include 'partials/career/vacancy-form.html.twig' with {
+                    'form': form,
+                    'submitLabel': 'Save changes'|trans,
+                    'cancelUrl': path('admin/career/vacancies/index'),
+                } only %}
+            </div>
         </div>
         {% if hasFeedback %}
             <div class="col-md-3">

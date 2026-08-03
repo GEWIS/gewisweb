@@ -1,0 +1,23 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ 'Already being edited'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block sidebar_label %}{{ 'Career portal'|trans }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'partials/company-sidebar.html.twig' with {'activeRoute': backRoute == 'company/profile' ? 'profile' : 'vacancies'} only %}
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-md-8">
+            {# A company never forces a lock open: the other holder is one of its own representatives. #}
+            {% include 'partials/application/edit-lock-notice.html.twig' with {
+                'lock': lock,
+                'subject': subject,
+                'backUrl': path(backRoute),
+                'backLabel': 'Go back'|trans,
+            } only %}
+        </div>
+    </div>
+{% endblock %}
