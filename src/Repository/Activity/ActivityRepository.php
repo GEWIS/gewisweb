@@ -642,6 +642,47 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
+     * Eager-loads the live revision's labels, and the localised name each of those renders with, for the given
+     * activities. Same reason as {@see self::primeSignupLists()}: the overview draws a badge per label, which is two
+     * lazy loads per activity (the collection, then a name row per label) without this.
+     *
+     * @param Activity[] $activities
+     */
+    public function primeLabels(array $activities): void
+    {
+        if ([] === $activities) {
+            return;
+        }
+
+        $this->createQueryBuilder('a')
+            ->select(
+                'a',
+                'lr',
+                'label',
+                'labelName',
+            )
+            ->leftJoin(
+                'a.liveRevision',
+                'lr',
+            )
+            ->leftJoin(
+                'lr.labels',
+                'label',
+            )
+            ->leftJoin(
+                'label.name',
+                'labelName',
+            )
+            ->where('a IN (:activities)')
+            ->setParameter(
+                'activities',
+                $activities,
+            )
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Returns the distinct organs that organise at least one live (approved) activity, for the overview's organ
      * filter.
      *

@@ -114,6 +114,9 @@ final class ActivityOverview
     /** @var Activity[]|null */
     private ?array $activities = null;
 
+    /** @var ActivityLabel[]|null */
+    private ?array $labels = null;
+
     private bool $memberResolved = false;
     private ?Member $member = null;
 
@@ -176,8 +179,10 @@ final class ActivityOverview
             false,
         );
 
-        // Hydrate the sign-up lists for the whole page in one query so the per-item accessors do not N+1.
+        // Hydrate the sign-up lists and the labels for the whole page in one query each, so the per-item accessors do
+        // not N+1.
         $this->activityRepository->primeSignupLists($activities);
+        $this->activityRepository->primeLabels($activities);
 
         return $this->activities = $activities;
     }
@@ -217,14 +222,14 @@ final class ActivityOverview
     }
 
     /**
+     * The filter panel reads this twice (once to decide whether to draw the block, once for the checkboxes), so it is
+     * fetched once per render, with the localised names the checkboxes are labelled with.
+     *
      * @return ActivityLabel[]
      */
     public function getLabels(): array
     {
-        return $this->activityLabelRepository->findBy(
-            [],
-            ['id' => 'ASC'],
-        );
+        return $this->labels ??= $this->activityLabelRepository->findAllWithName();
     }
 
     /**
