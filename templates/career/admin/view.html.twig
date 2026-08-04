@@ -13,27 +13,32 @@
 {% endblock %}
 
 {% block contents %}
-    {% include 'partials/career/admin/company-tabs.html.twig' with {
+    {% embed 'partials/career/admin/company-tabs.html.twig' with {
         'company': company,
         'active': 'profile',
+        'current': current,
     } only %}
+        {% block actions %}
+            {{ parent() }}
+            {% if current is not null and current.status.editableByAuthor %}
+                <a href="{{ path('admin/career/companies/edit', {'company': company.id}) }}"
+                   class="btn btn-gewis-primary">{{ 'Edit draft'|trans }}</a>
+                <a href="{{ path('admin/career/approvals/company', {'revision': current.id}) }}"
+                   class="btn btn-outline-success">{{ 'Submit for review'|trans }}</a>
+            {% elseif current is not null and current.status.revisable %}
+                <form method="post" action="{{ path('admin/career/companies/revise', {'company': company.id}) }}">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('company_revise-' ~ company.id) }}">
+                    <button type="submit" class="btn btn-gewis-primary">{{ 'Revise'|trans }}</button>
+                </form>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
 
     <div class="row">
         <div class="col-md-8">
             <div class="panel">
-                <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <div class="panel-heading">
                     <h3>{{ 'Profile'|trans }}</h3>
-                    {% if current is not null and current.status.editableByAuthor %}
-                        <a href="{{ path('admin/career/companies/edit', {'company': company.id}) }}"
-                           class="btn btn-sm btn-gewis-primary">{{ 'Edit draft'|trans }}</a>
-                        <a href="{{ path('admin/career/approvals/company', {'revision': current.id}) }}"
-                           class="btn btn-sm btn-outline-success">{{ 'Submit for review'|trans }}</a>
-                    {% elseif current is not null and current.status.revisable %}
-                        <form method="post" action="{{ path('admin/career/companies/revise', {'company': company.id}) }}">
-                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('company_revise-' ~ company.id) }}">
-                            <button type="submit" class="btn btn-sm btn-gewis-primary">{{ 'Revise'|trans }}</button>
-                        </form>
-                    {% endif %}
                 </div>
                 <div class="panel-body">
                     <dl class="row mb-0">

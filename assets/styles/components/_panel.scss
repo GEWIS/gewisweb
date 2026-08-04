@@ -40,8 +40,10 @@
         }
     }
 
+    // The tab you are on continues the panel underneath it, so it follows the panel's own background rather than the
+    // colour that background happens to have in the day theme.
     .nav.nav-tabs {
-        --#{$prefix}nav-tabs-link-active-bg: #{$panel-bg};
+        --#{$prefix}nav-tabs-link-active-bg: var(--#{$prefix}panel-bg);
 
         .nav-link.active {
             border-top-width: 0;

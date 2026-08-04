@@ -13,9 +13,20 @@
 {% endblock %}
 
 {% block contents %}
-    {% include 'partials/career/admin/company-tabs.html.twig' with {
+    {% embed 'partials/career/admin/company-tabs.html.twig' with {
         'company': company,
         'active': 'vacancies',
+    } only %}
+        {% block actions %}
+            {{ parent() }}
+            <a href="{{ path('admin/career/vacancies/create') }}" class="btn btn-gewis-primary">
+                <span class="fas fa-plus" aria-hidden="true"></span> {{ 'Add a vacancy'|trans }}
+            </a>
+        {% endblock %}
+    {% endembed %}
+
+    {% include 'partials/career/admin/review-queue-callout.html.twig' with {
+        'awaitingReview': awaitingReview,
     } only %}
 
     {{ component('Career:Admin:VacancyOverview', {'company': company}) }}

@@ -11,34 +11,45 @@
     {% include 'partials/company-sidebar.html.twig' with {'activeRoute': 'profile'} %}
 {% endblock %}
 
-{% block contents %}
-    <div class="row mb-3">
-        <div class="col-md-12 d-flex flex-wrap justify-content-between align-items-center gap-2">
-            <div>
-                <h3 class="mb-0">{{ 'Company profile'|trans }}</h3>
-                <p class="text-muted mb-0">
-                    {{ 'Changes go to your contact at GEWIS first; what is live stays live until they agree.'|trans }}
-                </p>
-            </div>
-            <div class="d-flex flex-wrap gap-2">
-                {% if current is not null and current.status.editableByAuthor %}
-                    <a href="{{ path('company/profile/edit') }}" class="btn btn-gewis-primary">{{ 'Continue your draft'|trans }}</a>
-                {% elseif current is not null and current.status.revisable %}
-                    <form method="post" action="{{ path('company/profile/revise') }}">
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('company_profile_revise') }}">
-                        <button type="submit" class="btn btn-gewis-primary">{{ 'Revise'|trans }}</button>
-                    </form>
-                {% endif %}
-                {% if current is not null %}
-                    <a href="{{ path('company/profile/status') }}" class="btn btn-outline-gewis-primary">{{ 'Status'|trans }}</a>
-                {% endif %}
-            </div>
-        </div>
-    </div>
+{% block page_header %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_container_class %}container-fluid px-3{% endblock %}
+        {% block header_top %}
+            <span class="page-header-eyebrow">{{ 'Company area'|trans }}</span>
+        {% endblock %}
+        {% block header_status %}
+            {% if live is not null %}
+                <span class="badge badge-success">{{ 'Profile is live'|trans }}</span>
+            {% else %}
+                <span class="badge badge-secondary">{{ 'Profile is not live yet'|trans }}</span>
+            {% endif %}
+        {% endblock %}
+        {% block header_title %}{{ 'Company profile'|trans }}{% endblock %}
+        {% block header_subtitle %}
+            <p class="page-header-meta mb-0">
+                {{ 'Changes go to your contact at GEWIS first; what is live stays live until they agree.'|trans }}
+            </p>
+        {% endblock %}
+        {% block header_actions %}
+            {% if current is not null and current.status.editableByAuthor %}
+                <a href="{{ path('company/profile/edit') }}" class="btn btn-gewis-primary">{{ 'Continue your draft'|trans }}</a>
+            {% elseif current is not null and current.status.revisable %}
+                <form method="post" action="{{ path('company/profile/revise') }}">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('company_profile_revise') }}">
+                    <button type="submit" class="btn btn-gewis-primary">{{ 'Revise'|trans }}</button>
+                </form>
+            {% endif %}
+            {% if current is not null %}
+                <a href="{{ path('company/profile/status') }}" class="btn btn-outline-gewis-primary">{{ 'Status'|trans }}</a>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
 
-    <div class="row">
+{% block contents %}
+    <div class="row g-4">
         <div class="col-md-8">
-            <div class="panel">
+            <div class="panel mt-0">
                 <div class="panel-heading">
                     <h3>{{ 'What visitors see'|trans }}</h3>
                 </div>
@@ -71,7 +82,7 @@
         </div>
 
         <aside class="col-md-4">
-            <div class="panel">
+            <div class="panel mt-0">
                 <div class="panel-heading">
                     <h3>{{ 'What has happened'|trans }}</h3>
                 </div>

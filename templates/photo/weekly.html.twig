@@ -3,7 +3,7 @@
 {% block page_title %}{{ 'Photo of the Week'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block contents %}
-    <h1 class="mb-4">{{ 'Photo of the Week'|trans }}</h1>
+    <h2 class="mb-4">{{ 'Photo of the Week'|trans }}</h2>
 
     {% if photosByYear is empty %}
         <p class="text-muted">{{ 'No photo of the week has been chosen yet.'|trans }}</p>

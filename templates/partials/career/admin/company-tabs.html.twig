@@ -1,11 +1,32 @@
 {#
     The heading and tabs shared by the four pages that manage one company. Pass `active` as 'profile', 'vacancies',
-    'packages' or 'representatives'.
+    'packages' or 'representatives'. Embed it to add the page's own actions beside the link to the public page:
+
+    {% embed 'partials/career/admin/company-tabs.html.twig' with {'company': company, 'active': 'profile'} only %}
+        {% block actions %}
+            {{ parent() }}
+            <a class="btn btn-gewis-primary" href="…">…</a>
+        {% endblock %}
+    {% endembed %}
 #}
-<div class="row mb-3">
-    <div class="col-md-12">
-        <h3 class="mb-0">{{ company.name }}</h3>
-        <code class="small">{{ company.slugName }}</code>
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+    <div class="d-flex align-items-center gap-3">
+        <span class="career-logo career-logo-sm" aria-hidden="true">{{ company.name|slice(0, 1)|upper }}</span>
+        <span>
+            <h3 class="mb-0">{{ company.name }}</h3>
+            <code class="small">{{ company.slugName }}</code>
+        </span>
+    </div>
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        {% block actions %}
+            {% if company.liveRevision is not null and not company.hidden %}
+                <a href="{{ path('career/company', {'slug': company.slugName}) }}"
+                   class="btn btn-outline-gewis-primary" target="_blank">
+                    <span class="fas fa-arrow-up-right-from-square" aria-hidden="true"></span>
+                    {{ 'View public page'|trans }}
+                </a>
+            {% endif %}
+        {% endblock %}
     </div>
 </div>
 

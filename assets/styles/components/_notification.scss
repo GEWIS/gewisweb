@@ -7,6 +7,7 @@
     .dropdown-item {
         flex: 1 1 auto;
         min-width: 0;
+        border-radius: 0;
     }
 
     .notification-actions .btn {
@@ -19,22 +20,47 @@
     }
 }
 
+// Pinning to the viewport on a phone is handled for every right-hand navbar panel in `_nav-menu.scss`.
 .notification-menu {
     min-width: 20rem;
     max-width: 90vw;
-
-    // The bell sits at the right edge on a phone, where a menu anchored to it runs off the screen. Pinning it to the
-    // viewport instead keeps it in view whatever the toggle is next to.
-    @include media-breakpoint-down(sm) {
-        position: fixed;
-        inset-inline: 0.5rem;
-        width: auto;
-        min-width: 0;
-        max-width: none;
-    }
 }
 
 .notification-list {
     max-height: 60vh;
     overflow-y: auto;
+}
+
+// What has not been read yet is tinted and carries a dot, so a full list still says which rows are new.
+.notification-unread {
+    background-color: #{$nav-menu-active-bg};
+}
+
+.notification-dot {
+    flex: none;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    margin-top: 0.375rem;
+    border-radius: 50%;
+    background-color: #{$nav-menu-active-color};
+}
+
+.notification-icon {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.875rem;
+    height: 1.875rem;
+    margin-top: 0.125rem;
+    border-radius: 0.5625rem;
+    background-color: var(--#{$prefix}secondary-bg);
+    color: var(--#{$prefix}secondary-color);
+    font-size: 0.75rem;
+}
+
+@include color-mode(gewis-night) {
+    .notification-unread {
+        background-color: #{$nav-menu-active-bg-dark};
+    }
 }

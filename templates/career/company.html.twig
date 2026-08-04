@@ -117,10 +117,29 @@
             <h3 class="mb-1">{{ company.getName }}</h3>
             {% set slogan = company.getSlogan|localise_text %}
             {% if slogan is not empty %}
-                <p class="text-body-secondary fs-5 mb-4">{{ slogan }}</p>
+                <p class="text-body-secondary fs-5">{{ slogan }}</p>
             {% endif %}
-            <div class="markdown">
-                {{ company.getDescription|localise_text|markdown }}
+
+            {# The article the career page teases with a "Read more" that lands here, so it has to be on this page. #}
+            {% set featuredPackage = company.getFeaturedPackage %}
+            {% if featuredPackage is not null %}
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3><span class="fas fa-star" aria-hidden="true"></span> {{ 'Featured this month'|trans }}</h3>
+                    </div>
+                    <div class="panel-body markdown">
+                        {{ featuredPackage.getArticle|localise_text|markdown }}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Description'|trans }}</h3>
+                </div>
+                <div class="panel-body markdown">
+                    {{ company.getDescription|localise_text|markdown }}
+                </div>
             </div>
         </div>
     </div>

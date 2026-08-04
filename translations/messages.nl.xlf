@@ -293,6 +293,10 @@
         <source>%name% will no longer be allowed to vote on your behalf and will be notified by email.</source>
         <target state="translated">%name% mag niet langer namens jou stemmen en wordt per e-mail op de hoogte gebracht.</target>
       </trans-unit>
+      <trans-unit id="bBiNKWY" resname="A banner runs across every page of the GEWIS website, so the whole association sees it and not only the students browsing vacancies. Ask your contact at GEWIS what a banner package would cost you.">
+        <source>A banner runs across every page of the GEWIS website, so the whole association sees it and not only the students browsing vacancies. Ask your contact at GEWIS what a banner package would cost you.</source>
+        <target state="translated">Een banner loopt over elke pagina van de GEWIS-website, dus de hele vereniging ziet hem en niet alleen de studenten die vacatures bekijken. Vraag je contactpersoon bij GEWIS wat een bannerpakket je zou kosten.</target>
+      </trans-unit>
       <trans-unit id="5pfQYrV" resname="A career does not have to mean leaving. The TU/e takes on PhD candidates and PDEng trainees every year, and the departments our members graduate from are usually looking. Ask your supervisor, or the education committee, what is going on in your own group.">
         <source>A career does not have to mean leaving. The TU/e takes on PhD candidates and PDEng trainees every year, and the departments our members graduate from are usually looking. Ask your supervisor, or the education committee, what is going on in your own group.</source>
         <target state="translated">Een carrière hoeft niet te betekenen dat je weggaat. De TU/e neemt elk jaar promovendi en PDEng-trainees aan, en de afdelingen waar onze leden afstuderen zoeken meestal mensen. Vraag je begeleider of de onderwijscommissie wat er in jouw eigen groep speelt.</target>
@@ -300,6 +304,10 @@
       <trans-unit id="9KB3Qb4" resname="A company cannot change one while it sits with you.">
         <source>A company cannot change one while it sits with you.</source>
         <target state="translated">Een bedrijf kan er niets aan veranderen zolang die bij jou ligt.</target>
+      </trans-unit>
+      <trans-unit id="o8mlHI1" resname="A highlight puts one of your vacancies at the top of the career page, above every other posting. Ask your contact at GEWIS what a highlight package would cost you.">
+        <source>A highlight puts one of your vacancies at the top of the career page, above every other posting. Ask your contact at GEWIS what a highlight package would cost you.</source>
+        <target state="translated">Een uitlichting zet een van je vacatures bovenaan de carrièrepagina, boven alle andere plaatsingen. Vraag je contactpersoon bij GEWIS wat een uitlichtpakket je zou kosten.</target>
       </trans-unit>
       <trans-unit id="cweoWmQ" resname="A new activity &quot;%name%&quot; has been published.">
         <source>A new activity "%name%" has been published.</source>
@@ -361,6 +369,10 @@
         <source>About %company%</source>
         <target>Over %company%</target>
       </trans-unit>
+      <trans-unit id="Z7u9824" resname="About GEWIS">
+        <source>About GEWIS</source>
+        <target state="translated">Over GEWIS</target>
+      </trans-unit>
       <trans-unit id="3XnQIRi" resname="About this activity">
         <source>About this activity</source>
         <target state="translated">Over deze activiteit</target>
@@ -372,6 +384,10 @@
       <trans-unit id="5DOuCi7" resname="Access Denied">
         <source>Access Denied</source>
         <target state="translated">Toegang geweigerd</target>
+      </trans-unit>
+      <trans-unit id="APxdqs0" resname="Account">
+        <source>Account</source>
+        <target state="translated">Account</target>
       </trans-unit>
       <trans-unit id="0Mx9A8T" resname="Account and security">
         <source>Account and security</source>
@@ -408,6 +424,10 @@
       <trans-unit id="l0bDq89" resname="Active Sessions">
         <source>Active Sessions</source>
         <target state="translated">Actieve sessies</target>
+      </trans-unit>
+      <trans-unit id="aPWOpPo" resname="Active member">
+        <source>Active member</source>
+        <target state="translated">Actief lid</target>
       </trans-unit>
       <trans-unit id="Vt9Fdhj" resname="Active members">
         <source>Active members</source>
@@ -460,6 +480,10 @@
       <trans-unit id="MiwFu8R" resname="Add a label">
         <source>Add a label</source>
         <target state="translated">Label toevoegen</target>
+      </trans-unit>
+      <trans-unit id="ERmpyAD" resname="Add a package">
+        <source>Add a package</source>
+        <target state="translated">Pakket toevoegen</target>
       </trans-unit>
       <trans-unit id="Cvlsb4D" resname="Add a question">
         <source>Add a question</source>
@@ -701,6 +725,10 @@
         <source>Any status</source>
         <target state="translated">Alle statussen</target>
       </trans-unit>
+      <trans-unit id="mxjIT1l" resname="Anything that needs you shows up here.">
+        <source>Anything that needs you shows up here.</source>
+        <target state="translated">Alles wat je aandacht nodig heeft verschijnt hier.</target>
+      </trans-unit>
       <trans-unit id="7UQ9ySb" resname="Aperture">
         <source>Aperture</source>
         <target>Diafragma</target>
@@ -865,6 +893,10 @@
         <source>Balance and orders</source>
         <target state="translated">Saldo en bestellingen</target>
       </trans-unit>
+      <trans-unit id="eB61ujO" resname="Balloons and seasonal themes">
+        <source>Balloons and seasonal themes</source>
+        <target state="translated">Ballonnen en seizoensthema's</target>
+      </trans-unit>
       <trans-unit id=".q1_j4L" resname="Banner">
         <source>Banner</source>
         <target state="translated">Banner</target>
@@ -893,6 +925,10 @@
         <source>Board Policies</source>
         <target state="translated">Bestuursbeleid</target>
       </trans-unit>
+      <trans-unit id="JG_49I8" resname="Board member">
+        <source>Board member</source>
+        <target state="translated">Bestuurslid</target>
+      </trans-unit>
       <trans-unit id="oqXX_GF" resname="Bodies">
         <source>Bodies</source>
         <target state="translated">Organen</target>
@@ -908,6 +944,14 @@
       <trans-unit id="pg8.RVR" resname="Brand Manager">
         <source>Brand Manager</source>
         <target state="translated">Brand Manager</target>
+      </trans-unit>
+      <trans-unit id="M2pT6_4" resname="Browse">
+        <source>Browse</source>
+        <target state="translated">Bekijken</target>
+      </trans-unit>
+      <trans-unit id="MbZy9Nf" resname="By type">
+        <source>By type</source>
+        <target state="translated">Op type</target>
       </trans-unit>
       <trans-unit id="xvpeTga" resname="CM">
         <source>CM</source>
@@ -1017,6 +1061,10 @@
         <source>Choose when the draw happens</source>
         <target>Kies wanneer de loting plaatsvindt</target>
       </trans-unit>
+      <trans-unit id="h9itp_Z" resname="Choose your highlights">
+        <source>Choose your highlights</source>
+        <target state="translated">Kies wat je uitlicht</target>
+      </trans-unit>
       <trans-unit id="ARMHX0P" resname="City and postal code">
         <source>City and postal code</source>
         <target>Woonplaats en postcode</target>
@@ -1117,6 +1165,10 @@
         <source>Company Users</source>
         <target state="translated">Bedrijfsgebruikers</target>
       </trans-unit>
+      <trans-unit id="2j5gH8T" resname="Company administrator">
+        <source>Company administrator</source>
+        <target state="translated">Bedrijfsbeheerder</target>
+      </trans-unit>
       <trans-unit id="dqA1dS7" resname="Company is being edited">
         <source>Company is being edited</source>
         <target state="translated">Bedrijf wordt bewerkt</target>
@@ -1176,6 +1228,10 @@
       <trans-unit id="4iRtdnb" resname="Contact">
         <source>Contact</source>
         <target>Contact</target>
+      </trans-unit>
+      <trans-unit id="gEji4tv" resname="Contact GEWIS">
+        <source>Contact GEWIS</source>
+        <target state="translated">Neem contact op</target>
       </trans-unit>
       <trans-unit id="Or2hVwX" resname="Contact details">
         <source>Contact details</source>
@@ -1661,6 +1717,10 @@
         <source>Email verified?</source>
         <target>E-mailadres geverifieerd?</target>
       </trans-unit>
+      <trans-unit id="wCkyDyA" resname="Email your contact at GEWIS">
+        <source>Email your contact at GEWIS</source>
+        <target state="translated">Mail je contactpersoon bij GEWIS</target>
+      </trans-unit>
       <trans-unit id="8THsPC2" resname="Enable Dutch and/or English and fill in the fields below. At least one language must be used.">
         <source>Enable Dutch and/or English and fill in the fields below. At least one language must be used.</source>
         <target state="translated">Schakel Nederlands en/of Engels in en vul de velden hieronder in. Er moet minstens één taal worden gebruikt.</target>
@@ -2033,6 +2093,10 @@
         <source>Generation</source>
         <target>Generatie</target>
       </trans-unit>
+      <trans-unit id="U_Cpf7W" resname="Generation %year%">
+        <source>Generation %year%</source>
+        <target state="translated">Generatie %year%</target>
+      </trans-unit>
       <trans-unit id="uBkTf4O" resname="Get in touch">
         <source>Get in touch</source>
         <target state="translated">Neem contact op</target>
@@ -2056,6 +2120,10 @@
       <trans-unit id="Y9O9JwI" resname="Go to the original album">
         <source>Go to the original album</source>
         <target state="translated">Ga naar het originele album</target>
+      </trans-unit>
+      <trans-unit id="mOS.NAR" resname="Good to know">
+        <source>Good to know</source>
+        <target state="translated">Goed om te weten</target>
       </trans-unit>
       <trans-unit id="USDCC8h" resname="Google Calendar">
         <source>Google Calendar</source>
@@ -2508,6 +2576,10 @@
       <trans-unit id="q2_TGUG" resname="Level">
         <source>Level</source>
         <target state="translated">Niveau</target>
+      </trans-unit>
+      <trans-unit id="udvDnp8" resname="Lift your vacancies to the top of the career page, where students looking for work start.">
+        <source>Lift your vacancies to the top of the career page, where students looking for work start.</source>
+        <target state="translated">Zet je vacatures bovenaan de carrièrepagina, waar studenten die werk zoeken beginnen.</target>
       </trans-unit>
       <trans-unit id="7GDr10z" resname="Light">
         <source>Light</source>
@@ -3133,6 +3205,10 @@
         <source>Not shown</source>
         <target state="translated">Niet getoond</target>
       </trans-unit>
+      <trans-unit id="0.e8sKq" resname="Not signed in">
+        <source>Not signed in</source>
+        <target state="translated">Niet ingelogd</target>
+      </trans-unit>
       <trans-unit id="G_bzmc9" resname="Not started">
         <source>Not started</source>
         <target state="translated">Nog niet begonnen</target>
@@ -3304,6 +3380,10 @@
       <trans-unit id="w4JtsHz" resname="Organ">
         <source>Organ</source>
         <target state="translated">Orgaan</target>
+      </trans-unit>
+      <trans-unit id="C9njVXL" resname="Organise">
+        <source>Organise</source>
+        <target state="translated">Organiseren</target>
       </trans-unit>
       <trans-unit id="OHX3r5E" resname="Organise and manage">
         <source>Organise and manage</source>
@@ -5513,6 +5593,10 @@
         <source>View photo</source>
         <target>Foto bekijken</target>
       </trans-unit>
+      <trans-unit id="eCgJvCl" resname="View public page">
+        <source>View public page</source>
+        <target state="translated">Bekijk de publieke pagina</target>
+      </trans-unit>
       <trans-unit id="X8rVv5O" resname="View the activity">
         <source>View the activity</source>
         <target state="translated">Bekijk de activiteit</target>
@@ -5741,6 +5825,10 @@
         <source>You are about to reset multi-factor authentication for:</source>
         <target state="translated">Je staat op het punt om tweestapsverificatie te resetten voor:</target>
       </trans-unit>
+      <trans-unit id="sTJmkRm" resname="You are all caught up">
+        <source>You are all caught up</source>
+        <target state="translated">Je bent helemaal bij</target>
+      </trans-unit>
       <trans-unit id="785sFTF" resname="You are being redirected to %app%.">
         <source>You are being redirected to %app%.</source>
         <target>Je wordt doorgestuurd naar %app%.</target>
@@ -5789,17 +5877,17 @@
         <source>You currently sign in with only a password. Adding MFA significantly reduces the risk of account takeover.</source>
         <target state="translated">Momenteel logt je alleen in met een wachtwoord. Door MFA toe te voegen, wordt het risico op accountmisbruik aanzienlijk verkleind.</target>
       </trans-unit>
+      <trans-unit id="rvPAnQ2" resname="You do not have a banner package">
+        <source>You do not have a banner package</source>
+        <target state="translated">Je hebt geen bannerpakket</target>
+      </trans-unit>
       <trans-unit id="03RqlgE" resname="You do not have a banner package running.">
         <source>You do not have a banner package running.</source>
         <target state="translated">Je hebt geen bannerpakket lopen.</target>
       </trans-unit>
-      <trans-unit id="qMMohQw" resname="You do not have a banner package running. Get in touch with your contact at GEWIS if you would like one.">
-        <source>You do not have a banner package running. Get in touch with your contact at GEWIS if you would like one.</source>
-        <target state="translated">Je hebt geen bannerpakket lopen. Neem contact op met je contactpersoon bij GEWIS als je er een wilt.</target>
-      </trans-unit>
-      <trans-unit id="YYTh2s_" resname="You do not have a highlight package running. Get in touch with your contact at GEWIS if you would like one.">
-        <source>You do not have a highlight package running. Get in touch with your contact at GEWIS if you would like one.</source>
-        <target state="translated">Je hebt geen uitlichtpakket lopen. Neem contact op met je contactpersoon bij GEWIS als je er een wilt.</target>
+      <trans-unit id=".oyzg.a" resname="You do not have a highlight package">
+        <source>You do not have a highlight package</source>
+        <target state="translated">Je hebt geen uitlichtpakket</target>
       </trans-unit>
       <trans-unit id="OWPRxny" resname="You do not have the required privileges to perform this action.">
         <source>You do not have the required privileges to perform this action.</source>
@@ -5816,10 +5904,6 @@
       <trans-unit id="lAXDq5A" resname="You have been unsubscribed.">
         <source>You have been unsubscribed.</source>
         <target>Je bent uitgeschreven.</target>
-      </trans-unit>
-      <trans-unit id=".jimGHg" resname="You have no notifications yet.">
-        <source>You have no notifications yet.</source>
-        <target state="translated">Je hebt nog geen meldingen.</target>
       </trans-unit>
       <trans-unit id="F07ab4W" resname="You have not been a member of a committee or fraternity.">
         <source>You have not been a member of a committee or fraternity.</source>
@@ -6012,6 +6096,10 @@
       <trans-unit id="KNmf6uO" resname="Your vacancy was updated.">
         <source>Your vacancy was updated.</source>
         <target>Je vacature is bijgewerkt.</target>
+      </trans-unit>
+      <trans-unit id="qmzBvIW" resname="Yours">
+        <source>Yours</source>
+        <target state="translated">Van jou</target>
       </trans-unit>
       <trans-unit id="ScQ2_ao" resname="Zettle">
         <source>Zettle</source>

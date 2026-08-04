@@ -8,22 +8,40 @@
     {% include 'partials/company-sidebar.html.twig' with {'activeRoute': 'banner'} %}
 {% endblock %}
 
-{% block contents %}
-    <div class="row mb-3">
-        <div class="col-md-12">
-            <h3 class="mb-0">{{ 'Banner'|trans }}</h3>
-            <p class="text-muted mb-0">
+{% block page_header %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_container_class %}container-fluid px-3{% endblock %}
+        {% block header_top %}
+            <span class="page-header-eyebrow">{{ 'Company area'|trans }}</span>
+        {% endblock %}
+        {% block header_status %}
+            {% if package is not null and package.hasPendingImage %}
+                <span class="badge badge-info">{{ 'Waiting for a decision'|trans }}</span>
+            {% elseif package is not null and package.image is not null %}
+                <span class="badge badge-success">{{ 'On the website'|trans }}</span>
+            {% endif %}
+        {% endblock %}
+        {% block header_title %}{{ 'Banner'|trans }}{% endblock %}
+        {% block header_subtitle %}
+            <p class="page-header-meta mb-0">
                 {{ 'Your banner runs between the news items on the home page and on the career page, so your contact at GEWIS looks at a new one before it goes up.'|trans }}
             </p>
-        </div>
-    </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
 
+{% block contents %}
     {% if package is null %}
-        <div class="panel">
+        <div class="panel mt-0">
             <div class="panel-body">
-                <p class="text-muted mb-0">
-                    {{ 'You do not have a banner package running. Get in touch with your contact at GEWIS if you would like one.'|trans }}
+                <span class="fas fa-rectangle-ad fa-2x text-muted d-block mb-3" aria-hidden="true"></span>
+                <h4 class="mb-2">{{ 'You do not have a banner package'|trans }}</h4>
+                <p class="text-muted mb-3">
+                    {{ 'A banner runs between the news items on the GEWIS home page, so the whole association sees it and not only the students browsing vacancies. Ask your contact at GEWIS what a banner package would cost you.'|trans }}
                 </p>
+                <a href="mailto:{{ external_affairs_email }}" class="btn btn-gewis-primary">
+                    {{ 'Email your contact at GEWIS'|trans }}
+                </a>
             </div>
         </div>
     {% else %}

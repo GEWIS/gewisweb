@@ -3,8 +3,16 @@
 {% block page_title %}{{ 'Administration'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block sidebar_label %}{{ 'Administration'|trans }}{% endblock %}
+
 {% block sidebar %}
     {% include 'partials/admin-sidebar.html.twig' %}
+{% endblock %}
+
+{% block sidebar_footer %}
+    {% set commit = app.request.server.get('GIT_COMMIT') %}
+    <a href="https://github.com/gewis/gewisweb/commit/{{ commit }}" target="_blank">
+        <span class="fab fa-github" aria-hidden="true"></span> {{ commit|slice(0, 7) }}
+    </a>
 {% endblock %}
 
 {% block breadcrumbs %}

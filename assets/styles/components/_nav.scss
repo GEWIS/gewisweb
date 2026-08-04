@@ -4,6 +4,15 @@
     --#{$prefix}nav-link-font-size: #{$nav-font-size};
 }
 
+// Tabs sit on a panel, so they read against that surface. Two colours have to be said out loud for them: the one every
+// nav link inherits, which is the white the main navbar needs and no panel can use, and the one Bootstrap gives the
+// tab you are on, which is its emphasis colour and stays black on the night theme.
+.nav-tabs {
+    --#{$prefix}nav-link-color: var(--#{$prefix}secondary-color);
+    --#{$prefix}nav-link-hover-color: var(--#{$prefix}body-color);
+    --#{$prefix}nav-tabs-link-active-color: var(--#{$prefix}body-color);
+}
+
 // Pills are a segmented control.
 .nav-pills {
     --#{$prefix}nav-pills-track-bg: #{$nav-pills-track-bg};

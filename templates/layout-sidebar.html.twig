@@ -1,30 +1,34 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container-fluid container-admin flex-grow-1 d-flex flex-row px-0">
+    <div class="container-fluid container-sidebar flex-grow-1 d-flex flex-row px-0">
         <aside class="px-0">
-            <nav class="navbar-sidebar navbar-gewis-admin rainbow d-flex flex-column h-100">
-                <div class="navbar-header d-lg-none d-flex justify-content-center">
+            <nav class="sidebar d-flex flex-column h-100">
+                <div class="d-lg-none d-flex justify-content-center py-1">
                     <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#navbar-sidebar-offcanvas" aria-controls="navbar-sidebar-offcanvas"
+                            data-bs-target="#sidebar-offcanvas" aria-controls="sidebar-offcanvas"
                             aria-expanded="false" aria-label="{{ 'Toggle navigation'|trans }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                 </div>
-                <div class="offcanvas-lg offcanvas-start h-100" id="navbar-sidebar-offcanvas"
-                     tabindex="-1" aria-labelledby="navbar-sidebar-offcanvas-label">
+                <div class="offcanvas-lg offcanvas-start h-100" id="sidebar-offcanvas"
+                     tabindex="-1" aria-labelledby="sidebar-offcanvas-label">
                     <div class="offcanvas-header d-lg-none">
-                        <h5 class="offcanvas-title" id="navbar-sidebar-offcanvas-label">
+                        <h5 class="offcanvas-title" id="sidebar-offcanvas-label">
                             {% block sidebar_label %}{{ 'Navigation'|trans }}{% endblock %}
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                data-bs-target="#navbar-sidebar-offcanvas" aria-label="{{ 'Close'|trans }}"></button>
+                                data-bs-target="#sidebar-offcanvas" aria-label="{{ 'Close'|trans }}"></button>
                     </div>
-                    <div class="offcanvas-body p-4 pt-0 p-lg-0 h-100">
-                        <ul class="navbar-nav h-100 w-100">
-                            <hr class="d-lg-none">
+                    <div class="offcanvas-body sidebar-body h-100">
+                        <div class="sidebar-nav">
                             {% block sidebar %}{% endblock %}
-                        </ul>
+                        </div>
+                        {% if block('sidebar_footer') is defined and block('sidebar_footer')|trim != '' %}
+                            <div class="sidebar-footer mt-auto">
+                                {{ block('sidebar_footer') }}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </nav>
@@ -37,6 +41,7 @@
                     </ol>
                 </nav>
             {% endif %}
+            {% block page_header %}{% endblock %}
             <section class="mx-auto my-0 pt-2 px-3 overflow-x-auto">
                 {% block contents %}{% endblock %}
             </section>

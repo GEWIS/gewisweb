@@ -1,35 +1,20 @@
-<li class="nav-item {{ activeRoute == 'overview' ? 'active' : '' }}">
-    <a class="nav-link p-3" href="{{ path('company/index') }}">
-        {{ 'Dashboard'|trans }}
-    </a>
-</li>
-<li class="nav-item {{ activeRoute == 'profile' ? 'active' : '' }}">
-    <a class="nav-link p-3" href="{{ path('company/profile') }}">
-        {{ 'Company profile'|trans }}
-    </a>
-</li>
-<li class="nav-item {{ activeRoute == 'vacancies' ? 'active' : '' }}">
-    <a class="nav-link p-3" href="{{ path('company/vacancies') }}">
-        {{ 'Vacancies'|trans }}
-    </a>
-</li>
-<li class="nav-item {{ activeRoute == 'highlights' ? 'active' : '' }}">
-    <a class="nav-link p-3" href="{{ path('company/highlights') }}">
-        {{ 'Highlights'|trans }}
-    </a>
-</li>
-<li class="nav-item {{ activeRoute == 'banner' ? 'active' : '' }}">
-    <a class="nav-link p-3" href="{{ path('company/banner') }}">
-        {{ 'Banner'|trans }}
-    </a>
-</li>
-<li class="nav-item {{ activeRoute == 'representatives' ? 'active' : '' }}">
-    <a class="nav-link p-3" href="{{ path('company/representatives') }}">
-        {{ 'Representatives'|trans }}
-    </a>
-</li>
-<li class="nav-item {{ activeRoute == 'security' ? 'active' : '' }}">
-    <a class="nav-link p-3" href="{{ path('company_user_security_index') }}">
-        {{ 'Security'|trans }}
-    </a>
-</li>
+{% import 'partials/application/sidebar.html.twig' as sidebar %}
+
+{% set company = app.user.company %}
+{{ sidebar.context(company.name|slice(0, 1), company.name, 'Company area'|trans) }}
+
+<ul class="sidebar-list">
+    {{ sidebar.link(path('company/index'), 'fa-gauge-high', 'Dashboard'|trans, 'overview' == activeRoute) }}
+    {{ sidebar.link(path('company/profile'), 'fa-building', 'Company profile'|trans, 'profile' == activeRoute) }}
+    {{ sidebar.link(path('company/vacancies'), 'fa-briefcase', 'Vacancies'|trans, 'vacancies' == activeRoute) }}
+    {{ sidebar.link(path('company/highlights'), 'fa-star', 'Highlights'|trans, 'highlights' == activeRoute) }}
+    {{ sidebar.link(path('company/banner'), 'fa-rectangle-ad', 'Banner'|trans, 'banner' == activeRoute) }}
+</ul>
+
+<div>
+    {{ sidebar.group('Account'|trans) }}
+    <ul class="sidebar-list">
+        {{ sidebar.link(path('company/representatives'), 'fa-user-group', 'Representatives'|trans, 'representatives' == activeRoute) }}
+        {{ sidebar.link(path('company_user_security_index'), 'fa-shield-halved', 'Security'|trans, 'security' == activeRoute) }}
+    </ul>
+</div>

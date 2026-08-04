@@ -15,23 +15,22 @@
 {% endblock %}
 
 {% block contents %}
-    {% include 'partials/career/admin/company-tabs.html.twig' with {
+    {% embed 'partials/career/admin/company-tabs.html.twig' with {
         'company': company,
         'active': 'packages',
     } only %}
-
-    <div class="row mb-3">
-        <div class="col-md-12 d-flex flex-wrap justify-content-end">
-            <div class="btn-group btn-group-sm" role="group">
+        {% block actions %}
+            {{ parent() }}
+            <div class="btn-group" role="group" aria-label="{{ 'Add a package'|trans }}">
                 {% for type in enum('App\\Entity\\Career\\Enums\\CompanyPackageTypes').cases() %}
                     <a href="{{ path('admin/career/packages/create', {'company': company.id, 'type': type.value}) }}"
-                       class="btn btn-outline-gewis-primary">
-                        <span class="fas fa-plus"></span> {{ type.label|trans }}
+                       class="btn btn-gewis-primary">
+                        <span class="fas fa-plus" aria-hidden="true"></span> {{ type.label|trans }}
                     </a>
                 {% endfor %}
             </div>
-        </div>
-    </div>
+        {% endblock %}
+    {% endembed %}
 
     <div class="panel">
         <div class="panel-body">

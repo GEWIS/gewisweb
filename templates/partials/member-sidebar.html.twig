@@ -1,44 +1,34 @@
-{% set overviewHref = isSelf ? path('members/me') : path('members/view', {'member': member.lidnr}) %}
-{% set photosHref = path('photo/album', {'type': 'member', 'album': member.lidnr}) %}
+{% import 'partials/application/sidebar.html.twig' as sidebar %}
 
-<li class="nav-item {{ activeRoute == 'overview' ? 'active' : '' }}">
-    <a class="nav-link p-3" href="{{ overviewHref }}">
-        {{ 'Overview'|trans }}
-    </a>
-</li>
-<li class="nav-item {{ activeRoute == 'photos' ? 'active' : '' }}">
-    <a class="nav-link p-3" href="{{ photosHref }}">
-        {{ 'Photos'|trans }}
-    </a>
-</li>
+{{ sidebar.context(
+    member.firstName|slice(0, 1) ~ member.lastName|slice(0, 1),
+    member.fullName,
+    'Generation %year%'|trans({'%year%': member.generation}),
+) }}
+
+<ul class="sidebar-list">
+    {{ sidebar.link(
+        isSelf ? path('members/me') : path('members/view', {'member': member.lidnr}),
+        'fa-user',
+        'Overview'|trans,
+        'overview' == activeRoute,
+    ) }}
+    {{ sidebar.link(
+        path('photo/album', {'type': 'member', 'album': member.lidnr}),
+        'fa-image',
+        'Photos'|trans,
+        'photos' == activeRoute,
+    ) }}
+</ul>
+
 {% if isSelf %}
-    {% set settingsActive = activeRoute in ['general', 'privacy', 'notifications', 'security'] %}
-    <li class="nav-item dropdown dropend {{ settingsActive ? 'active default open' : '' }}">
-        <a class="nav-link p-3 dropdown-toggle"
-           href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ settingsActive ? 'true' : 'false' }}">
-            {{ 'Settings'|trans }}
-        </a>
-        <ul class="dropdown-menu">
-            <li>
-                <a class="dropdown-item {{ activeRoute == 'general' ? 'active' : '' }}" href="{{ path('user_settings_index') }}">
-                    {{ 'General'|trans }}
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item {{ activeRoute == 'notifications' ? 'active' : '' }}" href="{{ path('user_settings_notifications') }}">
-                    {{ 'Notifications'|trans }}
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item {{ activeRoute == 'privacy' ? 'active' : '' }}" href="{{ path('user_settings_privacy') }}">
-                    {{ 'Privacy'|trans }}
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item {{ activeRoute == 'security' ? 'active' : '' }}" href="{{ path('user_security_index') }}">
-                    {{ 'Security'|trans }}
-                </a>
-            </li>
+    <div>
+        {{ sidebar.group('Settings'|trans) }}
+        <ul class="sidebar-list">
+            {{ sidebar.link(path('user_settings_index'), 'fa-sliders', 'General'|trans, 'general' == activeRoute) }}
+            {{ sidebar.link(path('user_settings_notifications'), 'fa-bell', 'Notifications'|trans, 'notifications' == activeRoute) }}
+            {{ sidebar.link(path('user_settings_privacy'), 'fa-user-shield', 'Privacy'|trans, 'privacy' == activeRoute) }}
+            {{ sidebar.link(path('user_security_index'), 'fa-shield-halved', 'Security'|trans, 'security' == activeRoute) }}
         </ul>
-    </li>
+    </div>
 {% endif %}

@@ -1,5 +1,5 @@
 <div {{ attributes }}>
-    <div class="panel mb-3">
+    <div class="panel mt-0 mb-3">
         <div class="panel-body">
             <div class="row g-3 align-items-end">
                 <div class="col-md-{{ this.pinnedToACompany ? 6 : 3 }}">
@@ -48,18 +48,16 @@
         </div>
     </div>
 
-    <div class="panel">
+    <div class="panel mt-0">
         <div class="panel-body">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
                     <thead>
                         <tr>
                             <th>{{ 'Vacancy'|trans }}</th>
-                            {% if not this.pinnedToACompany %}
-                                <th>{{ 'Company'|trans }}</th>
-                            {% endif %}
                             <th>{{ 'Category'|trans }}</th>
                             <th>{{ 'Status'|trans }}</th>
+                            <th>{{ 'On the website'|trans }}</th>
                             <th>{{ 'Closes'|trans }}</th>
                             <th class="text-end">{{ 'Actions'|trans }}</th>
                         </tr>
@@ -69,16 +67,17 @@
                             {% set current = vacancy.currentRevision %}
                             <tr>
                                 <td>
-                                    <strong>{{ current.name|localise_text }}</strong>
-                                    <div class="text-muted small"><code>{{ vacancy.slugName }}</code></div>
+                                    <span class="fw-semibold d-block">{{ current.name|localise_text }}</span>
+                                    <span class="text-muted small">
+                                        <code>{{ vacancy.slugName }}</code>
+                                        {% if not this.pinnedToACompany %}
+                                            &middot;
+                                            <a href="{{ path('admin/career/companies/view', {'company': vacancy.company.id}) }}">
+                                                {{ vacancy.company.name }}
+                                            </a>
+                                        {% endif %}
+                                    </span>
                                 </td>
-                                {% if not this.pinnedToACompany %}
-                                    <td>
-                                        <a href="{{ path('admin/career/companies/view', {'company': vacancy.company.id}) }}">
-                                            {{ vacancy.company.name }}
-                                        </a>
-                                    </td>
-                                {% endif %}
                                 <td>
                                     <span class="badge {{ current.category.badgeClass }}">{{ current.category.label|trans }}</span>
                                 </td>
@@ -88,10 +87,17 @@
                                         'live': current.liveCounterpart ? current.liveCounterpart.revisionNumber : null,
                                     } only %}
                                 </td>
+                                <td>
+                                    {% if vacancy.isActive %}
+                                        <span class="badge badge-success">{{ 'Live'|trans }}</span>
+                                    {% else %}
+                                        <span class="badge badge-secondary">{{ 'Not shown'|trans }}</span>
+                                    {% endif %}
+                                </td>
                                 <td class="text-muted small">
                                     {{ current.endDate is not null ? current.endDate|date('j M Y') : '-' }}
                                 </td>
-                                <td class="text-end">
+                                <td class="text-end text-nowrap">
                                     {% if current.status.editableByAuthor %}
                                         <a href="{{ path('admin/career/vacancies/edit', {'vacancy': vacancy.id}) }}"
                                            class="btn btn-sm btn-outline-gewis-primary">{{ 'Edit'|trans }}</a>
@@ -104,12 +110,15 @@
                                                 {{ 'Revise'|trans }}
                                             </button>
                                         </form>
+                                    {% else %}
+                                        <a href="{{ path('admin/career/approvals/vacancy', {'revision': current.id}) }}"
+                                           class="btn btn-sm btn-gewis-primary">{{ 'Review'|trans }}</a>
                                     {% endif %}
                                 </td>
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="{{ this.pinnedToACompany ? 5 : 6 }}" class="text-center text-muted py-4">
+                                <td colspan="6" class="text-center text-muted py-4">
                                     {{ 'No vacancies match the current filters.'|trans }}
                                 </td>
                             </tr>
