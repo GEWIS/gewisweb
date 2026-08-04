@@ -33,7 +33,10 @@
                                 <td class="text-muted small">{{ row.author ?: 'Removed account'|trans }}</td>
                                 <td class="text-muted small">#{{ row.revisionNumber }}</td>
                                 <td>
-                                    {% include 'partials/application/revision-status-badge.html.twig' with {'status': row.status} only %}
+                                    {% include 'partials/application/revision-status-badge.html.twig' with {
+                                        'status': row.status,
+                                        'live': row.liveRevisionNumber,
+                                    } only %}
                                 </td>
                                 <td class="text-end">
                                     <a href="{{ path(row.reviewRoute, {'revision': row.revisionId}) }}"

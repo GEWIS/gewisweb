@@ -67,12 +67,12 @@
                                 <tr>
                                     {% include 'partials/activity/admin/overview-row-cells.html.twig' with { row: row } only %}
                                     <td>
-                                        {% include 'partials/application/revision-status-badge.html.twig' with {'status': row.status} only %}
+                                        {% include 'partials/application/revision-status-badge.html.twig' with {
+                                            'status': row.status,
+                                            'live': row.liveRevisionNumber,
+                                        } only %}
                                         {% if row.changesRequested %}
                                             <span class="badge badge-warning">{{ 'Changes requested'|trans }}</span>
-                                        {% endif %}
-                                        {% if row.isLive %}
-                                            <span class="badge badge-success">{{ 'Live'|trans }}</span>
                                         {% endif %}
                                     </td>
                                     <td class="text-end">

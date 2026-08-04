@@ -78,6 +78,11 @@ interface RevisionInterface
     public function getRevisable(): RevisableInterface;
 
     /**
+     * The revision that is live while this one is not, or null when this one is live (or nothing is yet).
+     */
+    public function getLiveCounterpart(): ?RevisionInterface;
+
+    /**
      * The comment entity this revision's discussion is written in, so code that works across domains can read and
      * write the thread without knowing which domain it is in.
      *

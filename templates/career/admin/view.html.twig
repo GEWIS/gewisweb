@@ -40,7 +40,10 @@
                         <dt class="col-sm-4">{{ 'Working version'|trans }}</dt>
                         <dd class="col-sm-8">
                             {% if current is not null %}
-                                {% include 'partials/application/revision-status-badge.html.twig' with {'status': current.status} only %}
+                                {% include 'partials/application/revision-status-badge.html.twig' with {
+                                    'status': current.status,
+                                    'live': current.liveCounterpart ? current.liveCounterpart.revisionNumber : null,
+                                } only %}
                                 <span class="text-muted small">{{ 'rev. #%n%'|trans({'%n%': current.revisionNumber}) }}</span>
                             {% else %}
                                 <span class="text-muted">{{ 'None'|trans }}</span>

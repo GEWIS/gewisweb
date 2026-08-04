@@ -83,7 +83,10 @@
                                     <span class="badge {{ current.category.badgeClass }}">{{ current.category.label|trans }}</span>
                                 </td>
                                 <td>
-                                    {% include 'partials/application/revision-status-badge.html.twig' with {'status': current.status} only %}
+                                    {% include 'partials/application/revision-status-badge.html.twig' with {
+                                        'status': current.status,
+                                        'live': current.liveCounterpart ? current.liveCounterpart.revisionNumber : null,
+                                    } only %}
                                 </td>
                                 <td class="text-muted small">
                                     {{ current.endDate is not null ? current.endDate|date('j M Y') : '-' }}

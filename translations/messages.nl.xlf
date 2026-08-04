@@ -2541,6 +2541,10 @@
         <source>Live version</source>
         <target state="translated">Online versie</target>
       </trans-unit>
+      <trans-unit id="Nox5rlQ" resname="Live: #%number%">
+        <source>Live: #%number%</source>
+        <target>Live: #%number%</target>
+      </trans-unit>
       <trans-unit id="uU838DK" resname="Load more">
         <source>Load more</source>
         <target>Meer laden</target>
@@ -3921,13 +3925,13 @@
         <source>Revision</source>
         <target state="translated">Revisie</target>
       </trans-unit>
-      <trans-unit id="xE3VSX7" resname="Revision #%number% by %author%: %status%">
-        <source>Revision #%number% by %author%: %status%</source>
-        <target state="translated">Revisie #%number% door %author%: %status%</target>
+      <trans-unit id="NzKSNfv" resname="Revision #%number%">
+        <source>Revision #%number%</source>
+        <target>Revisie #%number%</target>
       </trans-unit>
-      <trans-unit id="MKp8c0f" resname="Revision #%number%: %status%">
-        <source>Revision #%number%: %status%</source>
-        <target state="translated">Versie #%number%: %status%</target>
+      <trans-unit id="9WpnlCM" resname="Revision #%number% by %author%">
+        <source>Revision #%number% by %author%</source>
+        <target>Revisie #%number% van %author%</target>
       </trans-unit>
       <trans-unit id="w9m_6PJ" resname="Revision %number%: %status%">
         <source>Revision %number%: %status%</source>

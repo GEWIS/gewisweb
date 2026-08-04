@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Controller\Career;
 
 use App\Controller\Career\AdminApprovalController;
+use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\Career\CompanyRevision;
 use App\Entity\Career\VacancyRevision;
 use App\Entity\User\User;
@@ -87,6 +88,32 @@ final class AdminApprovalControllerTest extends DatabaseTestCase
         self::assertStringContainsString(
             'Contact details',
             $content,
+        );
+    }
+
+    /**
+     * A revision that was turned down says nothing about what visitors see, so the screen has to name the revision
+     * that is still up rather than leave "Rejected" to be read as "the company is offline".
+     */
+    public function testARejectedRevisionStillNamesTheOneThatIsLive(): void
+    {
+        $revision = $this->aCompanyRevision();
+        $company = $revision->getCompany();
+
+        $live = new CompanyRevision();
+        $live->setStatus(RevisionStatus::Approved);
+        $live->setRevisionNumber($revision->getRevisionNumber() + 1);
+        $company->addRevision($live);
+        $company->setLiveRevision($live);
+        $revision->setStatus(RevisionStatus::Rejected);
+        $this->entityManager->persist($live);
+        $this->entityManager->flush();
+
+        $this->authenticateAsBoardWithSudo();
+
+        self::assertStringContainsString(
+            'Live: #' . $live->getRevisionNumber(),
+            strval($this->controller()->reviewCompany($revision)->getContent()),
         );
     }
 

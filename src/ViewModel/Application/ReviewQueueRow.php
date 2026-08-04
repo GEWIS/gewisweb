@@ -21,6 +21,8 @@ final readonly class ReviewQueueRow
         public RevisionStatus $status,
         public string $reviewRoute,
         public int $revisionId,
+        // The revision the public is seeing while this one waits, so a queue does not read as if nothing is up.
+        public ?int $liveRevisionNumber = null,
     ) {
     }
 
@@ -40,6 +42,7 @@ final readonly class ReviewQueueRow
             status: $revision->getStatus(),
             reviewRoute: $reviewRoute,
             revisionId: (int) $revision->getId(),
+            liveRevisionNumber: $revision->getLiveCounterpart()?->getRevisionNumber(),
         );
     }
 

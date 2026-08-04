@@ -33,6 +33,7 @@
                                     {% if company.currentRevision is not null %}
                                         {% include 'partials/application/revision-status-badge.html.twig' with {
                                             'status': company.currentRevision.status,
+                                            'live': company.currentRevision.liveCounterpart ? company.currentRevision.liveCounterpart.revisionNumber : null,
                                         } only %}
                                     {% else %}
                                         <span class="text-muted small">{{ 'None'|trans }}</span>

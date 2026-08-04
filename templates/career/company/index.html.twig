@@ -68,6 +68,7 @@
                                         <span>{{ vacancy.currentRevision.name|localise_text }}</span>
                                         {% include 'partials/application/revision-status-badge.html.twig' with {
                                             'status': vacancy.currentRevision.status,
+                                            'live': vacancy.currentRevision.liveCounterpart ? vacancy.currentRevision.liveCounterpart.revisionNumber : null,
                                         } only %}
                                     </li>
                                 {% endfor %}

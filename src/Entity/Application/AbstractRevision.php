@@ -275,6 +275,22 @@ abstract class AbstractRevision implements RevisionInterface
     }
 
     /**
+     * What visitors are seeing while this revision is not: the live revision, unless that is this one.
+     *
+     * A revision that was rejected, or is still with the reviewers, says nothing about what is public, so a screen
+     * showing one can name what is instead of leaving the reader to assume the worst.
+     */
+    #[Override]
+    public function getLiveCounterpart(): ?RevisionInterface
+    {
+        $live = $this->getRevisable()->getLiveRevision();
+
+        return $live === $this
+            ? null
+            : $live;
+    }
+
+    /**
      * Enforce the documented invariant that a revision is never authored, nor last edited, by both a member and a
      * company user at once. The setters hand the revision over rather than let both sides be set, so this catches only
      * what reached the fields another way, such as a row hydrated from the database.
