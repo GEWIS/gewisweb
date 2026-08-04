@@ -10,7 +10,7 @@ use App\Entity\Activity\ActivityRevision;
 use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Activity\SignupList;
 use App\Entity\Application\Enums\AlertTypes;
-use App\Entity\Application\Enums\RevisionStatus;
+use App\Entity\Application\Enums\ReviseRefusal;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Form\Activity\ActivityType;
@@ -20,9 +20,9 @@ use App\Repository\Activity\ExternalSignupRepository;
 use App\Security\Application\RevisionVoter;
 use App\Service\Activity\SignupManager;
 use App\Service\Application\EditLockService;
+use App\Service\Application\RevisionReviser;
 use App\Util\Activity\PastActivityRule;
 use App\Util\Activity\SignupAdminWindow;
-use App\Workflow\RevisionClonerRegistry;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
@@ -53,7 +53,7 @@ class AdminController extends AbstractController
         private readonly ActivityRevisionCommentRepository $commentRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly TranslatorInterface $translator,
-        private readonly RevisionClonerRegistry $clonerRegistry,
+        private readonly RevisionReviser $reviser,
         private readonly EditLockService $editLockService,
     ) {
     }
@@ -140,7 +140,7 @@ class AdminController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $status = $current->getStatus();
+        $refusal = $current->getStatus()->reviseRefusal();
 
         // An activity that has gone live and already taken place is immutable: no further revisions, whether the
         // current revision is the live one or an in-flight draft of it. "Took place" is a property of the real
@@ -159,24 +159,17 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin/activities/index');
         }
 
-        // Submitted / in review: locked while it is with the board, before any edit lock is even considered.
+        // Locked while it is with the board, and final once the board has closed it. Both are decided before any edit
+        // lock is even considered.
         if (
-            !$status->isEditableByAuthor()
-            && !$status->isTerminal()
+            ReviseRefusal::UnderReview === $refusal
+            || ReviseRefusal::Closed === $refusal
         ) {
             $this->addFlash(
                 AlertTypes::Warning->value,
-                $this->translator->trans('This activity is being reviewed and cannot be edited right now.'),
-            );
-
-            return $this->redirectToRoute('admin/activities/index');
-        }
-
-        // A revision the board closed is final: it cannot be revived into a new draft.
-        if (RevisionStatus::Closed === $status) {
-            $this->addFlash(
-                AlertTypes::Warning->value,
-                $this->translator->trans('This activity was closed by the board and can no longer be revised.'),
+                ReviseRefusal::UnderReview === $refusal
+                    ? $this->translator->trans('This activity is being reviewed and cannot be edited right now.')
+                    : $this->translator->trans('This activity was closed by the board and can no longer be revised.'),
             );
 
             return $this->redirectToRoute('admin/activities/index');
@@ -209,14 +202,16 @@ class AdminController extends AbstractController
             );
         }
 
-        if ($status->isEditableByAuthor()) {
+        if (ReviseRefusal::AlreadyADraft === $refusal) {
             // A draft is edited in place.
             $revision = $current;
         } else {
             // An approved/rejected activity is revised by spawning a new draft linked to the current revision; the
             // editing member becomes its author.
-            $revision = $this->clonerRegistry->cloneAsDraft($current);
-            $revision->setAuthor($user->getMember());
+            $revision = $this->reviser->spawnDraft(
+                $current,
+                $user,
+            );
         }
 
         // The registry is typed to the shared RevisionInterface; for an activity it always yields an ActivityRevision.
@@ -430,7 +425,7 @@ class AdminController extends AbstractController
         }
 
         // A revision the board closed is final: it cannot be revived into a new draft.
-        if (RevisionStatus::Closed === $current->getStatus()) {
+        if (ReviseRefusal::Closed === $current->getStatus()->reviseRefusal()) {
             $this->addFlash(
                 AlertTypes::Warning->value,
                 $this->translator->trans('This activity was closed by the board and can no longer be revised.'),
@@ -451,8 +446,10 @@ class AdminController extends AbstractController
 
         // The cloner links the new draft and points the activity's current revision at it; the reopening member
         // becomes its author.
-        $revision = $this->clonerRegistry->cloneAsDraft($current);
-        $revision->setAuthor($user->getMember());
+        $revision = $this->reviser->spawnDraft(
+            $current,
+            $user,
+        );
         $this->entityManager->persist($revision);
         $this->entityManager->flush();
 

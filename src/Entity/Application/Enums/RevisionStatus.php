@@ -74,6 +74,32 @@ enum RevisionStatus: string implements TranslatableInterface
     }
 
     /**
+     * Why a revision in this state cannot be revised into a new draft, or null when it can. Every module refuses for
+     * the same three reasons, so this is where they are settled; what a refusal reads as and where the reader goes
+     * next is the domain's business.
+     */
+    public function reviseRefusal(): ?ReviseRefusal
+    {
+        return match ($this) {
+            self::Draft => ReviseRefusal::AlreadyADraft,
+            self::Submitted,
+            self::InReview => ReviseRefusal::UnderReview,
+            self::Closed => ReviseRefusal::Closed,
+            self::ChangesRequested,
+            self::Rejected,
+            self::Approved => null,
+        };
+    }
+
+    /**
+     * Whether a new draft may be started off a revision in this state, which is what a "revise" control offers.
+     */
+    public function isRevisable(): bool
+    {
+        return null === $this->reviseRefusal();
+    }
+
+    /**
      * The `.badge-*` modifier this state's badge is drawn with, so a status reads the same wherever it is shown.
      */
     public function badgeClass(): string

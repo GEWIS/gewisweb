@@ -165,6 +165,7 @@ abstract class AbstractRevision implements RevisionInterface
         return $this->authorCompanyUser;
     }
 
+    #[Override]
     public function setAuthorCompanyUser(?CompanyUserModel $authorCompanyUser): void
     {
         $this->authorCompanyUser = $authorCompanyUser;

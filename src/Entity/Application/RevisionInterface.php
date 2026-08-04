@@ -54,6 +54,8 @@ interface RevisionInterface
      */
     public function getAuthorCompanyUser(): ?CompanyUser;
 
+    public function setAuthorCompanyUser(?CompanyUser $authorCompanyUser): void;
+
     /**
      * A human-readable name for whoever authored this revision.
      */
