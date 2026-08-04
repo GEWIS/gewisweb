@@ -13,6 +13,7 @@ use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Form\Career\VacancyType;
 use App\Repository\Career\VacancyRevisionCommentRepository;
+use App\Repository\Career\VacancyRevisionRepository;
 use App\Security\Application\RevisionVoter;
 use App\Service\Application\RevisionReviser;
 use App\Service\Career\CareerOverviewCountsProvider;
@@ -46,6 +47,7 @@ class AdminVacancyController extends AbstractController
 
     public function __construct(
         private readonly CareerOverviewCountsProvider $overviewCounts,
+        private readonly VacancyRevisionRepository $revisionRepository,
         private readonly VacancyRevisionCommentRepository $commentRepository,
         private readonly RevisionReviser $reviser,
         private readonly EntityManagerInterface $entityManager,
@@ -61,7 +63,10 @@ class AdminVacancyController extends AbstractController
     {
         return $this->render(
             'career/admin/vacancies/index.html.twig',
-            ['counts' => $this->overviewCounts->counts()],
+            [
+                'counts' => $this->overviewCounts->counts(),
+                'awaitingReview' => $this->revisionRepository->countForReview(),
+            ],
         );
     }
 

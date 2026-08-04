@@ -225,6 +225,10 @@
         <source>%count% vacancies have been submitted for review.</source>
         <target state="translated">%count% vacancies have been submitted for review.</target>
       </trans-unit>
+      <trans-unit id="h521ymk" resname="%count% vacancy is waiting for review|%count% vacancies are waiting for review">
+        <source>%count% vacancy is waiting for review|%count% vacancies are waiting for review</source>
+        <target state="translated">%count% vacancy is waiting for review|%count% vacancies are waiting for review</target>
+      </trans-unit>
       <trans-unit id="9uM3STA" resname="%count% version|%count% versions">
         <source>%count% version|%count% versions</source>
         <target state="translated">%count% version|%count% versions</target>
@@ -292,6 +296,10 @@
       <trans-unit id="5pfQYrV" resname="A career does not have to mean leaving. The TU/e takes on PhD candidates and PDEng trainees every year, and the departments our members graduate from are usually looking. Ask your supervisor, or the education committee, what is going on in your own group.">
         <source>A career does not have to mean leaving. The TU/e takes on PhD candidates and PDEng trainees every year, and the departments our members graduate from are usually looking. Ask your supervisor, or the education committee, what is going on in your own group.</source>
         <target state="translated">A career does not have to mean leaving. The TU/e takes on PhD candidates and PDEng trainees every year, and the departments our members graduate from are usually looking. Ask your supervisor, or the education committee, what is going on in your own group.</target>
+      </trans-unit>
+      <trans-unit id="9KB3Qb4" resname="A company cannot change one while it sits with you.">
+        <source>A company cannot change one while it sits with you.</source>
+        <target state="translated">A company cannot change one while it sits with you.</target>
       </trans-unit>
       <trans-unit id="cweoWmQ" resname="A new activity &quot;%name%&quot; has been published.">
         <source>A new activity "%name%" has been published.</source>
@@ -3240,6 +3248,10 @@
       <trans-unit id="sGdI_d5" resname="Open positions">
         <source>Open positions</source>
         <target>Open positions</target>
+      </trans-unit>
+      <trans-unit id="FMN.q3t" resname="Open the review queue">
+        <source>Open the review queue</source>
+        <target state="translated">Open the review queue</target>
       </trans-unit>
       <trans-unit id="cClgY38" resname="Open until %date%">
         <source>Open until %date%</source>

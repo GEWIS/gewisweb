@@ -15,6 +15,7 @@ use App\Entity\User\User;
 use App\Form\Career\CompanyType;
 use App\Repository\Career\CompanyAuditLogRepository;
 use App\Repository\Career\CompanyRevisionCommentRepository;
+use App\Repository\Career\VacancyRevisionRepository;
 use App\Security\Application\RevisionVoter;
 use App\Service\Application\RevisionReviser;
 use App\Service\Career\CareerOverviewCountsProvider;
@@ -53,6 +54,7 @@ class AdminController extends AbstractController
     public function __construct(
         private readonly CompanyAuditLogRepository $auditLogRepository,
         private readonly CompanyRevisionCommentRepository $commentRepository,
+        private readonly VacancyRevisionRepository $vacancyRevisionRepository,
         private readonly CareerOverviewCountsProvider $overviewCounts,
         private readonly CompanyAuditLogger $auditLogger,
         private readonly CompanyImageUploadService $imageUploadService,
@@ -165,7 +167,10 @@ class AdminController extends AbstractController
     {
         return $this->render(
             'career/admin/vacancies.html.twig',
-            ['company' => $company],
+            [
+                'company' => $company,
+                'awaitingReview' => $this->vacancyRevisionRepository->countForReview($company),
+            ],
         );
     }
 

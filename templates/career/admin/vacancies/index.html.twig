@@ -14,5 +14,9 @@
         'actionLabel': 'Add a vacancy'|trans,
     } only %}
 
+    {% include 'partials/career/admin/review-queue-callout.html.twig' with {
+        'awaitingReview': awaitingReview,
+    } only %}
+
     {{ component('Career:Admin:VacancyOverview') }}
 {% endblock %}
