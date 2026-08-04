@@ -22,8 +22,8 @@ use function Symfony\Component\Translation\t;
 use function trim;
 
 /**
- * A label a vacancy can be tagged with, in both languages plus a short form for the badge. Labels are shared reference
- * data rather than revisable content, so this form writes straight through.
+ * A label a vacancy can be tagged with, in both languages. Labels are shared reference data rather than revisable
+ * content, so this form writes straight through.
  *
  * A label is one or two words carried by every vacancy tagged with it, so there is no enabling a language here the way
  * there is on the revisable content: both translations are required.
@@ -41,23 +41,14 @@ class VacancyLabelType extends AbstractType
         FormBuilderInterface $builder,
         array $options,
     ): void {
-        $builder
-            ->add(
-                'name',
-                LocalisedTextType::class,
-                [
-                    'label' => t('Name'),
-                    'data_class' => CareerLocalisedText::class,
-                ],
-            )
-            ->add(
-                'abbreviation',
-                LocalisedTextType::class,
-                [
-                    'label' => t('Abbreviation'),
-                    'data_class' => CareerLocalisedText::class,
-                ],
-            );
+        $builder->add(
+            'name',
+            LocalisedTextType::class,
+            [
+                'label' => t('Name'),
+                'data_class' => CareerLocalisedText::class,
+            ],
+        );
 
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,
@@ -72,16 +63,10 @@ class VacancyLabelType extends AbstractType
             return;
         }
 
-        $form = $event->getForm();
         $this->requireBoth(
-            $form->get('name'),
+            $event->getForm()->get('name'),
             $label->getName(),
             $this->translator->trans('Enter the name in both languages.'),
-        );
-        $this->requireBoth(
-            $form->get('abbreviation'),
-            $label->getAbbreviation(),
-            $this->translator->trans('Enter the abbreviation in both languages.'),
         );
     }
 

@@ -57,10 +57,6 @@ class AdminVacancyLabelController extends AbstractController
             null,
             null,
         ));
-        $label->setAbbreviation(new CareerLocalisedText(
-            null,
-            null,
-        ));
 
         $form = $this->createForm(
             VacancyLabelType::class,

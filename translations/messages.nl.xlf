@@ -349,10 +349,6 @@
         <source>API Users</source>
         <target state="translated">API-gebruikers</target>
       </trans-unit>
-      <trans-unit id="KNRiz0N" resname="Abbreviation">
-        <source>Abbreviation</source>
-        <target state="translated">Afkorting</target>
-      </trans-unit>
       <trans-unit id="N8J6fEh" resname="About %company%">
         <source>About %company%</source>
         <target>Over %company%</target>
@@ -1729,10 +1725,6 @@
         <source>Enter the 6-digit code shown by the app to confirm the link.</source>
         <target state="translated">Voer de 6-cijferige code in die in de app wordt weergegeven om de koppeling te bevestigen.</target>
       </trans-unit>
-      <trans-unit id="T9OhqM5" resname="Enter the abbreviation in both languages.">
-        <source>Enter the abbreviation in both languages.</source>
-        <target state="translated">Vul de afkorting in beide talen in.</target>
-      </trans-unit>
       <trans-unit id="s.xcLfE" resname="Enter the email address you signed up with and we will send you a new confirmation link.">
         <source>Enter the email address you signed up with and we will send you a new confirmation link.</source>
         <target state="translated">Voer het e-mailadres in waarmee je je hebt aangemeld, dan sturen we je een nieuwe bevestigingslink.</target>
@@ -1740,10 +1732,6 @@
       <trans-unit id="NQcoaLP" resname="Enter the name in both languages.">
         <source>Enter the name in both languages.</source>
         <target state="translated">Vul de naam in beide talen in.</target>
-      </trans-unit>
-      <trans-unit id="2.ep7Dk" resname="Events">
-        <source>Events</source>
-        <target state="translated">Evenementen</target>
       </trans-unit>
       <trans-unit id="U3hnjYE" resname="Every active session for this user will be terminated immediately.">
         <source>Every active session for this user will be terminated immediately.</source>

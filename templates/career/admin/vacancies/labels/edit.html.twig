@@ -17,7 +17,6 @@
                 <div class="panel-body">
                     {{ form_start(form, {'method': 'POST'}) }}
                         {{ form_row(form.name) }}
-                        {{ form_row(form.abbreviation) }}
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-gewis-primary">{{ 'Save'|trans }}</button>
                             <a href="{{ path('admin/career/vacancies/labels/index') }}" class="btn btn-secondary">{{ 'Cancel'|trans }}</a>

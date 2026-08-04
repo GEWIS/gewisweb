@@ -250,24 +250,20 @@ class CompanyFixture extends Fixture
             'fulltime' => [
                 'en' => 'Full-time',
                 'nl' => 'Fulltime',
-                'abbr' => 'FT',
             ],
             'hybrid' => [
                 'en' => 'Hybrid',
                 'nl' => 'Hybride',
-                'abbr' => 'HYB',
             ],
             'remote' => [
                 'en' => 'Remote',
                 'nl' => 'Op afstand',
-                'abbr' => 'REM',
             ],
         ];
 
         foreach ($definitions as $key => $definition) {
             $label = new VacancyLabel();
             $label->setName(new CareerLocalisedText($definition['en'], $definition['nl']));
-            $label->setAbbreviation(new CareerLocalisedText($definition['abbr'], $definition['abbr']));
             $manager->persist($label);
 
             $this->labels[$key] = $label;

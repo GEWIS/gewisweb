@@ -30,7 +30,6 @@
                             <thead>
                                 <tr>
                                     <th>{{ 'Name'|trans }}</th>
-                                    <th>{{ 'Abbreviation'|trans }}</th>
                                     <th>{{ 'In use by'|trans }}</th>
                                     <th class="text-end">{{ 'Actions'|trans }}</th>
                                 </tr>
@@ -45,7 +44,6 @@
                                                 {{ label.name.valueNL }} / {{ label.name.valueEN }}
                                             </div>
                                         </td>
-                                        <td><span class="badge badge-tag">{{ label.abbreviation|localise_text }}</span></td>
                                         <td class="text-muted small">
                                             {{ 'used by %count% revisions'|trans({'%count%': row.usage}) }}
                                         </td>
@@ -63,7 +61,7 @@
                                     </tr>
                                 {% else %}
                                     <tr>
-                                        <td colspan="4" class="text-center text-muted py-4">
+                                        <td colspan="3" class="text-center text-muted py-4">
                                             {{ 'There are no labels yet.'|trans }}
                                         </td>
                                     </tr>
@@ -83,7 +81,6 @@
                 <div class="panel-body">
                     {{ form_start(form, {'method': 'POST'}) }}
                         {{ form_row(form.name) }}
-                        {{ form_row(form.abbreviation) }}
                         <div class="d-grid">
                             <button type="submit" class="btn btn-gewis-primary">{{ 'Add label'|trans }}</button>
                         </div>

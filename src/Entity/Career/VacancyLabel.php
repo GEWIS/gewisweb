@@ -20,8 +20,6 @@ use Doctrine\ORM\Mapping\OneToOne;
  *     id: int,
  *     name: ?string,
  *     nameEn: ?string,
- *     abbreviation: ?string,
- *     abbreviationEn: ?string,
  * }
  */
 #[Entity(repositoryClass: VacancyLabelRepository::class)]
@@ -46,24 +44,6 @@ class VacancyLabel
         nullable: false,
     )]
     private CareerLocalisedText $name;
-
-    /**
-     * The abbreviation of the label.
-     */
-    #[OneToOne(
-        targetEntity: CareerLocalisedText::class,
-        cascade: [
-            'persist',
-            'remove',
-        ],
-        orphanRemoval: true,
-    )]
-    #[JoinColumn(
-        name: 'abbreviation_id',
-        referencedColumnName: 'id',
-        nullable: false,
-    )]
-    private CareerLocalisedText $abbreviation;
 
     /**
      * The vacancy revisions this Label is assigned to (labels live on the revision so their changes are reviewable).
@@ -96,22 +76,6 @@ class VacancyLabel
     public function setName(CareerLocalisedText $name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * Gets the slug.
-     */
-    public function getAbbreviation(): CareerLocalisedText
-    {
-        return $this->abbreviation;
-    }
-
-    /**
-     * Sets the slug.
-     */
-    public function setAbbreviation(CareerLocalisedText $slug): void
-    {
-        $this->abbreviation = $slug;
     }
 
     /**
@@ -151,8 +115,6 @@ class VacancyLabel
             'id' => $this->getId(),
             'name' => $this->getName()->getValueNL(),
             'nameEn' => $this->getName()->getValueEN(),
-            'abbreviation' => $this->getAbbreviation()->getValueNL(),
-            'abbreviationEn' => $this->getAbbreviation()->getValueEN(),
         ];
     }
 }

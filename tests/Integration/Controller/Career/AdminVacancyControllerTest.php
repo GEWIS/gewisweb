@@ -110,10 +110,6 @@ final class AdminVacancyControllerTest extends DatabaseTestCase
             'Temporary',
             'Tijdelijk',
         ));
-        $label->setAbbreviation(new CareerLocalisedText(
-            'TMP',
-            'TMP',
-        ));
         $this->entityManager->persist($label);
         $this->entityManager->flush();
         $labelId = (int) $label->getId();
