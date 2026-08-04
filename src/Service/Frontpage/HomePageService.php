@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Service\Frontpage;
 
+use App\Entity\Activity\Activity;
 use App\Entity\Decision\Member;
 use App\Entity\Photo\Photo;
 use App\Entity\Photo\WeeklyPhoto;
+use App\Repository\Activity\ActivityRepository;
 use App\Repository\Decision\MemberRepository;
 use App\Repository\Photo\MemberTagRepository;
 use App\Repository\Photo\WeeklyPhotoRepository;
@@ -19,12 +21,14 @@ use function array_map;
 use function array_values;
 
 /**
- * Gathers the home-page blocks: the current photo of the week (with the public path the anonymous frontpage serves it
- * from, when that copy exists) and today's birthdays with the most-tagged member's photo.
+ * Gathers the home-page blocks: the agenda of what is coming up, the current photo of the week (with the public path
+ * the anonymous frontpage serves it from, when that copy exists) and today's birthdays with the most-tagged member's
+ * photo.
  */
 final readonly class HomePageService
 {
     public function __construct(
+        private ActivityRepository $activityRepository,
         private WeeklyPhotoRepository $weeklyPhotoRepository,
         private MemberRepository $memberRepository,
         private MemberTagRepository $memberTagRepository,
@@ -36,6 +40,7 @@ final readonly class HomePageService
 
     /**
      * @return array{
+     *     activities: Activity[],
      *     weeklyPhoto: WeeklyPhoto|null,
      *     weeklyPublicPath: string|null,
      *     birthdayPhoto: Photo|null,
@@ -64,6 +69,7 @@ final readonly class HomePageService
             : $this->memberTagRepository->getMostActiveMemberTag($birthdayMembers);
 
         return [
+            'activities' => $this->activityRepository->findUpcoming(),
             'weeklyPhoto' => $weeklyPhoto,
             'weeklyPublicPath' => null === $weeklyPhoto
                 ? null
