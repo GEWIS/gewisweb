@@ -1,89 +1,194 @@
-{% extends 'layout-sidebar.html.twig' %}
+{% extends 'layout.html.twig' %}
 
-{% block page_title %}{{ 'Dashboard'|trans|page_title }}{{ dashboard.company.name|page_title }}{{ parent() }}{% endblock %}
+{% set company = dashboard.company %}
 
-{% block sidebar_label %}{{ dashboard.company.name }}{% endblock %}
+{% block page_title %}{{ 'Dashboard'|trans|page_title }}{{ company.name|page_title }}{{ parent() }}{% endblock %}
 
-{% block sidebar %}
-    {% include 'partials/company-sidebar.html.twig' with {'activeRoute': 'overview'} %}
+{% block pre_body %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_top %}
+            <span class="page-header-eyebrow">{{ 'Company area'|trans }}</span>
+        {% endblock %}
+        {% block header_status %}
+            {% if dashboard.company.liveRevision is not null %}
+                <span class="badge badge-success">{{ 'Profile is live'|trans }}</span>
+            {% else %}
+                <span class="badge badge-secondary">{{ 'Profile is not live yet'|trans }}</span>
+            {% endif %}
+        {% endblock %}
+        {% block header_title %}{{ dashboard.company.name }}{% endblock %}
+        {% block header_subtitle %}
+            <p class="page-header-meta mb-0">
+                {{ 'Everything you can do for your company on the GEWIS website.'|trans }}
+            </p>
+        {% endblock %}
+        {% block header_actions %}
+            <div class="d-flex flex-column gap-2">
+                <a href="{{ path('company/vacancies/create') }}" class="btn btn-sm btn-outline-gewis-primary text-start">
+                    <span class="fas fa-plus" aria-hidden="true"></span>
+                    {{ 'Post a vacancy'|trans }}
+                </a>
+                <a href="{{ path('company/profile') }}" class="btn btn-sm btn-outline-gewis-primary text-start">
+                    <span class="fas fa-building" aria-hidden="true"></span>
+                    {{ 'Edit company profile'|trans }}
+                </a>
+                <a href="{{ path('company/vacancies') }}" class="btn btn-sm btn-outline-gewis-primary text-start">
+                    <span class="fas fa-briefcase" aria-hidden="true"></span>
+                    {{ 'Manage vacancies'|trans }}
+                </a>
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
 
-{% block contents %}
-    <div class="row mb-3">
-        <div class="col-md-12">
-            <h3 class="mb-0">{{ dashboard.company.name }}</h3>
-            <p class="text-muted mb-0">{{ 'Everything you can do for your company on the GEWIS website.'|trans }}</p>
-        </div>
+{% macro tile(href, icon, label, description) %}
+    <div class="col">
+        <a href="{{ href }}" class="d-flex flex-column gap-2 border rounded p-3 text-body text-decoration-none h-100">
+            <span class="fas {{ icon }}" aria-hidden="true"></span>
+            <span>
+                <span class="fw-semibold d-block">{{ label }}</span>
+                <span class="small text-muted">{{ description }}</span>
+            </span>
+        </a>
     </div>
+{% endmacro %}
 
-    {% if dashboard.profileNeedsAttention %}
-        <div class="alert alert-warning">
-            {% if dashboard.profileStatus is null or dashboard.company.liveRevision is null %}
-                {{ 'Your profile has not been approved yet, so your company is not shown on the website.'|trans }}
-            {% else %}
-                {{ 'Your contact at GEWIS asked for changes to your profile. Have a look at their feedback.'|trans }}
-            {% endif %}
+{% macro attention(href, icon, title, description) %}
+    <div class="col">
+        <a href="{{ href }}" class="d-flex gap-3 border rounded p-3 text-body text-decoration-none h-100">
+            <span class="fas {{ icon }} mt-1" aria-hidden="true"></span>
+            <span>
+                <span class="fw-semibold d-block">{{ title }}</span>
+                <span class="small text-muted">{{ description }}</span>
+            </span>
+        </a>
+    </div>
+{% endmacro %}
+
+{% block contents %}
+    {% set needsAttention = dashboard.profileNeedsAttention
+        or dashboard.drafts is not empty
+        or dashboard.expiringPackages is not empty
+        or dashboard.hasPendingBanner %}
+
+    {% if needsAttention %}
+        <div class="panel mt-0">
+            <div class="panel-heading">
+                <h3>{{ 'Needs your attention'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row row-cols-1 row-cols-md-2 g-2">
+                    {% if dashboard.profileNeedsAttention %}
+                        {{ _self.attention(
+                            path('company/profile'),
+                            'fa-building',
+                            (dashboard.company.liveRevision is null)
+                                ? 'Your profile is not on the website yet'|trans
+                                : 'Your profile came back with changes requested'|trans,
+                            (dashboard.company.liveRevision is null)
+                                ? 'It has to be approved before visitors can see your company.'|trans
+                                : 'Have a look at the feedback and send it back in.'|trans,
+                        ) }}
+                    {% endif %}
+                    {% if dashboard.drafts is not empty %}
+                        {{ _self.attention(
+                            path('company/vacancies', {'filter': 'drafts'}),
+                            'fa-pen',
+                            '%count% unfinished draft|%count% unfinished drafts'|trans({'%count%': dashboard.drafts|length}),
+                            'A draft only goes to GEWIS once you submit it for review.'|trans,
+                        ) }}
+                    {% endif %}
+                    {% if dashboard.hasPendingBanner %}
+                        {{ _self.attention(
+                            path('company/banner'),
+                            'fa-rectangle-ad',
+                            'Your proposed banner is with GEWIS'|trans,
+                            'It goes up once your contact has looked at it.'|trans,
+                        ) }}
+                    {% endif %}
+                    {% for package in dashboard.expiringPackages %}
+                        {{ _self.attention(
+                            path('company/index'),
+                            'fa-clock',
+                            '%package% runs out on %date%'|trans({
+                                '%package%': package.type.label|trans,
+                                '%date%': package.expirationDate|date('j M Y'),
+                            }),
+                            'Get in touch with your contact at GEWIS to renew it.'|trans,
+                        ) }}
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     {% endif %}
 
-    <div class="row g-3 mb-3">
-        {% for tile in [
-            {'label': 'Live vacancies'|trans, 'value': dashboard.liveVacancies|length},
-            {'label': 'Waiting for review'|trans, 'value': dashboard.awaitingReview|length},
-            {'label': 'Drafts'|trans, 'value': dashboard.drafts|length},
-            {'label': 'Highlighted'|trans, 'value': dashboard.highlightedVacancies},
-            {'label': 'Representatives'|trans, 'value': dashboard.representatives},
-        ] %}
-            <div class="col-6 col-md-4 col-lg-2">
-                <div class="panel h-100">
-                    <div class="panel-body text-center">
-                        <div class="fs-3">{{ tile.value }}</div>
-                        <div class="text-muted small">{{ tile.label }}</div>
+    <div class="panel {{ needsAttention ? '' : 'mt-0' }}">
+        <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <h3>{{ 'Your vacancies'|trans }}</h3>
+            <ul class="nav nav-pills nav-pills-compact" role="tablist">
+                {% for filter, label in {
+                    'all': 'All'|trans,
+                    'live': 'Live'|trans,
+                    'review': 'With GEWIS'|trans,
+                    'drafts': 'Drafts'|trans,
+                    'closed': 'Closed'|trans,
+                } %}
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link {% if 'all' == filter %}active{% endif %}"
+                                id="dashboard-vacancies-{{ filter }}-tab"
+                                data-bs-toggle="pill" data-bs-target="#dashboard-vacancies-{{ filter }}"
+                                type="button" role="tab" aria-controls="dashboard-vacancies-{{ filter }}"
+                                aria-selected="{{ 'all' == filter ? 'true' : 'false' }}">
+                            {{ label }}
+                            <span class="badge">{{ overview.counts[filter] }}</span>
+                        </button>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                {% for filter, vacancies in overview.groups %}
+                    <div class="tab-pane fade {% if 'all' == filter %}show active{% endif %}"
+                         id="dashboard-vacancies-{{ filter }}" role="tabpanel"
+                         aria-labelledby="dashboard-vacancies-{{ filter }}-tab" tabindex="0">
+                        {% include 'partials/career/company/vacancy-table.html.twig' with {
+                            'vacancies': vacancies,
+                            'emptyMessage': overview.counts.all > 0
+                                ? 'Nothing in this list. Try another tab.'|trans
+                                : 'You have not posted any vacancies yet.'|trans,
+                        } only %}
                     </div>
-                </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+            <a href="{{ path('company/vacancies') }}" class="d-inline-flex align-items-center gap-2 fw-semibold mt-2">
+                {{ 'Manage all vacancies'|trans }}
+                <span class="fas fa-arrow-right small" aria-hidden="true"></span>
+            </a>
+        </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-7">
-            <div class="panel">
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="panel mt-0">
                 <div class="panel-heading">
-                    <h3>{{ 'Your vacancies'|trans }}</h3>
+                    <h3>{{ 'Manage your presence'|trans }}</h3>
                 </div>
                 <div class="panel-body">
-                    {% set groups = [
-                        {'label': 'Live'|trans, 'items': dashboard.liveVacancies},
-                        {'label': 'Waiting for review'|trans, 'items': dashboard.awaitingReview},
-                        {'label': 'Drafts'|trans, 'items': dashboard.drafts},
-                    ] %}
-                    {% set anything = false %}
-                    {% for group in groups %}
-                        {% if group.items is not empty %}
-                            {% set anything = true %}
-                            <h6 class="text-muted small">{{ group.label }}</h6>
-                            <ul class="list-group mb-3">
-                                {% for vacancy in group.items %}
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span>{{ vacancy.currentRevision.name|localise_text }}</span>
-                                        {% include 'partials/application/revision-status-badge.html.twig' with {
-                                            'status': vacancy.currentRevision.status,
-                                            'live': vacancy.currentRevision.liveCounterpart ? vacancy.currentRevision.liveCounterpart.revisionNumber : null,
-                                        } only %}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    {% endfor %}
-                    {% if not anything %}
-                        <p class="text-muted mb-0">{{ 'You have not posted any vacancies yet.'|trans }}</p>
-                    {% endif %}
+                    <div class="row row-cols-2 row-cols-md-3 g-2">
+                        {{ _self.tile(path('company/profile'), 'fa-building', 'Company profile'|trans, 'Logo, story and contact'|trans) }}
+                        {{ _self.tile(path('company/vacancies'), 'fa-briefcase', 'Vacancies'|trans, 'Post and edit openings'|trans) }}
+                        {{ _self.tile(path('company/highlights'), 'fa-star', 'Highlights'|trans, 'Feature on the career page'|trans) }}
+                        {{ _self.tile(path('company/banner'), 'fa-rectangle-ad', 'Banner'|trans, 'Your banner between the news items'|trans) }}
+                        {{ _self.tile(path('company/representatives'), 'fa-user-group', 'Representatives'|trans, 'Who can sign in'|trans) }}
+                        {{ _self.tile(path('company_user_security_index'), 'fa-shield-halved', 'Security'|trans, 'Password and sessions'|trans) }}
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-5">
-            <div class="panel">
+        <div class="col-lg-5">
+            <div class="panel mt-0">
                 <div class="panel-heading">
                     <h3>{{ 'Your contract'|trans }}</h3>
                 </div>
@@ -93,7 +198,7 @@
                     {% else %}
                         <ul class="list-group">
                             {% for package in dashboard.expiringPackages %}
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <li class="list-group-item d-flex justify-content-between align-items-center gap-2">
                                     <span>{{ package.type.label|trans }}</span>
                                     <span class="text-muted small">
                                         {{ 'until %date%'|trans({'%date%': package.expirationDate|date('j M Y')}) }}
@@ -108,14 +213,33 @@
                 </div>
             </div>
 
-            {% if dashboard.hasPendingBanner %}
-                <div class="panel">
-                    <div class="panel-body">
-                        <span class="badge badge-info">{{ 'Waiting'|trans }}</span>
-                        {{ 'Your proposed banner is with the committee.'|trans }}
-                    </div>
+            <div class="panel">
+                <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <h3>{{ 'Representatives'|trans }}</h3>
+                    <a href="{{ path('company/representatives') }}" class="small fw-semibold">{{ 'See all'|trans }}</a>
                 </div>
-            {% endif %}
+                <div class="panel-body">
+                    <p class="mb-0">
+                        {{ '%count% person can act for your company.|%count% people can act for your company.'|trans({'%count%': dashboard.representatives}) }}
+                    </p>
+                    <p class="text-muted small mb-0">
+                        {{ 'Ask your contact at GEWIS to add somebody or to shut somebody out.'|trans }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Your contact at GEWIS'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="fw-semibold mb-1">{{ 'Career Development and External Affairs Officer'|trans }}</p>
+                    <p class="mb-2"><a href="mailto:{{ external_affairs_email }}">{{ external_affairs_email }}</a></p>
+                    <p class="text-muted small mb-0">
+                        {{ 'Questions about your profile, vacancies, banner or package all go here.'|trans }}
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

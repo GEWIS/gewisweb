@@ -31,7 +31,7 @@ final class CompanyControllerTest extends DatabaseTestCase
         );
         // The vacancy whose window closed is not live, but it is still the company's, so it is not simply hidden.
         self::assertStringContainsString(
-            'Live vacancies',
+            'Platform Engineering Internship',
             $content,
         );
     }
@@ -54,7 +54,7 @@ final class CompanyControllerTest extends DatabaseTestCase
         $this->entityManager->flush();
 
         self::assertStringContainsString(
-            'asked for changes',
+            'came back with changes requested',
             $this->dashboard('recruitment@nexunt.example.com'),
         );
     }
@@ -66,7 +66,7 @@ final class CompanyControllerTest extends DatabaseTestCase
         $this->entityManager->flush();
 
         self::assertStringContainsString(
-            'not been approved yet',
+            'not on the website yet',
             $this->dashboard('recruitment@nexunt.example.com'),
         );
     }

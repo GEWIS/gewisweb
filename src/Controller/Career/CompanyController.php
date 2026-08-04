@@ -9,6 +9,7 @@ use App\Entity\User\Enums\UserRoles;
 use App\Repository\Career\VacancyRepository;
 use App\Repository\User\CompanyUserRepository;
 use App\ViewModel\Career\Portal\CompanyDashboard;
+use App\ViewModel\Career\Portal\CompanyVacancyOverview;
 use DateInterval;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,16 +53,18 @@ class CompanyController extends AbstractController
         CompanyUser $companyUser,
     ): Response {
         $company = $companyUser->getCompany();
+        $vacancies = $this->vacancyRepository->findAllForCompany($company);
 
         return $this->render(
             'career/company/index.html.twig',
             [
                 'dashboard' => CompanyDashboard::build(
                     $company,
-                    $this->vacancyRepository->findAllForCompany($company),
+                    $vacancies,
                     $this->companyUserRepository->count(['company' => $company]),
                     new DateTime()->add(new DateInterval(self::HORIZON)),
                 ),
+                'overview' => CompanyVacancyOverview::build($vacancies),
             ],
         );
     }

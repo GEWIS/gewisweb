@@ -22,6 +22,7 @@ use App\Service\Application\RevisionDiscarder;
 use App\Service\Application\RevisionReviser;
 use App\ViewModel\Application\Review\RevisionAudience;
 use App\ViewModel\Application\RevisionActions;
+use App\ViewModel\Career\Portal\CompanyVacancyOverview;
 use Override;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
@@ -68,6 +69,7 @@ class CompanyVacancyController extends AbstractRevisionReviewController
         methods: ['GET'],
     )]
     public function index(
+        Request $request,
         #[CurrentUser]
         CompanyUser $companyUser,
     ): Response {
@@ -77,7 +79,10 @@ class CompanyVacancyController extends AbstractRevisionReviewController
             'career/company/vacancies.html.twig',
             [
                 'company' => $company,
-                'vacancies' => $this->vacancyRepository->findAllForCompany($company),
+                'overview' => CompanyVacancyOverview::build(
+                    $this->vacancyRepository->findAllForCompany($company),
+                    $request->query->getString('filter'),
+                ),
             ],
         );
     }

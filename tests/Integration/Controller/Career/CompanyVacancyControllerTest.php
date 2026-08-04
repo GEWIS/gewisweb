@@ -24,7 +24,10 @@ final class CompanyVacancyControllerTest extends DatabaseTestCase
     {
         $companyUser = $this->signIn();
 
-        $response = $this->controller()->index($companyUser);
+        $response = $this->controller()->index(
+            new Request(),
+            $companyUser,
+        );
 
         self::assertSame(
             Response::HTTP_OK,
@@ -38,6 +41,29 @@ final class CompanyVacancyControllerTest extends DatabaseTestCase
         // The one whose window closed is still the company's, so it is listed but not shown as live.
         self::assertStringContainsString(
             'Platform Engineering Internship',
+            $content,
+        );
+    }
+
+    /**
+     * The tabs narrow the list to one state at a time, and a vacancy sits in exactly one of them.
+     */
+    public function testATabOnlyShowsTheVacanciesInThatState(): void
+    {
+        $companyUser = $this->signIn();
+
+        $response = $this->controller()->index(
+            new Request(['filter' => 'closed']),
+            $companyUser,
+        );
+
+        $content = (string) $response->getContent();
+        self::assertStringContainsString(
+            'Platform Engineering Internship',
+            $content,
+        );
+        self::assertStringNotContainsString(
+            'Backend Engineer',
             $content,
         );
     }
