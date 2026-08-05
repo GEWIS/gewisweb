@@ -50,6 +50,15 @@ enum StorageNamespace: string
     /** Reference document versions from the association-wide library (PDFs, members-only). */
     case ReferenceDocument = 'reference-document';
 
+    /** Uploaded exams and summaries, scoped per course (PDFs, never served directly). */
+    case EducationDocument = 'education-document';
+
+    /** The rasterized pages a course document is rebuilt from, scoped per document (never served directly). */
+    case EducationDocumentPage = 'education-document-page';
+
+    /** A watermarked course document built for one download, deleted once collected or expired. */
+    case EducationDownload = 'education-download';
+
     private const int MEGABYTE = 1024 * 1024;
 
     /**
@@ -100,12 +109,25 @@ enum StorageNamespace: string
                 $scope,
                 'meetings/reference',
             ),
+            self::EducationDocument => sprintf(
+                'education/courses/%s',
+                $this->requireScope($scope),
+            ),
+            self::EducationDocumentPage => sprintf(
+                'education/pages/%s',
+                $this->requireScope($scope),
+            ),
+            self::EducationDownload => $this->rejectScope(
+                $scope,
+                'education/downloads',
+            ),
         };
     }
 
     /**
-     * Whether {@see directory()} needs a scope: photos are scoped per album, company assets per company, and meeting
-     * documents and minutes per meeting. The reference library is association-wide, so it stays unscoped.
+     * Whether {@see directory()} needs a scope: photos are scoped per album, company assets per company, meeting
+     * documents and minutes per meeting, course documents per course and their rendered pages per document. The
+     * reference library is association-wide and watermarked downloads are short-lived, so both stay unscoped.
      */
     public function requiresScope(): bool
     {
@@ -115,7 +137,9 @@ enum StorageNamespace: string
             self::CompanyImage,
             self::CompanyAttachment,
             self::MeetingDocument,
-            self::MeetingMinutes => true,
+            self::MeetingMinutes,
+            self::EducationDocument,
+            self::EducationDocumentPage => true,
             default => false,
         };
     }
@@ -124,6 +148,9 @@ enum StorageNamespace: string
      * Whether serving a file from this namespace requires an authenticated, signature-validated request. Album photos
      * and their generated covers are member-only (a cover is a mosaic of members-only photos), as are all meeting
      * files; the weekly photo copy, career, organ and page assets are public and immutably cacheable.
+     *
+     * Everything under education is private, and the three of them are never served through the image route at all:
+     * an uploaded course document and its rendered pages only ever leave the server as a freshly watermarked download.
      */
     public function isPrivate(): bool
     {
@@ -132,7 +159,10 @@ enum StorageNamespace: string
             self::PhotoCover,
             self::MeetingDocument,
             self::MeetingMinutes,
-            self::ReferenceDocument => true,
+            self::ReferenceDocument,
+            self::EducationDocument,
+            self::EducationDocumentPage,
+            self::EducationDownload => true,
             default => false,
         };
     }
@@ -149,7 +179,10 @@ enum StorageNamespace: string
             self::CompanyAttachment,
             self::MeetingDocument,
             self::MeetingMinutes,
-            self::ReferenceDocument => ['application/pdf'],
+            self::ReferenceDocument,
+            self::EducationDocument,
+            self::EducationDownload => ['application/pdf'],
+            self::EducationDocumentPage => ['image/jpeg'],
             default => [
                 'image/jpeg',
                 'image/png',

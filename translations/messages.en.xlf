@@ -929,6 +929,10 @@
         <source>Banners</source>
         <target state="translated">Banners</target>
       </trans-unit>
+      <trans-unit id="bbIcSzU" resname="Being processed">
+        <source>Being processed</source>
+        <target state="translated">Being processed</target>
+      </trans-unit>
       <trans-unit id="KkmGks6" resname="Billboard (%width% by %height% pixels)">
         <source>Billboard (%width% by %height% pixels)</source>
         <target state="translated">Billboard (%width% by %height% pixels)</target>
@@ -3737,6 +3741,10 @@
         <source>Privacy Policy</source>
         <target state="translated">Privacy Policy</target>
       </trans-unit>
+      <trans-unit id="V227xJS" resname="Processing failed">
+        <source>Processing failed</source>
+        <target state="translated">Processing failed</target>
+      </trans-unit>
       <trans-unit id="5Y34z39" resname="Profile">
         <source>Profile</source>
         <target state="translated">Profile</target>
@@ -3844,6 +3852,10 @@
       <trans-unit id="H3orQIK" resname="Readiness">
         <source>Readiness</source>
         <target state="translated">Readiness</target>
+      </trans-unit>
+      <trans-unit id="MuwD4xO" resname="Ready">
+        <source>Ready</source>
+        <target state="translated">Ready</target>
       </trans-unit>
       <trans-unit id="9Iuz1j8" resname="Reality collapsed. Please go back before the singularity spreads.">
         <source>Reality collapsed. Please go back before the singularity spreads.</source>
@@ -5780,6 +5792,10 @@
       <trans-unit id="JN_gtmg" resname="Waiting list">
         <source>Waiting list</source>
         <target>Waiting list</target>
+      </trans-unit>
+      <trans-unit id="NR4jmQJ" resname="Waiting to be processed">
+        <source>Waiting to be processed</source>
+        <target state="translated">Waiting to be processed</target>
       </trans-unit>
       <trans-unit id="V9XnrRt" resname="Warning">
         <source>Warning</source>

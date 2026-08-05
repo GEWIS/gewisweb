@@ -6,9 +6,12 @@ namespace App\Entity\Education;
 
 use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\Traits\IdentifiableTrait;
+use App\Entity\Education\Enums\DocumentFlattenStatus;
 use App\Repository\Education\CourseDocumentRepository;
 use DateTime;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
@@ -17,6 +20,8 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * @phpstan-import-type CourseGdprArrayType from Course as ImportedCourseGdprArrayType
@@ -61,10 +66,44 @@ abstract class CourseDocument
     private Languages $language;
 
     /**
-     * Filename of the exam.
+     * The stored path of the uploaded PDF. It is never served: downloads are rebuilt from {@see $pages}.
      */
     #[Column(type: Types::STRING)]
-    private string $filename;
+    private string $path;
+
+    /**
+     * The rendered pages a download is rebuilt from, in page order.
+     *
+     * @var Collection<array-key, CourseDocumentPage>
+     */
+    #[OneToMany(
+        targetEntity: CourseDocumentPage::class,
+        mappedBy: 'document',
+        cascade: ['persist'],
+    )]
+    #[OrderBy(value: ['pageNumber' => 'ASC'])]
+    private Collection $pages;
+
+    #[Column(
+        type: Types::STRING,
+        enumType: DocumentFlattenStatus::class,
+    )]
+    private DocumentFlattenStatus $flattenStatus = DocumentFlattenStatus::Pending;
+
+    #[Column(
+        type: Types::DATETIME_MUTABLE,
+        nullable: true,
+    )]
+    private ?DateTime $flattenedAt = null;
+
+    /**
+     * Why rasterization failed, kept so an administrator can tell a corrupt upload from a missing binary.
+     */
+    #[Column(
+        type: Types::TEXT,
+        nullable: true,
+    )]
+    private ?string $flattenError = null;
 
     /**
      * The course to which this document belongs.
@@ -85,6 +124,11 @@ abstract class CourseDocument
      */
     #[Column(type: Types::BOOLEAN)]
     private bool $scanned;
+
+    public function __construct()
+    {
+        $this->pages = new ArrayCollection();
+    }
 
     /**
      * Get the date.
@@ -119,19 +163,86 @@ abstract class CourseDocument
     }
 
     /**
-     * Get the filename.
+     * Get the stored path of the uploaded PDF.
      */
-    public function getFilename(): string
+    public function getPath(): string
     {
-        return $this->filename;
+        return $this->path;
     }
 
     /**
-     * Set the filename.
+     * Set the stored path of the uploaded PDF.
      */
-    public function setFilename(string $filename): void
+    public function setPath(string $path): void
     {
-        $this->filename = $filename;
+        $this->path = $path;
+    }
+
+    /**
+     * @return Collection<array-key, CourseDocumentPage>
+     */
+    public function getPages(): Collection
+    {
+        return $this->pages;
+    }
+
+    public function addPage(CourseDocumentPage $page): void
+    {
+        if ($this->pages->contains($page)) {
+            return;
+        }
+
+        $page->setDocument($this);
+        $this->pages->add($page);
+    }
+
+    public function clearPages(): void
+    {
+        $this->pages->clear();
+    }
+
+    public function getPageCount(): int
+    {
+        return $this->pages->count();
+    }
+
+    public function getFlattenStatus(): DocumentFlattenStatus
+    {
+        return $this->flattenStatus;
+    }
+
+    public function setFlattenStatus(DocumentFlattenStatus $flattenStatus): void
+    {
+        $this->flattenStatus = $flattenStatus;
+    }
+
+    public function getFlattenedAt(): ?DateTime
+    {
+        return $this->flattenedAt;
+    }
+
+    public function setFlattenedAt(?DateTime $flattenedAt): void
+    {
+        $this->flattenedAt = $flattenedAt;
+    }
+
+    public function getFlattenError(): ?string
+    {
+        return $this->flattenError;
+    }
+
+    public function setFlattenError(?string $flattenError): void
+    {
+        $this->flattenError = $flattenError;
+    }
+
+    /**
+     * Whether the document can be downloaded: it has been rasterized, so there is something to rebuild from.
+     */
+    public function isDownloadable(): bool
+    {
+        return DocumentFlattenStatus::Ready === $this->flattenStatus
+            && !$this->pages->isEmpty();
     }
 
     /**
@@ -177,7 +288,7 @@ abstract class CourseDocument
             'date' => $this->getDate()->format(DateTimeInterface::ATOM),
             'language' => $this->getLanguage()->value,
             'scanned' => $this->getScanned(),
-            'path' => $this->getFilename(),
+            'path' => $this->getPath(),
         ];
     }
 }
