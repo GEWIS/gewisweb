@@ -18,7 +18,9 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OrderBy;
 
+use function array_values;
 use function implode;
+use function ksort;
 
 /**
  * Course.
@@ -177,6 +179,27 @@ class Course
     public function getSimilarCoursesTo(): Collection
     {
         return $this->similarCoursesTo;
+    }
+
+    /**
+     * Every course linked as similar to this one, from either side of the link.
+     *
+     * A link is entered from one course but means the same thing from both, so both directions are read. Rendering only
+     * the outgoing side, as the old site did, made a link invisible from the course it was entered against.
+     *
+     * @return Course[]
+     */
+    public function getSimilarCourses(): array
+    {
+        $similar = [];
+
+        foreach ([...$this->similarCoursesTo, ...$this->similarCoursesFrom] as $course) {
+            $similar[$course->getCode()] = $course;
+        }
+
+        ksort($similar);
+
+        return array_values($similar);
     }
 
     /**

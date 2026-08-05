@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity\Education;
 
+use App\Entity\Education\Enums\CourseDocumentTypes;
 use App\Repository\Education\SummaryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Override;
 
 /**
  * Summary.
@@ -23,6 +25,12 @@ class Summary extends CourseDocument
         nullable: true,
     )]
     private ?string $author = null;
+
+    #[Override]
+    public function getType(): CourseDocumentTypes
+    {
+        return CourseDocumentTypes::Summary;
+    }
 
     /**
      * Get the author.

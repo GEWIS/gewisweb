@@ -1,0 +1,51 @@
+{# One exam or summary in a list. `downloadable` decides whether it offers a button or explains why it does not. #}
+{% set type = document.getType %}
+{% set summary = type.value == 'summary' %}
+<div class="panel panel-surface {{ downloadable ? '' : 'education-doc-locked' }} {{ first|default(false) ? 'mt-0' : '' }}">
+    <div class="panel-body d-flex align-items-center gap-3">
+        <span class="education-doc-icon {{ downloadable ? type.iconClass : '' }}" aria-hidden="true">
+            <span class="fas {{ downloadable ? type.icon : 'fa-lock' }}"></span>
+        </span>
+
+        <div class="flex-grow-1 overflow-hidden">
+            <span class="d-block fw-semibold">
+                {{ summary ? type.label|trans : document.getExamType.label|trans }}
+                &middot; {{ document.getDate|date('j F Y') }}
+            </span>
+            <span class="d-block small text-body-secondary">
+                {% if summary %}
+                    {{ document.getAuthor is not null
+                        ? 'Written by %author%'|trans({'%author%': document.getAuthor})
+                        : 'Shared by a member'|trans }}
+                {% else %}
+                    {{ 'Provided by Education and Student Affairs'|trans }}
+                {% endif %}
+            </span>
+        </div>
+
+        <div class="d-flex flex-wrap gap-1 flex-shrink-0">
+            <span class="badge badge-tag">{{ document.getLanguage.label|trans }}</span>
+            {% if document.getPageCount > 0 %}
+                <span class="badge badge-tag">
+                    {{ '%count% page|%count% pages'|trans({'%count%': document.getPageCount}) }}
+                </span>
+            {% endif %}
+        </div>
+
+        <div class="flex-shrink-0">
+            {% if not document.isDownloadable %}
+                <span class="badge badge-tag">{{ 'Being processed'|trans }}</span>
+            {% elseif downloadable %}
+                <form method="post" action="{{ path('education/document_request', {document: document.getId}) }}">
+                    <button type="submit" class="btn btn-sm btn-gewis-primary">
+                        <span class="fas fa-download" aria-hidden="true"></span> {{ 'Download'|trans }}
+                    </button>
+                </form>
+            {% else %}
+                <a href="{{ path('user_login') }}" class="btn btn-sm btn-outline-secondary">
+                    <span class="fas fa-lock" aria-hidden="true"></span> {{ 'Log in to open'|trans }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>

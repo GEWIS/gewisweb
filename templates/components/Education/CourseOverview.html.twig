@@ -1,0 +1,54 @@
+<div {{ attributes }}>
+    <div class="panel mt-0">
+        <div class="panel-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-6">
+                    <label class="form-label" for="course-overview-search">{{ 'Search'|trans }}</label>
+                    <input type="search" class="form-control" id="course-overview-search"
+                           placeholder="{{ 'Course code or course name'|trans }}"
+                           data-model="debounce(300)|search"
+                           value="{{ this.search }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="course-overview-filter">{{ 'Show'|trans }}</label>
+                    <select class="form-select" id="course-overview-filter" data-model="filter">
+                        {% for option in this.filters %}
+                            <option value="{{ option.value }}" {% if this.filter == option.value %}selected{% endif %}>
+                                {{ option.label|trans }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="course-overview-sort">{{ 'Sort by'|trans }}</label>
+                    <select class="form-select" id="course-overview-sort" data-model="sort">
+                        {% for option in this.sorts %}
+                            <option value="{{ option.value }}" {% if this.sort == option.value %}selected{% endif %}>
+                                {{ option.label|trans }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <span class="small text-body-secondary">
+            {{ 'Showing %shown% of %total% courses'|trans({'%shown%': this.rows|length, '%total%': this.total}) }}
+        </span>
+    </div>
+
+    {% if this.rows is empty %}
+        <div class="education-empty">
+            <h4 class="mb-2">{{ 'No course matches your search'|trans }}</h4>
+            <p class="text-body-secondary mb-0">
+                {{ 'Course codes look like 2IL50 or 2WF50. Try a shorter query, or search by name.'|trans }}
+            </p>
+        </div>
+    {% else %}
+        {% for row in this.rows %}
+            {% include 'partials/education/course-row.html.twig' with {'row': row, 'first': loop.first} only %}
+        {% endfor %}
+    {% endif %}
+</div>

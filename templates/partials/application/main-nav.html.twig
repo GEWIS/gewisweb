@@ -238,11 +238,18 @@
                             {% endif %}
                         </ul>
                     </li>
-                    <li class="nav-item col-12 col-lg-auto {{ is_module_active(['education']) ? 'active' : '' }}">
-                        <a href="{{ path('education/index') }}" class="nav-link">
+                    <li class="nav-item col-12 col-lg-auto dropdown dropdown-nav {{ is_module_active(['education']) ? 'active' : '' }}">
+                        <button aria-haspopup="true" class="nav-link dropdown-toggle" aria-expanded="false">
                             <span class="nav-menu-icon fas fa-graduation-cap d-lg-none" aria-hidden="true"></span>
                             {{ 'Education'|trans }}
-                        </a>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <h6 class="dropdown-header">{{ 'Browse'|trans }}</h6>
+                            </li>
+                            {{ menu.item(path('education/index'), 'fa-compass', 'Overview'|trans) }}
+                            {{ menu.item(path('education/courses'), 'fa-book', 'Courses'|trans) }}
+                        </ul>
                     </li>
                     {% set activityActive = is_module_active(['activity']) %}
                     <li class="nav-item col-12 col-lg-auto dropdown dropdown-nav {{ activityActive ? 'active' : '' }}">

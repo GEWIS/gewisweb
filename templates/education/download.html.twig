@@ -1,0 +1,55 @@
+{% extends 'layout.html.twig' %}
+
+{% set document = download.getDocument %}
+{% set course = document.getCourse %}
+
+{% block page_title %}{{ 'Preparing your download'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('education/index') }}">{{ 'Education'|trans }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('education/course', {code: course.getCode}) }}">{{ course.getCode }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Download'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="panel mt-0"
+                 data-controller="education--download-poll"
+                 data-education--download-poll-url-value="{{ path('education/download_status', {token: download.getToken}) }}">
+                <div class="panel-body text-center py-5">
+                    <div data-education--download-poll-target="pending">
+                        <div class="spinner-border text-body-secondary mb-3" role="status">
+                            <span class="visually-hidden">{{ 'Loading'|trans }}</span>
+                        </div>
+                        <h2 class="h4">{{ 'Preparing your download'|trans }}</h2>
+                        <p class="text-body-secondary mb-0">
+                            {{ 'Your copy of %code% is being watermarked. This usually takes a moment.'|trans({'%code%': course.getCode}) }}
+                        </p>
+                    </div>
+
+                    <div class="d-none" data-education--download-poll-target="ready">
+                        <span class="fas fa-circle-check fa-2x text-success mb-3" aria-hidden="true"></span>
+                        <h2 class="h4">{{ 'Your download is ready'|trans }}</h2>
+                        <p class="text-body-secondary">
+                            {{ 'It should start on its own. If it does not, use the button below.'|trans }}
+                        </p>
+                        <a class="btn btn-gewis-primary" href="#" data-education--download-poll-target="link">
+                            <span class="fas fa-download" aria-hidden="true"></span> {{ 'Download'|trans }}
+                        </a>
+                    </div>
+
+                    <div class="d-none" data-education--download-poll-target="failed">
+                        <span class="fas fa-triangle-exclamation fa-2x text-danger mb-3" aria-hidden="true"></span>
+                        <h2 class="h4">{{ 'Your download could not be prepared'|trans }}</h2>
+                        <p class="text-body-secondary">
+                            {{ 'Something went wrong while watermarking this document. Try again, and let the education officer know if it keeps happening.'|trans }}
+                        </p>
+                        <a class="btn btn-outline-secondary"
+                           href="{{ path('education/course', {code: course.getCode}) }}">{{ 'Back to %code%'|trans({'%code%': course.getCode}) }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

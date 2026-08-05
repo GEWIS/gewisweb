@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Courses'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block special_notices %}{% include 'partials/education/access-notice.html.twig' %}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('education/index') }}">{{ 'Education'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Courses'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    <h2>{{ 'Courses'|trans }}</h2>
+    <p class="text-body-secondary">
+        {{ 'Search the archive by code or name. Courses with nothing in them stay listed, so it is visible what is missing.'|trans }}
+    </p>
+
+    {{ component('Education:CourseOverview') }}
+{% endblock %}

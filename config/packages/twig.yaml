@@ -11,6 +11,7 @@ twig:
         supported_locales: '%kernel.enabled_locales%'
         matomo_domain: '%env(MATOMO_DOMAIN)%'
         external_affairs_email: '%app.email.external_affairs%'
+        education_email: '%app.email.education%'
 
 when@test:
     twig:

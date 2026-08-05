@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity\Education;
 
+use App\Entity\Education\Enums\CourseDocumentTypes;
 use App\Entity\Education\Enums\ExamTypes;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Override;
 
 /**
  * Exam.
@@ -23,6 +25,12 @@ class Exam extends CourseDocument
         enumType: ExamTypes::class,
     )]
     private ExamTypes $examType;
+
+    #[Override]
+    public function getType(): CourseDocumentTypes
+    {
+        return CourseDocumentTypes::Exam;
+    }
 
     /**
      * Get the type.

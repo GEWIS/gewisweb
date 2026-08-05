@@ -22,6 +22,9 @@ parameters:
     # Who a company writes to about its profile, vacancies, banner and package. Read by the company area templates
     # through the `external_affairs_email` Twig global.
     app.email.external_affairs: 'ceb@gewis.nl'
+    # The education officer: who a member sends a summary to, and who takes a complaint about a course to the
+    # department. Read by the education pages through the `education_email` Twig global.
+    app.email.education: 'co@gewis.nl'
     # Regulations on the members-area dashboard: slug (used in the URL) to the document's path inside the
     # SFTP-mirrored public archive (`data/public-archive/`), without the `.pdf` extension.
     app.regulations:

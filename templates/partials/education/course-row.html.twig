@@ -1,0 +1,43 @@
+<div class="panel panel-surface {{ first|default(false) ? 'mt-0' : '' }}">
+    <div class="panel-body d-flex align-items-center gap-3">
+        <span class="education-code" aria-hidden="true">{{ row.code }}</span>
+
+        <div class="flex-grow-1 overflow-hidden">
+            <h5 class="mb-0">
+                <a class="stretched-link" href="{{ path('education/course', {code: row.code}) }}">{{ row.name }}</a>
+            </h5>
+            {% if row.isEmpty %}
+                <span class="d-block small text-body-secondary">{{ 'Nothing has been shared for this course yet'|trans }}</span>
+                {# An empty course should point somewhere rather than dead-end. Often the same course under a code it
+                   had before. #}
+                {% if row.similarCourses is not empty %}
+                    <span class="d-block small text-body-secondary mt-1">
+                        {{ 'Try instead:'|trans }}
+                        {% for similar in row.similarCourses %}
+                            <a class="position-relative z-2" href="{{ path('education/course', {code: similar.getCode}) }}">{{ similar.getCode }}</a>{{ not loop.last ? ',' }}
+                        {% endfor %}
+                    </span>
+                {% endif %}
+            {% elseif row.lastAddedAt is not null %}
+                <span class="d-block small text-body-secondary">
+                    {{ 'Most recent material from %date%'|trans({'%date%': row.lastAddedAt|date('F Y')}) }}
+                </span>
+            {% endif %}
+        </div>
+
+        <div class="d-flex flex-wrap gap-1 justify-content-end flex-shrink-0">
+            {% if row.summaryCount > 0 %}
+                <span class="badge badge-tag">
+                    <span class="fas fa-file-lines" aria-hidden="true"></span>
+                    {{ '%count% summary|%count% summaries'|trans({'%count%': row.summaryCount}) }}
+                </span>
+            {% endif %}
+            {% if row.examCount > 0 %}
+                <span class="badge badge-tag">
+                    <span class="fas fa-file-pen" aria-hidden="true"></span>
+                    {{ '%count% exam|%count% exams'|trans({'%count%': row.examCount}) }}
+                </span>
+            {% endif %}
+        </div>
+    </div>
+</div>

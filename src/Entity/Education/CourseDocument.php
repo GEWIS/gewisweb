@@ -6,6 +6,7 @@ namespace App\Entity\Education;
 
 use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\Traits\IdentifiableTrait;
+use App\Entity\Education\Enums\CourseDocumentTypes;
 use App\Entity\Education\Enums\DocumentFlattenStatus;
 use App\Repository\Education\CourseDocumentRepository;
 use DateTime;
@@ -129,6 +130,12 @@ abstract class CourseDocument
     {
         $this->pages = new ArrayCollection();
     }
+
+    /**
+     * Which kind of material this is. Mirrors the discriminator, so a template can branch on it without knowing which
+     * subclass it has.
+     */
+    abstract public function getType(): CourseDocumentTypes;
 
     /**
      * Get the date.

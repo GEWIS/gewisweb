@@ -1,0 +1,130 @@
+// Education archive
+//
+// The band at the top of the education overview and the pieces that repeat down the archive: a course code badge, a
+// course row and a document row. Rows rather than cards, because every list here is something to scan for one entry.
+
+.education-hero {
+    background-color: var(--#{$prefix}body-bg);
+    border-bottom: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-translucent);
+    margin-bottom: map-get($spacers, 2);
+}
+
+.education-hero-search {
+    flex: 1 1 16rem;
+
+    .input-group-text {
+        background-color: transparent;
+        border-right: 0;
+        color: var(--#{$prefix}secondary-color);
+    }
+
+    .form-control {
+        border-left: 0;
+        padding-left: 0;
+    }
+}
+
+// The counts double as the way into each list, so they are links rather than figures.
+.education-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    height: 100%;
+    padding: 0.875rem 1rem;
+    border: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-translucent);
+    border-radius: var(--#{$prefix}border-radius-lg);
+    color: var(--#{$prefix}body-color);
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+        border-color: #{$gewis-red};
+        color: var(--#{$prefix}body-color);
+        text-decoration: none;
+    }
+}
+
+.education-stat-value {
+    font-size: 1.625rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.education-stat-label {
+    color: var(--#{$prefix}secondary-color);
+    font-size: $font-size-sm;
+}
+
+// A course is known by its code far more than by its name, so the code leads every row it appears in and is set in a
+// fixed-width slab that keeps a column of them aligned.
+.education-code {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    min-width: 4.25rem;
+    height: 2rem;
+    padding: 0 0.5rem;
+    border: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color);
+    border-radius: var(--#{$prefix}border-radius);
+    background-color: var(--#{$prefix}secondary-bg);
+    color: var(--#{$prefix}secondary-color);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.education-code-sm {
+    min-width: 3.5rem;
+    height: 1.625rem;
+    font-size: 0.75rem;
+}
+
+.education-course-name {
+    display: block;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// The square that tells a summary from an exam at a glance, down the length of a list.
+.education-doc-icon {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.375rem;
+    height: 2.375rem;
+    border-radius: var(--#{$prefix}border-radius);
+    background-color: var(--#{$prefix}secondary-bg);
+    color: var(--#{$prefix}secondary-color);
+}
+
+.education-doc-icon-summary {
+    background-color: rgba($gewis-red, 0.1);
+    color: #{$gewis-red};
+}
+
+.education-doc-icon-exam {
+    background-color: rgba($gewis-blue-dark, 0.1);
+    color: #{$gewis-blue-dark};
+}
+
+// A document nobody may open yet is still listed, greyed rather than hidden, so it is clear what logging in would get.
+.panel.panel-surface.education-doc-locked {
+    --#{$prefix}panel-bg: var(--#{$prefix}tertiary-bg);
+}
+
+.education-empty {
+    border: var(--#{$prefix}border-width) dashed var(--#{$prefix}border-color);
+    border-radius: var(--#{$prefix}border-radius-lg);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+}
+
+@include color-mode(gewis-night) {
+    .panel.panel-surface.education-doc-locked {
+        --#{$prefix}panel-bg: var(--#{$prefix}secondary-bg);
+    }
+}

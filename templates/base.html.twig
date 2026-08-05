@@ -59,6 +59,7 @@
     </head>
     <body class="d-flex flex-column min-vh-100">
         {% include 'partials/application/main-nav.html.twig' %}
+        {% block special_notices %}{% endblock %}
         {% include 'partials/application/announcements.html.twig' %}
         {% block body %}{% endblock %}
         {% include 'partials/application/toasts.html.twig' %}

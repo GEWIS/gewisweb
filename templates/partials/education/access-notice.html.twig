@@ -1,0 +1,10 @@
+{% if not is_granted('ROLE_USER') and not on_campus_network() %}
+    <div class="special-notice education-locked-notice sticky-top" role="status">
+        <p class="text-center">
+            <strong>
+                {{ 'Downloading course documents is only possible when you are logged in with a GEWIS account, or connected to the TU/e campus network.'|trans }}
+                <a href="{{ path('user_login') }}">{{ 'Log in'|trans }}</a>
+            </strong>
+        </p>
+    </div>
+{% endif %}
