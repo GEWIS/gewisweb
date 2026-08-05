@@ -37,12 +37,53 @@ use Override;
 
 use function is_array;
 
+/**
+ * @phpstan-type SignupListSeedType = array{
+ *     name: array{en: string, nl: string},
+ *     openDate: string,
+ *     closeDate: string,
+ *     onlyGEWIS: bool,
+ *     displaySubscribedNumber: bool,
+ *     limitedCapacity: bool,
+ *     capacity?: int,
+ *     allocationMethod?: AllocationMethod,
+ *     drawCutoffRule?: DrawCutoffRule,
+ *     externalPolicyUrl?: string,
+ *     customMethodDescription?: string,
+ *     drawnAt?: string,
+ *     drawnBy?: int,
+ *     promoted?: bool,
+ *     presenceTaken?: bool,
+ *     fields?: list<array<string, mixed>>,
+ *     subscribers?: list<int|array<string, mixed>>,
+ *     externals?: list<array<string, mixed>>,
+ * }
+ * @phpstan-type ActivitySeedType = array{
+ *     creator: int,
+ *     status: RevisionStatus,
+ *     beginTime: string,
+ *     endTime: string,
+ *     category: ActivityCategories,
+ *     requireGEFLITST: bool,
+ *     requireZettle: bool,
+ *     name: array{en: string, nl: string},
+ *     location: array{en: string, nl: string},
+ *     costs: array{en: string, nl: string},
+ *     description: array{en: string, nl: string},
+ *     labels?: list<string>,
+ *     company?: string,
+ *     cancelled?: bool,
+ *     unpublished?: bool,
+ *     signupLists?: list<SignupListSeedType>,
+ * }
+ */
 class ActivityFixture extends Fixture implements DependentFixtureInterface
 {
     #[Override]
     public function load(ObjectManager $manager): void
     {
         // Ordered chronologically by begin time so the rows are inserted (and auto-incremented) in that order.
+        /** @var list<ActivitySeedType> $activities */
         $activities = [
             // Past, two association years ago (AY 2023-2024): appears under that heading in the archive and
             // exercises the same-day, past-year date format.
@@ -1154,7 +1195,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * @psalm-param array{
+     * @phpstan-param array{
      *     name: array{en: string, nl: string},
      *     location: array{en: string, nl: string},
      *     costs: array{en: string, nl: string},
@@ -1210,26 +1251,7 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
 
     /**
      * @param array<string, mixed> $data
-     * @psalm-param array{
-     *     name: array{en: string, nl: string},
-     *     openDate: string,
-     *     closeDate: string,
-     *     onlyGEWIS: bool,
-     *     displaySubscribedNumber: bool,
-     *     limitedCapacity: bool,
-     *     capacity?: int,
-     *     allocationMethod?: AllocationMethod,
-     *     drawCutoffRule?: DrawCutoffRule,
-     *     externalPolicyUrl?: string,
-     *     customMethodDescription?: string,
-     *     drawnAt?: string,
-     *     drawnBy?: int,
-     *     promoted?: bool,
-     *     presenceTaken?: bool,
-     *     fields?: list<array<string, mixed>>,
-     *     subscribers?: list<int|array<string, mixed>>,
-     *     externals?: list<array<string, mixed>>,
-     * } $data
+     * @phpstan-param SignupListSeedType $data
      */
     private function createSignupList(array $data): SignupList
     {

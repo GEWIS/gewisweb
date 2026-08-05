@@ -483,7 +483,7 @@ class CompanyVacancyController extends AbstractRevisionReviewController
     }
 
     /**
-     * @param FormInterface<array<string, mixed>> $form
+     * @param FormInterface<array<string, mixed>|null> $form
      */
     private function renderStatus(
         Vacancy $vacancy,

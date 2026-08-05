@@ -13,12 +13,6 @@ parameters:
 			path: src/Entity/Activity/UserSignup.php
 
 		-
-			message: '#^Parameter \#1 \$data \(array\{contractNumber\: string\|null, startDate\: string, expirationDate\: string, published\: bool, article\: string\|null, articleEn\: string\|null\}\) of method App\\Entity\\Career\\CompanyFeaturedPackage\:\:exchangeArray\(\) should be contravariant with parameter \$data \(array\{contractNumber\: string\|null, startDate\?\: string, expirationDate\?\: string, published\?\: bool\|string, article\?\: string\|null, articleEn\?\: string\|null\}\) of method App\\Entity\\Career\\CompanyPackage\:\:exchangeArray\(\)$#'
-			identifier: method.childParameterType
-			count: 1
-			path: src/Entity/Career/CompanyFeaturedPackage.php
-
-		-
 			message: '#^Property App\\Entity\\Career\\CompanyFeaturedPackage\:\:\$article type mapping mismatch\: database can contain App\\Entity\\Career\\CareerLocalisedText\|null but property expects App\\Entity\\Career\\CareerLocalisedText\.$#'
 			identifier: doctrine.associationType
 			count: 1
@@ -29,18 +23,6 @@ parameters:
 			identifier: doctrine.associationType
 			count: 1
 			path: src/Entity/Career/CompanyPackage.php
-
-		-
-			message: '#^Comparison operation "\<" between ''1''\|''10''\|''11''\|''12''\|''13''\|''14''\|''15''\|''16''\|''17''\|''18''\|''19''\|''2''\|''20''\|''21''\|''22''\|''23''\|''24''\|''25''\|''26''\|''27''\|''28''\|''29''\|''3''\|''30''\|''31''\|''4''\|''5''\|''6''\|''7''\|''8''\|''9'' and 1 is always false\.$#'
-			identifier: smaller.alwaysFalse
-			count: 1
-			path: src/Entity/Decision/AssociationYear.php
-
-		-
-			message: '#^Result of && is always false\.$#'
-			identifier: booleanAnd.alwaysFalse
-			count: 1
-			path: src/Entity/Decision/AssociationYear.php
 
 		-
 			message: '#^Property App\\Entity\\Decision\\Authorization\:\:\$authorizer type mapping mismatch\: database can contain App\\Entity\\Decision\\Member\|null but property expects App\\Entity\\Decision\\Member\.$#'
@@ -227,15 +209,3 @@ parameters:
 			identifier: doctrine.columnType
 			count: 1
 			path: src/Entity/User/ExternalApp.php
-
-		-
-			message: '#^Call to function assert\(\) with true will always evaluate to true\.$#'
-			identifier: function.alreadyNarrowedType
-			count: 1
-			path: src/MessageHandler/User/PasswordResetRequestEmailHandler.php
-
-		-
-			message: '#^Instanceof between App\\Entity\\User\\CompanyUser and App\\Entity\\User\\CompanyUser will always evaluate to true\.$#'
-			identifier: instanceof.alwaysTrue
-			count: 1
-			path: src/MessageHandler/User/PasswordResetRequestEmailHandler.php

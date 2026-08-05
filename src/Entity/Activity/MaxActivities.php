@@ -18,8 +18,8 @@ use Doctrine\ORM\Mapping\ManyToOne;
  * Contains the max amount of activities an organ may create options for
  * Note that this is the limit per period!.
  *
- * @psalm-type MaxActivitiesArrayType = array{
- *     id: int,
+ * @phpstan-type MaxActivitiesArrayType = array{
+ *     id: ?int,
  *     organ: OrganModel,
  *     value: int,
  * }

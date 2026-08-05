@@ -83,7 +83,7 @@ final class ExternalSignupResendForm
     }
 
     /**
-     * @return FormInterface<array<string, mixed>>
+     * @return FormInterface<array<string, mixed>|null>
      */
     #[Override]
     protected function instantiateForm(): FormInterface

@@ -178,6 +178,11 @@ final class PhotoUploadServiceTest extends DatabaseTestCase
         return $count;
     }
 
+    /**
+     * @param int<0, 255> $red
+     * @param int<0, 255> $green
+     * @param int<0, 255> $blue
+     */
     private function imageFile(
         int $red,
         int $green,
@@ -188,6 +193,10 @@ final class PhotoUploadServiceTest extends DatabaseTestCase
 
     /**
      * A small solid-colour JPEG on disk; the colour keeps its content hash distinct from the seed's photos.
+     *
+     * @param int<0, 255> $red
+     * @param int<0, 255> $green
+     * @param int<0, 255> $blue
      */
     private function imagePath(
         int $red,

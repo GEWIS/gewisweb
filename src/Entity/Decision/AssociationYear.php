@@ -54,13 +54,8 @@ class AssociationYear
     public static function fromDate(DateTime $dateTime): static
     {
         $inst = new static();
-        if (
-            $dateTime->format('n') < self::ASSOCIATION_YEAR_START_MONTH
-            || (
-                self::ASSOCIATION_YEAR_START_MONTH === intval($dateTime->format('n'))
-                && $dateTime->format('j') < self::ASSOCIATION_YEAR_START_DAY
-            )
-        ) {
+        // The association year starts on the first of the month, so the month alone decides which one a date is in.
+        if (intval($dateTime->format('n')) < self::ASSOCIATION_YEAR_START_MONTH) {
             $inst->firstYear = (int) $dateTime->format('Y') - 1;
         } else {
             $inst->firstYear = (int) $dateTime->format('Y');
@@ -96,14 +91,10 @@ class AssociationYear
      */
     public function getStartDate(): DateTime
     {
-        return DateTime::createFromFormat(
-            'j-m-Y',
-            sprintf(
-                '%d-%d-%d',
-                self::ASSOCIATION_YEAR_START_DAY,
-                self::ASSOCIATION_YEAR_START_MONTH,
-                $this->firstYear,
-            ),
+        return new DateTime()->setDate(
+            $this->firstYear,
+            self::ASSOCIATION_YEAR_START_MONTH,
+            self::ASSOCIATION_YEAR_START_DAY,
         )->setTime(
             0,
             0,
@@ -115,14 +106,10 @@ class AssociationYear
      */
     public function getEndDate(): DateTime
     {
-        return DateTime::createFromFormat(
-            'j-m-Y',
-            sprintf(
-                '%d-%d-%d',
-                self::ASSOCIATION_YEAR_START_DAY,
-                self::ASSOCIATION_YEAR_START_MONTH,
-                $this->firstYear + 1,
-            ),
+        return new DateTime()->setDate(
+            $this->firstYear + 1,
+            self::ASSOCIATION_YEAR_START_MONTH,
+            self::ASSOCIATION_YEAR_START_DAY,
         )->sub(new DateInterval('P1D'))->setTime(
             23,
             59,

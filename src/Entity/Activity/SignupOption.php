@@ -18,9 +18,9 @@ use Doctrine\ORM\Mapping\OneToOne;
  * SignupOption model.
  * Contains the possible options of a field of type ``option''.
  *
- * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
- * @psalm-type SignupOptionGdprArrayType = array{
- *     id: int,
+ * @phpstan-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @phpstan-type SignupOptionGdprArrayType = array{
+ *     id: ?int,
  *     value: ImportedLocalisedTextGdprArrayType,
  * }
  */
@@ -137,7 +137,7 @@ class SignupOption
      * Returns an associative array representation of this object.
      *
      * @return array{
-     *     id: int,
+     *     id: ?int,
      *     value: ?string,
      *     valueEn: ?string,
      * }

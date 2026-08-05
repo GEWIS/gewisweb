@@ -37,7 +37,7 @@ class CompanyPackageRepository extends ServiceEntityRepository
      *
      * @param DateTime $date The date until where to search
      *
-     * @psalm-return (
+     * @phpstan-return (
      *     $companyPackageType is CompanyPackageTypes::Banner
      *     ? CompanyBannerPackage[]
      *     : (
@@ -85,7 +85,7 @@ class CompanyPackageRepository extends ServiceEntityRepository
      *
      * @param DateTime $date The date until where to search
      *
-     * @psalm-return (
+     * @phpstan-return (
      *     $companyPackageType is CompanyPackageTypes::Banner
      *     ? CompanyBannerPackage[]
      *     : (
@@ -132,8 +132,6 @@ class CompanyPackageRepository extends ServiceEntityRepository
      * The banner packages with a proposal waiting for the committee, oldest first so nothing sits unanswered.
      *
      * @return list<CompanyBannerPackage>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     public function findPendingBanners(): array
     {
@@ -192,8 +190,6 @@ class CompanyPackageRepository extends ServiceEntityRepository
      * Get non-expired packages for a specific company.
      *
      * @return list<CompanyPackage>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     public function findNonExpiredPackages(Company $company): array
     {

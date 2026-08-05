@@ -13,7 +13,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 /**
- * @psalm-import-type LangParam from Languages
+ * @phpstan-import-type LangParam from Languages
  */
 class PagePathExtension extends AbstractExtension
 {

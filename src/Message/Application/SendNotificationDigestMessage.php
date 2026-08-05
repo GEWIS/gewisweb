@@ -11,7 +11,7 @@ use App\Entity\Application\Enums\NotificationType;
  * subject the template needs to link to it. Dispatched to the bulk transport by the digest job so mailing never blocks
  * it. The email itself has no locale; its boilerplate is always English.
  *
- * @psalm-type DigestEntry = array{text: string, linkLabel: string, type: NotificationType, subjectId: int}
+ * @phpstan-type DigestEntry = array{text: string, linkLabel: string, type: NotificationType, subjectId: int}
  */
 final readonly class SendNotificationDigestMessage
 {

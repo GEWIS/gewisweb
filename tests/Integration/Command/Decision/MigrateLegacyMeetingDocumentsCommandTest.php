@@ -16,10 +16,11 @@ use App\Tests\Integration\DatabaseTestCase;
 use Override;
 use Symfony\Component\Filesystem\Filesystem;
 
+use function bin2hex;
 use function dirname;
+use function random_bytes;
 use function sprintf;
 use function sys_get_temp_dir;
-use function uniqid;
 
 /**
  * End-to-end run of the legacy document migrator against seeded meetings: version suffixes collapse into one document
@@ -36,7 +37,7 @@ final class MigrateLegacyMeetingDocumentsCommandTest extends DatabaseTestCase
     {
         parent::setUp();
 
-        $this->sourceDir = sys_get_temp_dir() . '/legacy-migrator-' . uniqid();
+        $this->sourceDir = sys_get_temp_dir() . '/legacy-migrator-' . bin2hex(random_bytes(8));
     }
 
     #[Override]

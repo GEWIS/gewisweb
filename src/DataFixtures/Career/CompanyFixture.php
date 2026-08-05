@@ -27,7 +27,7 @@ use Override;
  * Seeds a handful of publicly visible companies with active packages and vacancies across the vacancy categories, so
  * the career overview and the per-category vacancy listings have something to show.
  *
- * @psalm-type VacancyData = array{
+ * @phpstan-type VacancyData = array{
  *     slug: string,
  *     category: VacancyCategories,
  *     nameEn: string,

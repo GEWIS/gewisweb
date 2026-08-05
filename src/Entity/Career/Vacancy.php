@@ -36,7 +36,7 @@ use RuntimeException;
  * display revision. The publicly live version is {@see self::getLiveRevision()} (the latest approved revision); the
  * working head is {@see self::getCurrentRevision()}.
  *
- * @psalm-import-type VacancyLabelArrayType from VacancyLabel as ImportedVacancyLabelArrayType
+ * @phpstan-import-type VacancyLabelArrayType from VacancyLabel as ImportedVacancyLabelArrayType
  */
 #[Entity(repositoryClass: VacancyRepository::class)]
 #[HasLifecycleCallbacks]

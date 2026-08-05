@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\MessageHandler\User;
 
 use App\Entity\Decision\Member;
-use App\Entity\User\CompanyUser;
 use App\Entity\User\Enums\UserTypes;
 use App\Entity\User\PasswordReset;
 use App\Message\User\PasswordResetRequestEmail;
@@ -130,9 +129,6 @@ class PasswordResetRequestEmailHandler
             $recipientEmail = $member->getEmail();
             $fullName = $member->getFullName();
         } else {
-            // PHPStan narrows $companyUser from the both-null guard above and calls this assert redundant (baselined),
-            // but Psalm does not, so it stays.
-            assert($companyUser instanceof CompanyUser);
             $recipientEmail = $companyUser->getEmail();
             $fullName = $companyUser->getName();
         }

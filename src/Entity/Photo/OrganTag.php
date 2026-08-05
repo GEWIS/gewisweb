@@ -42,9 +42,9 @@ class OrganTag extends Tag
      * Returns the tag as an associative array.
      *
      * @return array{
-     *     id: int,
-     *     photo_id: int,
-     *     organ_id: int,
+     *     id: ?int,
+     *     photo_id: ?int,
+     *     organ_id: ?int,
      * }
      */
     public function toArray(): array

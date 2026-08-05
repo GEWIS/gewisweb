@@ -1,8 +1,20 @@
 includes:
     - phpstan-baseline.neon
+    # Ready-made lists of calls that should never reach production: eval and friends, shelling out, weak hashing and
+    # randomness, and loose comparisons in in_array()/array_search().
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
 
 parameters:
-    level: 6
+    level: 8
+    # Extra checks that are not tied to a level. Each of these was clean (or nearly so) when it was switched on, so
+    # they cost nothing today and catch a class of mistake the level alone does not.
+    checkBenevolentUnionTypes: true
+    checkMissingCallableSignature: true
+    reportAlwaysTrueInLastCondition: true
+    reportAnyTypeWideningInVarTag: true
     bootstrapFiles:
         - tests/bootstrap.php
     doctrine:
@@ -26,7 +38,20 @@ parameters:
         - tests/
     excludePaths:
         - config/reference.php
-    strictRules:
-        disallowedImplicitArrayCreation: false
-        overwriteVariablesWithLoop: false
-        noVariableVariables: false
+    # A ratchet on how much of the codebase declares its types, pinned just under where it stands now so it can only
+    # go up. Raise these numbers whenever the gap closes.
+    type_coverage:
+        declare: 100
+        param_type: 99
+        property_type: 100
+        return_type: 99
+        constant_type: 100
+    disallowedFunctionCalls:
+        -
+            function:
+                - 'dd()'
+                - 'dump()'
+                - 'print_r()'
+                - 'var_dump()'
+                - 'var_export()'
+            message: 'leftover debugging; use the profiler or a logger instead'

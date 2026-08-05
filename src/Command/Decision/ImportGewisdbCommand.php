@@ -27,6 +27,7 @@ use function array_map;
 use function array_walk_recursive;
 use function count;
 use function implode;
+use function intval;
 use function sprintf;
 use function str_repeat;
 use function strval;
@@ -343,10 +344,10 @@ final class ImportGewisdbCommand extends Command
             $updates,
         );
 
-        return $conn->executeStatement(
+        return intval($conn->executeStatement(
             $sql,
             $params,
-        );
+        ));
     }
 
     /**
@@ -419,10 +420,10 @@ final class ImportGewisdbCommand extends Command
             ),
         );
 
-        return $conn->executeStatement(
+        return intval($conn->executeStatement(
             $sql,
             $idsFlat,
-        );
+        ));
     }
 
     private function quoteSourceIdentifier(string $identifier): string

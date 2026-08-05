@@ -41,20 +41,23 @@ class PageService
         Languages $language,
     ): array {
         $parents = [];
+        $category = $page->getCategory()->getExactText($language);
+        $subCategory = $page->getSubCategory()->getExactText($language);
 
-        if (null !== $page->getSubCategory()->getExactText($language)) {
-            /** @psalm-suppress PossiblyNullArgument */
+        if (
+            null !== $category
+            && null !== $subCategory
+        ) {
             $parents[] = $this->pageRepository->findPage(
                 $language,
-                $page->getCategory()->getExactText($language),
+                $category,
             );
 
-            /** @psalm-suppress PossiblyNullArgument */
             if (null !== $page->getName()->getExactText($language)) {
                 $parents[] = $this->pageRepository->findPage(
                     $language,
-                    $page->getCategory()->getExactText($language),
-                    $page->getSubCategory()->getExactText($language),
+                    $category,
+                    $subCategory,
                 );
             }
         }

@@ -33,6 +33,7 @@ use function unlink;
  */
 final class AlbumAdminServiceTest extends DatabaseTestCase
 {
+    /** @var int<0, 255> the red channel of the next stored photo, wrapped so it stays a valid colour */
     private int $colour = 0x20;
 
     public function testMovePhotosReassignsTheAlbumAndQueuesEachCoverOnce(): void
@@ -208,10 +209,11 @@ final class AlbumAdminServiceTest extends DatabaseTestCase
         self::assertNotFalse($image);
         $colour = imagecolorallocate(
             $image,
-            $this->colour++,
+            $this->colour,
             0x40,
             0x80,
         );
+        $this->colour = ($this->colour + 0x11) % 0x100;
         self::assertNotFalse($colour);
         imagefilledrectangle(
             $image,

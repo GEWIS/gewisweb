@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping\OneToMany;
  * Activity Options Creation Period
  * Contains a period during which options may be created.
  *
- * @psalm-import-type MaxActivitiesArrayType from MaxActivities as ImportedMaxActivitiesArrayType
+ * @phpstan-import-type MaxActivitiesArrayType from MaxActivities as ImportedMaxActivitiesArrayType
  */
 #[Entity(repositoryClass: ActivityOptionCreationPeriodRepository::class)]
 class ActivityOptionCreationPeriod
@@ -119,7 +119,7 @@ class ActivityOptionCreationPeriod
      * Returns an associative array representation of this object.
      *
      * @return array{
-     *     id: int,
+     *     id: ?int,
      *     beginPlanningTime: DateTime,
      *     endPlanningTime: DateTime,
      *     beginOptionTime: DateTime,

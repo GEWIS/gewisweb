@@ -95,7 +95,6 @@ While developing, use these commonly used commands from the Makefile:
 - `make translations` - Extract translatable strings into the `.xlf` files. Run this whenever you add or edit a user-facing string in PHP, Twig, or a form type.
 - `make lint` / `make lint-fix` - Run PHP_CodeSniffer (or PHPCBF to autofix) against the project's coding standard.
 - `make phpstan` - Perform static analysis using PHPStan.
-- `make psalm` - Perform static analysis using Psalm.
 - `make test` - Run the test suite with PHPUnit.
 - `make igor` - Run Igor to validate the codebase for FrankenPHP's worker mode.
 

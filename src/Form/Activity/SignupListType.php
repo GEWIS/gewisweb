@@ -31,6 +31,7 @@ use Symfony\Component\Validator\Constraints\Url;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 use function array_keys;
+use function strval;
 use function Symfony\Component\Translation\t;
 use function trim;
 
@@ -421,7 +422,7 @@ class SignupListType extends AbstractType
         foreach (array_keys($form->all()) as $name) {
             $this->disableField(
                 $form,
-                $name,
+                strval($name),
             );
         }
     }

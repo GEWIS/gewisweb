@@ -17,9 +17,9 @@ use Doctrine\ORM\Mapping\ManyToOne;
 /**
  * Vote, represents a vote for a photo of the week.
  *
- * @psalm-import-type PhotoGdprArrayType from Photo as ImportedPhotoGdprArrayType
- * @psalm-type VoteGdprArrayType = array{
- *     id: int,
+ * @phpstan-import-type PhotoGdprArrayType from Photo as ImportedPhotoGdprArrayType
+ * @phpstan-type VoteGdprArrayType = array{
+ *     id: ?int,
  *     dateTime: string,
  *     photo: ImportedPhotoGdprArrayType,
  * }

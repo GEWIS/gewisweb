@@ -18,8 +18,8 @@ use Doctrine\ORM\Mapping\ManyToOne;
 /**
  * Poll comment.
  *
- * @psalm-type PollCommentGdprArrayType = array{
- *     id: int,
+ * @phpstan-type PollCommentGdprArrayType = array{
+ *     id: ?int,
  *     createdOn: string,
  *     author: string,
  *     content: string,

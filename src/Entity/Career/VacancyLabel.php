@@ -16,8 +16,8 @@ use Doctrine\ORM\Mapping\OneToOne;
 /**
  * Vacancy Label model.
  *
- * @psalm-type VacancyLabelArrayType = array{
- *     id: int,
+ * @phpstan-type VacancyLabelArrayType = array{
+ *     id: ?int,
  *     name: ?string,
  *     nameEn: ?string,
  * }

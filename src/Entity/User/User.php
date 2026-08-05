@@ -40,16 +40,16 @@ use function in_array;
 /**
  * User model.
  *
- * @psalm-import-type UserRoleGdprArrayType from UserRole as ImportedUserRoleGdprArrayType
- * @psalm-import-type UserSettingsGdprArrayType from UserSettings as ImportedUserSettingsGdprArrayType
- * @psalm-type UserGdprArrayType = array{
+ * @phpstan-import-type UserRoleGdprArrayType from UserRole as ImportedUserRoleGdprArrayType
+ * @phpstan-import-type UserSettingsGdprArrayType from UserSettings as ImportedUserSettingsGdprArrayType
+ * @phpstan-type UserGdprArrayType = array{
  *     roles: ImportedUserRoleGdprArrayType[],
  *     settings: ImportedUserSettingsGdprArrayType|null,
  *     passwordChangedOn: ?string,
  * }
  */
 #[Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface, BackupCodeAwareInterface
 {
     use BackupCodeAwareTrait;
 
@@ -191,7 +191,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     /**
      * @see UserInterface
      *
-     * @psalm-return array<array-key, value-of<UserRoles>|string>
+     * @phpstan-return array<array-key, value-of<UserRoles>|string>
      */
     #[Override]
     public function getRoles(): array

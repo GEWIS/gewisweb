@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 /**
  * Address model.
  *
- * @psalm-type AddressGdprArrayType = array{
+ * @phpstan-type AddressGdprArrayType = array{
  *     type: string,
  *     street: string,
  *     number: string,

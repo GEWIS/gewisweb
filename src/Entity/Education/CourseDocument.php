@@ -19,9 +19,9 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
- * @psalm-import-type CourseGdprArrayType from Course as ImportedCourseGdprArrayType
- * @psalm-type CourseDocumentGdprArrayType = array{
- *     id: int,
+ * @phpstan-import-type CourseGdprArrayType from Course as ImportedCourseGdprArrayType
+ * @phpstan-type CourseDocumentGdprArrayType = array{
+ *     id: ?int,
  *     course: ImportedCourseGdprArrayType,
  *     date: string,
  *     language: string,

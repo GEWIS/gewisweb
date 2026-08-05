@@ -36,7 +36,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 /**
  * SubDecision model.
  *
- * @psalm-type SubDecisionGdprArrayType = array{
+ * @phpstan-type SubDecisionGdprArrayType = array{
  *     meeting_type: string,
  *     meeting_number: int,
  *     decision_point: int,

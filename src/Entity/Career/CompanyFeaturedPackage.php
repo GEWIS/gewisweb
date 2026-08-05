@@ -15,7 +15,7 @@ use Override;
 /**
  * CompanyFeaturedPackage model.
  *
- * @psalm-type CompanyFeaturedPackageArrayType = array{
+ * @phpstan-type CompanyFeaturedPackageArrayType = array{
  *     contractNumber: ?string,
  *     startDate: string,
  *     expirationDate: string,
@@ -91,27 +91,26 @@ class CompanyFeaturedPackage extends CompanyPackage
     }
 
     /**
-     * @psalm-param array{
+     * @phpstan-param array{
      *     contractNumber: ?string,
-     *     startDate: string,
-     *     expirationDate: string,
-     *     published: bool,
-     *     article: ?string,
-     *     articleEn: ?string,
+     *     startDate?: string,
+     *     expirationDate?: string,
+     *     published?: bool|string,
+     *     article?: ?string,
+     *     articleEn?: ?string,
      * } $data
      *
      * @throws Exception
-     *
-     * @psalm-suppress MoreSpecificImplementedParamType
      */
     #[Override]
     public function exchangeArray(array $data): void
     {
         parent::exchangeArray($data);
 
+        // Like the fields the parent exchanges, an absent key leaves the current value in place.
         $this->getArticle()->updateValues(
-            $data['articleEn'],
-            $data['article'],
+            $data['articleEn'] ?? $this->getArticle()->getValueEN(),
+            $data['article'] ?? $this->getArticle()->getValueNL(),
         );
     }
 }

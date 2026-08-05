@@ -28,8 +28,6 @@ class CompanyHighlightPackageRepository extends ServiceEntityRepository
      * showable is settled by the package itself.
      *
      * @return list<CompanyHighlightPackage>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     public function findActive(): array
     {

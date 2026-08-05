@@ -10,8 +10,9 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 use function array_map;
+use function bin2hex;
+use function random_bytes;
 use function sys_get_temp_dir;
-use function uniqid;
 
 final class PublicArchiveBrowserTest extends TestCase
 {
@@ -21,7 +22,7 @@ final class PublicArchiveBrowserTest extends TestCase
     #[Override]
     protected function setUp(): void
     {
-        $this->root = sys_get_temp_dir() . '/public-archive-' . uniqid();
+        $this->root = sys_get_temp_dir() . '/public-archive-' . bin2hex(random_bytes(8));
 
         $filesystem = new Filesystem();
         $filesystem->mkdir($this->root . '/Policies & Regulations');

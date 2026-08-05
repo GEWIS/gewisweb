@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Index;
 
 /**
- * @psalm-type SessionGdprArrayType = array{
+ * @phpstan-type SessionGdprArrayType = array{
  *     series: string,
  *     firewall: string,
  *     deviceType: string,

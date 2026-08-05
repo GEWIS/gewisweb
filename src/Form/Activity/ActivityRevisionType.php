@@ -34,6 +34,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_values;
+use function intval;
 use function Symfony\Component\Translation\t;
 use function trim;
 
@@ -293,7 +294,7 @@ class ActivityRevisionType extends AbstractType
         $organs = [];
         foreach ($user->getMember()->getCurrentOrganInstallations() as $installation) {
             $organ = $installation->getOrgan();
-            $organs[$organ->getId()] = $organ;
+            $organs[intval($organ->getId())] = $organ;
         }
 
         return array_values($organs);

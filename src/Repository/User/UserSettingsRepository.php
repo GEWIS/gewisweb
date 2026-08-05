@@ -51,7 +51,7 @@ class UserSettingsRepository extends ServiceEntityRepository
             return [];
         }
 
-        /** @var UserSettings[] $rows */
+        /** @var list<UserSettings> $rows */
         $rows = $this->createQueryBuilder('s')
             ->where('s.user IN (:lidnrs)')
             ->setParameter(

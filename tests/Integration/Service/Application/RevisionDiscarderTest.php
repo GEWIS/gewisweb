@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Service\Application;
 
 use App\Entity\Activity\Activity;
+use App\Entity\Application\AbstractRevisionComment;
 use App\Entity\Application\RevisionInterface;
 use App\Entity\Career\Company;
 use App\Entity\Career\Vacancy;
@@ -171,7 +172,7 @@ final class RevisionDiscarderTest extends DatabaseTestCase
         return $activity;
     }
 
-    private function commentOn(RevisionInterface $revision): object
+    private function commentOn(RevisionInterface $revision): AbstractRevisionComment
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy([]);
         self::assertInstanceOf(

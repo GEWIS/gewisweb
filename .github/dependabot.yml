@@ -27,9 +27,8 @@ updates:
             dev-tools:
                 patterns:
                     - "phpstan/*"
-                    - "psalm/*"
-                    - "vimeo/psalm"
-                    - "weirdan/doctrine-psalm-plugin"
+                    - "spaze/phpstan-disallowed-calls"
+                    - "tomasvotruba/type-coverage"
                     - "phpunit/*"
                     - "gewis/gewisphp-coding-standards"
 

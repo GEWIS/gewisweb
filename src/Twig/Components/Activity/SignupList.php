@@ -93,7 +93,7 @@ final class SignupList
     }
 
     /**
-     * @return FormInterface<array<string, mixed>>
+     * @return FormInterface<array<string, mixed>|null>
      */
     #[Override]
     protected function instantiateForm(): FormInterface

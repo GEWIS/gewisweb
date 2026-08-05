@@ -16,8 +16,8 @@ use Doctrine\ORM\Mapping\ManyToOne;
 /**
  * Log when a member has authenticated for an external app.
  *
- * @psalm-type ExternalAppAuthenticationGdprArrayType = array{
- *     id: int,
+ * @phpstan-type ExternalAppAuthenticationGdprArrayType = array{
+ *     id: ?int,
  *     app_id: string,
  *     time: string,
  * }

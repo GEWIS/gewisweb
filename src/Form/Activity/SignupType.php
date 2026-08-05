@@ -29,6 +29,7 @@ use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Tito10047\AltchaBundle\Type\AltchaType;
 
+use function intval;
 use function Symfony\Component\Translation\t;
 
 /**
@@ -101,7 +102,7 @@ class SignupType extends AbstractType
         $answers = $signup->toFormArray();
         $prefill = [];
         foreach ($signupList->getFields() as $field) {
-            $raw = $answers[$field->getId()] ?? null;
+            $raw = $answers[intval($field->getId())] ?? null;
             $prefill[self::fieldKey((int) $field->getId())] = SignupFieldTypes::Number === $field->getType()
                 ? (null === $raw ? null : (int) $raw)
                 : $raw;
@@ -211,7 +212,7 @@ class SignupType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface<array<string, mixed>> $builder
+     * @param FormBuilderInterface<array<string, mixed>|null> $builder
      */
     private function addSignupField(
         FormBuilderInterface $builder,
@@ -288,7 +289,7 @@ class SignupType extends AbstractType
                 $optionIds = [];
                 $labelsById = [];
                 foreach ($field->getOptions() as $option) {
-                    $optionId = $option->getId();
+                    $optionId = intval($option->getId());
                     $optionIds[] = $optionId;
                     $labelsById[$optionId] = $option->getValue()->getText($language) ?? '';
                 }

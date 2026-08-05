@@ -28,7 +28,7 @@ use function array_reduce;
 /**
  * Member model.
  *
- * @psalm-type MemberGdprArrayType = array{
+ * @phpstan-type MemberGdprArrayType = array{
  *     lidnr: int,
  *     email: ?string,
  *     fullName: string,

@@ -17,9 +17,9 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
  * Poll response
  * Represents a vote on a poll option.
  *
- * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
- * @psalm-type PollVoteGdprArrayType = array{
- *     poll_id: int,
+ * @phpstan-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @phpstan-type PollVoteGdprArrayType = array{
+ *     poll_id: ?int,
  *     option: ImportedLocalisedTextGdprArrayType,
  * }
  */

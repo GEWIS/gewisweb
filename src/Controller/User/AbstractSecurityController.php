@@ -925,14 +925,14 @@ abstract class AbstractSecurityController extends AbstractController
      * Build the per-credential rate-limiter key for a password-reset request. Subclasses combine the form fields
      * that uniquely identify the requester (e.g. email + membership number, or just email).
      *
-     * @param FormInterface<array<string, mixed>> $form
+     * @param FormInterface<array<string, mixed>|null> $form
      */
     abstract protected function buildPasswordResetCredentialKey(FormInterface $form): string;
 
     /**
      * Build the messenger message dispatched to the worker when a password-reset request is rate-accepted.
      *
-     * @param FormInterface<array<string, mixed>> $form
+     * @param FormInterface<array<string, mixed>|null> $form
      */
     abstract protected function buildPasswordResetMessage(FormInterface $form): PasswordResetRequestEmail;
 
@@ -1011,7 +1011,7 @@ abstract class AbstractSecurityController extends AbstractController
     }
 
     /**
-     * @param FormInterface<array<string, mixed>> $form
+     * @param FormInterface<array<string, mixed>|null> $form
      */
     private function renderSudoConfirm(
         FormInterface $form,

@@ -199,7 +199,7 @@ abstract class CompanyPackage
     }
 
     /**
-     * @psalm-param array{
+     * @phpstan-param array{
      *     contractNumber: ?string,
      *     startDate?: string,
      *     expirationDate?: string,

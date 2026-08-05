@@ -14,7 +14,7 @@ use DateTimeImmutable;
  * Read-model view of a {@see Member} row for the admin users overview. Pre-computes everything the template needs to
  * render badges and status columns, so the Twig stays declarative.
  *
- * @psalm-type RoleBadgeArray = array{label: string, expiresAt: ?DateTimeImmutable}
+ * @phpstan-type RoleBadgeArray = array{label: string, expiresAt: ?DateTimeImmutable}
  */
 final readonly class MemberRow
 {

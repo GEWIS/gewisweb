@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
  *
  * This specifies all the roles of a user.
  *
- * @psalm-type UserRoleGdprArrayType = array{
+ * @phpstan-type UserRoleGdprArrayType = array{
  *     role: value-of<UserRoles>,
  *     expiration: ?string,
  * }

@@ -25,8 +25,6 @@ class CompanyAuditLogRepository extends ServiceEntityRepository
 
     /**
      * @return list<CompanyAuditLog>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     public function findRecentForCompany(
         Company $company,

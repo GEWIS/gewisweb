@@ -17,14 +17,14 @@ use Doctrine\ORM\Mapping\OneToOne;
 /**
  * Activity Label model.
  *
- * @psalm-type ActivityLabelArrayType = array{
- *     id: int,
+ * @phpstan-type ActivityLabelArrayType = array{
+ *     id: ?int,
  *     name: ?string,
  *     nameEn: ?string,
  * }
- * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
- * @psalm-type ActivityLabelGdprArrayType = array{
- *     id: int,
+ * @phpstan-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @phpstan-type ActivityLabelGdprArrayType = array{
+ *     id: ?int,
  *     name: ImportedLocalisedTextGdprArrayType,
  * }
  */

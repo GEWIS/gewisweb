@@ -27,7 +27,7 @@ use function sprintf;
 
 /**
  * @extends ServiceEntityRepository<Meeting>
- * @psalm-type MeetingArrayType = array<array-key, array{
+ * @phpstan-type MeetingArrayType = array<array-key, array{
  *      0: Meeting,
  *      1: int,
  * }>

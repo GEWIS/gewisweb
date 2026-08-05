@@ -60,7 +60,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         // QOL: active members are used to logging in with `m{lidnr}`, so allow that as well.
         if (
-            preg_match(
+            1 === preg_match(
                 '/^m(\d+)$/',
                 $identifier,
                 $matches,

@@ -101,9 +101,6 @@ class OrganMember
     )]
     private ?DateTime $dischargeDate = null;
 
-    /**
-     * @psalm-ignore-nullable-return
-     */
     public function getId(): ?int
     {
         return $this->id;

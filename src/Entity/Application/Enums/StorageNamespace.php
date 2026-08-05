@@ -163,6 +163,8 @@ enum StorageNamespace: string
 
     /**
      * The maximum size, in bytes, accepted for a file in this namespace.
+     *
+     * @return positive-int
      */
     public function maxFileSizeBytes(): int
     {

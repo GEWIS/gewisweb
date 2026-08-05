@@ -22,8 +22,8 @@ use Doctrine\ORM\Mapping\OrderBy;
 /**
  * SignupField model.
  *
- * @psalm-type SignupFieldArrayType = array{
- *     id: int,
+ * @phpstan-type SignupFieldArrayType = array{
+ *     id: ?int,
  *     sensitive: bool,
  *     name: ?string,
  *     nameEn: ?string,
@@ -33,10 +33,10 @@ use Doctrine\ORM\Mapping\OrderBy;
  *     options: array<array-key, ?string>,
  *     optionsEn: array<array-key, ?string>,
  * }
- * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
- * @psalm-import-type SignupOptionGdprArrayType from SignupOption as ImportedSignupOptionGdprArrayType
- * @psalm-type SignupFieldGdprArrayType = array{
- *     id: int,
+ * @phpstan-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @phpstan-import-type SignupOptionGdprArrayType from SignupOption as ImportedSignupOptionGdprArrayType
+ * @phpstan-type SignupFieldGdprArrayType = array{
+ *     id: ?int,
  *     sensitive: bool,
  *     name: ImportedLocalisedTextGdprArrayType,
  *     type: string,

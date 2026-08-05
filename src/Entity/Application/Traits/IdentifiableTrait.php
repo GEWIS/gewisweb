@@ -25,8 +25,6 @@ trait IdentifiableTrait
 
     /**
      * Get the identifier of the object.
-     *
-     * @psalm-ignore-nullable-return
      */
     public function getId(): ?int
     {

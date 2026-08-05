@@ -15,6 +15,7 @@ use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\Randomizer;
 
+use function array_values;
 use function usort;
 
 /**
@@ -226,7 +227,7 @@ final readonly class DrawManager
         }
 
         if (AllocationMethod::ConditionalDraw === $method) {
-            $pool = new Randomizer()->shuffleArray($pool);
+            $pool = array_values(new Randomizer()->shuffleArray($pool));
         }
 
         usort(

@@ -23,13 +23,13 @@ use Doctrine\ORM\Mapping\OneToOne;
 /**
  * Poll.
  *
- * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
- * @psalm-type PollGdprArrayType = array{
- *     id: int,
+ * @phpstan-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @phpstan-type PollGdprArrayType = array{
+ *     id: ?int,
  *     expiryDate: string,
  *     question: ImportedLocalisedTextGdprArrayType,
  *     options: array<array-key, array{
- *         id: int,
+ *         id: ?int,
  *         value: ImportedLocalisedTextGdprArrayType,
  *     }>,
  * }

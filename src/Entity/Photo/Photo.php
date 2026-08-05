@@ -20,12 +20,12 @@ use Doctrine\ORM\Mapping\OneToOne;
 /**
  * Photo.
  *
- * @psalm-type PhotoGdprArrayType = array{
- *     id: int,
+ * @phpstan-type PhotoGdprArrayType = array{
+ *     id: ?int,
  *     dateTime: string,
  *     path: string,
  * }
- * @psalm-type PhotoExifArrayType = array{
+ * @phpstan-type PhotoExifArrayType = array{
  *     artist: ?string,
  *     camera: ?string,
  *     dateTime: string,
