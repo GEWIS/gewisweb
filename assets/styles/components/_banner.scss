@@ -1,0 +1,48 @@
+// Company banners
+//
+// The advertising strip that runs between the items on a listing page. It is deliberately quiet: a small label saying
+// what it is, the artwork at exactly the size it was bought at, and nothing else drawing the eye away from the page.
+
+.banner-strip {
+    display: block;
+    margin-bottom: map-get($spacers, 4);
+    text-align: center;
+}
+
+.banner-strip-label {
+    display: block;
+    margin-bottom: 0.25rem;
+
+    color: var(--#{$prefix}secondary-color);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.banner {
+    display: inline-block;
+    max-width: 100%;
+}
+
+// The artwork is generated at the box its format is shown in, so it only ever has to come down for a narrow screen.
+.banner-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--#{$prefix}border-radius);
+}
+
+// The indicators sit under the artwork rather than on top of it, where they would cover whatever the company put
+// in that corner.
+.banner-strip .carousel-indicators {
+    position: static;
+    margin: 0.5rem 0 0;
+
+    [data-bs-target] {
+        width: 0.5rem;
+        height: 0.5rem;
+        margin: 0 0.25rem;
+        border: 0;
+        border-radius: 50%;
+        background-color: var(--#{$prefix}secondary-color);
+    }
+}

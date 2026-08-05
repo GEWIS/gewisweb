@@ -113,6 +113,8 @@
                 {% endfor %}
             </div>
 
+            {% include 'partials/career/banner-strip.html.twig' with {'banners': company_banners()} only %}
+
             <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
                 <h3 class="mb-0">{{ 'Companies hiring GEWIS members'|trans }}</h3>
                 <a href="{{ path('career/companies') }}" class="fw-semibold">

@@ -25,6 +25,10 @@
         <source>At least one language must be used.</source>
         <target>Er moet ten minste één taal worden gebruikt.</target>
       </trans-unit>
+      <trans-unit id="O2fBMa4" resname="Choose an image to upload.">
+        <source>Choose an image to upload.</source>
+        <target state="translated">Kies een afbeelding om te uploaden.</target>
+      </trans-unit>
       <trans-unit id="NrVT1pI" resname="Choose the job package this vacancy belongs to.">
         <source>Choose the job package this vacancy belongs to.</source>
         <target state="translated">Kies het vacaturepakket waar deze vacature bij hoort.</target>

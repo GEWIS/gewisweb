@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Twig\Extensions;
 
+use App\Entity\Career\CompanyBannerPackage;
 use App\Entity\Career\CompanyFeaturedPackage;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Career\Vacancy;
+use App\Repository\Career\CompanyBannerPackageRepository;
 use App\Repository\Career\CompanyFeaturedPackageRepository;
 use App\Repository\Career\CompanyRepository;
 use App\Repository\Career\VacancyRepository;
@@ -33,6 +35,7 @@ class CareerExtension extends AbstractExtension implements ResetInterface
     private ?CompanyFeaturedPackage $featured = null;
 
     public function __construct(
+        private readonly CompanyBannerPackageRepository $companyBannerPackageRepository,
         private readonly CompanyFeaturedPackageRepository $companyFeaturedPackageRepository,
         private readonly CompanyRepository $companyRepository,
         private readonly VacancyRepository $vacancyRepository,
@@ -54,6 +57,10 @@ class CareerExtension extends AbstractExtension implements ResetInterface
     public function getFunctions(): array
     {
         return [
+            new TwigFunction(
+                'company_banners',
+                $this->getCompanyBanners(...),
+            ),
             new TwigFunction(
                 'featured_company',
                 $this->getFeaturedCompany(...),
@@ -92,6 +99,16 @@ class CareerExtension extends AbstractExtension implements ResetInterface
             'vacancies' => array_sum($categories),
             'companies' => $this->companyRepository->countPublic(),
         ];
+    }
+
+    /**
+     * The banners a page may put between its items right now, in the order they should be shown in.
+     *
+     * @return list<CompanyBannerPackage>
+     */
+    public function getCompanyBanners(): array
+    {
+        return $this->companyBannerPackageRepository->findActiveBanners();
     }
 
     public function getFeaturedCompany(): ?CompanyFeaturedPackage

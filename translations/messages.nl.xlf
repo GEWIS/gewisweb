@@ -61,6 +61,10 @@
         <source>%actor% proposed a new banner</source>
         <target state="translated">%actor% heeft een nieuwe banner voorgesteld</target>
       </trans-unit>
+      <trans-unit id="nUcF18Q" resname="%actor% put a new banner on the site">
+        <source>%actor% put a new banner on the site</source>
+        <target state="translated">%actor% heeft een nieuwe banner op de site gezet</target>
+      </trans-unit>
       <trans-unit id="Nq2JuYe" resname="%actor% rejected the proposed banner">
         <source>%actor% rejected the proposed banner</source>
         <target state="translated">%actor% heeft de voorgestelde banner afgewezen</target>
@@ -305,9 +309,9 @@
         <source>%package% runs out on %date%</source>
         <target state="translated">%package% verloopt op %date%</target>
       </trans-unit>
-      <trans-unit id="bBiNKWY" resname="A banner runs across every page of the GEWIS website, so the whole association sees it and not only the students browsing vacancies. Ask your contact at GEWIS what a banner package would cost you.">
-        <source>A banner runs across every page of the GEWIS website, so the whole association sees it and not only the students browsing vacancies. Ask your contact at GEWIS what a banner package would cost you.</source>
-        <target state="translated">Een banner loopt over elke pagina van de GEWIS-website, dus de hele vereniging ziet hem en niet alleen de studenten die vacatures bekijken. Vraag je contactpersoon bij GEWIS wat een bannerpakket je zou kosten.</target>
+      <trans-unit id="FSVrLmg" resname="A banner runs between the news items on the GEWIS home page, so the whole association sees it and not only the students browsing vacancies. Ask your contact at GEWIS what a banner package would cost you.">
+        <source>A banner runs between the news items on the GEWIS home page, so the whole association sees it and not only the students browsing vacancies. Ask your contact at GEWIS what a banner package would cost you.</source>
+        <target state="translated">Een banner staat tussen de nieuwsberichten op de homepagina van GEWIS, zodat de hele vereniging hem ziet en niet alleen de studenten die vacatures bekijken. Vraag je contactpersoon bij GEWIS wat een bannerpakket je zou kosten.</target>
       </trans-unit>
       <trans-unit id="5pfQYrV" resname="A career does not have to mean leaving. The TU/e takes on PhD candidates and PDEng trainees every year, and the departments our members graduate from are usually looking. Ask your supervisor, or the education committee, what is going on in your own group.">
         <source>A career does not have to mean leaving. The TU/e takes on PhD candidates and PDEng trainees every year, and the departments our members graduate from are usually looking. Ask your supervisor, or the education committee, what is going on in your own group.</source>
@@ -360,10 +364,6 @@
       <trans-unit id="9NmRvbs" resname="A vacancy that closes, or that you take down, drops off the career page on its own.">
         <source>A vacancy that closes, or that you take down, drops off the career page on its own.</source>
         <target state="translated">Een vacature die sluit, of die je offline haalt, verdwijnt vanzelf van de carrièrepagina.</target>
-      </trans-unit>
-      <trans-unit id="GOTGCWM" resname="A wide image works best; it is shown at up to 2560 pixels across.">
-        <source>A wide image works best; it is shown at up to 2560 pixels across.</source>
-        <target state="translated">Een brede afbeelding werkt het beste; hij wordt tot 2560 pixels breed getoond.</target>
       </trans-unit>
       <trans-unit id="6e8o.wA" resname="API">
         <source>API</source>
@@ -592,6 +592,10 @@
       <trans-unit id="1CMuqz0" resname="Admittees">
         <source>Admittees</source>
         <target>Toegelatenen</target>
+      </trans-unit>
+      <trans-unit id="HbsShAY" resname="Advertisement">
+        <source>Advertisement</source>
+        <target state="translated">Advertentie</target>
       </trans-unit>
       <trans-unit id="Opzn5Lx" resname="Advisory Board">
         <source>Advisory Board</source>
@@ -925,6 +929,10 @@
         <source>Banners</source>
         <target state="translated">Banners</target>
       </trans-unit>
+      <trans-unit id="KkmGks6" resname="Billboard (%width% by %height% pixels)">
+        <source>Billboard (%width% by %height% pixels)</source>
+        <target state="translated">Billboard (%width% bij %height% pixels)</target>
+      </trans-unit>
       <trans-unit id="OWxEWkk" resname="Birth date">
         <source>Birth date</source>
         <target>Geboortedatum</target>
@@ -1025,13 +1033,13 @@
         <source>Career Development and External Affairs Officer</source>
         <target state="translated">Commissaris Carrièreontwikkeling en Externe Betrekkingen</target>
       </trans-unit>
-      <trans-unit id="QNUTcQ_" resname="Career portal">
-        <source>Career portal</source>
-        <target state="translated">Bedrijvenportaal</target>
-      </trans-unit>
       <trans-unit id="kUnrHOO" resname="Career events">
         <source>Career events</source>
         <target state="translated">Carrière-evenementen</target>
+      </trans-unit>
+      <trans-unit id="QNUTcQ_" resname="Career portal">
+        <source>Career portal</source>
+        <target state="translated">Bedrijvenportaal</target>
       </trans-unit>
       <trans-unit id="tceoGZr" resname="Category">
         <source>Category</source>
@@ -1065,13 +1073,13 @@
         <source>Changes saved. Submit the revision for review when you are ready.</source>
         <target state="translated">Wijzigingen opgeslagen. Dien de revisie ter beoordeling in wanneer je er klaar voor bent.</target>
       </trans-unit>
+      <trans-unit id="qGup7Tf" resname="Changing this asks the company for artwork at the new size; the banner it already has stays up until it hands one over.">
+        <source>Changing this asks the company for artwork at the new size; the banner it already has stays up until it hands one over.</source>
+        <target state="translated">Dit wijzigen vraagt het bedrijf om beeldmateriaal op het nieuwe formaat; de banner die er al staat blijft staan tot het bedrijf een nieuwe aanlevert.</target>
+      </trans-unit>
       <trans-unit id="bacf._y" resname="Choice">
         <source>Choice</source>
         <target state="translated">Keuze</target>
-      </trans-unit>
-      <trans-unit id="4emu3eU" resname="Choose an image to propose.">
-        <source>Choose an image to propose.</source>
-        <target state="translated">Kies een afbeelding om voor te stellen.</target>
       </trans-unit>
       <trans-unit id="0gvXpmO" resname="Choose an option">
         <source>Choose an option</source>
@@ -2041,6 +2049,10 @@
         <source>Forgot password?</source>
         <target state="translated">Wachtwoord vergeten?</target>
       </trans-unit>
+      <trans-unit id="9tb70cZ" resname="Format">
+        <source>Format</source>
+        <target state="translated">Formaat</target>
+      </trans-unit>
       <trans-unit id="rQZe0DG" resname="Fraternities">
         <source>Fraternities</source>
         <target>Disputen</target>
@@ -2600,6 +2612,10 @@
       <trans-unit id="uuJtNtg" resname="Latest vacancies">
         <source>Latest vacancies</source>
         <target state="translated">Nieuwste vacatures</target>
+      </trans-unit>
+      <trans-unit id="8AmMJuG" resname="Leaderboard (%width% by %height% pixels)">
+        <source>Leaderboard (%width% by %height% pixels)</source>
+        <target state="translated">Leaderboard (%width% bij %height% pixels)</target>
       </trans-unit>
       <trans-unit id="YD75Vls" resname="Leave empty to keep it on until you turn it off.">
         <source>Leave empty to keep it on until you turn it off.</source>
@@ -3745,25 +3761,17 @@
         <source>Propose a banner</source>
         <target state="translated">Een banner voorstellen</target>
       </trans-unit>
-      <trans-unit id="4tzIGa1" resname="Propose banner">
-        <source>Propose banner</source>
-        <target state="translated">Banner voorstellen</target>
-      </trans-unit>
-      <trans-unit id="ypfrMZd" resname="Proposed">
-        <source>Proposed</source>
-        <target state="translated">Voorgesteld</target>
-      </trans-unit>
       <trans-unit id="tJ.Hddi" resname="Proposed by">
         <source>Proposed by</source>
         <target state="translated">Voorgesteld door</target>
       </trans-unit>
-      <trans-unit id="27rT0n3" resname="Proposed by %name% on %date%">
-        <source>Proposed by %name% on %date%</source>
-        <target state="translated">Voorgesteld door %name% op %date%</target>
+      <trans-unit id="wo97pPJ" resname="Proposed by %name% on %date%. Uploading another one replaces it.">
+        <source>Proposed by %name% on %date%. Uploading another one replaces it.</source>
+        <target state="translated">Voorgesteld door %name% op %date%. Een nieuwe uploaden vervangt deze.</target>
       </trans-unit>
-      <trans-unit id="uJoLLQQ" resname="Proposed on %date%. Proposing another one replaces this.">
-        <source>Proposed on %date%. Proposing another one replaces this.</source>
-        <target state="translated">Voorgesteld op %date%. Een nieuwe voorstellen vervangt deze.</target>
+      <trans-unit id="BvTIit9" resname="Proposed on">
+        <source>Proposed on</source>
+        <target state="translated">Voorgesteld op</target>
       </trans-unit>
       <trans-unit id="VUPGptv" resname="Proxy votes for the GMM">
         <source>Proxy votes for the GMM</source>
@@ -4385,6 +4393,10 @@
         <source>Set new password</source>
         <target state="translated">Nieuw wachtwoord instellen</target>
       </trans-unit>
+      <trans-unit id="0ewIEXE" resname="Set the banner">
+        <source>Set the banner</source>
+        <target state="translated">Banner instellen</target>
+      </trans-unit>
       <trans-unit id="VXFwlwn" resname="Settings">
         <source>Settings</source>
         <target>Instellingen</target>
@@ -4833,6 +4845,10 @@
         <source>The banner is now live.</source>
         <target state="translated">De banner staat nu online.</target>
       </trans-unit>
+      <trans-unit id="wNmyYRT" resname="The banner is now on the website.">
+        <source>The banner is now on the website.</source>
+        <target state="translated">De banner staat nu op de website.</target>
+      </trans-unit>
       <trans-unit id="7QlSkVv" resname="The board will write to %name% when it needs one answer from this company.">
         <source>The board will write to %name% when it needs one answer from this company.</source>
         <target state="translated">Het bestuur schrijft %name% aan wanneer het één antwoord van dit bedrijf nodig heeft.</target>
@@ -5117,6 +5133,10 @@
         <source>There is already a draft to work on.</source>
         <target state="translated">Er is al een concept om aan te werken.</target>
       </trans-unit>
+      <trans-unit id="mftjN3u" resname="There is no banner on the website yet.">
+        <source>There is no banner on the website yet.</source>
+        <target state="translated">Er staat nog geen banner op de website.</target>
+      </trans-unit>
       <trans-unit id="JBLe5Ny" resname="There is no upcoming GMM planned to authorize someone for.">
         <source>There is no upcoming GMM planned to authorize someone for.</source>
         <target state="translated">Er is geen aankomende ALV gepland om iemand voor te machtigen.</target>
@@ -5272,6 +5292,10 @@
       <trans-unit id="oQO3Nvr" resname="This member cannot receive authorizations.">
         <source>This member cannot receive authorizations.</source>
         <target state="translated">Dit lid kan geen machtigingen ontvangen.</target>
+      </trans-unit>
+      <trans-unit id="gFodlnQ" resname="This package is a %format% banner.">
+        <source>This package is a %format% banner.</source>
+        <target state="translated">Dit pakket is een %format%-banner.</target>
       </trans-unit>
       <trans-unit id="V.Ye_4R" resname="This page does not exist">
         <source>This page does not exist</source>
@@ -5573,6 +5597,10 @@
         <source>Upload photos</source>
         <target state="translated">Foto's uploaden</target>
       </trans-unit>
+      <trans-unit id="UQ2XFkH" resname="Upload the artwork at %width% by %height% pixels. A larger image in exactly those proportions works too, and stays sharp on a high-resolution screen.">
+        <source>Upload the artwork at %width% by %height% pixels. A larger image in exactly those proportions works too, and stays sharp on a high-resolution screen.</source>
+        <target state="translated">Lever het beeldmateriaal aan op %width% bij %height% pixels. Een grotere afbeelding met precies die verhoudingen kan ook, en blijft scherp op een scherm met hoge resolutie.</target>
+      </trans-unit>
       <trans-unit id="qsAU93m" resname="Use “quotes” for exact phrases, -word to exclude, and type:bm to limit to one meeting type.">
         <source>Use “quotes” for exact phrases, -word to exclude, and type:bm to limit to one meeting type.</source>
         <target state="translated">Gebruik “aanhalingstekens” voor exacte zinnen, -woord om uit te sluiten en type:bm om te beperken tot een vergadertype.</target>
@@ -5837,6 +5865,10 @@
         <source>What you can do</source>
         <target state="translated">Wat je kunt doen</target>
       </trans-unit>
+      <trans-unit id="HfaO6.G" resname="What you upload goes onto the website straight away. Use this when a company sends its artwork to the committee instead of uploading it itself.">
+        <source>What you upload goes onto the website straight away. Use this when a company sends its artwork to the committee instead of uploading it itself.</source>
+        <target state="translated">Wat je uploadt komt meteen op de website te staan. Gebruik dit wanneer een bedrijf zijn beeldmateriaal naar de commissie stuurt in plaats van het zelf te uploaden.</target>
+      </trans-unit>
       <trans-unit id="Ke53rYN" resname="When a company has something waiting to be reviewed">
         <source>When a company has something waiting to be reviewed</source>
         <target state="translated">Wanneer een bedrijf iets heeft dat op beoordeling wacht</target>
@@ -5981,10 +6013,6 @@
         <source>You do not have a banner package</source>
         <target state="translated">Je hebt geen bannerpakket</target>
       </trans-unit>
-      <trans-unit id="03RqlgE" resname="You do not have a banner package running.">
-        <source>You do not have a banner package running.</source>
-        <target state="translated">Je hebt geen bannerpakket lopen.</target>
-      </trans-unit>
       <trans-unit id=".oyzg.a" resname="You do not have a highlight package">
         <source>You do not have a highlight package</source>
         <target state="translated">Je hebt geen uitlichtpakket</target>
@@ -6012,10 +6040,6 @@
       <trans-unit id="3KHHscz" resname="You have not been tagged in any photos yet.">
         <source>You have not been tagged in any photos yet.</source>
         <target state="translated">Je bent nog in geen enkele foto getagd.</target>
-      </trans-unit>
-      <trans-unit id="XJlxt39" resname="You have not had a banner approved yet.">
-        <source>You have not had a banner approved yet.</source>
-        <target state="translated">Er is nog geen banner van je goedgekeurd.</target>
       </trans-unit>
       <trans-unit id="Z2Y_wil" resname="You have not posted any vacancies yet.">
         <source>You have not posted any vacancies yet.</source>
@@ -6069,17 +6093,17 @@
         <source>Your authorization has been revoked.</source>
         <target state="translated">Je machtiging is ingetrokken.</target>
       </trans-unit>
-      <trans-unit id="ybJbIpg" resname="Your banner across the website">
-        <source>Your banner across the website</source>
-        <target state="translated">Je banner over de hele website</target>
+      <trans-unit id="HXV2Ccp" resname="Your banner between the news items">
+        <source>Your banner between the news items</source>
+        <target state="translated">Je banner tussen de nieuwsberichten</target>
       </trans-unit>
       <trans-unit id="ricA.aM" resname="Your banner has been proposed. The committee will look at it.">
         <source>Your banner has been proposed. The committee will look at it.</source>
         <target state="translated">Je banner is voorgesteld. De commissie kijkt ernaar.</target>
       </trans-unit>
-      <trans-unit id="m1iKJS9" resname="Your banner is shown across the website, so your contact at GEWIS looks at a new one before it goes up.">
-        <source>Your banner is shown across the website, so your contact at GEWIS looks at a new one before it goes up.</source>
-        <target state="translated">Je banner wordt op de hele website getoond, dus je contactpersoon bij GEWIS bekijkt een nieuwe voordat die online gaat.</target>
+      <trans-unit id="FAlgKoh" resname="Your banner runs between the news items on the home page and on the career page, so your contact at GEWIS looks at a new one before it goes up.">
+        <source>Your banner runs between the news items on the home page and on the career page, so your contact at GEWIS looks at a new one before it goes up.</source>
+        <target state="translated">Je banner staat tussen de nieuwsberichten op de homepagina en op de carrièrepagina, dus je contactpersoon bij GEWIS bekijkt een nieuwe voordat die online komt.</target>
       </trans-unit>
       <trans-unit id="WcSRa2P" resname="Your changes are saved. Submit them for review when you are ready.">
         <source>Your changes are saved. Submit them for review when you are ready.</source>
@@ -6088,6 +6112,10 @@
       <trans-unit id="0D6FVvd" resname="Your contact at GEWIS">
         <source>Your contact at GEWIS</source>
         <target state="translated">Je contactpersoon bij GEWIS</target>
+      </trans-unit>
+      <trans-unit id="6pB7B8m" resname="Your contact at GEWIS looks at what you upload before it goes onto the website. Until they do, the banner you already have stays where it is.">
+        <source>Your contact at GEWIS looks at what you upload before it goes onto the website. Until they do, the banner you already have stays where it is.</source>
+        <target state="translated">Je contactpersoon bij GEWIS bekijkt wat je uploadt voordat het op de website komt. Tot die tijd blijft de banner die je al hebt gewoon staan.</target>
       </trans-unit>
       <trans-unit id="wEjJbC8" resname="Your contract">
         <source>Your contract</source>

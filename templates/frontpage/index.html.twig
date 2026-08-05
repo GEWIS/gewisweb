@@ -32,6 +32,10 @@
             <section class="mb-2">
                 <h2>{{ 'News'|trans }}</h2>
             </section>
+            {# Where the banners go once there are news items to put them between. #}
+            <section class="my-2">
+                {% include 'partials/career/banner-strip.html.twig' with {'banners': company_banners()} only %}
+            </section>
             {# Birthday data is member-only, so the block is gated on an authenticated session. #}
             {% if birthdays is not empty and is_granted('ROLE_USER') %}
                 <section class="my-2">
