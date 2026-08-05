@@ -80,19 +80,19 @@ use const LOCK_EX;
  * row's rewritten path always points at a file `--files` created. `--dry-run` reports without changing anything, and
  * `--rollback` restores the DB paths from a `--paths` run's log.
  *
- * @psalm-type StorageTarget = array{
+ * @phpstan-type StorageTarget = array{
  *     key: string,
  *     field: string,
  *     namespace: StorageNamespace,
  * }
- * @psalm-type MigrationRow = array{
+ * @phpstan-type MigrationRow = array{
  *     key: string,
  *     entity: object,
  *     field: string,
  *     legacy: string,
  *     new: string,
  * }
- * @psalm-type LogEntry = array{
+ * @phpstan-type LogEntry = array{
  *     key: string,
  *     id: int,
  *     old: string,

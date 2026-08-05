@@ -23,7 +23,7 @@ use function implode;
 /**
  * Course.
  *
- * @psalm-type CourseGdprArrayType = array{
+ * @phpstan-type CourseGdprArrayType = array{
  *     code: string,
  *     name: string,
  * }

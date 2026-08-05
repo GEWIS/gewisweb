@@ -26,7 +26,7 @@ enum CompanyPackageTypes: string
      * anything that creates or queries one kind has to name that subclass.
      *
      * @return class-string<CompanyPackage>
-     * @psalm-return (
+     * @phpstan-return (
      *     $type is CompanyPackageTypes::Banner
      *     ? class-string<CompanyBannerPackage>
      *     : (

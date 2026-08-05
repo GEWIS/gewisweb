@@ -13,6 +13,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 
+use function assert;
+
 #[Entity]
 class OrganRegulation extends SubDecision
 {
@@ -62,12 +64,12 @@ class OrganRegulation extends SubDecision
 
     /**
      * Get the member.
-     *
-     * @psalm-suppress InvalidNullableReturnType
-     * @psalm-suppress NullableReturnStatement
      */
     public function getMember(): Member
     {
+        // The trait keeps the association nullable for mapping reasons; this sub-decision always names a member.
+        assert(null !== $this->member);
+
         return $this->member;
     }
 

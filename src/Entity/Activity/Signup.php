@@ -25,16 +25,18 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+use function intval;
+
 /**
  * Signup model.
  *
- * @psalm-import-type SignupFieldValueGdprArrayType from SignupFieldValue as ImportedSignupFieldValueGdprArrayType
- * @psalm-type SignupGdprArrayType = array{
- *     id: int,
+ * @phpstan-import-type SignupFieldValueGdprArrayType from SignupFieldValue as ImportedSignupFieldValueGdprArrayType
+ * @phpstan-type SignupGdprArrayType = array{
+ *     id: ?int,
  *     createdAt: string,
  *     updatedAt: string,
- *     activity_id: int,
- *     signupList_id: int,
+ *     activity_id: ?int,
+ *     signupList_id: ?int,
  *     fieldValues: ImportedSignupFieldValueGdprArrayType[],
  *     present: bool,
  * }
@@ -253,7 +255,7 @@ abstract class Signup
                     : '0';
             }
 
-            $fieldValues[$fieldValue->getField()->getId()] = $value ?? $fieldValue->getValue();
+            $fieldValues[intval($fieldValue->getField()->getId())] = $value ?? $fieldValue->getValue();
         }
 
         return $fieldValues;

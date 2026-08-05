@@ -84,7 +84,7 @@ abstract class AbstractRevisionReviewController extends AbstractRevisionControll
     }
 
     /**
-     * @param FormInterface<array<string, mixed>>|null $form the submitted form when re-rendering after an error
+     * @param FormInterface<array<string, mixed>|null> $form the submitted form when re-rendering after an error
      */
     protected function renderReview(
         RevisionInterface $revision,
@@ -183,7 +183,7 @@ abstract class AbstractRevisionReviewController extends AbstractRevisionControll
      * that was applied, or null when it could not be — in which case a flash already says why and the caller should
      * send the reader back to the review screen.
      *
-     * @param FormInterface<array<string, mixed>> $form
+     * @param FormInterface<array<string, mixed>|null> $form
      */
     protected function applyDecision(
         FormInterface $form,

@@ -495,6 +495,9 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
     /**
      * Draws a coloured placeholder image (a background band with a caption) to a temporary file and returns its path.
      * The caption makes every photo's bytes unique, so content-addressed storage does not collapse them into one file.
+     *
+     * @param positive-int $width
+     * @param positive-int $height
      */
     private function generateImage(
         int $width,
@@ -584,6 +587,11 @@ class PhotoFixture extends Fixture implements DependentFixtureInterface
         return $temporaryFile;
     }
 
+    /**
+     * @param int<0, 255> $red
+     * @param int<0, 255> $green
+     * @param int<0, 255> $blue
+     */
     private function allocateColor(
         GdImage $image,
         int $red,

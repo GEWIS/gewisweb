@@ -151,13 +151,12 @@ Don't introduce factory classes here. That's a Laminas idiom and has no place in
 
 ## Static analysis & tests
 
-Run these inside the `web` container (the `make` targets handle that for you). **`make lint` (after `make lint-fix`), `make phpstan`, and `make psalm` must pass for any change** — they are not optional; do not claim work done while one of them fails. Add `make lint-twig` whenever templates changed and `make igor` for any non-trivial change.
+Run these inside the `web` container (the `make` targets handle that for you). **`make lint` (after `make lint-fix`) and `make phpstan` must pass for any change** — they are not optional; do not claim work done while one of them fails. Add `make lint-twig` whenever templates changed and `make igor` for any non-trivial change.
 
 | Command | What it does |
 |---|---|
 | `make lint` / `make lint-fix` | PHPCS / PHPCBF against `GEWISPHPCodingStandards`. Run `lint-fix` first, then `lint` must be clean. |
 | `make phpstan` | PHPStan analysis (baseline in repo root). Must pass. |
-| `make psalm` / `make psalm-all` | Psalm with and without `psalm-baseline.xml`. `make psalm` must pass. |
 | `make lint-twig` | `lint:twig` over `templates/` — validates Twig syntax. Run whenever you add or edit a template. |
 | `make igor` | Validates the codebase for FrankenPHP worker-mode safety. **Run this for any non-trivial change.** |
 | `make test` | PHPUnit inside the `web` container under `APP_ENV=test`. Pure-unit tests (`PHPUnit\Framework\TestCase`, no DB) and DB integration tests (`App\Tests\Integration\DatabaseTestCase`). Must pass. |

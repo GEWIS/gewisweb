@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Security\User;
 
+use App\Entity\User\BackupCodeAwareInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Backup\BackupCodeManagerInterface;
 
 use function array_values;
+use function assert;
 use function bin2hex;
 use function hash_equals;
 use function random_bytes;
@@ -45,6 +47,8 @@ final class BackupCodeManager implements BackupCodeManagerInterface
         object $user,
         string $code,
     ): bool {
+        assert($user instanceof BackupCodeAwareInterface);
+
         $matched = false;
 
         foreach ($user->getBackupCodeSlots() ?? [] as $entry) {
@@ -64,6 +68,8 @@ final class BackupCodeManager implements BackupCodeManagerInterface
         object $user,
         string $code,
     ): void {
+        assert($user instanceof BackupCodeAwareInterface);
+
         $entries = $user->getBackupCodeSlots() ?? [];
         $matchedIndex = null;
 
@@ -88,7 +94,9 @@ final class BackupCodeManager implements BackupCodeManagerInterface
             return;
         }
 
-        $entries[$matchedIndex]['used'] = true;
+        $matchedEntry = $entries[$matchedIndex];
+        $matchedEntry['used'] = true;
+        $entries[$matchedIndex] = $matchedEntry;
         $user->setBackupCodeSlots(array_values($entries));
         $this->entityManager->flush();
     }
@@ -100,7 +108,7 @@ final class BackupCodeManager implements BackupCodeManagerInterface
      * @return string[]
      */
     public function generateAndStore(
-        object $user,
+        BackupCodeAwareInterface $user,
         int $count = self::DEFAULT_COUNT,
     ): array {
         $plaintext = [];

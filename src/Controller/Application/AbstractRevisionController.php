@@ -71,7 +71,7 @@ abstract class AbstractRevisionController extends AbstractController
     }
 
     /**
-     * @return FormInterface<array<string, mixed>>
+     * @return FormInterface<array<string, mixed>|null>
      */
     protected function createDecisionForm(RevisionActions $actions): FormInterface
     {
@@ -86,7 +86,7 @@ abstract class AbstractRevisionController extends AbstractController
      * The clicked submit button names the transition to apply. `getClickedButton()` lives on the concrete Form, hence
      * the narrowing; an unsubmitted or button-less form yields an empty string.
      *
-     * @param FormInterface<array<string, mixed>> $form
+     * @param FormInterface<array<string, mixed>|null> $form
      */
     protected function clickedTransition(FormInterface $form): string
     {
@@ -105,7 +105,7 @@ abstract class AbstractRevisionController extends AbstractController
      * The feedback or response typed alongside a decision. The field is only present for the transitions that carry
      * one, so its absence is normal rather than an error.
      *
-     * @param FormInterface<array<string, mixed>> $form
+     * @param FormInterface<array<string, mixed>|null> $form
      */
     protected function decisionMessage(FormInterface $form): string
     {

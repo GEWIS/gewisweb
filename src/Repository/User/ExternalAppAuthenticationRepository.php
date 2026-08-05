@@ -18,7 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  *      firstAuthentication: string,
  *      lastAuthentication: string,
  *  }>
- * @psalm-type ExternalAppsArrayType = list<array{
+ * @phpstan-type ExternalAppsArrayType = list<array{
  *      0: ExternalApp|null,
  *      firstAuthentication: string,
  *      lastAuthentication: string,
@@ -36,8 +36,6 @@ class ExternalAppAuthenticationRepository extends ServiceEntityRepository
 
     /**
      * @return ExternalAppsArrayType
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     public function getFirstAndLastAuthenticationPerExternalApp(Member $member): array
     {

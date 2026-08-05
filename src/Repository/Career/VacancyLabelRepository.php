@@ -53,8 +53,6 @@ class VacancyLabelRepository extends ServiceEntityRepository
      * collection would load every revision of every label to do it.
      *
      * @return list<array{label: VacancyLabel, usage: int}>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     public function findAllWithUsage(): array
     {

@@ -18,8 +18,8 @@ use function array_merge;
  * LangParam is the format compatible with $translator->translate(locale: $langparam)
  * Locale should be compatible with dates.
  *
- * @psalm-type LangParam = 'en'|'nl'
- * @psalm-type Locale = 'en_GB'|'nl_NL'
+ * @phpstan-type LangParam = 'en'|'nl'
+ * @phpstan-type Locale = 'en_GB'|'nl_NL'
  */
 enum Languages: string
 {
@@ -28,7 +28,7 @@ enum Languages: string
 
     /**
      * Get the language param ('en', 'nl') from a language
-     * An explode is not possible because of psalm
+     * An explode loses the literal return type, hence the match
      *
      * @return LangParam
      */

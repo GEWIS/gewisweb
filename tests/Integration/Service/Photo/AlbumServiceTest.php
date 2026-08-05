@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use function array_map;
 use function array_merge;
 use function array_values;
+use function intval;
 
 /**
  * The album browsing service must only ever surface albums the current user may view: members see published albums,
@@ -187,7 +188,7 @@ final class AlbumServiceTest extends DatabaseTestCase
         );
 
         // Gala has two published sub-albums (Dinner, Afterparty) and one draft.
-        $galaId = $gala->getId();
+        $galaId = intval($gala->getId());
         self::assertSame(
             2,
             $this->service()->getCardCounts(

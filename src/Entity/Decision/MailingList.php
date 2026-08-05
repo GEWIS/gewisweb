@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping\OneToMany;
  *
  * ReportDB does not know about mailman and does not need to know.
  *
- * @psalm-type MailingListGdprArrayType = array{
+ * @phpstan-type MailingListGdprArrayType = array{
  *     name: string,
  *     description_en: string,
  *     description_nl: string,

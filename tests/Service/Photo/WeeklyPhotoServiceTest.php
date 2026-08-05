@@ -321,6 +321,9 @@ final class WeeklyPhotoServiceTest extends TestCase
         );
     }
 
+    /**
+     * @param positive-int $id
+     */
     private function storedPhoto(
         FileStorage $storage,
         int $id,
@@ -339,7 +342,7 @@ final class WeeklyPhotoServiceTest extends TestCase
         self::assertNotFalse($image);
         $colour = imagecolorallocate(
             $image,
-            $id * 20,
+            $id * 20 % 0x100,
             0x40,
             0x80,
         );

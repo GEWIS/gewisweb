@@ -48,8 +48,6 @@ class CompanyUserInviteRepository extends ServiceEntityRepository
 
     /**
      * @return list<CompanyUserInvite>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     public function findForCompany(Company $company): array
     {

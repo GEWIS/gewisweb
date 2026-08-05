@@ -32,9 +32,9 @@ use function sprintf;
 /**
  * SignupList model.
  *
- * @psalm-import-type SignupFieldArrayType from SignupField as ImportedSignupFieldArrayType
- * @psalm-type SignupListArrayType = array{
- *     id: int,
+ * @phpstan-import-type SignupFieldArrayType from SignupField as ImportedSignupFieldArrayType
+ * @phpstan-type SignupListArrayType = array{
+ *     id: ?int,
  *     name: ?string,
  *     nameEn: ?string,
  *     openDate: DateTime,
@@ -55,10 +55,10 @@ use function sprintf;
  *     presenceTaken: bool,
  *     promoted: bool,
  * }
- * @psalm-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
- * @psalm-import-type SignupFieldGdprArrayType from SignupField as ImportedSignupFieldGdprArrayType
- * @psalm-type SignupListGdprArrayType = array{
- *     id: int,
+ * @phpstan-import-type LocalisedTextGdprArrayType from LocalisedTextModel as ImportedLocalisedTextGdprArrayType
+ * @phpstan-import-type SignupFieldGdprArrayType from SignupField as ImportedSignupFieldGdprArrayType
+ * @phpstan-type SignupListGdprArrayType = array{
+ *     id: ?int,
  *     name: ImportedLocalisedTextGdprArrayType,
  *     openDate: string,
  *     closeDate: string,

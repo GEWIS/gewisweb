@@ -31,8 +31,6 @@ class CompanyBannerPackageRepository extends ServiceEntityRepository
      * move on, and that should not be decided by whose contract was signed first.
      *
      * @return list<CompanyBannerPackage>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     public function findActiveBanners(): array
     {

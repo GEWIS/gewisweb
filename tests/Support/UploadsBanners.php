@@ -50,6 +50,10 @@ trait UploadsBanners
         return $request;
     }
 
+    /**
+     * @param positive-int $width
+     * @param positive-int $height
+     */
     private function bannerImageFile(
         int $width,
         int $height,

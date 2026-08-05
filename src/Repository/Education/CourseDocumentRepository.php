@@ -25,7 +25,7 @@ class CourseDocumentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @psalm-param class-string<Exam>|class-string<Summary> $type
+     * @phpstan-param class-string<Exam>|class-string<Summary> $type
      *
      * @return CourseDocument[]
      */

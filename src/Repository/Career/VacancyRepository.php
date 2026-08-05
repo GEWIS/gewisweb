@@ -585,8 +585,6 @@ class VacancyRepository extends ServiceEntityRepository
      * Every vacancy of one company, whatever state it is in, for the company's own overview.
      *
      * @return list<Vacancy>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     public function findAllForCompany(Company $company): array
     {
@@ -634,8 +632,6 @@ class VacancyRepository extends ServiceEntityRepository
      * category on purpose, so this is simply everything that is live for the company right now.
      *
      * @return list<Vacancy>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     public function findHighlightableForCompany(Company $company): array
     {

@@ -57,8 +57,6 @@ class CompanyUserRepository extends ServiceEntityRepository implements PasswordU
      * the order they joined.
      *
      * @return list<CompanyUser>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     public function findForCompany(Company $company): array
     {
@@ -69,8 +67,6 @@ class CompanyUserRepository extends ServiceEntityRepository implements PasswordU
      * Only the ones who can still sign in, which is who anything addressed to "the company" should reach.
      *
      * @return list<CompanyUser>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     public function findActiveForCompany(Company $company): array
     {

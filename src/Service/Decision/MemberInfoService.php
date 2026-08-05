@@ -13,7 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use function array_values;
 
 /**
- * @psalm-type OrganMembershipType = array{
+ * @phpstan-type OrganMembershipType = array{
  *     organ: Organ,
  *     functions: list<string>,
  * }

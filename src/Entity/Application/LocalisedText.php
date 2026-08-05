@@ -13,7 +13,7 @@ use InvalidArgumentException;
 /**
  * Class LocalisedText: stores Dutch and English versions of text fields.
  *
- * @psalm-type LocalisedTextGdprArrayType = array{
+ * @phpstan-type LocalisedTextGdprArrayType = array{
  *     valueEN: ?string,
  *     valueNL: ?string,
  * }

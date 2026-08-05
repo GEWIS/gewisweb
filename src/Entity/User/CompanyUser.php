@@ -39,7 +39,11 @@ use function sprintf;
     name: 'company_user_email_uniq',
     columns: ['email'],
 )]
-class CompanyUser implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
+class CompanyUser implements
+    UserInterface,
+    PasswordAuthenticatedUserInterface,
+    TwoFactorInterface,
+    BackupCodeAwareInterface
 {
     use BackupCodeAwareTrait;
     use IdentifiableTrait;

@@ -18,8 +18,8 @@ use Doctrine\ORM\Mapping\OneToOne;
 /**
  * ProfilePhoto.
  *
- * @psalm-import-type PhotoGdprArrayType from Photo as ImportedPhotoGdprArrayType
- * @psalm-type ProfilePhotoGdprArrayType = array{
+ * @phpstan-import-type PhotoGdprArrayType from Photo as ImportedPhotoGdprArrayType
+ * @phpstan-type ProfilePhotoGdprArrayType = array{
  *     dateTime: string,
  *     explicit: bool,
  *     photo: ImportedPhotoGdprArrayType,

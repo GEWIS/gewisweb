@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping\OneToOne;
  * means "all defaults" (see the null-safe accessors on {@see User}), so rows are only created the first time a member
  * touches their settings.
  *
- * @psalm-type UserSettingsGdprArrayType = array{
+ * @phpstan-type UserSettingsGdprArrayType = array{
  *     disableCosmetics: bool,
  *     photoTaggingOptOut: bool,
  *     photoVisibility: string,

@@ -14,9 +14,9 @@ use Doctrine\ORM\Mapping\ManyToOne;
  * A tag identifying a member who appears in a photo. This is the GDPR-relevant tag subtype: the member's personal data
  * export walks these (never {@see OrganTag}s).
  *
- * @psalm-import-type PhotoGdprArrayType from Photo as ImportedPhotoGdprArrayType
- * @psalm-type MemberTagGdprArrayType = array{
- *     id: int,
+ * @phpstan-import-type PhotoGdprArrayType from Photo as ImportedPhotoGdprArrayType
+ * @phpstan-type MemberTagGdprArrayType = array{
+ *     id: ?int,
  *     photo: ImportedPhotoGdprArrayType,
  * }
  */

@@ -24,6 +24,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
+use function intval;
 use function strval;
 
 /**
@@ -335,11 +336,11 @@ final readonly class SignupManager
     ): void {
         $existing = [];
         foreach ($signup->getFieldValues() as $fieldValue) {
-            $existing[$fieldValue->getField()->getId()] = $fieldValue;
+            $existing[intval($fieldValue->getField()->getId())] = $fieldValue;
         }
 
         foreach ($signup->getSignupList()->getFields() as $field) {
-            $fieldValue = $existing[$field->getId()] ?? null;
+            $fieldValue = $existing[intval($field->getId())] ?? null;
             if (null === $fieldValue) {
                 $fieldValue = new SignupFieldValue();
                 $fieldValue->setField($field);
@@ -350,7 +351,7 @@ final readonly class SignupManager
             $fieldValue->setValue(null);
             $fieldValue->setOption(null);
 
-            $submitted = $fieldData[$field->getId()] ?? null;
+            $submitted = $fieldData[intval($field->getId())] ?? null;
 
             switch ($field->getType()) {
                 case SignupFieldTypes::Choice:

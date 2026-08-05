@@ -18,9 +18,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * SignupFieldValue model.
  *
- * @psalm-import-type SignupOptionGdprArrayType from SignupOption as ImportedSignupOptionGdprArrayType
- * @psalm-type SignupFieldValueGdprArrayType = array{
- *     id: int,
+ * @phpstan-import-type SignupOptionGdprArrayType from SignupOption as ImportedSignupOptionGdprArrayType
+ * @phpstan-type SignupFieldValueGdprArrayType = array{
+ *     id: ?int,
  *     value: ?string,
  *     option: ?ImportedSignupOptionGdprArrayType,
  * }

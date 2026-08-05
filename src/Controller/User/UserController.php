@@ -182,7 +182,7 @@ class UserController extends AbstractSecurityController
     }
 
     /**
-     * @param FormInterface<array<string, mixed>> $form
+     * @param FormInterface<array<string, mixed>|null> $form
      */
     #[Override]
     protected function buildPasswordResetCredentialKey(FormInterface $form): string
@@ -195,7 +195,7 @@ class UserController extends AbstractSecurityController
     }
 
     /**
-     * @param FormInterface<array<string, mixed>> $form
+     * @param FormInterface<array<string, mixed>|null> $form
      */
     #[Override]
     protected function buildPasswordResetMessage(FormInterface $form): PasswordResetRequestEmail

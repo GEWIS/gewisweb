@@ -57,7 +57,7 @@ class ExternalSignupVerificationRepository extends ServiceEntityRepository
         // Select the sign-ups directly (DISTINCT, with the sign-up as the root alias): a sign-up that ever held more
         // than one expired Verify token must be returned once, and this avoids a lazy-load query per row in the prune
         // loop.
-        /** @var ExternalSignup[] $signups */
+        /** @var list<ExternalSignup> $signups */
         $signups = $this->getEntityManager()->createQueryBuilder()
             ->select('es')
             ->distinct()

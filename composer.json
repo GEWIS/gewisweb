@@ -180,8 +180,7 @@
         "phpstan/phpstan-strict-rules": "^2.0.12",
         "phpstan/phpstan-symfony": "^2.0.20",
         "phpunit/phpunit": "^13.1.14",
-        "psalm/plugin-phpunit": "^0.19.7",
-        "psalm/plugin-symfony": "^5.3.0",
+        "spaze/phpstan-disallowed-calls": "^4.6",
         "symfony/browser-kit": "8.1.*",
         "symfony/css-selector": "8.1.*",
         "symfony/debug-bundle": "8.1.*",
@@ -189,7 +188,6 @@
         "symfony/phpunit-bridge": "^8.1.2",
         "symfony/stopwatch": "8.1.*",
         "symfony/web-profiler-bundle": "8.1.*",
-        "vimeo/psalm": "^6.16.1",
-        "weirdan/doctrine-psalm-plugin": "^2.10"
+        "tomasvotruba/type-coverage": "^2.0"
     }
 }

@@ -18,6 +18,8 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 
+use function assert;
+
 /**
  * Installation into organ.
  */
@@ -93,12 +95,12 @@ class Installation extends FoundationReference
 
     /**
      * Get the member.
-     *
-     * @psalm-suppress InvalidNullableReturnType
-     * @psalm-suppress NullableReturnStatement
      */
     public function getMember(): Member
     {
+        // The trait keeps the association nullable for mapping reasons; this sub-decision always names a member.
+        assert(null !== $this->member);
+
         return $this->member;
     }
 

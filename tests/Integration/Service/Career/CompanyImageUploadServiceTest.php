@@ -151,6 +151,11 @@ final class CompanyImageUploadServiceTest extends DatabaseTestCase
         return $transport;
     }
 
+    /**
+     * @param int<0, 255> $red
+     * @param int<0, 255> $green
+     * @param int<0, 255> $blue
+     */
     private function imageFile(
         int $red,
         int $green,

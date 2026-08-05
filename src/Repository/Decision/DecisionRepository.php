@@ -16,6 +16,7 @@ use function implode;
 use function is_numeric;
 use function preg_match;
 use function sprintf;
+use function strval;
 
 use const PREG_UNMATCHED_AS_NULL;
 
@@ -174,8 +175,7 @@ class DecisionRepository extends ServiceEntityRepository
                 PREG_UNMATCHED_AS_NULL,
             )
         ) {
-            /** @psalm-suppress PossiblyNullArgument */
-            $meetingType = MeetingTypes::tryFromSearch($meetingInfo[1]);
+            $meetingType = MeetingTypes::tryFromSearch(strval($meetingInfo[1]));
             $meetingNumber = (int) $meetingInfo[2];
 
             $where = 'd.meeting_type = :meeting_type AND d.meeting_number = :meeting_number';

@@ -28,8 +28,6 @@ trait FindsRevisionCommentsTrait
      * The full review discussion across every revision of one aggregate, oldest first.
      *
      * @return list<AbstractRevisionComment>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     protected function findThread(?int $aggregateId): array
     {
@@ -70,8 +68,6 @@ trait FindsRevisionCommentsTrait
 
     /**
      * @return list<AbstractRevisionComment>
-     *
-     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
     #[Override]
     public function findForRevision(RevisionInterface $revision): array

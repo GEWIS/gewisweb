@@ -396,7 +396,7 @@ class MemberRepository extends ServiceEntityRepository
      * (if any) hydrated so the row knows whether the account is activated and whether MFA is enabled.
      *
      * @param array<string, mixed> $filters
-     * @psalm-param array{
+     * @phpstan-param array{
      *     type?: MembershipTypes|null,
      *     hiddenOnly?: bool,
      *     deletedOnly?: bool,

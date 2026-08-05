@@ -22,8 +22,8 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
  *
  * Report assumes a full sync has happened (e.g. toBeDeleted entires do not exist)
  *
- * @psalm-import-type MailingListGdprArrayType from MailingListModel as ImportedMailingListGdprArrayType
- * @psalm-type MailingListMemberGdprArrayType = array{
+ * @phpstan-import-type MailingListGdprArrayType from MailingListModel as ImportedMailingListGdprArrayType
+ * @phpstan-type MailingListMemberGdprArrayType = array{
  *     list: ImportedMailingListGdprArrayType,
  *     email: string,
  * }

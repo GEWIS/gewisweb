@@ -39,10 +39,10 @@ use function assert;
  * edits. The publicly live version is {@see self::getLiveRevision()} (the latest approved revision); the working head
  * is {@see self::getCurrentRevision()}.
  *
- * @psalm-import-type ActivityLabelArrayType from ActivityLabel as ImportedActivityLabelArrayType
- * @psalm-import-type SignupListArrayType from SignupList as ImportedSignupListArrayType
- * @psalm-type ActivityArrayType = array{
- *     id: int,
+ * @phpstan-import-type ActivityLabelArrayType from ActivityLabel as ImportedActivityLabelArrayType
+ * @phpstan-import-type SignupListArrayType from SignupList as ImportedSignupListArrayType
+ * @phpstan-type ActivityArrayType = array{
+ *     id: ?int,
  *     name: ?string,
  *     nameEn: ?string,
  *     beginTime: DateTime,
@@ -63,11 +63,11 @@ use function assert;
  *     labels: ImportedActivityLabelArrayType[],
  *     signupLists: ImportedSignupListArrayType[],
  * }
- * @psalm-import-type LocalisedTextGdprArrayType from LocalisedText as ImportedLocalisedTextGdprArrayType
- * @psalm-import-type ActivityLabelGdprArrayType from ActivityLabel as ImportedActivityLabelGdprArrayType
- * @psalm-import-type SignupListGdprArrayType from SignupList as ImportedSignupListGdprArrayType
- * @psalm-type ActivityGdprArrayType = array{
- *     id: int,
+ * @phpstan-import-type LocalisedTextGdprArrayType from LocalisedText as ImportedLocalisedTextGdprArrayType
+ * @phpstan-import-type ActivityLabelGdprArrayType from ActivityLabel as ImportedActivityLabelGdprArrayType
+ * @phpstan-import-type SignupListGdprArrayType from SignupList as ImportedSignupListGdprArrayType
+ * @phpstan-type ActivityGdprArrayType = array{
+ *     id: ?int,
  *     name: ImportedLocalisedTextGdprArrayType,
  *     beginTime: string,
  *     endTime: string,

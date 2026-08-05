@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
 /**
  * Authorization model.
  *
- * @psalm-type AuthorizationGdprArrayType = array{
+ * @phpstan-type AuthorizationGdprArrayType = array{
  *     meeting_number: int,
  *     createdAt: string,
  *     revokedAt: ?string,

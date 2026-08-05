@@ -26,6 +26,9 @@ enum CompanyBannerFormats: string implements TranslatableInterface
     /** The taller block, for a company that wants to be harder to scroll past. */
     case Billboard = 'billboard';
 
+    /**
+     * @return positive-int
+     */
     public function width(): int
     {
         return match ($this) {
@@ -34,6 +37,9 @@ enum CompanyBannerFormats: string implements TranslatableInterface
         };
     }
 
+    /**
+     * @return positive-int
+     */
     public function height(): int
     {
         return match ($this) {
