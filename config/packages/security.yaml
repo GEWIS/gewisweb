@@ -93,6 +93,9 @@ security:
         - { path: ^/user/mfa/challenge, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         - { path: '^/(%app.locales%)/company/mfa/challenge', role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         - { path: '^/(%app.locales%)/admin', roles: [ROLE_ACTIVE_MEMBER, ROLE_BOARD, ROLE_ADMIN] }
+        # Everything a representative needs before they have a session, which the rule below would otherwise send them
+        # to the login page for, which is itself one of these paths.
+        - { path: '^/(%app.locales%)/company/(login|logout|forgot-password|reset-password|invite)', role: PUBLIC_ACCESS }
         - { path: '^/(%app.locales%)/company', roles: [ROLE_COMPANY_USER] }
         # - { path: ^/profile, roles: ROLE_USER }
 

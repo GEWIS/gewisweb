@@ -4,39 +4,33 @@ declare(strict_types=1);
 
 namespace App\Controller\Activity;
 
+use App\Controller\Application\AbstractRevisionReviewController;
 use App\Entity\Activity\ActivityRevision;
-use App\Entity\Activity\ActivityRevisionComment;
 use App\Entity\Activity\SignupList;
 use App\Entity\Application\Enums\AlertTypes;
-use App\Entity\Application\Enums\RevisionStatus;
+use App\Entity\Application\Enums\Languages;
+use App\Entity\Application\RevisionInterface;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
-use App\Form\Application\ReviewDecisionType;
 use App\Repository\Activity\ActivityRevisionCommentRepository;
 use App\Repository\Activity\ActivityRevisionRepository;
 use App\Security\Application\RevisionVoter;
-use App\Security\User\SudoVoter;
-use App\Service\Activity\DraftDiscarder;
 use App\Service\Activity\SignupListMigrator;
-use App\Service\Application\EditLockService;
+use App\Service\Application\RevisionDiscarder;
 use App\Util\Activity\PastActivityRule;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Target;
+use App\ViewModel\Application\ReviewQueueRow;
+use App\ViewModel\Application\RevisionActions;
+use Override;
 use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Workflow\WorkflowInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
+use function assert;
 use function strval;
-use function trim;
 
 /**
  * The shared review surface for activities:
@@ -52,18 +46,13 @@ use function trim;
     path: '/admin/activities/approvals',
     name: 'admin/activities/approvals/',
 )]
-class AdminApprovalController extends AbstractController
+class AdminApprovalController extends AbstractRevisionReviewController
 {
     public function __construct(
         private readonly ActivityRevisionRepository $revisionRepository,
         private readonly ActivityRevisionCommentRepository $commentRepository,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly TranslatorInterface $translator,
-        #[Target('revisionStateMachine')]
-        private readonly WorkflowInterface $revisionStateMachine,
         private readonly SignupListMigrator $signupListMigrator,
-        private readonly DraftDiscarder $draftDiscarder,
-        private readonly EditLockService $editLockService,
+        private readonly RevisionDiscarder $draftDiscarder,
     ) {
     }
 
@@ -76,7 +65,17 @@ class AdminApprovalController extends AbstractController
     {
         return $this->render(
             'activity/admin/approvals/index.html.twig',
-            ['revisions' => $this->revisionRepository->findForReview()],
+            [
+                'rows' => ReviewQueueRow::fromRevisions(
+                    $this->revisionRepository->findForReview(),
+                    static function (RevisionInterface $revision): string {
+                        assert($revision instanceof ActivityRevision);
+
+                        return strval($revision->getName()->getText(Languages::current()));
+                    },
+                    'admin/activities/approvals/review',
+                ),
+            ],
         );
     }
 
@@ -87,28 +86,9 @@ class AdminApprovalController extends AbstractController
     )]
     public function review(ActivityRevision $revision): Response
     {
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::VIEW,
-            $revision,
-        );
+        $this->assertMayReview($revision);
 
-        // Actually reviewing is sensitive, so a reviewer (board, or C4 for company/vacancy) must be in sudo mode to
-        // open the screen. This is a GET, so the SudoAccessDeniedListener preserves ?next and returns the reviewer
-        // here after re-auth. Pure authors (APPROVE denied) are never prompted: they only view/submit/comment on
-        // their own draft, none of which sudo gates.
-        if (
-            $this->isGranted(
-                RevisionVoter::APPROVE,
-                $revision,
-            )
-        ) {
-            $this->denyAccessUnlessGranted(SudoVoter::ATTRIBUTE);
-        }
-
-        return $this->renderReview(
-            $revision,
-            $this->createDecisionForm($revision),
-        );
+        return $this->renderReview($revision);
     }
 
     #[Route(
@@ -123,96 +103,11 @@ class AdminApprovalController extends AbstractController
         User $user,
         ActivityRevision $revision,
     ): Response {
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::VIEW,
+        return $this->handleDecision(
+            $request,
             $revision,
+            $user,
         );
-
-        $form = $this->createDecisionForm($revision)->handleRequest($request);
-
-        // The clicked button names the transition; the form's validation groups make feedback mandatory for
-        // "reject"/"request changes". On any error (incl. missing feedback) the review screen is re-rendered.
-        if (
-            !$form->isSubmitted()
-            || !$form->isValid()
-        ) {
-            return $this->renderReview(
-                $revision,
-                $form,
-            );
-        }
-
-        // getClickedButton() lives on the concrete Form; the clicked submit button names the transition.
-        $transition = '';
-        if ($form instanceof Form) {
-            $button = $form->getClickedButton();
-            $transition = $button instanceof FormInterface
-                ? $button->getName()
-                : '';
-        }
-
-        if (
-            !$this->revisionStateMachine->can(
-                $revision,
-                $transition,
-            )
-        ) {
-            $this->addFlash(
-                AlertTypes::Warning->value,
-                $this->translator->trans('That action is not available for this revision.'),
-            );
-
-            return $this->redirectToRoute(
-                'admin/activities/approvals/review',
-                ['revision' => $revision->getId()],
-            );
-        }
-
-        // Defence in depth: a reviewer transition (anything but the author's `submit`) requires sudo before it is
-        // applied. review() already prompted within the last 10 minutes, so this normally sees an active grant; it
-        // only fires when the grant lapsed, sending the reviewer to confirm sudo and retry.
-        if ('submit' !== $transition) {
-            $this->denyAccessUnlessGranted(SudoVoter::ATTRIBUTE);
-        }
-
-        // The message field is only present for transitions that carry one (a decision, or a resubmission response).
-        $message = $form->has('message')
-            ? trim(strval($form->get('message')->getData()))
-            : '';
-        if ('' !== $message) {
-            $this->addComment(
-                $revision,
-                $user,
-                $message,
-            );
-        }
-
-        $this->revisionStateMachine->apply(
-            $revision,
-            $transition,
-        );
-        $this->entityManager->flush();
-
-        // trans() is called per arm (not around the match) so each literal stays statically extractable.
-        $this->addFlash(
-            AlertTypes::Success->value,
-            match ($transition) {
-                'submit' => $this->translator->trans('Activity submitted for review.'),
-                'start_review' => $this->translator->trans('Review started.'),
-                default => $this->translator->trans('The activity revision was updated.'),
-            },
-        );
-
-        // Authors return to their overview; starting a review stays on the (now in-review) screen so the
-        // board can decide straight away; every other decision returns to the queue.
-        return match ($transition) {
-            'submit' => $this->redirectToRoute('admin/activities/index'),
-            'start_review' => $this->redirectToRoute(
-                'admin/activities/approvals/review',
-                ['revision' => $revision->getId()],
-            ),
-            default => $this->redirectToRoute('admin/activities/approvals/index'),
-        };
     }
 
     #[Route(
@@ -231,25 +126,13 @@ class AdminApprovalController extends AbstractController
         User $user,
         ActivityRevision $revision,
     ): Response {
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::COMMENT,
+        $this->handleCommentPost(
+            $request,
             $revision,
+            $user,
         );
 
-        $message = trim(strval($request->request->get('message', '')));
-        if ('' !== $message) {
-            $this->addComment(
-                $revision,
-                $user,
-                $message,
-            );
-            $this->entityManager->flush();
-        }
-
-        return $this->redirectToRoute(
-            'admin/activities/approvals/review',
-            ['revision' => $revision->getId()],
-        );
+        return $this->reviewResponse($revision);
     }
 
     /**
@@ -295,10 +178,6 @@ class AdminApprovalController extends AbstractController
         }
 
         $this->draftDiscarder->discardToLive($revision);
-        // The draft is gone, so its edit lock (keyed on the activity) is meaningless: drop it now instead of leaving a
-        // reviewer's discard to block the owner until the lock's TTL lapses. purge() only schedules the removal, so it
-        // commits with the discard below.
-        $this->editLockService->purge($revision->getActivity());
         $this->entityManager->flush();
 
         $this->addFlash(
@@ -309,45 +188,51 @@ class AdminApprovalController extends AbstractController
         return $this->redirectToRoute('admin/activities/index');
     }
 
-    /**
-     * @return FormInterface<array<string, mixed>>
-     */
-    private function createDecisionForm(ActivityRevision $revision): FormInterface
+    #[Override]
+    protected function reviewTemplate(): string
     {
-        // Ask the workflow directly which transitions are enabled for this revision and user (it already applies the
-        // guards), rather than filtering a hand-maintained list: a newly added transition then shows up automatically.
-        $enabled = [];
-        foreach ($this->revisionStateMachine->getEnabledTransitions($revision) as $transition) {
-            $enabled[] = $transition->getName();
-        }
-
-        return $this->createForm(
-            ReviewDecisionType::class,
-            null,
-            [
-                'enabled_transitions' => $enabled,
-                'resubmission' => $this->isResubmission($revision),
-            ],
-        );
+        return 'activity/admin/approvals/review.html.twig';
     }
 
     /**
-     * Whether this draft was spawned to address a "changes requested" review, so resubmitting it must carry a
-     * response explaining how the feedback was addressed.
+     * trans() is called per arm (not around the match) so each literal stays statically extractable.
      */
-    private function isResubmission(ActivityRevision $revision): bool
+    #[Override]
+    protected function decisionFlash(string $transition): string
     {
-        return RevisionStatus::Draft === $revision->getStatus()
-            && RevisionStatus::ChangesRequested === $revision->getPreviousRevision()?->getStatus();
+        return match ($transition) {
+            'submit' => $this->translator->trans('Activity submitted for review.'),
+            'start_review' => $this->translator->trans('Review started.'),
+            default => $this->translator->trans('The activity revision was updated.'),
+        };
     }
 
     /**
-     * @param FormInterface<array<string, mixed>> $form
+     * Authors return to their overview; starting a review stays on the (now in-review) screen so the board can decide
+     * straight away; every other decision returns to the queue.
      */
-    private function renderReview(
-        ActivityRevision $revision,
-        FormInterface $form,
+    #[Override]
+    protected function decisionResponse(
+        RevisionInterface $revision,
+        string $transition,
     ): Response {
+        return match ($transition) {
+            'submit' => $this->redirectToRoute('admin/activities/index'),
+            'start_review' => $this->reviewResponse($revision),
+            default => $this->redirectToRoute('admin/activities/approvals/index'),
+        };
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    #[Override]
+    protected function reviewContext(
+        RevisionInterface $revision,
+        RevisionActions $actions,
+    ): array {
+        assert($revision instanceof ActivityRevision);
+
         // When this revision restructured/removed a sign-up list that the live revision has sign-ups on, the workflow
         // withholds approve/submit (SignupMigrationGuardListener); explain why on the screen.
         $live = $revision->getActivity()->getLiveRevision();
@@ -370,32 +255,26 @@ class AdminApprovalController extends AbstractController
             $live,
             $revision,
         );
-        $activityPassed = $liveEnded || $debutMissed;
 
-        // A draft re-edit of an already-live activity can be discarded back to that live version (the recovery for a
-        // blocked submit, but offered for any such draft). A brand-new activity's draft has no live version to revert
-        // to, so it is not discardable here.
-        $canDiscard = RevisionStatus::Draft === $revision->getStatus()
-            && null !== $live
-            && $live !== $revision;
+        return [
+            'activity' => $revision->getActivity(),
+            'comments' => $this->commentRepository->findThreadForActivity($revision->getActivity()),
+            'migrationBlocked' => $migrationBlocked,
+            'activityPassed' => $liveEnded || $debutMissed,
+            'debutMissed' => $debutMissed,
+            'signupListDiff' => $this->buildSignupListDiff(
+                $revision,
+                $revision->getPreviousRevision(),
+            ),
+        ];
+    }
 
-        return $this->render(
-            'activity/admin/approvals/review.html.twig',
-            [
-                'revision' => $revision,
-                'activity' => $revision->getActivity(),
-                'previous' => $revision->getPreviousRevision(),
-                'comments' => $this->commentRepository->findThreadForActivity($revision->getActivity()),
-                'decisionForm' => $form->createView(),
-                'migrationBlocked' => $migrationBlocked,
-                'activityPassed' => $activityPassed,
-                'debutMissed' => $debutMissed,
-                'canDiscard' => $canDiscard,
-                'signupListDiff' => $this->buildSignupListDiff(
-                    $revision,
-                    $revision->getPreviousRevision(),
-                ),
-            ],
+    #[Override]
+    protected function reviewResponse(RevisionInterface $revision): Response
+    {
+        return $this->redirectToRoute(
+            'admin/activities/approvals/review',
+            ['revision' => $revision->getId()],
         );
     }
 
@@ -466,18 +345,5 @@ class AdminApprovalController extends AbstractController
             'present' => $present,
             'removed' => $removed,
         ];
-    }
-
-    private function addComment(
-        ActivityRevision $revision,
-        User $user,
-        string $message,
-    ): void {
-        $comment = new ActivityRevisionComment();
-        $comment->setRevision($revision);
-        $comment->setAuthor($user);
-        $comment->setBody($message);
-
-        $this->entityManager->persist($comment);
     }
 }

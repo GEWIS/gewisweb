@@ -13,7 +13,7 @@
 {% block contents %}
     <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
         <div>
-            <h1 class="mb-0">{{ 'Photos of the Week in'|trans }} {{ year }}/{{ year + 1 }}</h1>
+            <h2 class="mb-0">{{ 'Photos of the Week in'|trans }} {{ year }}/{{ year + 1 }}</h2>
             {% if startDate is not null and endDate is not null %}
                 <p class="small text-muted mb-1">{{ date_range(startDate, endDate, time = false, year = 'auto') }}</p>
             {% endif %}

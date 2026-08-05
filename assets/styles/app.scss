@@ -55,6 +55,7 @@ $enable-negative-margins: true;
 // Components
 @import 'components/activity';
 @import 'components/balloons';
+@import 'components/banner';
 @import 'components/breadcrumb';
 @import 'components/buttons';
 @import 'components/badge';
@@ -66,12 +67,14 @@ $enable-negative-margins: true;
 @import 'components/form';
 @import 'components/month-divider';
 @import 'components/nav';
+@import 'components/nav-menu';
 @import 'components/navbar';
 @import 'components/notification';
 @import 'components/page';
 @import 'components/page-header';
 @import 'components/panel';
 @import 'components/privacy-widget';
+@import 'components/sidebar';
 @import 'components/sortable';
 @import 'components/special-notice';
 @import 'components/table';
@@ -80,8 +83,8 @@ $enable-negative-margins: true;
 
 // Module specific styles
 @import 'modules/activity-calendar';
-@import 'modules/admin';
 @import 'modules/approvable-admin';
+@import 'modules/career';
 @import 'modules/ckeditor';
 @import 'modules/company';
 @import 'modules/company-form';

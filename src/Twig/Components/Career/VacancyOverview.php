@@ -65,6 +65,9 @@ final class VacancyOverview
     /** @var Vacancy[]|null */
     private ?array $vacancies = null;
 
+    /** @var VacancyLabel[]|null */
+    private ?array $labels = null;
+
     public function __construct(
         private readonly VacancyRepository $vacancyRepository,
         private readonly VacancyLabelRepository $vacancyLabelRepository,
@@ -134,14 +137,14 @@ final class VacancyOverview
     }
 
     /**
+     * The filter panel reads this twice (once to decide whether to draw the block, once for the checkboxes), so it is
+     * fetched once per render, with the localised names the checkboxes are labelled with.
+     *
      * @return VacancyLabel[]
      */
     public function getLabels(): array
     {
-        return $this->vacancyLabelRepository->findBy(
-            [],
-            ['id' => 'ASC'],
-        );
+        return $this->labels ??= $this->vacancyLabelRepository->findAllWithName();
     }
 
     /**

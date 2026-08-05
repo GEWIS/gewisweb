@@ -111,8 +111,8 @@ final class RevisionVoter extends Voter
 
     /**
      * Who may review (approve/reject/request changes/start review/close) a chain. The board may review everything;
-     * the careers portal (jobs & companies) is additionally reviewed by C4, the corporate contact committee, whose
-     * members hold {@see UserRoles::CompanyAdmin}.
+     * anything beyond that is the resource's own business, so it says so through
+     * {@see RevisableInterface::getReviewerRoles()} rather than being listed here.
      */
     private function canApprove(RevisableInterface $revisable): bool
     {
@@ -120,15 +120,13 @@ final class RevisionVoter extends Voter
             return true;
         }
 
-        return in_array(
-            $revisable->getResourceId(),
-            [
-                'vacancy',
-                'company',
-            ],
-            true,
-        )
-            && $this->security->isGranted(UserRoles::CompanyAdmin->value);
+        foreach ($revisable->getReviewerRoles() as $role) {
+            if ($this->security->isGranted($role->value)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

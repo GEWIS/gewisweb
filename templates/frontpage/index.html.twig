@@ -24,13 +24,17 @@
     <div class="row">
         <main class="col-sm-7 col-md-8">
             <section class="my-2">
-                <h1 class="display-6">{{ 'Study Association GEWIS'|trans }}</h1>
+                <h2 class="display-6">{{ 'Study Association GEWIS'|trans }}</h2>
                 <p class="lead">
                     {{ 'Welcome to the website of study association GEWIS, the study association of the department of Mathematics & Computer Science at Eindhoven University of Technology.'|trans }}
                 </p>
             </section>
             <section class="mb-2">
                 <h2>{{ 'News'|trans }}</h2>
+            </section>
+            {# Where the banners go once there are news items to put them between. #}
+            <section class="my-2">
+                {% include 'partials/career/banner-strip.html.twig' with {'banners': company_banners()} only %}
             </section>
             {# Birthday data is member-only, so the block is gated on an authenticated session. #}
             {% if birthdays is not empty and is_granted('ROLE_USER') %}
@@ -84,13 +88,9 @@
                     <h3>{{ 'Agenda'|trans }}</h3>
                 </div>
                 {% if activities is not empty %}
-                    <div class="list-group list-group-flush">
+                    <div class="panel-body pb-0">
                         {% for activity in activities %}
-                            <a class="list-group-item list-group-item-action"
-                               href="{{ path('') }}">
-                                <h4 class="list-group-item-heading">{{ activity.getName.getText|localise_text }}</h4>
-                                <p class="list-group-item-text text-muted">{{ activity.getBeginTime|format_datetime('full', 'short', locale: app.request.locale)|capitalize }}</p>
-                            </a>
+                            {% include 'partials/activity/agenda-item.html.twig' with {'activity': activity} only %}
                         {% endfor %}
                     </div>
                 {% endif %}

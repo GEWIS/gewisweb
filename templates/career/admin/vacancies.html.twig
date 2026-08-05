@@ -1,0 +1,33 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Vacancies'|trans|page_title }}{{ company.name|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/index') }}">{{ 'Career'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/companies/view', {'company': company.id}) }}">{{ company.name }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Vacancies'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    {% embed 'partials/career/admin/company-tabs.html.twig' with {
+        'company': company,
+        'active': 'vacancies',
+    } only %}
+        {% block actions %}
+            {{ parent() }}
+            <a href="{{ path('admin/career/vacancies/create') }}" class="btn btn-gewis-primary">
+                <span class="fas fa-plus" aria-hidden="true"></span> {{ 'Add a vacancy'|trans }}
+            </a>
+        {% endblock %}
+    {% endembed %}
+
+    {% include 'partials/career/admin/review-queue-callout.html.twig' with {
+        'awaitingReview': awaitingReview,
+    } only %}
+
+    {{ component('Career:Admin:VacancyOverview', {'company': company}) }}
+{% endblock %}

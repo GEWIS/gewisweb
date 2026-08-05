@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * The review controller is thin glue over already-tested pieces (the workflow, {@see DraftDiscarder},
+ * The review controller is thin glue over already-tested pieces (the workflow, {@see RevisionDiscarder},
  * {@see EditLockService}, {@see \App\Form\Application\ReviewDecisionType}); these pin its own discard action, the
  * recovery path for a draft whose submit the workflow withholds.
  *

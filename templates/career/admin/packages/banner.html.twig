@@ -1,0 +1,30 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% set company = package.company %}
+
+{% block page_title %}{{ 'Banner'|trans|page_title }}{{ company.name|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/index') }}">{{ 'Career'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/packages/company', {'company': company.id}) }}">{{ 'Packages'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Banner'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    {% embed 'partials/career/admin/company-tabs.html.twig' with {
+        'company': company,
+        'active': 'packages',
+    } only %}{% endembed %}
+
+    {% include 'partials/career/banner-manage.html.twig' with {
+        'package': package,
+        'form': form,
+        'canDecide': true,
+        'submitLabel': 'Set the banner'|trans,
+        'formIntro': 'What you upload goes onto the website straight away. Use this when a company sends its artwork to the committee instead of uploading it itself.'|trans,
+    } only %}
+{% endblock %}

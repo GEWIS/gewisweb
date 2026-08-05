@@ -43,6 +43,7 @@
                                     'currentDirection': this.direction,
                                 } only %}
                             </th>
+                            <th>{{ 'Status'|trans }}</th>
                             <th>{{ 'MFA'|trans }}</th>
                             <th class="text-end">{{ 'Actions'|trans }}</th>
                         </tr>
@@ -53,6 +54,13 @@
                                 <td><strong>{{ row.companyName }}</strong></td>
                                 <td>{{ row.representativeName }}</td>
                                 <td><code class="small">{{ row.representativeEmail }}</code></td>
+                                <td>
+                                    {% if row.disabled %}
+                                        <span class="badge badge-danger">{{ 'No longer active'|trans }}</span>
+                                    {% else %}
+                                        <span class="badge badge-success">{{ 'Active'|trans }}</span>
+                                    {% endif %}
+                                </td>
                                 <td>
                                     {% if row.mfaEnabled %}
                                         <span class="badge badge-success"><span class="fas fa-shield-halved"></span> {{ 'Enabled'|trans }}</span>
@@ -80,7 +88,7 @@
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="5" class="text-center text-muted py-4">{{ 'No company users match the current filters.'|trans }}</td>
+                                <td colspan="6" class="text-center text-muted py-4">{{ 'No company users match the current filters.'|trans }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

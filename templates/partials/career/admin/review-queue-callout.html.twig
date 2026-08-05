@@ -1,0 +1,26 @@
+{#
+    Says how much of the career queue is waiting on the committee, on the overviews that show vacancies but do not list
+    the queue itself. Renders nothing when there is nothing to do.
+#}
+{% if awaitingReview > 0 %}
+    <div class="panel mt-0">
+        <div class="panel-body d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <span class="d-flex align-items-center gap-3">
+                <span class="fas fa-inbox fa-lg text-muted" aria-hidden="true"></span>
+                <span>
+                    <span class="fw-semibold d-block">
+                        {{ '%count% vacancy is waiting for review|%count% vacancies are waiting for review'|trans({
+                            '%count%': awaitingReview,
+                        }) }}
+                    </span>
+                    <span class="text-muted small">
+                        {{ 'A company cannot change one while it sits with you.'|trans }}
+                    </span>
+                </span>
+            </span>
+            <a href="{{ path('admin/career/approvals/index') }}" class="btn btn-gewis-primary">
+                {{ 'Open the review queue'|trans }}
+            </a>
+        </div>
+    </div>
+{% endif %}

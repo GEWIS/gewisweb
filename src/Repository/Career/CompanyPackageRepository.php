@@ -7,10 +7,12 @@ namespace App\Repository\Career;
 use App\Entity\Career\Company;
 use App\Entity\Career\CompanyBannerPackage;
 use App\Entity\Career\CompanyFeaturedPackage;
+use App\Entity\Career\CompanyHighlightPackage;
 use App\Entity\Career\CompanyJobPackage;
 use App\Entity\Career\CompanyPackage;
 use App\Entity\Career\Enums\CompanyPackageTypes;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,7 +43,11 @@ class CompanyPackageRepository extends ServiceEntityRepository
      *     : (
      *         $companyPackageType is CompanyPackageTypes::Featured
      *         ? CompanyFeaturedPackage[]
-     *         : CompanyJobPackage[]
+     *         : (
+     *             $companyPackageType is CompanyPackageTypes::Highlight
+     *             ? CompanyHighlightPackage[]
+     *             : CompanyJobPackage[]
+     *         )
      *     )
      * )
      */
@@ -49,7 +55,7 @@ class CompanyPackageRepository extends ServiceEntityRepository
         CompanyPackageTypes $companyPackageType,
         DateTime $date,
     ): array {
-        $companyPackageClass = $this->resolvePackageClass($companyPackageType);
+        $companyPackageClass = CompanyPackageTypes::entityClass($companyPackageType);
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('p')
@@ -85,7 +91,11 @@ class CompanyPackageRepository extends ServiceEntityRepository
      *     : (
      *         $companyPackageType is CompanyPackageTypes::Featured
      *         ? CompanyFeaturedPackage[]
-     *         : CompanyJobPackage[]
+     *         : (
+     *             $companyPackageType is CompanyPackageTypes::Highlight
+     *             ? CompanyHighlightPackage[]
+     *             : CompanyJobPackage[]
+     *         )
      *     )
      * )
      */
@@ -93,7 +103,7 @@ class CompanyPackageRepository extends ServiceEntityRepository
         CompanyPackageTypes $companyPackageType,
         DateTime $date,
     ): array {
-        $companyPackageClass = $this->resolvePackageClass($companyPackageType);
+        $companyPackageClass = CompanyPackageTypes::entityClass($companyPackageType);
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('p')
@@ -113,6 +123,43 @@ class CompanyPackageRepository extends ServiceEntityRepository
                 'date',
                 $date,
                 Types::DATETIME_MUTABLE,
+            );
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * The banner packages with a proposal waiting for the committee, oldest first so nothing sits unanswered.
+     *
+     * @return list<CompanyBannerPackage>
+     *
+     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
+     */
+    public function findPendingBanners(): array
+    {
+        // The queue names the company and whoever put the banner forward, so both come along with the packages.
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select(
+                'p',
+                'c',
+                's',
+            )
+            ->from(
+                CompanyBannerPackage::class,
+                'p',
+            )
+            ->join(
+                'p.company',
+                'c',
+            )
+            ->leftJoin(
+                'p.pendingImageSubmittedBy',
+                's',
+            )
+            ->where('p.pendingImage IS NOT NULL')
+            ->orderBy(
+                'p.pendingImageSubmittedAt',
+                'ASC',
             );
 
         return $qb->getQuery()->getResult();
@@ -155,30 +202,36 @@ class CompanyPackageRepository extends ServiceEntityRepository
             ->andWhere('p.expires > CURRENT_DATE()')
             ->setParameter(
                 'company',
-                $company,
-                Company::class,
+                $company->getId(),
+                Types::INTEGER,
             );
 
         return $qb->getQuery()->getResult();
     }
 
     /**
-     * @psalm-return (
-     *     $type is CompanyPackageTypes::Banner
-     *     ? class-string<CompanyBannerPackage>
-     *     : (
-     *         $type is CompanyPackageTypes::Featured
-     *         ? class-string<CompanyFeaturedPackage>
-     *         : class-string<CompanyJobPackage>
-     *     )
-     * )
+     * Whether the company still has a contract to stand on: a package of any type that has not expired yet. A package
+     * that has not started counts, so a company can prepare its profile in the run-up to its contract.
      */
-    private function resolvePackageClass(CompanyPackageTypes $type): string
-    {
-        return match ($type) {
-            CompanyPackageTypes::Banner => CompanyBannerPackage::class,
-            CompanyPackageTypes::Featured => CompanyFeaturedPackage::class,
-            CompanyPackageTypes::Job => CompanyJobPackage::class,
-        };
+    public function hasNonExpiredPackage(
+        Company $company,
+        DateTimeImmutable $now,
+    ): bool {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('COUNT(p.id)')
+            ->where('p.company = :company')
+            ->andWhere('p.expires > :now')
+            ->setParameter(
+                'company',
+                $company->getId(),
+                Types::INTEGER,
+            )
+            ->setParameter(
+                'now',
+                $now,
+                Types::DATETIME_IMMUTABLE,
+            );
+
+        return (int) $qb->getQuery()->getSingleScalarResult() > 0;
     }
 }

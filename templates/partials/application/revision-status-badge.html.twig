@@ -1,0 +1,17 @@
+{#
+    Where a revision stands, as a badge. The colour comes off the state itself, so a status reads the same in every
+    module that shows one.
+
+    A revision that was rejected, or is still with the reviewers, says nothing about what visitors see. Pass `live`
+    (the number of the revision that is live instead, or null) and a second badge names it, so "Rejected" is never
+    read as "nothing is public". Leave it out where the aggregate is not at hand.
+
+    {% include 'partials/application/revision-status-badge.html.twig' with {
+        'status': revision.status,
+        'live': revision.liveCounterpart ? revision.liveCounterpart.revisionNumber : null,
+    } only %}
+#}
+<span class="badge {{ status.badgeClass }}">{{ status|trans }}</span>
+{% if live|default(null) is not null %}
+    <span class="badge badge-success badge-outlined">{{ 'Live: #%number%'|trans({'%number%': live}) }}</span>
+{% endif %}

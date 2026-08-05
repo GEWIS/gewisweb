@@ -6,6 +6,7 @@ namespace App\Entity\Activity;
 
 use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Application\AbstractRevision;
+use App\Entity\Application\AbstractRevisionComment;
 use App\Entity\Application\RevisableInterface;
 use App\Entity\Career\Company as CompanyModel;
 use App\Entity\Decision\Organ as OrganModel;
@@ -219,6 +220,15 @@ class ActivityRevision extends AbstractRevision
     public function getRevisable(): RevisableInterface
     {
         return $this->activity;
+    }
+
+    /**
+     * @return class-string<AbstractRevisionComment>
+     */
+    #[Override]
+    public function getCommentClass(): string
+    {
+        return ActivityRevisionComment::class;
     }
 
     /**

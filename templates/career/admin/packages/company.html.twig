@@ -1,0 +1,107 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% import 'partials/application/confirm-post-modal.html.twig' as modals %}
+
+{% block page_title %}{{ 'Packages'|trans|page_title }}{{ company.name|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/index') }}">{{ 'Career'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/companies/view', {'company': company.id}) }}">{{ company.name }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Packages'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    {% embed 'partials/career/admin/company-tabs.html.twig' with {
+        'company': company,
+        'active': 'packages',
+    } only %}
+        {% block actions %}
+            {{ parent() }}
+            <div class="btn-group" role="group" aria-label="{{ 'Add a package'|trans }}">
+                {% for type in enum('App\\Entity\\Career\\Enums\\CompanyPackageTypes').cases() %}
+                    <a href="{{ path('admin/career/packages/create', {'company': company.id, 'type': type.value}) }}"
+                       class="btn btn-gewis-primary">
+                        <span class="fas fa-plus" aria-hidden="true"></span> {{ type.label|trans }}
+                    </a>
+                {% endfor %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Type'|trans }}</th>
+                            <th>{{ 'Contract'|trans }}</th>
+                            <th>{{ 'Runs'|trans }}</th>
+                            <th>{{ 'Status'|trans }}</th>
+                            <th class="text-end">{{ 'Actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for package in company.packages %}
+                            <tr>
+                                <td><strong>{{ package.type.label|trans }}</strong></td>
+                                <td class="text-muted small">{{ package.contractNumber ?? '-' }}</td>
+                                <td class="text-muted small">
+                                    {{ package.startingDate|date('j M Y') }} &ndash; {{ package.expirationDate|date('j M Y') }}
+                                </td>
+                                <td>
+                                    {% if package.expired %}
+                                        <span class="badge badge-secondary">{{ 'Expired'|trans }}</span>
+                                    {% elseif package.active %}
+                                        <span class="badge badge-success">{{ 'Running'|trans }}</span>
+                                    {% else %}
+                                        <span class="badge badge-info">{{ 'Not started'|trans }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        {% if package.type == constant('App\\Entity\\Career\\Enums\\CompanyPackageTypes::Job') %}
+                                            <a href="{{ path('admin/career/companies/vacancies', {'company': company.id}) }}"
+                                               class="btn btn-outline-secondary">{{ 'Vacancies'|trans }}</a>
+                                        {% elseif package.type == constant('App\\Entity\\Career\\Enums\\CompanyPackageTypes::Banner') %}
+                                            <a href="{{ path('admin/career/packages/banner', {'package': package.id}) }}"
+                                               class="btn btn-outline-secondary">{{ 'Banner'|trans }}</a>
+                                        {% endif %}
+                                        <a href="{{ path('admin/career/packages/edit', {'package': package.id}) }}"
+                                           class="btn btn-outline-secondary">{{ 'Edit'|trans }}</a>
+                                        <button type="button" class="btn btn-outline-danger"
+                                                data-bs-toggle="modal" data-bs-target="#modal-delete-package-{{ package.id }}">
+                                            {{ 'Remove'|trans }}
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    {{ 'This company has no packages.'|trans }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% for package in company.packages %}
+        {{ modals.confirm_modal(
+            'modal-delete-package-' ~ package.id,
+            path('admin/career/packages/delete', {'package': package.id}),
+            csrf_token('company_package_delete-' ~ package.id),
+            'Remove this package?'|trans,
+            'Everything that hangs off this package goes with it, including any vacancies posted under it.'|trans,
+            'Remove'|trans,
+            'danger',
+        ) }}
+    {% endfor %}
+{% endblock %}

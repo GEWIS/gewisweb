@@ -8,8 +8,9 @@ namespace App\Entity\Application\Enums;
  * The variant map: which {@see ImageVariant}s (and at what WebP quality) to pre-generate for a given consumer role.
  *
  * A role is finer-grained than a {@see StorageNamespace} on purpose. Company logos and banners share the
- * `career/{id}/images` namespace but need different renditions (small near-lossless logos versus large photographic
- * banners), which a namespace alone cannot express. A future consumer (e.g. an og:image) would be one more case here.
+ * `career/{id}/images` namespace but need different renditions (small near-lossless logos versus a banner at the exact
+ * box its format is shown in), which a namespace alone cannot express. A future consumer (e.g. an og:image) would be
+ * one more case here.
  */
 enum ImageProfile: string
 {
@@ -25,8 +26,11 @@ enum ImageProfile: string
     /** Company logos: small renditions at near-lossless quality (flat colour/text smears under lossy). */
     case CompanyLogo = 'company-logo';
 
-    /** Company banner-package images: large photographic renditions. */
-    case CompanyBanner = 'company-banner';
+    /** Company banner-package images: the leaderboard box, and twice it. */
+    case CompanyBannerLeaderboard = 'company-banner-leaderboard';
+
+    /** Company banner-package images: the billboard box, and twice it. */
+    case CompanyBannerBillboard = 'company-banner-billboard';
 
     /** Images embedded in custom pages/markdown. */
     case PageImage = 'page-image';
@@ -70,9 +74,13 @@ enum ImageProfile: string
                 ImageVariant::W320,
                 ImageVariant::W640,
             ],
-            self::CompanyBanner => [
-                ImageVariant::W1280,
-                ImageVariant::W2560,
+            self::CompanyBannerLeaderboard => [
+                ImageVariant::Leaderboard,
+                ImageVariant::Leaderboard2x,
+            ],
+            self::CompanyBannerBillboard => [
+                ImageVariant::Billboard,
+                ImageVariant::Billboard2x,
             ],
             self::PageImage => [
                 ImageVariant::W320,

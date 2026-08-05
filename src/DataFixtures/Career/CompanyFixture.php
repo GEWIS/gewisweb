@@ -9,9 +9,11 @@ use App\Entity\Career\CareerLocalisedText;
 use App\Entity\Career\Company;
 use App\Entity\Career\CompanyBannerPackage;
 use App\Entity\Career\CompanyFeaturedPackage;
+use App\Entity\Career\CompanyHighlightPackage;
 use App\Entity\Career\CompanyJobPackage;
 use App\Entity\Career\CompanyPackage;
 use App\Entity\Career\CompanyRevision;
+use App\Entity\Career\Enums\CompanyBannerFormats;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Career\Vacancy;
 use App\Entity\Career\VacancyLabel;
@@ -33,6 +35,8 @@ use Override;
  *     descriptionEn: string,
  *     descriptionNl: string,
  *     labels: string[],
+ *     startDate?: string,
+ *     endDate?: string,
  * }
  */
 class CompanyFixture extends Fixture
@@ -56,7 +60,8 @@ class CompanyFixture extends Fixture
             websiteEn: 'https://example.com/nexunt',
             websiteNl: 'https://example.com/nexunt',
             featured: true,
-            banner: false,
+            bannerFormat: null,
+            highlight: true,
             vacancies: [
                 [
                     'slug' => 'backend-engineer',
@@ -86,8 +91,10 @@ class CompanyFixture extends Fixture
                         'fulltime',
                         'hybrid',
                     ],
+                    'endDate' => '2099-12-31',
                 ],
                 [
+                    // Its window closed, so it is approved and published yet nowhere to be seen.
                     'slug' => 'platform-internship',
                     'category' => VacancyCategories::Internships,
                     'nameEn' => 'Platform Engineering Internship',
@@ -96,6 +103,8 @@ class CompanyFixture extends Fixture
                     'descriptionEn' => 'Help us automate our deployment pipeline during a six-month internship.',
                     'descriptionNl' => 'Help onze deployment-pipeline te automatiseren in een stage van zes maanden.',
                     'labels' => ['hybrid'],
+                    'startDate' => '2025-01-01',
+                    'endDate' => '2025-06-30',
                 ],
             ],
         );
@@ -111,7 +120,7 @@ class CompanyFixture extends Fixture
             websiteEn: 'https://example.com/orbit',
             websiteNl: 'https://example.com/orbit',
             featured: false,
-            banner: true,
+            bannerFormat: CompanyBannerFormats::Leaderboard,
             vacancies: [
                 [
                     'slug' => 'data-science-internship',
@@ -157,7 +166,7 @@ class CompanyFixture extends Fixture
             websiteEn: 'https://example.com/delta',
             websiteNl: 'https://example.com/delta',
             featured: false,
-            banner: false,
+            bannerFormat: CompanyBannerFormats::Billboard,
             vacancies: [
                 [
                     'slug' => 'robotics-traineeship',
@@ -205,6 +214,33 @@ class CompanyFixture extends Fixture
             ],
         );
 
+        // Its contract lapsed, so it is invisible to the public and its representative can no longer sign in.
+        $this->createCompany(
+            $manager,
+            slug: 'halcyon-mobility',
+            name: 'Halcyon Mobility',
+            sloganEn: 'Moving the city, quietly',
+            sloganNl: 'De stad in beweging, zonder herrie',
+            descriptionEn: 'Halcyon Mobility designs electric drivetrains for urban logistics fleets.',
+            descriptionNl: 'Halcyon Mobility ontwerpt elektrische aandrijflijnen voor stedelijke logistiek.',
+            websiteEn: 'https://example.com/halcyon',
+            websiteNl: 'https://example.com/halcyon',
+            featured: false,
+            bannerFormat: null,
+            vacancies: [
+                [
+                    'slug' => 'drivetrain-engineer',
+                    'category' => VacancyCategories::Jobs,
+                    'nameEn' => 'Drivetrain Engineer',
+                    'nameNl' => 'Aandrijflijn-engineer',
+                    'descriptionEn' => 'Develop the motors and inverters behind our delivery vans.',
+                    'descriptionNl' => 'Ontwikkel de motoren en omvormers achter onze bestelbussen.',
+                    'labels' => ['fulltime'],
+                ],
+            ],
+            contractExpired: true,
+        );
+
         $manager->flush();
     }
 
@@ -214,24 +250,20 @@ class CompanyFixture extends Fixture
             'fulltime' => [
                 'en' => 'Full-time',
                 'nl' => 'Fulltime',
-                'abbr' => 'FT',
             ],
             'hybrid' => [
                 'en' => 'Hybrid',
                 'nl' => 'Hybride',
-                'abbr' => 'HYB',
             ],
             'remote' => [
                 'en' => 'Remote',
                 'nl' => 'Op afstand',
-                'abbr' => 'REM',
             ],
         ];
 
         foreach ($definitions as $key => $definition) {
             $label = new VacancyLabel();
             $label->setName(new CareerLocalisedText($definition['en'], $definition['nl']));
-            $label->setAbbreviation(new CareerLocalisedText($definition['abbr'], $definition['abbr']));
             $manager->persist($label);
 
             $this->labels[$key] = $label;
@@ -252,14 +284,14 @@ class CompanyFixture extends Fixture
         string $websiteEn,
         string $websiteNl,
         bool $featured,
-        bool $banner,
+        ?CompanyBannerFormats $bannerFormat,
         array $vacancies,
+        bool $highlight = false,
+        bool $contractExpired = false,
     ): void {
         $company = new Company();
         $company->setName($name);
         $company->setSlugName($slug);
-        $company->setRepresentativeName('Recruitment ' . $name);
-        $company->setRepresentativeEmail('recruitment@' . $slug . '.example.com');
         $company->setPublished(true);
 
         $revision = new CompanyRevision();
@@ -286,7 +318,10 @@ class CompanyFixture extends Fixture
         $this->configurePackage(
             $jobPackage,
             $company,
+            $contractExpired,
         );
+
+        $createdVacancies = [];
 
         foreach ($vacancies as $data) {
             $vacancy = $this->createVacancy(
@@ -294,20 +329,38 @@ class CompanyFixture extends Fixture
                 $data,
             );
             $manager->persist($vacancy);
+            $createdVacancies[] = $vacancy;
+            $this->addReference(
+                'career-vacancy-' . $data['slug'],
+                $vacancy,
+            );
         }
 
         $manager->persist($company);
         $manager->persist($revision);
         $manager->persist($jobPackage);
 
-        if ($banner) {
+        if (null !== $bannerFormat) {
             $bannerPackage = new CompanyBannerPackage();
             $this->configurePackage(
                 $bannerPackage,
                 $company,
             );
+            $bannerPackage->setFormat($bannerFormat);
             $bannerPackage->setImage('data/company/banner/' . $slug . '.png');
             $manager->persist($bannerPackage);
+        }
+
+        if ($highlight) {
+            $highlightPackage = new CompanyHighlightPackage();
+            $this->configurePackage(
+                $highlightPackage,
+                $company,
+            );
+            // Everything the company has, including the vacancy whose window has closed: what the landing page shows
+            // is worked out when it is rendered, so an unshowable pick is exactly the case worth seeding.
+            $highlightPackage->setVacancies($createdVacancies);
+            $manager->persist($highlightPackage);
         }
 
         if (!$featured) {
@@ -327,15 +380,17 @@ class CompanyFixture extends Fixture
     }
 
     /**
-     * Makes a package active: started in the past, expiring far in the future, and published.
+     * Makes a package active: started in the past, expiring far in the future, and published. An expired package keeps
+     * the same start but lapsed long ago.
      */
     private function configurePackage(
         CompanyPackage $package,
         Company $company,
+        bool $expired = false,
     ): void {
         $package->setCompany($company);
         $package->setStartingDate(new DateTime('2020-01-01'));
-        $package->setExpirationDate(new DateTime('2100-01-01'));
+        $package->setExpirationDate(new DateTime($expired ? '2021-01-01' : '2100-01-01'));
         $package->setPublished(true);
     }
 
@@ -367,6 +422,9 @@ class CompanyFixture extends Fixture
         ));
         $revision->setAttachment(new CareerLocalisedText('', ''));
         $revision->setCategory($data['category']);
+        $revision->setStartDate(isset($data['startDate']) ? new DateTime($data['startDate']) : null);
+        // Without a window of its own a vacancy runs as long as the package it was sold under.
+        $revision->setEndDate(new DateTime($data['endDate'] ?? $package->getExpirationDate()->format('Y-m-d')));
 
         foreach ($data['labels'] as $labelKey) {
             $revision->addLabel($this->labels[$labelKey]);

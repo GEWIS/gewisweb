@@ -1,0 +1,49 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ 'Status'|trans|page_title }}{{ company.name|page_title }}{{ parent() }}{% endblock %}
+
+{% block sidebar_label %}{{ company.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>{{ diff_styles() }}</style>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'partials/company-sidebar.html.twig' with {'activeRoute': 'profile'} %}
+{% endblock %}
+
+{% block contents %}
+    {% embed 'partials/application/review-screen.html.twig' with {
+        'subjectName': 'Your proposed profile'|trans,
+        'revision': revision,
+        'previous': previous,
+        'sections': sections,
+        'comments': comments,
+        'decisionForm': decisionForm,
+        'canDiscard': canDiscard,
+        'firstRevisionNote': 'This is your first version, so there is nothing to compare it against.'|trans,
+        'mainWidth': 8,
+        'asideWidth': 4,
+        'actionsHeading': 'What you can do'|trans,
+        'decideAction': path('company/profile/decide'),
+        'decisionsEmptyNote': 'Nothing right now: your profile is with your contact at GEWIS.'|trans,
+        'commentAction': path('company/profile/comment'),
+        'commentToken': csrf_token('company_profile_comment'),
+        'commentAudienceNote': 'Visible to you and your contact at GEWIS.'|trans,
+        'discardAction': path('company/profile/discard'),
+        'discardToken': csrf_token('company_profile_discard'),
+        'discardBody': 'The changes in this draft will be lost and your live profile restored.'|trans,
+    } only %}
+        {% block review_header_actions %}
+            {% if revision.status.editableByAuthor %}
+                <a href="{{ path('company/profile/edit') }}" class="btn btn-gewis-primary">{{ 'Keep editing'|trans }}</a>
+            {% elseif revision.status.revisable %}
+                <form method="post" action="{{ path('company/profile/revise') }}">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('company_profile_revise') }}">
+                    <button type="submit" class="btn btn-gewis-primary">{{ 'Revise'|trans }}</button>
+                </form>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

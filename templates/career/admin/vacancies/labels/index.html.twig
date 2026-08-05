@@ -1,32 +1,107 @@
 {% extends 'layout-admin.html.twig' %}
 
-{% block page_title %}{{ 'Labels'|trans|page_title }}{{ 'Vacancies'|trans|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
+{% import 'partials/application/confirm-post-modal.html.twig' as modals %}
+
+{% block page_title %}{{ 'Labels'|trans|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block admin_breadcrumbs %}
-    <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('admin/career/index') }}">
-            {{ 'Companies'|trans }}
-        </a>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/index') }}">{{ 'Career'|trans }}</a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('admin/career/vacancies/index') }}">
-            {{ 'Vacancies'|trans }}
-        </a>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('admin/career/vacancies/labels/index') }}">
-            {{ 'Labels'|trans }}
-        </a>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">
-        {{ 'Overview'|trans }}
-    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Labels'|trans }}</li>
 {% endblock %}
 
 {% block contents %}
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-md-12">
-            {# TODO #}
+            <h3 class="mb-0">{{ 'Vacancy labels'|trans }}</h3>
+            <p class="text-muted mb-0">
+                {{ 'Labels are shared by every company, so renaming one changes it everywhere it is used.'|trans }}
+            </p>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>{{ 'Name'|trans }}</th>
+                                    <th>{{ 'In use by'|trans }}</th>
+                                    <th class="text-end">{{ 'Actions'|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in labels %}
+                                    {% set label = row.label %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ label.name|localise_text }}</strong>
+                                            <div class="text-muted small">
+                                                {{ label.name.valueNL }} / {{ label.name.valueEN }}
+                                            </div>
+                                        </td>
+                                        <td class="text-muted small">
+                                            {{ 'used by %count% revisions'|trans({'%count%': row.usage}) }}
+                                        </td>
+                                        <td class="text-end">
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <a href="{{ path('admin/career/vacancies/labels/edit', {'label': label.id}) }}"
+                                                   class="btn btn-outline-secondary">{{ 'Edit'|trans }}</a>
+                                                <button type="button" class="btn btn-outline-danger"
+                                                        {% if row.usage > 0 %}disabled{% endif %}
+                                                        data-bs-toggle="modal" data-bs-target="#modal-delete-label-{{ label.id }}">
+                                                    {{ 'Remove'|trans }}
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted py-4">
+                                            {{ 'There are no labels yet.'|trans }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Add a label'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {{ form_start(form, {'method': 'POST'}) }}
+                        {{ form_row(form.name) }}
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-gewis-primary">{{ 'Add label'|trans }}</button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for row in labels %}
+        {% set label = row.label %}
+        {{ modals.confirm_modal(
+            'modal-delete-label-' ~ label.id,
+            path('admin/career/vacancies/labels/delete', {'label': label.id}),
+            csrf_token('vacancy_label_delete-' ~ label.id),
+            'Remove this label?'|trans,
+            '%label% disappears from the label picker. Vacancies that already carry it keep it.'|trans({
+                '%label%': label.name|localise_text,
+            }),
+            'Remove'|trans,
+            'danger',
+        ) }}
+    {% endfor %}
 {% endblock %}

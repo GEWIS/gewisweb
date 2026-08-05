@@ -4,17 +4,30 @@ declare(strict_types=1);
 
 namespace App\Repository\Career;
 
+use App\Entity\Application\AbstractRevisionComment;
+use App\Entity\Application\RevisionInterface;
 use App\Entity\Career\Company;
+use App\Entity\Career\CompanyRevision;
 use App\Entity\Career\CompanyRevisionComment;
+use App\Repository\Application\FindsRevisionCommentsTrait;
+use App\Repository\Application\RevisionCommentRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\Persistence\ManagerRegistry;
+use Override;
 
 /**
  * @extends ServiceEntityRepository<CompanyRevisionComment>
  */
-class CompanyRevisionCommentRepository extends ServiceEntityRepository
+class CompanyRevisionCommentRepository extends ServiceEntityRepository implements RevisionCommentRepositoryInterface
 {
+    use FindsRevisionCommentsTrait;
+
+    #[Override]
+    public function supports(RevisionInterface $revision): bool
+    {
+        return $revision instanceof CompanyRevision;
+    }
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct(
@@ -26,41 +39,16 @@ class CompanyRevisionCommentRepository extends ServiceEntityRepository
     /**
      * The full review discussion across every revision of a company, oldest first.
      *
-     * @return CompanyRevisionComment[]
+     * @return list<AbstractRevisionComment>
      */
     public function findThreadForCompany(Company $company): array
     {
-        return $this->createQueryBuilder('c')
-            ->addSelect(
-                'au',
-                'acu',
-                'r',
-            )
-            // A comment's author is a member's account OR a company user (mutually exclusive, both nullable), so both
-            // must be LEFT-joined: an inner join on c.author alone silently drops every CompanyUser-authored comment.
-            ->leftJoin(
-                'c.author',
-                'au',
-            )
-            ->leftJoin(
-                'c.authorCompanyUser',
-                'acu',
-            )
-            ->join(
-                'c.revision',
-                'r',
-            )
-            ->where('IDENTITY(r.company) = :companyId')
-            ->setParameter(
-                'companyId',
-                $company->getId(),
-                Types::INTEGER,
-            )
-            ->orderBy(
-                'c.createdAt',
-                'ASC',
-            )
-            ->getQuery()
-            ->getResult();
+        return $this->findThread($company->getId());
+    }
+
+    #[Override]
+    protected function revisionAggregateField(): string
+    {
+        return 'company';
     }
 }

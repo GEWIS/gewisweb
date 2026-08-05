@@ -1,0 +1,89 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% macro package_rows(packages, dateField) %}
+    {% for package in packages %}
+        <tr>
+            <td>
+                <a href="{{ path('admin/career/packages/company', {'company': package.company.id}) }}">
+                    {{ package.company.name }}
+                </a>
+            </td>
+            <td>{{ package.type.label|trans }}</td>
+            <td class="text-muted small">{{ package.contractNumber ?? '-' }}</td>
+            <td>{{ (dateField == 'expires' ? package.expirationDate : package.startingDate)|date('j M Y') }}</td>
+            <td class="text-end">
+                {% if package.type == constant('App\\Entity\\Career\\Enums\\CompanyPackageTypes::Job') %}
+                    <a href="{{ path('admin/career/companies/vacancies', {'company': package.company.id}) }}"
+                       class="btn btn-sm btn-outline-secondary">{{ 'Vacancies'|trans }}</a>
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="5" class="text-center text-muted py-4">{{ 'Nothing in the next two months.'|trans }}</td>
+        </tr>
+    {% endfor %}
+{% endmacro %}
+
+{% import _self as tables %}
+
+{% block page_title %}{{ 'Packages'|trans|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Career'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    {% include 'partials/career/admin/overview-tabs.html.twig' with {
+        'active': 'packages',
+        'counts': counts,
+    } only %}
+
+    <p class="text-muted">
+        {{ 'What runs out or starts before %date%.'|trans({'%date%': horizon|date('j F Y')}) }}
+    </p>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>{{ 'Expiring soon'|trans }}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Company'|trans }}</th>
+                            <th>{{ 'Type'|trans }}</th>
+                            <th>{{ 'Contract'|trans }}</th>
+                            <th>{{ 'Expires'|trans }}</th>
+                            <th class="text-end">{{ 'Actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>{{ tables.package_rows(expiring, 'expires') }}</tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>{{ 'Starting soon'|trans }}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Company'|trans }}</th>
+                            <th>{{ 'Type'|trans }}</th>
+                            <th>{{ 'Contract'|trans }}</th>
+                            <th>{{ 'Starts'|trans }}</th>
+                            <th class="text-end">{{ 'Actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>{{ tables.package_rows(starting, 'starts') }}</tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

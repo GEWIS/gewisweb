@@ -1,3 +1,46 @@
+{#
+    Every dropdown follows the same pattern: labelled groups of rows rather than one flat run of links, an icon per
+    row, a count where knowing the number tells you whether the click is worth it, sub-sections that expand inside the
+    panel instead of flying out sideways, and the action that ends the menu last behind a rule.
+#}
+{% macro item(href, icon, label, count, active) %}
+    <li>
+        <a href="{{ href }}" class="dropdown-item {{ active|default(false) ? 'active' : '' }}"
+           {% if active|default(false) %}aria-current="page"{% endif %}>
+            <span class="nav-menu-icon fas {{ icon }}" aria-hidden="true"></span>
+            <span class="nav-menu-label">{{ label }}</span>
+            {% if count|default(null) is not null %}
+                <span class="nav-menu-count">{{ count }}</span>
+            {% endif %}
+        </a>
+    </li>
+{% endmacro %}
+
+{% macro section(id, icon, label, children) %}
+    <li>
+        <button class="dropdown-item collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#nav-menu-{{ id }}" aria-controls="nav-menu-{{ id }}" aria-expanded="false">
+            <span class="nav-menu-icon fas {{ icon }}" aria-hidden="true"></span>
+            <span class="nav-menu-label">{{ label }}</span>
+            <span class="nav-menu-caret fas fa-chevron-down" aria-hidden="true"></span>
+        </button>
+        <ul class="nav-menu-sublist collapse" id="nav-menu-{{ id }}">
+            {% for child in children %}
+                <li>
+                    <a href="{{ child.href }}" class="dropdown-item">
+                        <span class="nav-menu-label">{{ child.label }}</span>
+                        {% if child.count|default(null) is not null %}
+                            <span class="nav-menu-count">{{ child.count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </li>
+{% endmacro %}
+
+{% import _self as menu %}
+
 <nav class="navbar navbar-expand navbar-gewis rainbow">
     <div class="container">
         <a href="{{ path('frontpage/index') }}" class="navbar-brand">
@@ -7,225 +50,197 @@
              data-bs-scroll="true" aria-labelledby="gws-offcanvas-label" data-controller="nav-dropdown"
         >
             <div class="offcanvas-header px-4 pb-0">
-                <h5 class="offcanvas-title text-white" id="gws-offcanvas-label">GEWIS</h5>
+                <h5 class="offcanvas-title" id="gws-offcanvas-label">GEWIS</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                         aria-label="{{ 'Close'|trans }}" data-bs-target="#navbar-gewis-collapse">
                 </button>
             </div>
             <div class="offcanvas-body p-4 pt-0 p-lg-0">
                 <ul class="navbar-nav flex-row flex-wrap">
-                    <hr class="d-lg-none text-white-50">
+                    <hr class="d-lg-none">
                     {% set frontpageActive = is_module_active(['frontpage', 'page']) %}
                     <li class="nav-item col-12 col-lg-auto dropdown dropdown-nav {{ frontpageActive ? 'active' : '' }}">
                         <a href="" role="button" aria-expanded="false"
                            class="nav-link dropdown-toggle" aria-haspopup="true"
                         >
+                            <span class="nav-menu-icon fas fa-users d-lg-none" aria-hidden="true"></span>
                             {{ 'Association'|trans }}
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="visible-sm visible-xs">
-                                <a href="{{ page_path(
-                                    category: 'vereniging',
-                                    categoryEn: 'association',
-                                ) }}"
-                                   class="dropdown-item">
-                                    {{ 'Association'|trans }}
-                                </a>
-                            </li>
                             <li>
-                                <a href="{{ page_path(
+                                <h6 class="dropdown-header">{{ 'The association'|trans }}</h6>
+                            </li>
+                            {{ menu.item(
+                                page_path(category: 'vereniging', categoryEn: 'association'),
+                                'fa-circle-info',
+                                'About GEWIS'|trans,
+                            ) }}
+                            {{ menu.item(
+                                page_path(
                                     category: 'vereniging',
                                     categoryEn: 'association',
                                     sub_category: 'bestuur',
                                     sub_categoryEn: 'board',
-                                ) }}" class="dropdown-item">
-                                    {{ 'Board'|trans }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="dropdown-item">
-                                    {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').Committee.pluralLabel|trans }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="dropdown-item">
-                                    {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').Fraternity.pluralLabel|trans }}
-                                </a>
-                            </li>
-                            <li class="dropdown dropdown-submenu dropend">
-                                <button class="dropdown-item dropdown-toggle"
-                                        aria-haspopup="true" aria-expanded="false">
-                                    {{ 'GMM Bodies'|trans }}
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="#" class="dropdown-item">
-                                            {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').RvA.pluralLabel|trans }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="dropdown-item">
-                                            {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').KCC.pluralLabel|trans }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="dropdown-item">
-                                            {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').AVW.pluralLabel|trans }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="dropdown-item">
-                                            {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').SC.pluralLabel|trans }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="dropdown-item">
-                                            {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').AVC.pluralLabel|trans }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="{{ page_path(
+                                ),
+                                'fa-users-gear',
+                                'Board'|trans,
+                            ) }}
+                            {{ menu.item(
+                                page_path(
                                     category: 'vereniging',
                                     categoryEn: 'association',
                                     sub_category: 'uitzonderlijke-leden',
                                     sub_categoryEn: 'exceptional-members',
-                                ) }}" class="dropdown-item">
-                                    {{ 'Exceptional Members'|trans }}
-                                </a>
-                            </li>
+                                ),
+                                'fa-medal',
+                                'Exceptional Members'|trans,
+                            ) }}
+
+                            <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a href="{{ page_path(
-                                    category: 'vereniging',
-                                    categoryEn: 'association',
-                                    sub_category: 'lied',
-                                    sub_categoryEn: 'song',
-                                ) }}" class="dropdown-item">
-                                    {{ 'GEWIS song'|trans }}
-                                </a>
+                                <h6 class="dropdown-header">{{ 'Bodies'|trans }}</h6>
                             </li>
+                            {{ menu.item('#', 'fa-people-group', enum('App\\Entity\\Decision\\Enums\\OrganTypes').Committee.pluralLabel|trans) }}
+                            {{ menu.item('#', 'fa-people-roof', enum('App\\Entity\\Decision\\Enums\\OrganTypes').Fraternity.pluralLabel|trans) }}
+                            {{ menu.section('gmm-bodies', 'fa-scale-balanced', 'GMM Bodies'|trans, [
+                                {'href': '#', 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').RvA.pluralLabel|trans},
+                                {'href': '#', 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').KCC.pluralLabel|trans},
+                                {'href': '#', 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').AVW.pluralLabel|trans},
+                                {'href': '#', 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').SC.pluralLabel|trans},
+                                {'href': '#', 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').AVC.pluralLabel|trans},
+                            ]) }}
+
+                            <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a href="{{ page_path(
+                                <h6 class="dropdown-header">{{ 'Good to know'|trans }}</h6>
+                            </li>
+                            {{ menu.item(
+                                page_path(
                                     category: 'vereniging',
                                     categoryEn: 'association',
                                     subCategory: 'reglementen',
                                     subCategoryEn: 'regulations',
-                                ) }}" class="dropdown-item">
-                                    {{ 'Regulations'|trans }}
-                                </a>
-                            </li>
-                            <li class="dropdown dropdown-submenu dropend">
-                                <button class="dropdown-item dropdown-toggle"
-                                        aria-haspopup="true" aria-expanded="false">
-                                    {{ 'Useful Information'|trans }}
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ page_path(
-                                            category: 'links',
-                                            categoryEn: 'links',
-                                        ) }}" class="dropdown-item">
-                                            {{ 'Links'|trans }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ page_path(
-                                            category: 'welzijn',
-                                            categoryEn: 'wellbeing',
-                                        ) }}" class="dropdown-item">
-                                            {{ 'Well-being'|trans }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ page_path(
-                                            category: 'welzijn',
-                                            categoryEn: 'wellbeing',
-                                            subCategory: 'vcp',
-                                            subCategoryEn: 'ccp',
-                                        ) }}" class="dropdown-item">
-                                            {{ 'Confidential Contact Person (CCP)'|trans }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ page_path(
-                                            category: 'faq',
-                                            categoryEn: 'faq',
-                                        ) }}" class="dropdown-item">
-                                            {{ 'FAQ'|trans }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ page_path(
-                                            category: 'welzijn',
-                                            categoryEn: 'wellbeing',
-                                            subCategory: 'huisvesting',
-                                            subCategoryEn: 'housing',
-                                        ) }}" class="dropdown-item">
-                                            {{ 'Housing'|trans }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                ),
+                                'fa-gavel',
+                                'Regulations'|trans,
+                            ) }}
+                            {{ menu.section('useful-information', 'fa-lightbulb', 'Useful Information'|trans, [
+                                {
+                                    'href': page_path(category: 'links', categoryEn: 'links'),
+                                    'label': 'Links'|trans,
+                                },
+                                {
+                                    'href': page_path(category: 'welzijn', categoryEn: 'wellbeing'),
+                                    'label': 'Well-being'|trans,
+                                },
+                                {
+                                    'href': page_path(
+                                        category: 'welzijn',
+                                        categoryEn: 'wellbeing',
+                                        subCategory: 'vcp',
+                                        subCategoryEn: 'ccp',
+                                    ),
+                                    'label': 'Confidential Contact Person (CCP)'|trans,
+                                },
+                                {
+                                    'href': page_path(category: 'faq', categoryEn: 'faq'),
+                                    'label': 'FAQ'|trans,
+                                },
+                                {
+                                    'href': page_path(
+                                        category: 'welzijn',
+                                        categoryEn: 'wellbeing',
+                                        subCategory: 'huisvesting',
+                                        subCategoryEn: 'housing',
+                                    ),
+                                    'label': 'Housing'|trans,
+                                },
+                            ]) }}
+                            {{ menu.item(
+                                page_path(
+                                    category: 'vereniging',
+                                    categoryEn: 'association',
+                                    sub_category: 'lied',
+                                    sub_categoryEn: 'song',
+                                ),
+                                'fa-music',
+                                'GEWIS song'|trans,
+                            ) }}
+
+                            <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a href="{{ page_path(
                                     category: 'vereniging',
                                     categoryEn: 'association',
                                     sub_category: 'contact',
                                     sub_categoryEn: 'contact',
-                                ) }}" class="dropdown-item">
-                                    {{ 'Contact'|trans }}
+                                ) }}" class="dropdown-item nav-menu-action">
+                                    <span class="nav-menu-icon fas fa-envelope" aria-hidden="true"></span>
+                                    <span class="nav-menu-label">{{ 'Contact GEWIS'|trans }}</span>
+                                    <span class="fas fa-arrow-right small" aria-hidden="true"></span>
                                 </a>
                             </li>
                         </ul>
                     </li>
                     {% set careerActive = is_module_active(['career']) %}
+                    {% set careerCounts = career_menu_counts() %}
                     <li class="nav-item col-12 col-lg-auto dropdown dropdown-nav {{ careerActive ? 'active' : '' }}">
                         <button aria-haspopup="true" class="nav-link dropdown-toggle"
                                 aria-expanded="false"
                         >
+                            <span class="nav-menu-icon fas fa-briefcase d-lg-none" aria-hidden="true"></span>
                             {{ 'Career'|trans }}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="{{ path('career/index') }}" class="dropdown-item">
-                                    {{ 'Companies'|trans }}
-                                </a>
+                                <h6 class="dropdown-header">{{ 'Browse'|trans }}</h6>
                             </li>
+                            {{ menu.item(path('career/index'), 'fa-compass', 'Overview'|trans) }}
+                            {{ menu.item(path('career/companies'), 'fa-building', 'Companies'|trans, careerCounts.companies) }}
+                            {{ menu.item(path('career/vacancies'), 'fa-briefcase', 'Vacancies'|trans, careerCounts.vacancies) }}
+
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <h6 class="dropdown-header">{{ 'By type'|trans }}</h6>
+                            </li>
+                            <li>
+                                <ul class="nav-menu-sublist">
+                                    {% for category in vacancy_categories() %}
+                                        <li>
+                                            <a href="{{ path('career/vacancies', {category: category.value}) }}"
+                                               class="dropdown-item">
+                                                <span class="nav-menu-label">{{ category.pluralLabel|trans }}</span>
+                                                <span class="nav-menu-count">{{ careerCounts.categories[category.value]|default(0) }}</span>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+
                             {% set featuredPackage = featured_company() %}
                             {% if null !== featuredPackage %}
+                                <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <h6 class="dropdown-header"><span class="fas fa-star"></span> {{ 'Featured'|trans }}</h6>
+                                    <h6 class="dropdown-header">
+                                        <span class="fas fa-star" aria-hidden="true"></span> {{ 'Featured'|trans }}
+                                    </h6>
                                 </li>
                                 <li>
                                     <a href="{{ path('career/company', {slug: featuredPackage.getCompany.getSlugName}) }}"
                                        class="dropdown-item">
-                                        {{ featuredPackage.getCompany.getName }}
+                                        <span class="career-logo nav-menu-monogram" aria-hidden="true">
+                                            {{ featuredPackage.getCompany.getName|slice(0, 1)|upper }}
+                                        </span>
+                                        <span class="nav-menu-label">{{ featuredPackage.getCompany.getName }}</span>
                                     </a>
                                 </li>
                             {% endif %}
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <h6 class="dropdown-header">{{ 'Vacancies'|trans }}</h6>
-                            </li>
-                            {% for category in vacancy_categories() %}
-                                <li>
-                                    <a href="{{ path('career/vacancies', {category: category.value}) }}"
-                                       class="dropdown-item">
-                                        {{ category.pluralLabel|trans }}
-                                    </a>
-                                </li>
-                            {% endfor %}
                         </ul>
                     </li>
                     <li class="nav-item col-12 col-lg-auto {{ is_module_active(['education']) ? 'active' : '' }}">
                         <a href="{{ path('education/index') }}" class="nav-link">
+                            <span class="nav-menu-icon fas fa-graduation-cap d-lg-none" aria-hidden="true"></span>
                             {{ 'Education'|trans }}
                         </a>
                     </li>
@@ -234,36 +249,34 @@
                         <button aria-haspopup="true" class="nav-link dropdown-toggle"
                                 aria-expanded="false"
                         >
+                            <span class="nav-menu-icon fas fa-calendar-days d-lg-none" aria-hidden="true"></span>
                             {{ 'Activities'|trans }}
                         </button>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="{{ path('activity/index') }}" class="dropdown-item {{ is_module_active(['activity', 'activity', 'index']) ? 'active' : '' }}">
-                                    {{ 'Overview'|trans }}
-                                </a>
+                                <h6 class="dropdown-header">{{ 'Browse'|trans }}</h6>
                             </li>
+                            {{ menu.item(
+                                path('activity/index'),
+                                'fa-calendar-days',
+                                'Overview'|trans,
+                                null,
+                                is_module_active(['activity', 'activity', 'index']),
+                            ) }}
                             {% if is_granted('ROLE_USER') %}
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a href="{{ path('activity/my') }}" class="dropdown-item">
-                                        {{ 'My Activities'|trans }}
-                                    </a>
-                                </li>
+                                {{ menu.item(path('activity/my'), 'fa-circle-check', 'My Activities'|trans) }}
                             {% endif %}
                             {% if is_granted('ROLE_ACTIVE_MEMBER') %}
+                                <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <hr class="dropdown-divider">
+                                    <h6 class="dropdown-header">{{ 'Organise'|trans }}</h6>
                                 </li>
+                                {{ menu.item(path('admin/activities/calendar/index'), 'fa-calendar-plus', 'Option Calendar'|trans) }}
                                 <li>
-                                    <a href="{{ path('admin/activities/create') }}" class="dropdown-item">
-                                        {{ 'Create Activity'|trans }}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('admin/activities/calendar/index') }}" class="dropdown-item">
-                                        {{ 'Option Calendar'|trans }}
+                                    <a href="{{ path('admin/activities/create') }}" class="dropdown-item nav-menu-action">
+                                        <span class="nav-menu-icon fas fa-plus" aria-hidden="true"></span>
+                                        <span class="nav-menu-label">{{ 'Create Activity'|trans }}</span>
+                                        <span class="fas fa-arrow-right small" aria-hidden="true"></span>
                                     </a>
                                 </li>
                             {% endif %}
@@ -274,46 +287,42 @@
                             <button aria-haspopup="true" aria-expanded="false"
                                     class="nav-link dropdown-toggle"
                             >
+                                <span class="nav-menu-icon fas fa-image d-lg-none" aria-hidden="true"></span>
                                 {{ 'Photos'|trans }}
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{ path('photo/index') }}" class="dropdown-item">
-                                        {{ 'Overview'|trans }}
-                                    </a>
+                                    <h6 class="dropdown-header">{{ 'Browse'|trans }}</h6>
                                 </li>
-                                <li>
-                                    <a href="{{ path('photo/weekly') }}" class="dropdown-item">
-                                        {{ 'Photos of the Week'|trans }}
-                                    </a>
-                                </li>
+                                {{ menu.item(path('photo/index'), 'fa-images', 'Overview'|trans) }}
+                                {{ menu.item(path('photo/weekly'), 'fa-camera', 'Photos of the Week'|trans) }}
                                 {% if null !== app.user %}
+                                    <li><hr class="dropdown-divider"></li>
                                     <li>
-                                        <hr class="dropdown-divider">
+                                        <h6 class="dropdown-header">{{ 'Yours'|trans }}</h6>
                                     </li>
-                                    <li>
-                                        <a href="{{ path('photo/album', {
-                                            album: app.user.getLidnr,
-                                            type: 'member',
-                                        }) }}" class="dropdown-item">
-                                            {{ 'My Photos'|trans }}
-                                        </a>
-                                    </li>
+                                    {{ menu.item(
+                                        path('photo/album', {album: app.user.getLidnr, type: 'member'}),
+                                        'fa-user',
+                                        'My Photos'|trans,
+                                    ) }}
                                 {% endif %}
                             </ul>
                         {% else %}
                             <a href="{{ path('photo/index') }}" class="nav-link">
+                                <span class="nav-menu-icon fas fa-image d-lg-none" aria-hidden="true"></span>
                                 {{ 'Photos'|trans }}
                             </a>
                         {% endif %}
                     </li>
                 </ul>
                 {% if null !== app.user and app.user.getUserType === enum('App\\Entity\\User\\Enums\\UserTypes').User %}
-                    <hr class="d-lg-none text-white-50">
+                    <hr class="d-lg-none">
                     <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
                         <li class="nav-item col-12 col-lg-auto {{ is_module_active(['decision']) ? 'active' : '' }}">
                             <a href="{{ path('members/index') }}" class="nav-link">
+                                <span class="nav-menu-icon fas fa-address-card d-lg-none" aria-hidden="true"></span>
                                 {{ 'Members'|trans }}
                             </a>
                         </li>
@@ -333,21 +342,17 @@
                             <span id="gws-members-text">{{ 'Members'|trans }}</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gws-members-text">
-                            <li>
-                                <a href="{{ path('user_login') }}" class="dropdown-item">
-                                    {{ 'Login'|trans }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ page_path(
+                            {{ menu.item(path('user_login'), 'fa-right-to-bracket', 'Login'|trans) }}
+                            {{ menu.item(
+                                page_path(
                                     category: 'vereniging',
                                     categoryEn: 'association',
                                     sub_category: 'lid-worden',
                                     sub_categoryEn: 'become-member',
-                                ) }}" class="dropdown-item">
-                                    {{ 'Subscribe'|trans }}
-                                </a>
-                            </li>
+                                ),
+                                'fa-user-plus',
+                                'Subscribe'|trans,
+                            ) }}
                         </ul>
                     {% elseif enum('App\\Entity\\User\\Enums\\UserTypes').CompanyUser === app.user.getUserType %}
                         {% set company = app.user.getCompany %}
@@ -359,56 +364,53 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gws-company-text">
                             <li>
-                                <a href="{{ path('company/index') }}" class="dropdown-item">
-                                    {{ 'My Company'|trans }}
-                                </a>
+                                <div class="nav-menu-identity">
+                                    <span class="nav-menu-avatar" aria-hidden="true">{{ company.getName|slice(0, 1) }}</span>
+                                    <span class="nav-menu-identity-text">
+                                        <span class="nav-menu-identity-name">{{ company.getName }}</span>
+                                        <span class="nav-menu-identity-meta">{{ app.user.getEmail }}</span>
+                                    </span>
+                                </div>
                             </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <a href="{{ path('company_user_logout') }}" class="dropdown-item">
-                                    {{ 'Logout'|trans }}
-                                </a>
-                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            {{ menu.item(path('company/index'), 'fa-building', 'My Company'|trans) }}
+                            <li><hr class="dropdown-divider"></li>
+                            {{ menu.item(path('company_user_logout'), 'fa-arrow-right-from-bracket', 'Logout'|trans) }}
                         </ul>
                     {% elseif enum('App\\Entity\\User\\Enums\\UserTypes').User === app.user.getUserType %}
+                        {% set member = app.user.getMember %}
                         <button id="gws-member" type="button" aria-expanded="false" data-bs-toggle="dropdown"
                                 class="nav-link dropdown-toggle"
                                 aria-label="{{ 'Toggle member menu'|trans }}"
                         >
-                            <span id="gws-member-text">{{ app.user.getMember.getFirstName }}</span>
+                            <span id="gws-member-text">{{ member.getFirstName }}</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="gws-member-text">
                             <li>
-                                <a href="{{ path('members/me') }}" class="dropdown-item">
-                                    {{ 'My Information'|trans }}
-                                </a>
+                                <div class="nav-menu-identity">
+                                    <span class="nav-menu-avatar" aria-hidden="true">
+                                        {{ member.getFirstName|slice(0, 1) }}{{ member.getLastName|slice(0, 1) }}
+                                    </span>
+                                    <span class="nav-menu-identity-text">
+                                        <span class="nav-menu-identity-name">{{ member.getFullName }}</span>
+                                        <span class="nav-menu-identity-meta">
+                                            {{ 'Generation %year%'|trans({'%year%': member.getGeneration}) }} &middot; {{ member.getLidnr }}
+                                        </span>
+                                    </span>
+                                </div>
                             </li>
-                            <li>
-                                <a href="{{ path('user_token', {app: 'sudosos'}) }}" class="dropdown-item">
-                                    {{ 'SudoSOS'|trans }}
-                                </a>
-                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            {{ menu.item(path('members/me'), 'fa-id-card', 'My Information'|trans) }}
+                            {{ menu.item(path('user_token', {app: 'sudosos'}), 'fa-beer-mug-empty', 'SudoSOS'|trans) }}
                             {% if
                                 is_granted('ROLE_ACTIVE_MEMBER') or
                                 is_granted('ROLE_BOARD') or
                                 is_granted('ROLE_ADMIN')
                             %}
-                                <li>
-                                    <a href="{{ path('admin/index') }}" class="dropdown-item">
-                                        {{ 'Admin'|trans }}
-                                    </a>
-                                </li>
+                                {{ menu.item(path('admin/index'), 'fa-screwdriver-wrench', 'Admin'|trans) }}
                             {% endif %}
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <a href="{{ path('user_logout') }}" class="dropdown-item">
-                                    {{ 'Logout'|trans }}
-                                </a>
-                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            {{ menu.item(path('user_logout'), 'fa-arrow-right-from-bracket', 'Logout'|trans) }}
                         </ul>
                     {% endif %}
                 </li>
@@ -425,8 +427,10 @@
                     {{ component('Notification:Bell') }}
                 {% endif %}
                 <li class="nav-item dropdown">
-                    <button class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button"
-                            aria-haspopup="true" aria-expanded="false" aria-label="{{ 'Settings'|trans }}"
+                    {# Choosing a language navigates away, but a theme or the festive switch should not close the panel
+                       from under the reader who is still looking at it. #}
+                    <button class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                            role="button" aria-haspopup="true" aria-expanded="false" aria-label="{{ 'Settings'|trans }}"
                     >
                         <span class="fas fa-gear"></span>
                     </button>
@@ -434,63 +438,53 @@
                         <li>
                             <h6 class="dropdown-header">{{ 'Language'|trans }}</h6>
                         </li>
-                        {% for locale in supported_locales %}
-                            {% set is_disabled = locale === app.request.locale %}
-                            {% if null !== app.current_route %}
-                                {# Use route-based localisation when available. #}
-                                {% set altlang_url = page is not defined ? path(app.current_route, app.current_route_parameters|merge({_locale: locale})) : localised_page_path(page, locale) %}
-                            {% else %}
-                                {# Otherwise, we are in an error-state and construct the URL manually. #}
-                                {% set current_path = app.request.pathinfo %}
-                                {% if current_path starts with '/' ~ app.request.locale ~ '/' %}
-                                    {% set stripped_path = current_path|slice((app.request.locale|length + 1)) %}
-                                {% else %}
-                                    {% set stripped_path = current_path %}
-                                {% endif %}
-
-                                {% set altlang_url = '/' ~ locale ~ stripped_path %}
-                            {% endif %}
-                            <li translate="no">
-                                <a lang="{{ locale }}" hreflang="{{ locale }}" class="dropdown-item {{ is_disabled ? 'disabled' }}"
-                                   href="{{ altlang_url }}">
-                                    <span class="flag-icon flag-icon-{{ locale }}"></span>{{ locale|locale_name(locale) }}
-                                </a>
-                            </li>
-                        {% endfor %}
                         <li>
-                            <hr class="dropdown-divider">
+                            <div class="nav-menu-segmented">
+                                {% for locale in supported_locales %}
+                                    {% set is_disabled = locale === app.request.locale %}
+                                    {% if null !== app.current_route %}
+                                        {# Use route-based localisation when available. #}
+                                        {% set altlang_url = page is not defined ? path(app.current_route, app.current_route_parameters|merge({_locale: locale})) : localised_page_path(page, locale) %}
+                                    {% else %}
+                                        {# Otherwise, we are in an error-state and construct the URL manually. #}
+                                        {% set current_path = app.request.pathinfo %}
+                                        {% if current_path starts with '/' ~ app.request.locale ~ '/' %}
+                                            {% set stripped_path = current_path|slice((app.request.locale|length + 1)) %}
+                                        {% else %}
+                                            {% set stripped_path = current_path %}
+                                        {% endif %}
+
+                                        {% set altlang_url = '/' ~ locale ~ stripped_path %}
+                                    {% endif %}
+                                    <a lang="{{ locale }}" hreflang="{{ locale }}" translate="no"
+                                       class="btn {{ is_disabled ? 'active' : '' }}" href="{{ altlang_url }}">
+                                        <span class="flag-icon flag-icon-{{ locale }}"></span>{{ locale|locale_name(locale) }}
+                                    </a>
+                                {% endfor %}
+                            </div>
                         </li>
+                        <li><hr class="dropdown-divider"></li>
                         <li>
                             <h6 class="dropdown-header">{{ 'Theme'|trans }}</h6>
                         </li>
                         <li>
-                            <button type="button" class="dropdown-item d-flex align-items-center"
-                                    data-bs-theme-value="gewis-day" aria-pressed="false"
-                            >
-                                <span class="fas fa-sun fa-fw me-1"></span>
-                                {{ 'Light'|trans }}
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" class="dropdown-item d-flex align-items-center"
-                                    data-bs-theme-value="gewis-night" aria-pressed="false"
-                            >
-                                <span class="fas fa-moon fa-fw me-1"></span>
-                                {{ 'Dark'|trans }}
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" class="dropdown-item d-flex align-items-center"
-                                    data-bs-theme-value="auto" aria-pressed="false"
-                            >
-                                <span class="fas fa-star-half-stroke fa-fw me-1"></span>
-                                {{ 'Auto'|trans }}
-                            </button>
+                            <div class="nav-menu-segmented">
+                                <button type="button" class="btn" data-bs-theme-value="gewis-day" aria-pressed="false">
+                                    <span class="fas fa-sun" aria-hidden="true"></span>
+                                    {{ 'Light'|trans }}
+                                </button>
+                                <button type="button" class="btn" data-bs-theme-value="gewis-night" aria-pressed="false">
+                                    <span class="fas fa-moon" aria-hidden="true"></span>
+                                    {{ 'Dark'|trans }}
+                                </button>
+                                <button type="button" class="btn" data-bs-theme-value="auto" aria-pressed="false">
+                                    <span class="fas fa-star-half-stroke" aria-hidden="true"></span>
+                                    {{ 'Auto'|trans }}
+                                </button>
+                            </div>
                         </li>
                         {% if null !== app.user and enum('App\\Entity\\User\\Enums\\UserTypes').User == app.user.getUserType %}
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                            <li><hr class="dropdown-divider"></li>
                             <li>
                                 <h6 class="dropdown-header">{{ 'Cosmetics'|trans }}</h6>
                             </li>
@@ -511,6 +505,9 @@
                                         >
                                         <label class="form-check-label" for="cosmetics-switch">
                                             {{ 'Festive effects'|trans }}
+                                            <span class="d-block nav-menu-identity-meta">
+                                                {{ 'Balloons and seasonal themes'|trans }}
+                                            </span>
                                         </label>
                                     </div>
                                 </div>

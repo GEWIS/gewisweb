@@ -8,10 +8,11 @@ use App\Entity\Application\RevisableInterface;
 use App\Entity\Application\RevisionInterface;
 use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Application\Traits\TimestampableTrait;
-use App\Entity\Career\Enums\CompanyPackageTypes;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Decision\Member as MemberModel;
 use App\Entity\Decision\Organ as OrganModel;
+use App\Entity\User\CompanyUser as CompanyUserModel;
+use App\Entity\User\Enums\UserRoles;
 use App\Repository\Career\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,8 +24,12 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OrderBy;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\PreUpdate;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Override;
 use RuntimeException;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use function array_filter;
 use function array_map;
@@ -34,13 +39,21 @@ use function count;
 /**
  * Company aggregate root.
  *
- * The stable identity, the name, slug, representative details, packages and publication flag live here and survive
+ * The stable identity, the name, slug, primary contact, packages and publication flag live here and survive
  * across edits. The revisable, reviewable content (localised texts, logo and contact details) lives on the chain of
  * {@see CompanyRevision}s. The publicly live version is {@see self::getLiveRevision()} (the latest approved revision);
  * the working head is {@see self::getCurrentRevision()}.
  */
 #[Entity(repositoryClass: CompanyRepository::class)]
 #[HasLifecycleCallbacks]
+#[UniqueConstraint(
+    name: 'company_slug_uniq',
+    columns: ['slugName'],
+)]
+#[UniqueEntity(
+    fields: ['slugName'],
+    message: 'Another company already uses this slug.',
+)]
 class Company implements RevisableInterface
 {
     use IdentifiableTrait;
@@ -59,16 +72,15 @@ class Company implements RevisableInterface
     private string $slugName;
 
     /**
-     * The name of the person representing the company. Is used for communications with the company.
+     * The representative the board writes to when it needs one answer from the company. Null when nobody has been
+     * appointed yet, or when whoever held it was removed; the admin interface then asks for a new one.
      */
-    #[Column(type: Types::STRING)]
-    private string $representativeName;
-
-    /**
-     * The email address of the person representing the company. Is used for communications with the company.
-     */
-    #[Column(type: Types::STRING)]
-    private string $representativeEmail;
+    #[ManyToOne(targetEntity: CompanyUserModel::class)]
+    #[JoinColumn(
+        nullable: true,
+        onDelete: 'SET NULL',
+    )]
+    private ?CompanyUserModel $primaryContact = null;
 
     /**
      * Whether the company is published or not.
@@ -175,6 +187,12 @@ class Company implements RevisableInterface
         $this->setLiveRevision($revision);
     }
 
+    #[Override]
+    public function restoreLiveRevision(): void
+    {
+        $this->setCurrentRevision($this->getLiveRevision());
+    }
+
     /**
      * The revision whose content is shown for this company: the live (approved) one when present, otherwise the
      * working head. Only ever null for a company with no revisions at all, which never occurs once persisted.
@@ -226,36 +244,31 @@ class Company implements RevisableInterface
         $this->slugName = $slugName;
     }
 
-    /**
-     * Get the name of the person representing the company.
-     */
-    public function getRepresentativeName(): string
+    public function getPrimaryContact(): ?CompanyUserModel
     {
-        return $this->representativeName;
+        return $this->primaryContact;
+    }
+
+    public function setPrimaryContact(?CompanyUserModel $primaryContact): void
+    {
+        $this->primaryContact = $primaryContact;
     }
 
     /**
-     * Set the name of the person representing the company.
+     * A company can only be represented towards the board by one of its own people.
      */
-    public function setRepresentativeName(string $name): void
+    #[PrePersist]
+    #[PreUpdate]
+    public function assertPrimaryContactBelongsToCompany(): void
     {
-        $this->representativeName = $name;
-    }
+        if (
+            null === $this->primaryContact
+            || $this->primaryContact->getCompany() === $this
+        ) {
+            return;
+        }
 
-    /**
-     * Get the email address of the person representing the company.
-     */
-    public function getRepresentativeEmail(): string
-    {
-        return $this->representativeEmail;
-    }
-
-    /**
-     * Set the email address of the person representing the company.
-     */
-    public function setRepresentativeEmail(string $email): void
-    {
-        $this->representativeEmail = $email;
+        throw new RuntimeException('The primary contact of a company must be one of its own representatives.');
     }
 
     /**
@@ -456,18 +469,50 @@ class Company implements RevisableInterface
     }
 
     /**
+     * The company's running package of one kind, or null when it holds none. A company is not stopped from buying the
+     * same kind twice, so this answers with the first one that is running.
+     *
+     * @template T of CompanyPackage
+     *
+     * @param class-string<T> $class
+     *
+     * @return T|null
+     */
+    public function getActivePackage(string $class): ?CompanyPackage
+    {
+        foreach ($this->getPackages() as $package) {
+            if (
+                !$package instanceof $class
+                || !$package->isActive()
+            ) {
+                continue;
+            }
+
+            return $package;
+        }
+
+        return null;
+    }
+
+    /**
      * Returns true if company is featured.
      */
     public function isFeatured(): bool
     {
-        $featuredPackages = array_filter(
-            $this->getPackages()->toArray(),
-            static function (CompanyPackage $package) {
-                return CompanyPackageTypes::Featured === $package->getType() && $package->isActive();
-            },
-        );
+        return null !== $this->getFeaturedPackage();
+    }
 
-        return [] !== $featuredPackages;
+    /**
+     * The company's running featured package, which carries the article written about it, or null when it is not being
+     * featured right now.
+     */
+    public function getFeaturedPackage(): ?CompanyFeaturedPackage
+    {
+        $package = $this->getActivePackage(CompanyFeaturedPackage::class);
+
+        return $package instanceof CompanyFeaturedPackage
+            ? $package
+            : null;
     }
 
     /**
@@ -475,14 +520,7 @@ class Company implements RevisableInterface
      */
     public function isBannerActive(): bool
     {
-        $banners = array_filter(
-            $this->getPackages()->toArray(),
-            static function (CompanyPackage $package) {
-                return CompanyPackageTypes::Banner === $package->getType() && $package->isActive();
-            },
-        );
-
-        return [] !== $banners;
+        return null !== $this->getActivePackage(CompanyBannerPackage::class);
     }
 
     /**
@@ -492,6 +530,17 @@ class Company implements RevisableInterface
     public function getResourceId(): string
     {
         return 'company';
+    }
+
+    /**
+     * On top of the board, C4 reviews everything in the career module.
+     *
+     * @return list<UserRoles>
+     */
+    #[Override]
+    public function getReviewerRoles(): array
+    {
+        return [UserRoles::CompanyAdmin];
     }
 
     /**
@@ -527,8 +576,6 @@ class Company implements RevisableInterface
      * @return array{
      *     name: string,
      *     slugName: string,
-     *     representativeName: string,
-     *     representativeEmail: string,
      *     logo: ?string,
      *     contactName: ?string,
      *     contactEmail: ?string,
@@ -549,9 +596,6 @@ class Company implements RevisableInterface
 
         $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
-
-        $arraycopy['representativeName'] = $this->getRepresentativeName();
-        $arraycopy['representativeEmail'] = $this->getRepresentativeEmail();
 
         $arraycopy['logo'] = $this->getLogo();
         $arraycopy['contactName'] = $this->getContactName();

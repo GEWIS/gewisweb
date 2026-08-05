@@ -4,10 +4,6 @@ $transition-duration: 200ms;
 
 $transition-duration-fast: 100ms;
 
-// Admin Side-Navbar
-$navbar-sidebar-width-sm: 54px;
-$navbar-sidebar-width-md: 186px;
-
 // FontAwesome path is configured via @use ... with (...) in _fontawesome.scss
 $gewisicons-font-path: "../fonts/gewisicons";
 
@@ -86,11 +82,45 @@ $dropdown-link-hover-bg-dark: $gray-900;
 
 $navbar-dropdown-spacer: 0;
 
+// Stacked date beside an activity, tinted with the brand red so it reads as GEWIS on any panel.
+$activity-date-badge-bg: rgba($gewis-red, 0.08);
+$activity-date-badge-bg-dark: rgba($gewis-red, 0.16);
+
+// Navigation rows
+//
+// A row in a panel dropping out of the navbar and a row in the section sidebar are the same object seen in two places,
+// so one set of measurements drives both and neither can drift. Each component hands them to its own custom
+// properties, the way Bootstrap hands a dropdown item its padding.
+$nav-row-padding-x: 0.625rem;
+$nav-row-padding-y: 0.5rem;
+$nav-row-font-size: 1rem;
+$nav-row-sub-padding-y: 0.4375rem;
+$nav-row-sub-font-size: 0.875rem;
+
+// A sub-section hangs off an accent line rather than flying out sideways, in both navigations.
+$nav-row-sublist-margin-start: 0.875rem;
+$nav-row-sublist-padding-start: 0.625rem;
+$nav-row-sublist-accent-width: 0.125rem;
+
+// Navigation menus (the panels dropping out of the main navbar)
+$nav-menu-hover-bg: $gray-100;
+$nav-menu-hover-bg-dark: rgba($white, 0.05);
+$nav-menu-active-bg: rgba($gewis-red, 0.08);
+$nav-menu-active-bg-dark: rgba($gewis-red, 0.16);
+$nav-menu-active-color: $gewis-red;
+$nav-menu-count-bg: #f4f5f7;
+$nav-menu-count-bg-dark: rgba($white, 0.08);
+$nav-menu-box-shadow: 0 1.125rem 2.75rem rgba(20, 22, 25, 0.16);
+$nav-menu-box-shadow-dark: 0 1.125rem 2.75rem rgba($black, 0.5);
+
 $navbar-nav-link-padding-x: 0.75rem;
 
 $navbar-padding-y: 0;
 
 // Sidebar
+$sidebar-width: 14.5rem;
+$sidebar-width-collapsed: 3.375rem;
+$sidebar-list-padding-x: 0.5rem;
 $sidebar-bg: $white;
 $sidebar-bg-dark: $background-gray;
 $sidebar-color: $gewis-gray-dark;
@@ -103,6 +133,7 @@ $sidebar-active-bg-dark: rgba($gewis-red, 0.16);
 $sidebar-border-color: $gray-200;
 $sidebar-border-color-dark: $background-gray-dark;
 $sidebar-toggler-icon-bg: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#{$sidebar-color}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+$sidebar-toggler-icon-bg-dark: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='#{$sidebar-color-dark}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
 
 // Page canvas
 $page-bg: #f4f5f7;
@@ -125,11 +156,24 @@ $nav-pills-badge-active-bg: rgba($gewis-red, 0.08);
 $nav-pills-badge-active-bg-dark: rgba($gewis-red, 0.16);
 
 // Breadcrumb
+//
+// The bar is a surface laid over the page canvas, the same relationship a panel has to it, so it takes the surface
+// colour in each theme rather than a shade of the canvas it would disappear into.
 $breadcrumb-padding-y: 0.375rem;
 $breadcrumb-margin-bottom: 0.25rem;
-$breadcrumb-bg: $gray-100;
-$breadcrumb-bg-dark: $body-secondary-bg-dark;
+$breadcrumb-bg: $white;
+$breadcrumb-bg-dark: $body-bg-dark;
 $breadcrumb-active-color-dark: $body-secondary-color-dark;
+
+// Pagination
+//
+// Bootstrap marks the page you are on, and rings a focused one, with its own primary, which is still the framework
+// blue on a site that is red everywhere else. The hover shade comes off the tertiary background, which the night theme
+// leaves at its light-mode value, so that one is moved onto a background both themes do set.
+$pagination-active-bg: $gewis-red;
+$pagination-active-border-color: $gewis-red;
+$pagination-focus-box-shadow: 0 0 0 0.25rem rgba($gewis-red, 0.25);
+$pagination-hover-bg: var(--#{$prefix}secondary-bg);
 
 // Panel
 $panel-spacer-x: 1.5rem;

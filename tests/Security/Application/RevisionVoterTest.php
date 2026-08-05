@@ -92,7 +92,7 @@ final class RevisionVoterTest extends TestCase
         );
     }
 
-    public function testCompanyAdminsMayApproveCareerDomains(): void
+    public function testCompanyAdminsMayApproveWhatNamesThemAsAReviewer(): void
     {
         $voter = new RevisionVoter($this->security(companyAdmin: true));
         $token = $this->tokenFor($this->userFor($this->member(1)));
@@ -101,13 +101,16 @@ final class RevisionVoterTest extends TestCase
             VoterInterface::ACCESS_GRANTED,
             $voter->vote(
                 $token,
-                $this->revisable('vacancy'),
+                $this->revisable(
+                    'vacancy',
+                    reviewerRoles: [UserRoles::CompanyAdmin],
+                ),
                 [RevisionVoter::APPROVE],
             ),
         );
     }
 
-    public function testCompanyAdminsMayNotApproveActivities(): void
+    public function testCompanyAdminsMayNotApproveWhatDoesNotNameThem(): void
     {
         $voter = new RevisionVoter($this->security(companyAdmin: true));
         $token = $this->tokenFor($this->userFor($this->member(1)));
@@ -343,12 +346,16 @@ final class RevisionVoterTest extends TestCase
         return $token;
     }
 
+    /**
+     * @param list<UserRoles> $reviewerRoles who reviews this resource besides the board
+     */
     private function revisable(
         string $resourceId = 'activity',
         ?Member $creator = null,
         ?Organ $organ = null,
         ?Company $company = null,
         ?RevisionInterface $currentRevision = null,
+        array $reviewerRoles = [],
     ): RevisableInterface {
         $revisable = self::createStub(RevisableInterface::class);
         $revisable->method('getResourceId')->willReturn($resourceId);
@@ -356,6 +363,7 @@ final class RevisionVoterTest extends TestCase
         $revisable->method('getResourceOrgan')->willReturn($organ);
         $revisable->method('getResourceCompany')->willReturn($company);
         $revisable->method('getCurrentRevision')->willReturn($currentRevision);
+        $revisable->method('getReviewerRoles')->willReturn($reviewerRoles);
 
         return $revisable;
     }

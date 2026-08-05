@@ -1,0 +1,58 @@
+{#
+    The heading and tabs shared by the four pages that manage one company. Pass `active` as 'profile', 'vacancies',
+    'packages' or 'representatives'. Embed it to add the page's own actions beside the link to the public page:
+
+    {% embed 'partials/career/admin/company-tabs.html.twig' with {'company': company, 'active': 'profile'} only %}
+        {% block actions %}
+            {{ parent() }}
+            <a class="btn btn-gewis-primary" href="…">…</a>
+        {% endblock %}
+    {% endembed %}
+#}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+    <div class="d-flex align-items-center gap-3">
+        <span class="career-logo career-logo-sm" aria-hidden="true">{{ company.name|slice(0, 1)|upper }}</span>
+        <span>
+            <h3 class="mb-0">{{ company.name }}</h3>
+            <code class="small">{{ company.slugName }}</code>
+        </span>
+    </div>
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        {% block actions %}
+            {% if company.liveRevision is not null and not company.hidden %}
+                <a href="{{ path('career/company', {'slug': company.slugName}) }}"
+                   class="btn btn-outline-gewis-primary" target="_blank">
+                    <span class="fas fa-arrow-up-right-from-square" aria-hidden="true"></span>
+                    {{ 'View public page'|trans }}
+                </a>
+            {% endif %}
+        {% endblock %}
+    </div>
+</div>
+
+<ul class="nav nav-pills nav-pills-compact mb-3">
+    <li class="nav-item">
+        <a class="nav-link {% if 'profile' == active %}active{% endif %}"
+           href="{{ path('admin/career/companies/view', {'company': company.id}) }}">
+            {{ 'Profile'|trans }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if 'vacancies' == active %}active{% endif %}"
+           href="{{ path('admin/career/companies/vacancies', {'company': company.id}) }}">
+            {{ 'Vacancies'|trans }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if 'packages' == active %}active{% endif %}"
+           href="{{ path('admin/career/packages/company', {'company': company.id}) }}">
+            {{ 'Packages'|trans }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if 'representatives' == active %}active{% endif %}"
+           href="{{ path('admin/career/companies/representatives', {'id': company.id}) }}">
+            {{ 'Representatives'|trans }}
+        </a>
+    </li>
+</ul>

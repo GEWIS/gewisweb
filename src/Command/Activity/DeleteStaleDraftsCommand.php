@@ -6,8 +6,8 @@ namespace App\Command\Activity;
 
 use App\Entity\Activity\Activity;
 use App\Repository\Activity\ActivityRevisionRepository;
-use App\Service\Activity\DraftDiscarder;
 use App\Service\Application\EditLockService;
+use App\Service\Application\RevisionDiscarder;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
@@ -49,7 +49,7 @@ final class DeleteStaleDraftsCommand extends Command
         private readonly ActivityRevisionRepository $activityRevisionRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly LoggerInterface $logger,
-        private readonly DraftDiscarder $draftDiscarder,
+        private readonly RevisionDiscarder $draftDiscarder,
         private readonly EditLockService $editLockService,
     ) {
         parent::__construct();

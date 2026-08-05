@@ -25,7 +25,7 @@
 {% block contents %}
     <div class="profile">
         <div class="profile-header mb-0">
-            <h1>{{ member.getFullName }}</h1>
+            <h2>{{ member.getFullName }}</h2>
             <div class="profile-badges">
                 <span class="badge {{ member.getType.badgeClass }}">{{ member.getType.label|trans }}</span>
                 <span class="badge badge-tag">{{ 'Member'|trans }} #{{ member.getLidnr }}</span>

@@ -1,0 +1,41 @@
+{#
+    The discussion beside a revision under review: what has been said so far, and a box to add to it. The thread runs
+    across the whole chain, so every comment says which revision it was left on.
+
+    {% include 'partials/application/revision-comments.html.twig' with {
+        'comments': comments,
+        'commentAction': path('admin/activities/approvals/comment', {'revision': revision.getId}),
+        'csrfToken': csrf_token('activity_review_comment-' ~ revision.getId),
+        'audienceNote': 'Visible to the organisers and the board. Use it to ask a question or leave a note.'|trans,
+    } only %}
+#}
+<div class="panel p-3">
+    <h5>{{ 'Discussion'|trans }}</h5>
+    <p class="text-muted small mb-2">{{ audienceNote }}</p>
+    {% if comments is empty %}
+        <p class="text-muted small">{{ 'No comments yet.'|trans }}</p>
+    {% else %}
+        <ul class="list-group mb-3">
+            {% for comment in comments %}
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <strong>{{ comment.authorDisplayName ?: 'Removed account'|trans }}</strong>
+                        <span class="text-muted small">
+                            {{ comment.getCreatedAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
+                            · {{ 'rev. #%n%'|trans({'%n%': comment.revision.revisionNumber}) }}
+                        </span>
+                    </div>
+                    <div class="mt-1">{{ comment.body|nl2br }}</div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form method="post" action="{{ commentAction }}">
+        <input type="hidden" name="_csrf_token" value="{{ csrfToken }}">
+        <div class="mb-2">
+            <label for="comment-message" class="form-label">{{ 'Add a comment'|trans }}</label>
+            <textarea id="comment-message" name="message" class="form-control" rows="2"></textarea>
+        </div>
+        <button type="submit" class="btn btn-sm btn-outline-gewis-primary">{{ 'Comment'|trans }}</button>
+    </form>
+</div>

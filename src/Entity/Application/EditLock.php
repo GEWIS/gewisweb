@@ -66,6 +66,7 @@ class EditLock
     #[JoinColumn(
         referencedColumnName: 'id',
         nullable: true,
+        onDelete: 'SET NULL',
     )]
     private ?CompanyUserModel $lockedByCompanyUser = null;
 

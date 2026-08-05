@@ -1,0 +1,79 @@
+{#
+    A banner package as seen by whoever may change it. The committee and the company get the same three panels, which
+    is the point: what is on the site, what is waiting for a decision, and the form that puts a new image up.
+
+    Only the committee decides, so `canDecide` adds the two buttons to the pending panel; a company sees the same
+    proposal without them. `submitLabel` and `formIntro` say what uploading means here, which is the one thing that
+    genuinely differs between the two.
+#}
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="panel mt-0">
+            <div class="panel-heading">
+                <h3>{{ 'On the website now'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                {% if package.image is null %}
+                    <p class="text-muted mb-0">{{ 'There is no banner on the website yet.'|trans }}</p>
+                {% else %}
+                    {% include 'partials/career/banner.html.twig' with {
+                        'path': package.image,
+                        'format': package.format,
+                    } only %}
+                {% endif %}
+            </div>
+        </div>
+
+        {% if package.hasPendingImage %}
+            <div class="panel">
+                <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <h3>{{ 'Waiting for a decision'|trans }}</h3>
+                    {% if canDecide %}
+                        <div class="d-flex flex-wrap gap-2">
+                            <form method="post" action="{{ path('admin/career/packages/banner/approve', {'package': package.id}) }}">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('company_banner_decide-' ~ package.id) }}">
+                                <button type="submit" class="btn btn-sm btn-outline-success">{{ 'Approve'|trans }}</button>
+                            </form>
+                            <form method="post" action="{{ path('admin/career/packages/banner/reject', {'package': package.id}) }}">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('company_banner_decide-' ~ package.id) }}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">{{ 'Reject'|trans }}</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="panel-body">
+                    <p class="text-muted small">
+                        {{ 'Proposed by %name% on %date%. Uploading another one replaces it.'|trans({
+                            '%name%': package.pendingImageSubmittedBy ? package.pendingImageSubmittedBy.name : ('a former representative'|trans),
+                            '%date%': package.pendingImageSubmittedAt|date('j F Y'),
+                        }) }}
+                    </p>
+                    {% include 'partials/career/banner.html.twig' with {
+                        'path': package.pendingImage,
+                        'format': package.format,
+                    } only %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-lg-4">
+        <div class="panel mt-0">
+            <div class="panel-heading">
+                <h3>{{ submitLabel }}</h3>
+            </div>
+            <div class="panel-body">
+                <p class="text-muted small">{{ formIntro }}</p>
+                <p class="text-muted small">
+                    {{ 'This package is a %format% banner.'|trans({'%format%': package.format|trans}) }}
+                </p>
+                {{ form_start(form, {'method': 'POST'}) }}
+                    {{ form_row(form.image) }}
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-gewis-primary">{{ submitLabel }}</button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+{#
+    A company's own vacancies as a table, shared by its dashboard and its vacancies page. Pass the `vacancies` to list
+    and the `emptyMessage` for when there are none.
+#}
+<div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+        <thead>
+            <tr>
+                <th>{{ 'Vacancy'|trans }}</th>
+                <th>{{ 'Category'|trans }}</th>
+                <th>{{ 'Status'|trans }}</th>
+                <th>{{ 'On the website'|trans }}</th>
+                <th>{{ 'Closes'|trans }}</th>
+                <th class="text-end">{{ 'Actions'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vacancy in vacancies %}
+                {% set current = vacancy.currentRevision %}
+                <tr>
+                    <td>
+                        <a href="{{ path('company/vacancies/status', {'vacancy': vacancy.id}) }}"
+                           class="text-body fw-semibold">
+                            {{ current.name|localise_text }}
+                        </a>
+                    </td>
+                    <td>
+                        <span class="badge {{ current.category.badgeClass }}">{{ current.category.label|trans }}</span>
+                    </td>
+                    <td>
+                        {% include 'partials/application/revision-status-badge.html.twig' with {
+                            'status': current.status,
+                            'live': current.liveCounterpart ? current.liveCounterpart.revisionNumber : null,
+                        } only %}
+                    </td>
+                    <td>
+                        {% if vacancy.isActive %}
+                            <span class="badge badge-success">{{ 'Live'|trans }}</span>
+                        {% else %}
+                            <span class="badge badge-secondary">{{ 'Not shown'|trans }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-muted small">
+                        {{ current.endDate is not null ? current.endDate|date('j M Y') : '-' }}
+                    </td>
+                    <td class="text-end">
+                        <a href="{{ path('company/vacancies/status', {'vacancy': vacancy.id}) }}"
+                           class="btn btn-sm btn-outline-gewis-primary">{{ 'Open'|trans }}</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted py-4">{{ emptyMessage }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -11,7 +11,9 @@ use App\Entity\Application\Traits\TimestampableTrait;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Entity\Decision\Member as MemberModel;
 use App\Entity\Decision\Organ as OrganModel;
+use App\Entity\User\Enums\UserRoles;
 use App\Repository\Career\VacancyRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -152,6 +154,12 @@ class Vacancy implements RevisableInterface
         $this->setLiveRevision($revision);
     }
 
+    #[Override]
+    public function restoreLiveRevision(): void
+    {
+        $this->setCurrentRevision($this->getLiveRevision());
+    }
+
     /**
      * The revision whose content is shown for this vacancy: the live (approved) one when present, otherwise the
      * working head. Only ever null for a vacancy with no revisions at all, which never occurs once persisted.
@@ -203,7 +211,10 @@ class Vacancy implements RevisableInterface
 
     public function isActive(): bool
     {
-        return null !== $this->getLiveRevision()
+        $live = $this->getLiveRevision();
+
+        return null !== $live
+            && $live->isWithinPostingWindow()
             && $this->isPublished()
             && $this->getPackage()->isActive()
             && !$this->getPackage()->getCompany()->isHidden();
@@ -287,6 +298,22 @@ class Vacancy implements RevisableInterface
     }
 
     /**
+     * Display proxy. The day the vacancy starts being shown, or null for as soon as it is approved.
+     */
+    public function getStartDate(): ?DateTime
+    {
+        return $this->getDisplayRevision()->getStartDate();
+    }
+
+    /**
+     * Display proxy. The last day the vacancy is shown.
+     */
+    public function getEndDate(): ?DateTime
+    {
+        return $this->getDisplayRevision()->getEndDate();
+    }
+
+    /**
      * Get the vacancy's contact's name.
      */
     public function getContactName(): ?string
@@ -325,6 +352,17 @@ class Vacancy implements RevisableInterface
     public function getResourceId(): string
     {
         return 'vacancy';
+    }
+
+    /**
+     * On top of the board, C4 reviews everything in the career module.
+     *
+     * @return list<UserRoles>
+     */
+    #[Override]
+    public function getReviewerRoles(): array
+    {
+        return [UserRoles::CompanyAdmin];
     }
 
     /**

@@ -1,0 +1,40 @@
+{#
+    The heading and tabs shared by the three career overviews. Pass `active` as 'companies', 'packages' or 'vacancies',
+    the `counts` behind each tab, and optionally `actionPath`/`actionLabel` for the tab's own "add" button.
+#}
+{% set actionPath = actionPath|default(null) %}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+    <div>
+        <h3 class="mb-0">{{ 'Career'|trans }}</h3>
+        <p class="text-muted mb-0">
+            {{ 'The companies GEWIS works with, what they have on offer, and what they pay for.'|trans }}
+        </p>
+    </div>
+    {% if actionPath is not null %}
+        <a href="{{ actionPath }}" class="btn btn-gewis-primary">
+            <span class="fas fa-plus" aria-hidden="true"></span> {{ actionLabel }}
+        </a>
+    {% endif %}
+</div>
+
+<ul class="nav nav-pills mb-3" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link {% if 'companies' == active %}active{% endif %}" href="{{ path('admin/career/index') }}">
+            {{ 'Companies'|trans }}
+            <span class="badge ms-1">{{ counts.companies }}</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if 'packages' == active %}active{% endif %}" href="{{ path('admin/career/packages/index') }}">
+            {{ 'Packages'|trans }}
+            <span class="badge ms-1">{{ counts.packages }}</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {% if 'vacancies' == active %}active{% endif %}" href="{{ path('admin/career/vacancies/index') }}">
+            {{ 'Vacancies'|trans }}
+            <span class="badge ms-1">{{ counts.vacancies }}</span>
+        </a>
+    </li>
+</ul>

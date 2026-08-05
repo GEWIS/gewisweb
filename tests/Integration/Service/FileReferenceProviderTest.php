@@ -55,6 +55,30 @@ final class FileReferenceProviderTest extends DatabaseTestCase
         self::assertFalse($provider->references('career/2/images/not-referenced.png'));
     }
 
+    /**
+     * A proposal is not on show anywhere yet, but the committee has to be able to look at it, so the bytes behind it
+     * are as spoken for as the ones behind the banner that is up.
+     */
+    public function testAProposedBannerIsReferencedTooWhileItAwaitsADecision(): void
+    {
+        $package = $this->entityManager->getRepository(CompanyBannerPackage::class)->findOneBy([]);
+        self::assertInstanceOf(
+            CompanyBannerPackage::class,
+            $package,
+            'The seed is expected to contain a company banner package.',
+        );
+        $package->setImage('career/2/images/live-banner.png');
+        $package->proposeImage(
+            'career/2/images/proposed-banner.png',
+            null,
+        );
+        $this->entityManager->flush();
+
+        $provider = new CompanyBannerReferenceProvider($this->entityManager);
+
+        self::assertTrue($provider->references('career/2/images/proposed-banner.png'));
+    }
+
     public function testOrganCoverAndThumbnailAreBothReferenced(): void
     {
         // The seed has organs but no organ information yet, so attach a fresh one carrying the two image paths.

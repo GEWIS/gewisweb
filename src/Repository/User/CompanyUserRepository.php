@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Repository\User;
 
+use App\Entity\Career\Company;
 use App\Entity\User\CompanyUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Override;
@@ -40,13 +43,56 @@ class CompanyUserRepository extends ServiceEntityRepository implements PasswordU
                 'u.company',
                 'c',
             )
-            ->where('LOWER(c.representativeEmail) = :email')
+            ->where('LOWER(u.email) = :email')
             ->setParameter(
                 'email',
                 strtolower($identifier),
             );
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * Everybody who represents a company, whether or not they are still allowed in, oldest first so the list reads as
+     * the order they joined.
+     *
+     * @return list<CompanyUser>
+     *
+     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
+     */
+    public function findForCompany(Company $company): array
+    {
+        return $this->forCompany($company)->getQuery()->getResult();
+    }
+
+    /**
+     * Only the ones who can still sign in, which is who anything addressed to "the company" should reach.
+     *
+     * @return list<CompanyUser>
+     *
+     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
+     */
+    public function findActiveForCompany(Company $company): array
+    {
+        return $this->forCompany($company)
+            ->andWhere('u.disabledAt IS NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+    private function forCompany(Company $company): QueryBuilder
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.company = :company')
+            ->setParameter(
+                'company',
+                $company->getId(),
+                Types::INTEGER,
+            )
+            ->orderBy(
+                'u.id',
+                'ASC',
+            );
     }
 
     /**
@@ -78,11 +124,11 @@ class CompanyUserRepository extends ServiceEntityRepository implements PasswordU
                         ':needle',
                     ),
                     $qb->expr()->like(
-                        'LOWER(c.representativeName)',
+                        'LOWER(u.name)',
                         ':needle',
                     ),
                     $qb->expr()->like(
-                        'LOWER(c.representativeEmail)',
+                        'LOWER(u.email)',
                         ':needle',
                     ),
                 ),
@@ -93,8 +139,8 @@ class CompanyUserRepository extends ServiceEntityRepository implements PasswordU
         }
 
         $orderField = match ($sort) {
-            'name' => 'c.representativeName',
-            'email' => 'c.representativeEmail',
+            'name' => 'u.name',
+            'email' => 'u.email',
             'mfa' => 'u.totpSecret',
             default => 'c.name',
         };

@@ -24,10 +24,7 @@ final class FrontpageController extends AbstractController
     {
         return $this->render(
             'frontpage/index.html.twig',
-            [
-                'activities' => [],
-                ...$this->homePageService->getHomePageData(),
-            ],
+            $this->homePageService->getHomePageData(),
         );
     }
 

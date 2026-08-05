@@ -21,14 +21,17 @@
 
     Breadcrumbs go in the layout's own `breadcrumbs` block, which renders in the regular
     breadcrumb bar above this band, like on every other page.
+
+    Inside a sidebar layout there is no page-wide container to line up with, so those pages override
+    `header_container_class` with `container-fluid px-3` to sit flush with the content below.
 #}
 <header class="page-header">
-    <div class="container pt-3 pb-4">
+    <div class="{% block header_container_class %}container{% endblock %} pt-3 pb-4">
         {% block header_top %}{% endblock %}
         <div class="d-flex flex-wrap justify-content-between align-items-end column-gap-4 row-gap-3">
             <div>
                 {% block header_status %}{% endblock %}
-                <h1 class="mb-0">{% block header_title %}{% endblock %}</h1>
+                <h2 class="mb-0">{% block header_title %}{% endblock %}</h2>
                 {% block header_subtitle %}{% endblock %}
             </div>
             {% if block('header_actions') is defined and block('header_actions')|trim != '' %}
@@ -40,7 +43,7 @@
     </div>
     {% if block('header_stats') is defined and block('header_stats')|trim != '' %}
         <div class="page-header-stats">
-            <div class="container d-flex flex-wrap column-gap-5 row-gap-2 py-2">
+            <div class="{{ block('header_container_class') }} d-flex flex-wrap column-gap-5 row-gap-2 py-2">
                 {{ block('header_stats') }}
             </div>
         </div>

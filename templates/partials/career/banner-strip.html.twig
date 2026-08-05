@@ -1,0 +1,42 @@
+{#
+    The advertising strip that sits between the items on a listing page. Pass the banners to show:
+
+    {% include 'partials/career/banner-strip.html.twig' with {'banners': company_banners()} only %}
+
+    One banner is shown on its own; several rotate, because the space was sold to each of them and only the first
+    would ever be seen otherwise. The carousel is given the height of the tallest banner in it, so the items below do
+    not jump every time it moves on.
+#}
+{% if banners is not empty %}
+    {% set tallest = 0 %}
+    {% for banner in banners %}
+        {% set tallest = max(tallest, banner.format.height) %}
+    {% endfor %}
+
+    <aside class="banner-strip">
+        <span class="banner-strip-label">{{ 'Advertisement'|trans }}</span>
+        {% if 1 == banners|length %}
+            {% include 'partials/career/banner-link.html.twig' with {'banner': banners|first} only %}
+        {% else %}
+            <div id="banner-carousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner" style="min-height: {{ tallest }}px;">
+                    {% for banner in banners %}
+                        <div class="carousel-item{{ loop.first ? ' active' : '' }}">
+                            {% include 'partials/career/banner-link.html.twig' with {'banner': banner} only %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="carousel-indicators">
+                    {% for banner in banners %}
+                        <button type="button"
+                                data-bs-target="#banner-carousel"
+                                data-bs-slide-to="{{ loop.index0 }}"
+                                class="{{ loop.first ? 'active' : '' }}"
+                                {% if loop.first %}aria-current="true"{% endif %}
+                                aria-label="{{ banner.company.name }}"></button>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </aside>
+{% endif %}

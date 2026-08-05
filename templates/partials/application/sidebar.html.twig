@@ -1,0 +1,63 @@
+{#
+    The rows of the section sidebar rendered by `layout-sidebar.html.twig`. Import and call from a sidebar partial:
+
+    {% import 'partials/application/sidebar.html.twig' as sidebar %}
+
+    {{ sidebar.context('DR', 'Delta Robotics', 'Company area'|trans) }}
+    <ul class="sidebar-list">
+        {{ sidebar.link(path('company/index'), 'fa-gauge-high', 'Dashboard'|trans, active) }}
+        {{ sidebar.section('career', 'fa-briefcase', 'Career'|trans, inCareer, [
+            {'href': path('admin/career/index'), 'label': 'Overview'|trans, 'active': true},
+        ]) }}
+    </ul>
+
+    A section is open when it is active or one of its children is, and toggles in place rather than flying out
+    sideways, so a page buried two levels down is still reachable in one look.
+#}
+
+{% macro context(monogram, name, meta) %}
+    <div class="sidebar-context">
+        <span class="sidebar-monogram" aria-hidden="true">{{ monogram }}</span>
+        <span class="sidebar-context-text">
+            <span class="sidebar-context-name" title="{{ name }}">{{ name }}</span>
+            <span class="sidebar-context-meta">{{ meta }}</span>
+        </span>
+    </div>
+{% endmacro %}
+
+{% macro group(label) %}
+    <span class="sidebar-group-label">{{ label }}</span>
+{% endmacro %}
+
+{% macro link(href, icon, label, active) %}
+    <li>
+        <a class="sidebar-link {{ active ? 'active' : '' }}" href="{{ href }}"
+           {% if active %}aria-current="page"{% endif %}>
+            <span class="sidebar-icon fas {{ icon }}" aria-hidden="true"></span>
+            <span class="sidebar-label">{{ label }}</span>
+        </a>
+    </li>
+{% endmacro %}
+
+{% macro section(id, icon, label, active, children) %}
+    {% set open = active or children|filter(child => child.active ?? false)|length > 0 %}
+    <li>
+        <button class="sidebar-link {{ active ? 'active' : '' }} {{ open ? '' : 'collapsed' }}" type="button"
+                data-bs-toggle="collapse" data-bs-target="#sidebar-section-{{ id }}"
+                aria-controls="sidebar-section-{{ id }}" aria-expanded="{{ open ? 'true' : 'false' }}">
+            <span class="sidebar-icon fas {{ icon }}" aria-hidden="true"></span>
+            <span class="sidebar-label">{{ label }}</span>
+            <span class="sidebar-caret fas fa-chevron-down" aria-hidden="true"></span>
+        </button>
+        <ul class="sidebar-sublist collapse {{ open ? 'show' : '' }}" id="sidebar-section-{{ id }}">
+            {% for child in children %}
+                <li>
+                    <a class="sidebar-sublink {{ child.active ?? false ? 'active' : '' }}" href="{{ child.href }}"
+                       {% if child.active ?? false %}aria-current="page"{% endif %}>
+                        {{ child.label }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </li>
+{% endmacro %}

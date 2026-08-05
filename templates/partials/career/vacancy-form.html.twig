@@ -1,0 +1,164 @@
+{#
+    The vacancy form, shared by the board's create/edit pages and the company's own. The board's form carries the
+    publication flag; a company's does not, so it is rendered only when it exists.
+#}
+{{ form_start(form, {'method': 'POST', 'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_errors(form) }}
+
+<div data-controller="localised-fields form-stepper">
+    <ol class="form-stepper" role="tablist">
+        <li class="form-stepper__step" role="presentation">
+            <button type="button" class="form-stepper__btn" role="tab"
+                    data-form-stepper-target="tab"
+                    data-action="form-stepper#goto" data-form-stepper-index-param="0">
+                <span class="form-stepper__num">1</span>
+                <span class="form-stepper__label">{{ 'General information'|trans }}</span>
+            </button>
+        </li>
+        <li class="form-stepper__step" role="presentation">
+            <button type="button" class="form-stepper__btn" role="tab"
+                    data-form-stepper-target="tab"
+                    data-action="form-stepper#goto" data-form-stepper-index-param="1">
+                <span class="form-stepper__num">2</span>
+                <span class="form-stepper__label">{{ 'Details'|trans }}</span>
+            </button>
+        </li>
+        <li class="form-stepper__step" role="presentation">
+            <button type="button" class="form-stepper__btn" role="tab"
+                    data-form-stepper-target="tab"
+                    data-action="form-stepper#goto" data-form-stepper-index-param="2">
+                <span class="form-stepper__num">3</span>
+                <span class="form-stepper__label">{{ 'Contact details'|trans }}</span>
+            </button>
+        </li>
+    </ol>
+
+    <div data-form-stepper-target="step">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'General'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            {% if form.slugName is defined %}
+                                <div class="col-md-6">{{ form_row(form.slugName) }}</div>
+                                <div class="col-md-6">{{ form_row(form.package) }}</div>
+                            {% endif %}
+                            <div class="col-md-4">{{ form_row(form.currentRevision.category) }}</div>
+                            <div class="col-md-4">{{ form_row(form.currentRevision.startDate) }}</div>
+                            <div class="col-md-4">{{ form_row(form.currentRevision.endDate) }}</div>
+                        </div>
+                        {% if form.published is defined %}
+                            {{ form_row(form.published) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Labels'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {{ form_label(form.currentRevision.labels) }}
+                        <div data-controller="label-chips"
+                             data-label-chips-placeholder-value="{{ 'Search labels...'|trans }}"
+                             data-label-chips-remove-label-value="{{ 'Remove'|trans }}"
+                             data-label-chips-no-results-value="{{ 'No matching labels'|trans }}">
+                            {{ form_widget(form.currentRevision.labels) }}
+                            {{ form_errors(form.currentRevision.labels) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-form-stepper-target="step">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Details'|trans }}</h3>
+                        <p class="text-muted small mb-0">
+                            {{ 'Enable Dutch and/or English and fill in the fields below. At least one language must be used.'|trans }}
+                        </p>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ form_row(form.currentRevision.languageDutch, {
+                                    'label': '<span class="flag-icon flag-icon-nl"></span> ' ~ ('Dutch'|trans),
+                                    'label_html': true,
+                                    'attr': {
+                                        'data-localised-fields-target': 'dutchToggle',
+                                        'data-action': 'change->localised-fields#apply',
+                                    },
+                                }) }}
+                                <hr>
+                                {{ form_row(form.currentRevision.name.valueNL, {'label': 'Title'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+                                {{ form_row(form.currentRevision.location.valueNL, {'label': 'Location'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+                                {{ form_row(form.currentRevision.website.valueNL, {'label': 'Website'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+                                {{ form_row(form.currentRevision.attachment.valueNL, {'label': 'Attachment link'|trans, 'attr': {'data-localised-fields-target': 'dutch'}}) }}
+                                {{ form_row(form.currentRevision.description.valueNL, {'label': 'Description'|trans, 'attr': {'data-localised-fields-target': 'dutch', 'data-controller': 'markdown-editor', 'data-markdown-editor-language-value': app.request.locale}}) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form_row(form.currentRevision.languageEnglish, {
+                                    'label': '<span class="flag-icon flag-icon-en"></span> ' ~ ('English'|trans),
+                                    'label_html': true,
+                                    'attr': {
+                                        'data-localised-fields-target': 'englishToggle',
+                                        'data-action': 'change->localised-fields#apply',
+                                    },
+                                }) }}
+                                <hr>
+                                {{ form_row(form.currentRevision.name.valueEN, {'label': 'Title'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                                {{ form_row(form.currentRevision.location.valueEN, {'label': 'Location'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                                {{ form_row(form.currentRevision.website.valueEN, {'label': 'Website'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                                {{ form_row(form.currentRevision.attachment.valueEN, {'label': 'Attachment link'|trans, 'attr': {'data-localised-fields-target': 'english'}}) }}
+                                {{ form_row(form.currentRevision.description.valueEN, {'label': 'Description'|trans, 'attr': {'data-localised-fields-target': 'english', 'data-controller': 'markdown-editor', 'data-markdown-editor-language-value': app.request.locale}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-form-stepper-target="step">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Contact details'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">{{ form_row(form.currentRevision.contactName) }}</div>
+                            <div class="col-md-4">{{ form_row(form.currentRevision.contactEmail) }}</div>
+                            <div class="col-md-4">{{ form_row(form.currentRevision.contactPhone) }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3 d-flex justify-content-end gap-2">
+        <a href="{{ cancelUrl }}" class="btn btn-link">{{ 'Cancel'|trans }}</a>
+        <button type="button" class="btn btn-outline-secondary"
+                data-form-stepper-target="back" data-action="form-stepper#previous">
+            {{ 'Back'|trans }}
+        </button>
+        <button type="button" class="btn btn-gewis-primary"
+                data-form-stepper-target="next" data-action="form-stepper#next">
+            {{ 'Next'|trans }}
+        </button>
+        <button type="submit" class="btn btn-gewis-primary" data-form-stepper-target="submit">
+            {{ submitLabel }}
+        </button>
+    </div>
+</div>
+{{ form_end(form) }}

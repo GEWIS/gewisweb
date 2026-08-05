@@ -1,0 +1,14 @@
+{% extends 'emails/_base.html.twig' %}
+
+{% block emailTitle %}Invitation to the GEWIS career portal{% endblock %}
+{% block preheader %}Invitation&nbsp;to&nbsp;the&nbsp;GEWIS&nbsp;career&nbsp;portal{% endblock %}
+{% block heading %}Represent {{ companyName }}{% endblock %}
+{% block subheading %}Set a password to start using the GEWIS career portal{% endblock %}
+{% block body %}
+    <p>Dear {{ fullName }},</p>
+    <p>You have been invited to represent {{ companyName }} on the GEWIS website. Through the career portal you can keep the company profile up to date, post vacancies, and follow what your contact at GEWIS makes of them.</p>
+    <p>Choose a password using the following link (valid until {{ expiresAt|date('j F Y') }}):<br><a href="{{ inviteUrl }}" style="color: #C40000; text-decoration: none;" target="_blank" rel="noopener nofollow">{{ inviteUrl }}</a></p>
+    <p>If you were not expecting this invitation, you can ignore this email. Without the link above no account is created.</p>
+    With kind regards,<br> The External Affairs Officer
+{% endblock %}
+{% block footerNoteSection %}{% endblock %}

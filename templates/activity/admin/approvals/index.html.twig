@@ -21,37 +21,10 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            {% if revisions is empty %}
-                <p class="text-muted">{{ 'There is nothing to review right now.'|trans }}</p>
-            {% else %}
-                <table class="table table-hover align-middle">
-                    <thead>
-                        <tr>
-                            <th>{{ 'Name'|trans }}</th>
-                            <th>{{ 'Submitted by'|trans }}</th>
-                            <th>{{ 'Revision'|trans }}</th>
-                            <th>{{ 'Status'|trans }}</th>
-                            <th class="text-end">{{ 'Actions'|trans }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for revision in revisions %}
-                            <tr>
-                                <td>{{ revision.name|localise_text }}</td>
-                                <td class="text-muted small">{{ revision.authorDisplayName }}</td>
-                                <td class="text-muted small">#{{ revision.revisionNumber }}</td>
-                                <td><span class="badge badge-info">{{ revision.status|trans }}</span></td>
-                                <td class="text-end">
-                                    <a href="{{ path('admin/activities/approvals/review', {'revision': revision.getId}) }}"
-                                       class="btn btn-sm btn-gewis-primary">
-                                        {{ 'Review'|trans }}
-                                    </a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% endif %}
+            {% include 'partials/application/review-queue.html.twig' with {
+                'heading': 'Activities'|trans,
+                'rows': rows,
+            } only %}
         </div>
     </div>
 {% endblock %}

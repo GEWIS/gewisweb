@@ -1,0 +1,32 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% set company = package.company %}
+
+{% block page_title %}{{ 'Package'|trans|page_title }}{{ company.name|page_title }}{{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/ckeditor5/ckeditor5.css') }}">
+{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/index') }}">{{ 'Career'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/packages/company', {'company': company.id}) }}">{{ 'Packages'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Edit'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-md-{{ package.type == constant('App\\Entity\\Career\\Enums\\CompanyPackageTypes::Featured') ? 12 : 6 }}">
+            <h3 class="mb-3">{{ 'Edit the %type% package'|trans({'%type%': package.type.label|trans}) }}</h3>
+            {% include 'partials/career/package-form.html.twig' with {
+                'form': form,
+                'cancelUrl': path('admin/career/packages/company', {'company': company.id}),
+            } only %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{#
+    One banner as a visitor meets it. It leads to the company that paid for it, unless that company has nothing public
+    to lead to, in which case the artwork is shown on its own rather than pointing at a page that is not there.
+#}
+{% set company = banner.company %}
+{% set linkable = company.liveRevision is not null and not company.hidden %}
+
+{% if linkable %}
+    <a class="banner" href="{{ path('career/company', {'slug': company.slugName}) }}">
+{% else %}
+    <span class="banner">
+{% endif %}
+    {% include 'partials/career/banner.html.twig' with {
+        'path': banner.image,
+        'format': banner.format,
+        'alt': company.name,
+    } only %}
+{% if linkable %}
+    </a>
+{% else %}
+    </span>
+{% endif %}

@@ -1,216 +1,185 @@
-{% if null === app.user %}
-    <li class="nav-item">
-        <a class="nav-link p-3" href="{{ path('user_login') }}">
-            {{ 'Login'|trans }}
-        </a>
-    </li>
-{% elseif enum('App\\Entity\\User\\Enums\\UserTypes').User === app.user.getUserType %}
-    {% if is_granted('ROLE_ACTIVE_MEMBER') or is_granted('ROLE_BOARD') %}
-        {% set activityActive = is_module_active(['activity']) %}
-        <li class="nav-item dropdown dropend {{ activityActive ? 'active default open' : '' }}">
-            <a class="nav-link p-3 dropdown-toggle"
-               href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ activityActive ? 'true' : 'false' }}">
-                {{ 'Activities'|trans }}
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/activities/index') }}">
-                        {{ 'Overview'|trans }}
-                    </a>
-                </li>
-                {% if is_granted('ROLE_BOARD') %}
-                    <li>
-                        <a class="dropdown-item" href="{{ path('admin/activities/approvals/index') }}">
-                            {{ 'Approvals'|trans }}
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="{{ path('admin/activities/labels/index') }}">
-                            {{ 'Labels'|trans }}
-                        </a>
-                    </li>
-                {% endif %}
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/activities/calendar/index') }}">
-                        {{ 'Option Calendar'|trans }}
-                    </a>
-                </li>
-            </ul>
-        </li>
-    {% endif %}
-    {% if is_granted('ROLE_ACTIVE_MEMBER') or is_granted('ROLE_BOARD') %}
-        <li class="nav-item {{ is_module_active(['decision', 'adminbody']) ? 'active' }}">
-            <a class="nav-link p-3" href="{{ path('admin/decision/bodies/index') }}">
-                {{ 'Bodies'|trans }}
-            </a>
-        </li>
-    {% endif %}
-    {% if is_granted('ROLE_BOARD') %}
-        {% set meetingsActive = is_module_active(['decision', 'adminmeeting']) or is_module_active(['decision', 'adminreferencedocument']) %}
-        <li class="nav-item dropdown dropend {{ meetingsActive ? 'active default open' : '' }}">
-            <a class="nav-link p-3 dropdown-toggle"
-               href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ meetingsActive ? 'true' : 'false' }}">
-                {{ 'Meetings'|trans }}
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/meetings/index') }}">
-                        {{ 'Overview'|trans }}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/meetings/authorizations') }}">
-                        {{ 'Authorizations'|trans }}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/meetings/reference/index') }}">
-                        {{ 'Reference documents'|trans }}
-                    </a>
-                </li>
-            </ul>
-        </li>
-    {% endif %}
-    {% if is_granted('ROLE_COMPANY_ADMIN') or is_granted('ROLE_BOARD') %}
-        {% set companyActive = is_module_active(['career']) %}
-        <li class="nav-item dropdown dropend {{ companyActive ? 'active default open' : '' }}">
-            <a class="nav-link p-3 dropdown-toggle"
-               href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ companyActive ? 'true' : 'false' }}">
-                {{ 'Career'|trans }}
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/career/index') }}">
-                        {{ 'Companies'|trans }}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/career/approvals/index') }}">
-                        {{ 'Approvals'|trans }}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/career/vacancies/labels/index') }}">
-                        {{ 'Labels'|trans }}
-                    </a>
-                </li>
-            </ul>
-        </li>
-    {% endif %}
-    {% if is_granted('ROLE_BOARD') %}
-        {% set educationActive = is_module_active(['education']) %}
-        <li class="nav-item dropdown dropend {{ educationActive ? 'active default open' : '' }}">
-            <a class="nav-link p-3 dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ educationActive ? 'true' : 'false' }}">
-                {{ 'Education'|trans }}
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/education/index') }}">
-                        {{ 'Courses'|trans }}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/education/exams/upload') }}">
-                        {{ 'Upload exams'|trans }}
-                    </a>
-                </li>
-            </ul>
-        </li>
-        {% set frontpageActive = is_module_active(['frontpage']) %}
-        <li class="nav-item dropdown dropend {{ frontpageActive ? 'active default open' : '' }}">
-            <a class="nav-link p-3 dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ educationActive ? 'true' : 'false' }}">
-                {{ 'Frontpage'|trans }}
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/frontpage/news/index') }}">
-                        {{ 'News'|trans }}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/frontpage/polls/index') }}">
-                        {{ 'Polls'|trans }}
-                    </a>
-                </li>
-            </ul>
-        </li>
-        {% set photoActive = is_module_active(['photo']) %}
-        <li class="nav-item dropdown dropend {{ photoActive ? 'active default open' : '' }}">
-            <a class="nav-link p-3 dropdown-toggle"
-               href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ photoActive ? 'true' : 'false' }}">
-                {{ 'Photos'|trans }}
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/photos/index') }}">
-                        {{ 'Overview'|trans }}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/photos/weekly') }}">
-                        {{ 'Photo of the Week'|trans }}
-                    </a>
-                </li>
-            </ul>
-        </li>
-    {% endif %}
+{% import 'partials/application/sidebar.html.twig' as sidebar %}
+
+{# The sidebar says which hat the reader is wearing, since what it offers below depends on it. #}
+{% if null == app.user %}
+    {% set role = 'Not signed in'|trans %}
+{% elseif is_granted('ROLE_ADMIN') %}
+    {% set role = 'Administrator'|trans %}
+{% elseif is_granted('ROLE_BOARD') %}
+    {% set role = 'Board member'|trans %}
+{% elseif is_granted('ROLE_COMPANY_ADMIN') %}
+    {% set role = 'Company administrator'|trans %}
+{% else %}
+    {% set role = 'Active member'|trans %}
+{% endif %}
+{{ sidebar.context('A', 'Administration'|trans, role) }}
+
+{% if null == app.user %}
+    <ul class="sidebar-list">
+        {{ sidebar.link(path('user_login'), 'fa-right-to-bracket', 'Login'|trans, false) }}
+    </ul>
+{% elseif enum('App\\Entity\\User\\Enums\\UserTypes').User == app.user.getUserType %}
+    <ul class="sidebar-list">
+        {% if is_granted('ROLE_ACTIVE_MEMBER') or is_granted('ROLE_BOARD') %}
+            {{ sidebar.section('activities', 'fa-calendar-days', 'Activities'|trans, is_module_active(['activity']), [
+                {
+                    'href': path('admin/activities/index'),
+                    'label': 'Overview'|trans,
+                    'active': is_module_active(['activity', 'admin']),
+                },
+                is_granted('ROLE_BOARD') ? {
+                    'href': path('admin/activities/approvals/index'),
+                    'label': 'Approvals'|trans,
+                    'active': is_module_active(['activity', 'adminapproval']),
+                } : null,
+                is_granted('ROLE_BOARD') ? {
+                    'href': path('admin/activities/labels/index'),
+                    'label': 'Labels'|trans,
+                    'active': is_module_active(['activity', 'adminactivitylabel']),
+                } : null,
+                {
+                    'href': path('admin/activities/calendar/index'),
+                    'label': 'Option Calendar'|trans,
+                    'active': is_module_active(['activity', 'adminactivitycalendar']),
+                },
+            ]|filter(child => child is not null)) }}
+
+            {{ sidebar.link(
+                path('admin/decision/bodies/index'),
+                'fa-sitemap',
+                'Bodies'|trans,
+                is_module_active(['decision', 'adminbody']),
+            ) }}
+        {% endif %}
+
+        {% if is_granted('ROLE_BOARD') %}
+            {% set meetingAuthorizations = is_module_active(['decision', 'adminmeeting', 'authorizations']) %}
+            {{ sidebar.section('meetings', 'fa-gavel', 'Meetings'|trans, is_module_active(['decision', 'adminmeeting']) or is_module_active(['decision', 'adminreferencedocument']), [
+                {
+                    'href': path('admin/meetings/index'),
+                    'label': 'Overview'|trans,
+                    'active': is_module_active(['decision', 'adminmeeting']) and not meetingAuthorizations,
+                },
+                {
+                    'href': path('admin/meetings/authorizations'),
+                    'label': 'Authorizations'|trans,
+                    'active': meetingAuthorizations,
+                },
+                {
+                    'href': path('admin/meetings/reference/index'),
+                    'label': 'Reference documents'|trans,
+                    'active': is_module_active(['decision', 'adminreferencedocument']),
+                },
+            ]) }}
+        {% endif %}
+
+        {% if is_granted('ROLE_COMPANY_ADMIN') or is_granted('ROLE_BOARD') %}
+            {{ sidebar.section('career', 'fa-briefcase', 'Career'|trans, is_module_active(['career']), [
+                {
+                    'href': path('admin/career/index'),
+                    'label': 'Overview'|trans,
+                    'active': is_module_active(['career', 'admin'])
+                        or is_module_active(['career', 'adminpackage'])
+                        or is_module_active(['career', 'adminvacancy'])
+                        or is_module_active(['career', 'adminrepresentative']),
+                },
+                {
+                    'href': path('admin/career/approvals/index'),
+                    'label': 'Approvals'|trans,
+                    'active': is_module_active(['career', 'adminapproval']),
+                },
+                {
+                    'href': path('admin/career/vacancies/labels/index'),
+                    'label': 'Labels'|trans,
+                    'active': is_module_active(['career', 'adminvacancylabel']),
+                },
+            ]) }}
+        {% endif %}
+
+        {% if is_granted('ROLE_BOARD') %}
+            {{ sidebar.section('education', 'fa-graduation-cap', 'Education'|trans, is_module_active(['education']), [
+                {
+                    'href': path('admin/education/index'),
+                    'label': 'Courses'|trans,
+                    'active': is_module_active(['education', 'admin', 'index']),
+                },
+                {
+                    'href': path('admin/education/exams/upload'),
+                    'label': 'Upload exams'|trans,
+                    'active': is_module_active(['education', 'admin', 'upload']),
+                },
+            ]) }}
+
+            {{ sidebar.section('frontpage', 'fa-house', 'Frontpage'|trans, is_module_active(['frontpage']), [
+                {
+                    'href': path('admin/frontpage/news/index'),
+                    'label': 'News'|trans,
+                    'active': is_module_active(['frontpage', 'adminnews']),
+                },
+                {
+                    'href': path('admin/frontpage/polls/index'),
+                    'label': 'Polls'|trans,
+                    'active': is_module_active(['frontpage', 'adminpoll']),
+                },
+            ]) }}
+
+            {% set photoWeekly = is_module_active(['photo', 'admin', 'weekly']) %}
+            {{ sidebar.section('photos', 'fa-image', 'Photos'|trans, is_module_active(['photo']), [
+                {
+                    'href': path('admin/photos/index'),
+                    'label': 'Overview'|trans,
+                    'active': is_module_active(['photo', 'admin']) and not photoWeekly,
+                },
+                {
+                    'href': path('admin/photos/weekly'),
+                    'label': 'Photo of the Week'|trans,
+                    'active': photoWeekly,
+                },
+            ]) }}
+        {% endif %}
+    </ul>
+
     {% if is_granted('ROLE_ADMIN') %}
-        {% set userActive = is_module_active(['user']) %}
-        <li class="nav-item dropdown dropend {{ userActive ? 'active default open' : '' }}">
-            <a class="nav-link p-3 dropdown-toggle"
-               href="#" data-bs-toggle="dropdown" data-bs-offset="0,0" aria-expanded="{{ userActive ? 'true' : 'false' }}">
-                {{ 'Users'|trans }}
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/users/api/index') }}">
-                        {{ 'API Users'|trans }}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/users/apps/index') }}">
-                        {{ 'External Apps'|trans }}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/users/index') }}">
-                        {{ 'Users'|trans }}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/users/company-users/index') }}">
-                        {{ 'Company Users'|trans }}
-                    </a>
-                </li>
+        <div>
+            {{ sidebar.group('System'|trans) }}
+            <ul class="sidebar-list">
+                {% set companyUsers = is_module_active(['user', 'admin', 'companyusersindex']) %}
+                {{ sidebar.section('users', 'fa-user-group', 'Users'|trans, is_module_active(['user']), [
+                    {
+                        'href': path('admin/users/index'),
+                        'label': 'Users'|trans,
+                        'active': is_module_active(['user', 'admin']) and not companyUsers,
+                    },
+                    {
+                        'href': path('admin/users/company-users/index'),
+                        'label': 'Company Users'|trans,
+                        'active': companyUsers,
+                    },
+                    {
+                        'href': path('admin/users/api/index'),
+                        'label': 'API Users'|trans,
+                        'active': is_module_active(['user', 'adminapiuser']),
+                    },
+                    {
+                        'href': path('admin/users/apps/index'),
+                        'label': 'External Apps'|trans,
+                        'active': is_module_active(['user', 'adminexternalapp']),
+                    },
+                ]) }}
+
+                {{ sidebar.section('application', 'fa-sliders', 'Application'|trans, is_module_active(['application', 'announcement']) or is_module_active(['application', 'maintenance']), [
+                    {
+                        'href': path('admin/announcement'),
+                        'label': 'Announcement'|trans,
+                        'active': is_module_active(['application', 'announcement']),
+                    },
+                    {
+                        'href': path('admin/maintenance'),
+                        'label': 'Maintenance'|trans,
+                        'active': is_module_active(['application', 'maintenance']),
+                    },
+                ]) }}
             </ul>
-        </li>
-        {% set applicationActive = is_module_active(['application']) %}
-        <li class="nav-item dropdown dropend {{ applicationActive ? 'active default open' : '' }}">
-            <a class="nav-link p-3 dropdown-toggle"
-               href="#" data-bs-toggle="dropdown" data-bs-offset="0,0"
-               aria-expanded="{{ applicationActive ? 'true' : 'false' }}">
-                {{ 'Application'|trans }}
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/announcement') }}">
-                        {{ 'Announcement'|trans }}
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ path('admin/maintenance') }}">
-                        {{ 'Maintenance'|trans }}
-                    </a>
-                </li>
-            </ul>
-        </li>
+        </div>
     {% endif %}
 {% endif %}
-<hr class="mt-auto mb-0">
-<li class="nav-item">
-    {% set commit = app.request.server.get('GIT_COMMIT') %}
-    <a class="nav-link p-3" target="_blank"
-       href="https://github.com/gewis/gewisweb/commit/{{ commit }}">
-        <small><span class="fab fa-github"></span> {{ commit|slice(0, 7) }}</small>
-    </a>
-</li>

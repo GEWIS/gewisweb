@@ -9,9 +9,6 @@ use App\Entity\Application\Enums\NotificationType;
 use App\Entity\Application\Notification;
 use App\Entity\User\CompanyUser;
 use App\Entity\User\User;
-use App\Repository\Activity\ActivityRepository;
-use App\Repository\Activity\ActivityRevisionRepository;
-use App\Repository\Photo\AlbumRepository;
 use App\Service\Application\DeviceDescription;
 use App\Service\Application\NotificationContextResolver;
 use App\Service\Application\NotificationSubjectResolver;
@@ -165,15 +162,6 @@ final class RealtimeNotificationChannelTest extends TestCase
             return 'id';
         });
 
-        // The resolver is final, so it is built for real over repositories that find nothing: these tests are about
-        // which topic a notification lands on and whether a frozen label stands in for a subject, not about lookups.
-        $albums = self::createStub(AlbumRepository::class);
-        $albums->method('findBy')->willReturn([]);
-        $activities = self::createStub(ActivityRepository::class);
-        $activities->method('findBy')->willReturn([]);
-        $revisions = self::createStub(ActivityRevisionRepository::class);
-        $revisions->method('findBy')->willReturn([]);
-
         $translator = self::createStub(TranslatorInterface::class);
         $translator->method('trans')->willReturnCallback(
             static fn (string $id, array $parameters = []): string => strtr(
@@ -190,11 +178,9 @@ final class RealtimeNotificationChannelTest extends TestCase
 
         return new RealtimeNotificationChannel(
             new RealtimeNotifier($hub),
-            new NotificationSubjectResolver(
-                $albums,
-                $activities,
-                $revisions,
-            ),
+            // Nobody names a subject here: these tests are about which topic a notification lands on and whether a
+            // frozen label stands in for a subject, not about lookups.
+            new NotificationSubjectResolver([]),
             new NotificationContextResolver(new DeviceDescription($translator)),
             $translator,
             $urlGenerator,

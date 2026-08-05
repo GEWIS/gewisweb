@@ -67,16 +67,30 @@
             --#{$prefix}panel-bg: var(--#{$prefix}secondary-bg);
         }
     }
+
+    .activity-date-badge {
+        background-color: #{$activity-date-badge-bg-dark};
+    }
+
+    .agenda-item:hover,
+    .agenda-item:focus-visible {
+        background-color: var(--#{$prefix}secondary-bg);
+    }
 }
 
-// Stacked date on the left of each activity list item: red uppercase month on top, bold body-coloured day, small
-// weekday underneath. No background box — it sits directly on the panel surface and is top-aligned with the title.
+// Stacked date beside an activity, wherever one is listed: red uppercase month on top, bold day, small weekday
+// underneath, on a brand-tinted block that keeps it readable against both the list panels and a side panel.
 .activity-date-badge {
     display: flex;
     flex: 0 0 auto;
     flex-direction: column;
     align-items: center;
+    // Without this the block stretches to whatever the row is tall, which on the overview is the whole description.
+    align-self: flex-start;
     width: 3.5rem;
+    padding: 0.3125rem 0.25rem 0.375rem;
+    border-radius: var(--#{$prefix}border-radius);
+    background-color: #{$activity-date-badge-bg};
     line-height: 1.2;
     text-align: center;
 
@@ -107,4 +121,28 @@
         font-size: 0.95rem;
         letter-spacing: -0.02em;
     }
+}
+
+// A compact activity row for a side panel: the agenda on the frontpage, the career events on the career overview.
+.agenda-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    margin: 0 -0.5rem;
+    border-radius: var(--#{$prefix}border-radius);
+    color: var(--#{$prefix}body-color);
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+        background-color: var(--#{$prefix}tertiary-bg);
+        color: var(--#{$prefix}body-color);
+        text-decoration: none;
+    }
+}
+
+.agenda-item-body {
+    flex: 1 1 auto;
+    min-width: 0;
 }

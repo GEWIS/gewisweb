@@ -84,8 +84,9 @@ final readonly class FilePathResolver
 
     /**
      * The image profile (variant set + quality) that governs a variant of a stored path, or null when the path is not a
-     * variant-generating image namespace. Company images split into logo vs. banner by the requested variant's width,
-     * since both share the same career namespace.
+     * variant-generating image namespace. Company logos and banners share the career namespace, so the requested
+     * variant says which of the two is being served: a banner is only ever asked for at one of the boxes its format
+     * is shown in.
      */
     public function profileForPath(
         string $path,
@@ -96,9 +97,11 @@ final readonly class FilePathResolver
             StorageNamespace::PhotoCover => ImageProfile::AlbumCover,
             StorageNamespace::OrganImage => ImageProfile::OrganImage,
             StorageNamespace::PageImage => ImageProfile::PageImage,
-            StorageNamespace::CompanyImage => $variant->width() <= ImageVariant::W640->width()
-                ? ImageProfile::CompanyLogo
-                : ImageProfile::CompanyBanner,
+            StorageNamespace::CompanyImage => match ($variant) {
+                ImageVariant::Leaderboard, ImageVariant::Leaderboard2x => ImageProfile::CompanyBannerLeaderboard,
+                ImageVariant::Billboard, ImageVariant::Billboard2x => ImageProfile::CompanyBannerBillboard,
+                default => ImageProfile::CompanyLogo,
+            },
             default => null,
         };
     }

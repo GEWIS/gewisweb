@@ -52,7 +52,10 @@ class PasswordReset
     private ?Member $member = null;
 
     #[ManyToOne(targetEntity: CompanyUser::class)]
-    #[JoinColumn(nullable: true)]
+    #[JoinColumn(
+        nullable: true,
+        onDelete: 'CASCADE',
+    )]
     private ?CompanyUser $companyUser = null;
 
     /**

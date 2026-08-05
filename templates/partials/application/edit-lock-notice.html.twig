@@ -1,0 +1,40 @@
+{#
+    Somebody else holds the edit lock. Every module says the same thing about it, so they all say it through here;
+    only what is being edited and where the reader goes instead belong to the module.
+
+    {% include 'partials/application/edit-lock-notice.html.twig' with {
+        'lock': lock,
+        'subject': 'this vacancy'|trans,
+        'backUrl': path('admin/career/vacancies/index'),
+        'backLabel': 'Back to overview'|trans,
+        'takeOverUrl': path('admin/career/vacancies/edit', {'vacancy': vacancy.id, 'take': 1}),
+    } only %}
+
+    takeOverUrl is optional; when it is given the control still only shows to the board, which is who may force a
+    lock open.
+#}
+<div class="panel">
+    <div class="panel-heading">
+        <h3>{{ 'Already being edited'|trans }}</h3>
+    </div>
+    <div class="panel-body">
+        {% if lock is not null %}
+            <p>
+                {{ '%name% has been editing %subject% since %time%.'|trans({
+                    '%name%': lock.holderDisplayName,
+                    '%subject%': subject,
+                    '%time%': lock.lastPingAt|format_datetime(pattern: 'HH:mm', locale: app.request.locale),
+                }) }}
+            </p>
+        {% else %}
+            <p>{{ 'Somebody else is editing %subject% right now.'|trans({'%subject%': subject}) }}</p>
+        {% endif %}
+        <p class="text-muted">{{ 'Try again once they are finished.'|trans }}</p>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ backUrl }}" class="btn btn-secondary">{{ backLabel }}</a>
+            {% if takeOverUrl is defined and takeOverUrl is not null and is_granted('ROLE_BOARD') %}
+                <a href="{{ takeOverUrl }}" class="btn btn-outline-gewis-primary">{{ 'Take over editing'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

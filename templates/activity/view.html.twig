@@ -39,7 +39,7 @@
     {% endif %}
     <div class="row">
         <main class="col-md-8">
-            <h1 class="mb-2">{{ activity_title(activity) }}</h1>
+            <h2 class="mb-2">{{ activity_title(activity) }}</h2>
             <div class="d-flex flex-wrap gap-1 mb-3">
                 {% if activity.getCategory.value not in ['other', 'uncategorised'] %}
                     <span class="badge badge-gewis-primary">{{ activity.getCategory|trans }}</span>

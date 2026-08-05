@@ -1,0 +1,336 @@
+// Navigation menu
+//
+// The panels that drop out of the main navbar. Every panel is a set of labelled groups rather than one flat run of
+// links, a sub-section expands inside the panel instead of flying out sideways, and the action that ends a menu sits
+// last behind a rule. The rows are the same shape as the ones in `_sidebar.scss`.
+
+.navbar-gewis {
+    .dropdown-menu {
+        --#{$prefix}dropdown-padding-x: 0.5rem;
+        --#{$prefix}dropdown-padding-y: 0.5rem;
+        --#{$prefix}dropdown-item-padding-x: #{$nav-row-padding-x};
+        --#{$prefix}dropdown-item-padding-y: #{$nav-row-padding-y};
+        --#{$prefix}dropdown-border-radius: 0.875rem;
+        --#{$prefix}dropdown-link-hover-bg: #{$nav-menu-hover-bg};
+        --#{$prefix}dropdown-link-active-bg: #{$nav-menu-active-bg};
+        --#{$prefix}dropdown-link-active-color: #{$nav-menu-active-color};
+
+        min-width: 17rem;
+        max-width: calc(100vw - 1rem);
+        box-shadow: #{$nav-menu-box-shadow};
+    }
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        border-radius: 0.5625rem;
+        font-weight: 500;
+
+        &.active,
+        &:active {
+            font-weight: 600;
+        }
+    }
+
+    // Group heading above a run of rows.
+    .dropdown-header {
+        padding: 0.5rem $nav-row-padding-x 0.3125rem;
+        color: var(--#{$prefix}secondary-color);
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+    }
+
+    .dropdown-divider {
+        margin: 0.4375rem 0.25rem;
+        opacity: 1;
+        border-top-color: var(--#{$prefix}border-color-translucent);
+    }
+}
+
+.nav-menu-icon {
+    flex: none;
+    width: 0.9375rem;
+    font-size: 0.8125rem;
+    text-align: center;
+    color: var(--#{$prefix}secondary-color);
+}
+
+.dropdown-item.active .nav-menu-icon,
+.nav-menu-action .nav-menu-icon {
+    color: inherit;
+}
+
+// How many things sit behind a row, so you know whether the click is worth it.
+.nav-menu-count {
+    flex: none;
+    padding: 0.0625rem 0.4375rem;
+    border-radius: 0.375rem;
+    background-color: #{$nav-menu-count-bg};
+    color: var(--#{$prefix}secondary-color);
+    font-size: 0.6875rem;
+    font-weight: 700;
+}
+
+.nav-menu-label {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+// The featured company leads with its mark rather than an icon, the same monogram placeholder the career cards use.
+.nav-menu-monogram {
+    flex: none;
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 0.4375rem;
+    font-size: 0.625rem;
+}
+
+// Bootstrap adds `.collapsed` while the list is hidden, so the chevron points down only when open.
+.nav-menu-caret {
+    flex: none;
+    font-size: 0.625rem;
+    color: var(--#{$prefix}secondary-color);
+    transition: transform $transition-duration ease;
+}
+
+.dropdown-item.collapsed .nav-menu-caret {
+    transform: rotate(-90deg);
+}
+
+// A sub-section expands here rather than flying out to the side, which is unhittable on a trackpad and impossible on
+// touch. The accent line ties the children back to the row that opened them.
+.nav-menu-sublist {
+    list-style: none;
+    margin: 0.125rem 0 0.25rem $nav-row-sublist-margin-start;
+    padding: 0 0 0 $nav-row-sublist-padding-start;
+    border-left: $nav-row-sublist-accent-width solid #{$nav-menu-active-bg};
+
+    .dropdown-item {
+        padding-block: $nav-row-sub-padding-y;
+        color: var(--#{$prefix}secondary-color);
+        font-size: $nav-row-sub-font-size;
+
+        &.active {
+            color: var(--#{$prefix}dropdown-link-active-color);
+        }
+    }
+}
+
+// The one action that ends a menu: contact, create, log out.
+.nav-menu-action {
+    --#{$prefix}dropdown-link-color: #{$nav-menu-active-color};
+    --#{$prefix}dropdown-link-hover-color: #{$nav-menu-active-color};
+    --#{$prefix}dropdown-link-hover-bg: #{$nav-menu-active-bg};
+
+    background-color: #{$nav-menu-active-bg};
+    font-weight: 600;
+}
+
+// Who is signed in, at the top of the account menu.
+.nav-menu-identity {
+    display: flex;
+    align-items: center;
+    gap: 0.6875rem;
+    padding: 0.5625rem 0.625rem 0.6875rem;
+}
+
+.nav-menu-avatar {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.375rem;
+    height: 2.375rem;
+    border-radius: 50%;
+    background-color: #{$nav-menu-active-bg};
+    color: #{$nav-menu-active-color};
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.nav-menu-identity-text {
+    min-width: 0;
+}
+
+.nav-menu-identity-name {
+    display: block;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nav-menu-identity-meta {
+    display: block;
+    color: var(--#{$prefix}secondary-color);
+    font-size: 0.78125rem;
+}
+
+// Language and theme are a handful of exclusive options each, which read better as one row of segments than as a list
+// of look-alike rows.
+.nav-menu-segmented {
+    display: flex;
+    gap: 0.3125rem;
+    padding: 0 0.25rem 0.25rem;
+
+    .btn {
+        --#{$prefix}btn-border-color: transparent;
+        --#{$prefix}btn-bg: #{$nav-menu-count-bg};
+        --#{$prefix}btn-color: var(--#{$prefix}secondary-color);
+        --#{$prefix}btn-hover-border-color: transparent;
+        --#{$prefix}btn-hover-bg: #{$nav-menu-hover-bg};
+        --#{$prefix}btn-hover-color: var(--#{$prefix}body-color);
+        --#{$prefix}btn-active-bg: #{$nav-menu-active-bg};
+        --#{$prefix}btn-active-color: #{$nav-menu-active-color};
+        --#{$prefix}btn-active-border-color: #{rgba($gewis-red, 0.25)};
+        --#{$prefix}btn-border-radius: 0.5625rem;
+        --#{$prefix}btn-font-size: #{$font-size-sm};
+        --#{$prefix}btn-font-weight: 500;
+        --#{$prefix}btn-padding-y: 0.5rem;
+        --#{$prefix}btn-padding-x: 0.375rem;
+
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.375rem;
+        white-space: nowrap;
+
+        &.active {
+            font-weight: 600;
+        }
+    }
+}
+
+// A panel anchored to a toggle that sits near the right edge runs off a phone screen, and these panels are wider than
+// Bootstrap's default. Below `sm` they are pinned to the viewport instead of to whatever they hang from.
+// These panels are wider than Bootstrap's default, and the toggles they hang from sit well short of the right edge, so
+// on a phone they ran off the screen. Dropping the positioning off the nav item lets them resolve against the navbar
+// instead and span it: `right`/`left` rather than `inset-inline`, and repeated with the attribute Bootstrap stamps on
+// a positioned menu, since its own `right: 0; left: auto` is more specific than a plain two-class selector.
+@include media-breakpoint-down(sm) {
+    .navbar-gewis {
+        .nav-item.dropdown {
+            position: static;
+        }
+
+        .dropdown-menu-end,
+        .dropdown-menu-end[data-bs-popper] {
+            right: 0.5rem;
+            left: 0.5rem;
+            width: auto;
+            min-width: 0;
+            max-width: none;
+        }
+    }
+}
+
+// Below `lg` the whole navigation moves into the offcanvas, where a panel floating over a red slab reads as a
+// different component again. It becomes the same light surface as the section sidebar instead: the bar items are rows,
+// and the menu that belongs to one indents underneath it.
+@include media-breakpoint-down(lg) {
+    #navbar-gewis-collapse {
+        --#{$prefix}offcanvas-bg: #{$sidebar-bg};
+
+        color: var(--#{$prefix}body-color);
+
+        .nav-link {
+            --#{$prefix}nav-link-color: #{$sidebar-color};
+            --#{$prefix}nav-link-hover-color: #{$sidebar-color};
+            --#{$prefix}nav-link-hover-bg: #{$sidebar-hover-bg};
+            --#{$prefix}nav-link-font-size: #{$nav-row-font-size};
+            --#{$prefix}nav-link-padding-y: #{$nav-row-padding-y};
+            --#{$prefix}nav-link-padding-x: #{$nav-row-padding-x};
+
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            border-radius: 0.625rem;
+            font-weight: 500;
+        }
+
+        .active > .nav-link {
+            background-color: #{$sidebar-active-bg};
+            color: #{$sidebar-active-color};
+            font-weight: 600;
+        }
+
+        // The panel is not a panel down here, it is the rows belonging to the item above it.
+        .dropdown-menu {
+            --#{$prefix}dropdown-bg: transparent;
+            --#{$prefix}dropdown-padding-x: 0;
+            --#{$prefix}dropdown-padding-y: 0;
+
+            width: 100%;
+            margin: 0.125rem 0 0.25rem $nav-row-sublist-margin-start;
+            padding-left: $nav-row-sublist-padding-start;
+            border: 0;
+            border-left: $nav-row-sublist-accent-width solid #{$nav-menu-active-bg};
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        // Already indented by its parent menu, so it only needs the accent line.
+        .nav-menu-sublist {
+            margin-left: 0;
+        }
+    }
+}
+
+@include color-mode(gewis-night) {
+    .navbar-gewis {
+        .dropdown-menu {
+            --#{$prefix}dropdown-link-hover-bg: #{$nav-menu-hover-bg-dark};
+            --#{$prefix}dropdown-link-active-bg: #{$nav-menu-active-bg-dark};
+
+            box-shadow: #{$nav-menu-box-shadow-dark};
+        }
+    }
+
+    .nav-menu-count {
+        background-color: #{$nav-menu-count-bg-dark};
+    }
+
+    .nav-menu-sublist {
+        border-left-color: #{$nav-menu-active-bg-dark};
+    }
+
+    .nav-menu-action,
+    .nav-menu-avatar {
+        background-color: #{$nav-menu-active-bg-dark};
+    }
+
+    .nav-menu-action {
+        --#{$prefix}dropdown-link-hover-bg: #{$nav-menu-active-bg-dark};
+    }
+
+    .nav-menu-segmented .btn {
+        --#{$prefix}btn-bg: #{$nav-menu-count-bg-dark};
+        --#{$prefix}btn-hover-bg: #{$nav-menu-hover-bg-dark};
+        --#{$prefix}btn-active-bg: #{$nav-menu-active-bg-dark};
+    }
+
+    @include media-breakpoint-down(lg) {
+        #navbar-gewis-collapse {
+            --#{$prefix}offcanvas-bg: #{$sidebar-bg-dark};
+
+            .nav-link {
+                --#{$prefix}nav-link-color: #{$sidebar-color-dark};
+                --#{$prefix}nav-link-hover-color: #{$sidebar-color-dark};
+                --#{$prefix}nav-link-hover-bg: #{$sidebar-hover-bg-dark};
+            }
+
+            .active > .nav-link {
+                background-color: #{$sidebar-active-bg-dark};
+            }
+
+            .dropdown-menu {
+                border-left-color: #{$nav-menu-active-bg-dark};
+            }
+        }
+    }
+}

@@ -27,7 +27,11 @@ final readonly class ActivityAdminRow
         public string $submitter,
         public RevisionStatus $status,
         public ?DateTimeImmutable $beginTime,
+        // Whether anything of this activity is public at all, which decides whether there is a page to link to.
         public bool $isLive,
+        // The revision the public is seeing while the working one is not, so a rejected or in-flight revision is not
+        // read as "nothing is up". Null when the working revision is itself the live one.
+        public ?int $liveRevisionNumber,
         // The working revision is a draft that addresses a "changes requested" review (its predecessor was rejected
         // with feedback). Is surfaced in the overview so the author knows there is feedback to act on.
         public bool $changesRequested,
@@ -70,6 +74,7 @@ final readonly class ActivityAdminRow
                 ? null
                 : DateTimeImmutable::createFromMutable($beginTime),
             isLive: null !== $activity->getLiveRevision(),
+            liveRevisionNumber: $revision->getLiveCounterpart()?->getRevisionNumber(),
             changesRequested: RevisionStatus::Draft === $revision->getStatus()
                 && RevisionStatus::ChangesRequested === $revision->getPreviousRevision()?->getStatus(),
             passed: null !== $endTime && $endTime < new DateTime(),

@@ -6,7 +6,7 @@
 
 {% block breadcrumbs %}
     <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('career/index') }}">{{ 'Companies'|trans }}</a>
+        <a href="{{ path('career/companies') }}">{{ 'Companies'|trans }}</a>
     </li>
     <li class="breadcrumb-item">
         <a href="{{ path('career/company', {slug: company.getSlugName}) }}">{{ company.getName }}</a>
@@ -26,8 +26,7 @@
                 </div>
                 <div class="card-body">
                     <p class="mb-1">
-                        <a href="{{ path('career/company', {slug: company.getSlugName}) }}"
-                           class="fw-semibold">{{ company.getName }}</a>
+                        <a href="{{ path('career/company', {slug: company.getSlugName}) }}">{{ company.getName }}</a>
                     </p>
                     {% set location = vacancy.getLocation|localise_text %}
                     {% if location is not empty %}
@@ -41,6 +40,11 @@
                             <span class="badge badge-tag">{{ label.getName|localise_text }}</span>
                         {% endfor %}
                     </div>
+                    {% if vacancy.getEndDate is not null %}
+                        <p class="text-body-secondary small mb-3">
+                            {{ 'Open until %date%'|trans({'%date%': vacancy.getEndDate|date('j F Y')}) }}
+                        </p>
+                    {% endif %}
                     {% if vacancyWebsite is not empty %}
                         <a href="{{ vacancyWebsite }}" target="_blank" rel="noopener noreferrer"
                            class="btn btn-gewis-primary w-100">
@@ -63,7 +67,7 @@
                     </div>
                     <div class="panel-body">
                         <p class="text-body-secondary">{{ companySlogan }}</p>
-                        <a href="{{ path('career/company', {slug: company.getSlugName}) }}" class="fw-semibold">
+                        <a href="{{ path('career/company', {slug: company.getSlugName}) }}">
                             {{ 'View company page'|trans }}
                         </a>
                     </div>
@@ -73,11 +77,17 @@
 
         <div class="col-lg-8 col-xl-9">
             <h3 class="mb-1">{{ vacancy.getName|localise_text }}</h3>
-            <p class="text-body-secondary fs-5 mb-4">
+            <p class="text-body-secondary fs-5">
                 {{ 'at %company%'|trans({'%company%': company.getName}) }}
             </p>
-            <div class="markdown">
-                {{ vacancy.getDescription|localise_text|markdown }}
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Description'|trans }}</h3>
+                </div>
+                <div class="panel-body markdown">
+                    {{ vacancy.getDescription|localise_text|markdown }}
+                </div>
             </div>
         </div>
     </div>

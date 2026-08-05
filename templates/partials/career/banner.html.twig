@@ -1,0 +1,11 @@
+{#
+    One banner, at the box the format it was bought in is shown in. The renditions behind it are generated at exactly
+    that size, and the element is given those dimensions so nothing on the page moves while it loads.
+#}
+<img class="banner-image {{ class|default('') }}"
+     loading="lazy"
+     alt="{{ alt|default('') }}"
+     width="{{ format.width }}"
+     height="{{ format.height }}"
+     src="{{ image_url(path, format.variant) }}"
+     srcset="{{ image_url(path, format.variant) }} 1x, {{ image_url(path, format.retinaVariant) }} 2x">

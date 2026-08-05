@@ -6,6 +6,7 @@ namespace App\Form\Activity;
 
 use App\Entity\Activity\Activity;
 use App\Entity\Activity\Enums\SignupFieldTypes;
+use App\Form\Application\RequiresEnabledLanguagesTrait;
 use DateTime;
 use Override;
 use Symfony\Component\Form\AbstractType;
@@ -13,12 +14,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
-
-use function strval;
-use function trim;
 
 /**
  * Create/edit form for an activity. All revisable content, including the organising organ/company and the labels,
@@ -29,6 +26,8 @@ use function trim;
  */
 class ActivityType extends AbstractType
 {
+    use RequiresEnabledLanguagesTrait;
+
     public function __construct(
         private readonly TranslatorInterface $translator,
     ) {
@@ -129,31 +128,22 @@ class ActivityType extends AbstractType
             ));
         }
 
-        // Rule 5: at least one language must be enabled. The per-language requirements below (and on every sign-up
-        // list) are all skipped for a disabled language, so with both off nothing is required and an activity with no
-        // content at all would save, contradicting the form's own promise. The toggles are always submitted, so
-        // this reads reliably here.
-        if (
-            !$dutchOn
-            && !$englishOn
-        ) {
-            $revision->get('languageDutch')->addError(new FormError(
-                $this->translator->trans(
-                    'At least one language must be used.',
-                    [],
-                    'validators',
-                ),
-            ));
-        }
-
-        // Rule 6: the activity's localised texts are required for each enabled language.
-        foreach (['name', 'location', 'costs', 'description'] as $field) {
-            $this->requireLocalised(
-                $revision->get($field),
-                $dutchOn,
-                $englishOn,
-            );
-        }
+        // Rule 5: at least one language must be enabled, and rule 6: the activity's localised texts are required for
+        // each enabled language.
+        $this->requireAtLeastOneLanguage(
+            $revision,
+            $this->translator,
+        );
+        $this->requireEnabledLanguages(
+            $revision,
+            [
+                'name',
+                'location',
+                'costs',
+                'description',
+            ],
+            $this->translator,
+        );
 
         foreach ($revision->get('signupLists') as $listForm) {
             $openForm = $listForm->get('openDate');
@@ -208,17 +198,19 @@ class ActivityType extends AbstractType
             }
 
             // Rule 6: the list name, each custom-field question and each choice option, per enabled language.
-            $this->requireLocalised(
+            $this->requireLocalisedText(
                 $listForm->get('name'),
                 $dutchOn,
                 $englishOn,
+                $this->translator,
             );
 
             foreach ($listForm->get('fields') as $fieldForm) {
-                $this->requireLocalised(
+                $this->requireLocalisedText(
                     $fieldForm->get('name'),
                     $dutchOn,
                     $englishOn,
+                    $this->translator,
                 );
 
                 if (SignupFieldTypes::Choice !== $fieldForm->get('type')->getData()) {
@@ -229,10 +221,11 @@ class ActivityType extends AbstractType
                 // (the checkboxes are mutually exclusive), so this only guards a tampered submission.
                 $defaultCount = 0;
                 foreach ($fieldForm->get('options') as $optionForm) {
-                    $this->requireLocalised(
+                    $this->requireLocalisedText(
                         $optionForm->get('value'),
                         $dutchOn,
                         $englishOn,
+                        $this->translator,
                     );
 
                     if (true !== $optionForm->get('isDefault')->getData()) {
@@ -255,45 +248,5 @@ class ActivityType extends AbstractType
                 ));
             }
         }
-    }
-
-    /**
-     * Require the enabled language(s) of a localised field to be filled in. A language switched off was disabled
-     * client-side and not submitted, so it is never required here.
-     *
-     * @param FormInterface<mixed> $localised
-     */
-    private function requireLocalised(
-        FormInterface $localised,
-        bool $dutchOn,
-        bool $englishOn,
-    ): void {
-        if (
-            $dutchOn
-            && '' === trim(strval($localised->get('valueNL')->getData()))
-        ) {
-            $localised->get('valueNL')->addError(new FormError(
-                $this->translator->trans(
-                    'Fill in the Dutch text.',
-                    [],
-                    'validators',
-                ),
-            ));
-        }
-
-        if (
-            !$englishOn
-            || '' !== trim(strval($localised->get('valueEN')->getData()))
-        ) {
-            return;
-        }
-
-        $localised->get('valueEN')->addError(new FormError(
-            $this->translator->trans(
-                'Fill in the English text.',
-                [],
-                'validators',
-            ),
-        ));
     }
 }

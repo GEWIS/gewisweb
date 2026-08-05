@@ -1,0 +1,35 @@
+# This is a GEWIS mailings template
+# Invitation to represent a company in the career portal
+---
+# All mailings require some settings. These can be set here. Don't forget to set the title ("Algemene mededeling; tekst zelf invoeren")
+version: 1.1
+settings:
+    title: "Invitation to the GEWIS career portal"
+    email: "gewisweb@gewis.nl"
+    lang: en-UK
+    follow: false
+
+# A mailing consists of a series of messageblocks, each with their own type
+# The available types are "header", "topblock", "activities", "activityfooter", "extramessage" and "tinyfooter"
+messageblocks:
+
+    # Each mailing must have a header to make the template shine! It contains the title and the date.
+    - type: "header"
+      title: "Represent {{COMPANY_NAME}}"
+      date: 2026-08-02 # Note that this date needs to be updated
+
+    # This is the first block which is shown on top of the message. Recommended for most messages
+    - type: topblock
+      title: "Set a password to start using the GEWIS career portal"
+      contentHTML: "</p>
+
+      <p>Dear {{FULL_NAME}},</p>
+
+      <p>You have been invited to represent {{COMPANY_NAME}} on the GEWIS website. Through the career portal you can keep the company profile up to date, post vacancies, and follow what your contact at GEWIS makes of them.</p>
+
+      <p>Choose a password using the following link (valid until {{EXPIRES_AT}}):<br><a href='{{INVITE_URL}}'>{{INVITE_URL}}</a></p>
+
+      <p>If you were not expecting this invitation, you can ignore this email. Without the link above no account is created.</p>
+
+      With kind regards,<br/>
+      The External Affairs Officer"

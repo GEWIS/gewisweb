@@ -1,0 +1,47 @@
+{#
+    What a reader may do with the revision in front of them, in the order a decision is made: what moves it forward on
+    top, what sends it back underneath. Which buttons exist at all is the decision form's business, since only the
+    transitions the reader is allowed are on it, so the same block serves the committee and the company alike.
+
+    `emptyNote` is for a screen where nothing being possible is worth saying out loud rather than leaving blank, which
+    is how the company portal reads while a proposal is with the committee.
+
+    {% include 'partials/application/revision-decisions.html.twig' with {
+        'decisionForm': decisionForm,
+        'action': path('company/profile/decide'),
+        'emptyNote': 'Nothing right now: your profile is with your contact at GEWIS.'|trans,
+    } only %}
+#}
+{{ form_start(decisionForm, {'action': action}) }}
+    {# The message field is only present for a decision (feedback) or a resubmission (required response). #}
+    {% if decisionForm.message is defined %}
+        {{ form_row(decisionForm.message) }}
+    {% endif %}
+    <div class="d-grid gap-2">
+        {% if decisionForm.submit is defined %}
+            {{ form_widget(decisionForm.submit, {'attr': {'class': 'btn btn-success'}}) }}
+        {% endif %}
+        {% if decisionForm.start_review is defined %}
+            {{ form_widget(decisionForm.start_review, {'attr': {'class': 'btn btn-gewis-primary'}}) }}
+        {% endif %}
+        {% if decisionForm.approve is defined %}
+            {{ form_widget(decisionForm.approve, {'attr': {'class': 'btn btn-success'}}) }}
+        {% endif %}
+        {% if emptyNote is defined and decisionForm.submit is not defined and decisionForm.start_review is not defined and decisionForm.approve is not defined %}
+            <p class="text-muted small mb-0">{{ emptyNote }}</p>
+        {% endif %}
+    </div>
+    {% if decisionForm.request_changes is defined or decisionForm.reject is defined or decisionForm.close is defined %}
+        <div class="d-flex flex-wrap gap-2 mt-2">
+            {% if decisionForm.request_changes is defined %}
+                {{ form_widget(decisionForm.request_changes, {'attr': {'class': 'btn btn-sm btn-outline-warning'}}) }}
+            {% endif %}
+            {% if decisionForm.reject is defined %}
+                {{ form_widget(decisionForm.reject, {'attr': {'class': 'btn btn-sm btn-outline-gewis-primary'}}) }}
+            {% endif %}
+            {% if decisionForm.close is defined %}
+                {{ form_widget(decisionForm.close, {'attr': {'class': 'btn btn-sm btn-outline-gewis-primary'}}) }}
+            {% endif %}
+        </div>
+    {% endif %}
+{{ form_end(decisionForm) }}

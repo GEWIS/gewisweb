@@ -1,0 +1,78 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ 'Highlights'|trans|page_title }}{{ company.name|page_title }}{{ parent() }}{% endblock %}
+
+{% block sidebar_label %}{{ company.name }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'partials/company-sidebar.html.twig' with {'activeRoute': 'highlights'} %}
+{% endblock %}
+
+{% block page_header %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_container_class %}container-fluid px-3{% endblock %}
+        {% block header_top %}
+            <span class="page-header-eyebrow">{{ 'Company area'|trans }}</span>
+        {% endblock %}
+        {% block header_title %}{{ 'Highlights'|trans }}{% endblock %}
+        {% block header_subtitle %}
+            <p class="page-header-meta mb-0">
+                {{ 'Lift your vacancies to the top of the career page, where students looking for work start.'|trans }}
+            </p>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block contents %}
+    {% if package is null %}
+        <div class="panel mt-0">
+            <div class="panel-body">
+                <span class="fas fa-star fa-2x text-muted d-block mb-3" aria-hidden="true"></span>
+                <h4 class="mb-2">{{ 'You do not have a highlight package'|trans }}</h4>
+                <p class="text-muted mb-3">
+                    {{ 'A highlight puts one of your vacancies at the top of the career page, above every other posting. Ask your contact at GEWIS what a highlight package would cost you.'|trans }}
+                </p>
+                <a href="mailto:{{ external_affairs_email }}" class="btn btn-gewis-primary">
+                    {{ 'Email your contact at GEWIS'|trans }}
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="panel mt-0">
+                    <div class="panel-heading">
+                        <h3>{{ 'Choose your highlights'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p class="text-muted small">
+                            {{ 'Pick which of your vacancies appear on the career page. There is no limit per category.'|trans }}
+                            {{ 'A vacancy that closes, or that you take down, drops off the career page on its own.'|trans }}
+                        </p>
+                        {{ form_start(form, {'method': 'POST'}) }}
+                            {{ form_row(form.vacancies) }}
+                            <button type="submit" class="btn btn-gewis-primary">{{ 'Save selection'|trans }}</button>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="panel mt-0">
+                    <div class="panel-heading">
+                        <h3>{{ 'Currently on the career page'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            {% for vacancy in package.displayableVacancies %}
+                                <li class="list-group-item">{{ vacancy.getName|localise_text }}</li>
+                            {% else %}
+                                <li class="list-group-item text-muted">{{ 'Nothing is highlighted right now.'|trans }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

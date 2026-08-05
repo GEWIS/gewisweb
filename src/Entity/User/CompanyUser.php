@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity\User;
 
 use Ambta\DoctrineEncryptBundle\Configuration\Encrypted;
+use App\Entity\Application\Traits\IdentifiableTrait;
+use App\Entity\Application\Traits\TimestampableTrait;
 use App\Entity\Career\Company as CompanyModel;
 use App\Entity\User\Enums\UserTypes;
 use App\Entity\User\Traits\BackupCodeAwareTrait;
@@ -13,9 +15,10 @@ use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use Override;
 use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
 use Scheb\TwoFactorBundle\Model\Totp\TotpConfigurationInterface;
@@ -23,39 +26,66 @@ use Scheb\TwoFactorBundle\Model\Totp\TwoFactorInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use function assert;
 use function sprintf;
 
+/**
+ * One of the people who represent a company in the careers portal. A company can have several; which one is the point
+ * of contact for the board is recorded on the {@see CompanyModel} itself.
+ */
 #[Entity(repositoryClass: CompanyUserRepository::class)]
+#[HasLifecycleCallbacks]
+#[UniqueConstraint(
+    name: 'company_user_email_uniq',
+    columns: ['email'],
+)]
 class CompanyUser implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     use BackupCodeAwareTrait;
+    use IdentifiableTrait;
+    use TimestampableTrait;
 
     /**
-     * The internal identifier for this company.
+     * The address this representative signs in with, and where their mail is sent.
      */
-    #[Id]
-    #[Column(type: Types::INTEGER)]
-    private int $id;
+    #[Column(type: Types::STRING)]
+    private string $email;
 
     /**
-     * The company's password.
+     * The representative's own name.
+     */
+    #[Column(type: Types::STRING)]
+    private string $name;
+
+    /**
+     * The representative's password.
      */
     #[Column(type: Types::STRING)]
     private string $password;
 
     /**
-     * The company for this company user.
+     * The company this representative acts for.
      */
-    #[OneToOne(
+    #[ManyToOne(
         targetEntity: CompanyModel::class,
         fetch: 'EAGER',
     )]
     #[JoinColumn(
-        name: 'id',
-        referencedColumnName: 'id',
         nullable: false,
+        onDelete: 'CASCADE',
     )]
     private CompanyModel $company;
+
+    /**
+     * When this representative was shut out, or null while they still act for the company. Someone who has moved on
+     * keeps their row (the revisions and comments they left behind still point at it) but can no longer sign in; the
+     * board removes the account outright once it is no longer worth keeping around.
+     */
+    #[Column(
+        type: Types::DATETIME_MUTABLE,
+        nullable: true,
+    )]
+    private ?DateTime $disabledAt = null;
 
     /**
      * Timestamp when the password was last changed.
@@ -85,11 +115,6 @@ class CompanyUser implements UserInterface, PasswordAuthenticatedUserInterface, 
     #[Encrypted]
     private ?string $totpSecret = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     /**
      * A visual identifier that represents this user.
      *
@@ -98,7 +123,9 @@ class CompanyUser implements UserInterface, PasswordAuthenticatedUserInterface, 
     #[Override]
     public function getUserIdentifier(): string
     {
-        return (string) $this->id;
+        assert('' !== $this->email);
+
+        return $this->email;
     }
 
     /**
@@ -128,6 +155,26 @@ class CompanyUser implements UserInterface, PasswordAuthenticatedUserInterface, 
         return $this;
     }
 
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
     /**
      * Get the company.
      */
@@ -136,17 +183,37 @@ class CompanyUser implements UserInterface, PasswordAuthenticatedUserInterface, 
         return $this->company;
     }
 
+    public function setCompany(CompanyModel $company): void
+    {
+        $this->company = $company;
+    }
+
     /**
-     * A human-readable name for this account, for display alongside a {@see User}: the company name with the
-     * representative who acts for it in parentheses.
+     * A human-readable name for this account, for display alongside a {@see User}: the representative's name with the
+     * company they act for in parentheses.
      */
     public function getDisplayName(): string
     {
         return sprintf(
             '%s (%s)',
+            $this->getName(),
             $this->getCompany()->getName(),
-            $this->getCompany()->getRepresentativeName(),
         );
+    }
+
+    public function getDisabledAt(): ?DateTime
+    {
+        return $this->disabledAt;
+    }
+
+    public function setDisabledAt(?DateTime $disabledAt): void
+    {
+        $this->disabledAt = $disabledAt;
+    }
+
+    public function isDisabled(): bool
+    {
+        return null !== $this->disabledAt;
     }
 
     public function getPasswordChangedOn(): ?DateTime
@@ -193,7 +260,7 @@ class CompanyUser implements UserInterface, PasswordAuthenticatedUserInterface, 
     #[Override]
     public function getTotpAuthenticationUsername(): string
     {
-        return (string) $this->id;
+        return $this->getUserIdentifier();
     }
 
     #[Override]

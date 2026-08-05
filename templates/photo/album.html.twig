@@ -24,7 +24,7 @@
 {% block contents %}
     <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
         <div>
-            <h1 class="mb-0">{{ album.name }}</h1>
+            <h2 class="mb-0">{{ album.name }}</h2>
             {% include 'partials/photo/album-dates.html.twig' with { 'album': album } only %}
         </div>
         {% if album.parent %}

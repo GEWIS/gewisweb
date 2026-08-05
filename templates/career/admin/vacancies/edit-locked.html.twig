@@ -1,0 +1,24 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Vacancy is being edited'|trans|page_title }}{{ 'Career'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/career/vacancies/index') }}">{{ 'Vacancies'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Edit'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-md-8">
+            {% include 'partials/application/edit-lock-notice.html.twig' with {
+                'lock': lock,
+                'subject': 'this vacancy'|trans,
+                'backUrl': path('admin/career/vacancies/index'),
+                'backLabel': 'Back to overview'|trans,
+                'takeOverUrl': path('admin/career/vacancies/edit', {'vacancy': vacancy.id, 'take': 1}),
+            } only %}
+        </div>
+    </div>
+{% endblock %}

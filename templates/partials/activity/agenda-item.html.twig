@@ -1,0 +1,23 @@
+{#
+    One upcoming activity, compact enough for a side panel: the stacked date beside the name, when it runs and where.
+    The overview's own list item is the full version of this; both draw the same date badge.
+
+    {% include 'partials/activity/agenda-item.html.twig' with {'activity': activity} only %}
+#}
+{% set dateBadge = activity_date_badge(activity.getBeginTime, activity.getEndTime) %}
+<a class="agenda-item" href="{{ path('activity/view', {'activity': activity.getId}) }}">
+    {# aria-hidden: the date range below already announces the full date to assistive tech. #}
+    <span class="activity-date-badge{{ dateBadge.range ? ' activity-date-badge-range' : '' }}" aria-hidden="true">
+        <span class="activity-date-badge-month">{{ dateBadge.month }}</span>
+        <span class="activity-date-badge-day">{{ dateBadge.day }}</span>
+        <span class="activity-date-badge-weekday">{{ dateBadge.weekday }}</span>
+    </span>
+    <span class="agenda-item-body">
+        <span class="fw-semibold d-block">{{ activity.getName|localise_text }}</span>
+        <span class="small text-body-secondary">
+            {{ activity_date_range(activity.getBeginTime, activity.getEndTime) }}
+            {% set location = activity.getLocation|localise_text %}
+            {% if location is not empty %}&middot; {{ location }}{% endif %}
+        </span>
+    </span>
+</a>

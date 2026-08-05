@@ -23,10 +23,12 @@
         <div class="notification-list">
             {% for entry in this.entries %}
                 {% set notification = entry.notification %}
-                <div class="notification-entry d-flex align-items-start border-bottom">
+                <div class="notification-entry d-flex align-items-start border-bottom{{ entry.unread > 0 ? ' notification-unread' : '' }}">
                     <a class="dropdown-item d-flex gap-2 py-2 text-wrap{{ entry.unread > 0 ? ' fw-semibold' : '' }}"
                        href="{{ entry.href }}">
-                        <span class="fas {{ notification.type.icon }} text-muted mt-1"></span>
+                        <span class="notification-icon">
+                            <span class="fas {{ notification.type.icon }}" aria-hidden="true"></span>
+                        </span>
                         <span class="flex-grow-1">
                             {% if entry.ids|length > 1 %}
                                 {{ notification.type.manyMessage(entry.ids|length)|trans }}
@@ -39,8 +41,9 @@
                             </small>
                         </span>
                     </a>
-                    <span class="notification-actions d-flex flex-column gap-1 pe-2 py-2">
+                    <span class="notification-actions d-flex flex-column align-items-center gap-1 pe-2 py-2">
                         {% if entry.unread > 0 %}
+                            <span class="notification-dot" aria-hidden="true"></span>
                             <button type="button" class="btn btn-link btn-sm p-0 text-muted lh-1"
                                     title="{{ 'Mark as read'|trans }}" aria-label="{{ 'Mark as read'|trans }}"
                                     data-action="live#action" data-live-action-param="markRead"
@@ -57,8 +60,12 @@
                     </span>
                 </div>
             {% else %}
-                <div class="dropdown-item-text text-muted small py-3 text-center">
-                    {{ 'You have no notifications yet.'|trans }}
+                <div class="dropdown-item-text text-center px-4 py-4">
+                    <span class="far fa-bell-slash fa-lg text-muted" aria-hidden="true"></span>
+                    <span class="d-block fw-semibold mt-2">{{ 'You are all caught up'|trans }}</span>
+                    <span class="d-block small text-muted">
+                        {{ 'Anything that needs you shows up here.'|trans }}
+                    </span>
                 </div>
             {% endfor %}
         </div>

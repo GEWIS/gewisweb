@@ -1,0 +1,63 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% block page_title %}{{ 'Vacancies'|trans|page_title }}{{ company.name|page_title }}{{ parent() }}{% endblock %}
+
+{% block sidebar_label %}{{ company.name }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'partials/company-sidebar.html.twig' with {'activeRoute': 'vacancies'} %}
+{% endblock %}
+
+{% block page_header %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_container_class %}container-fluid px-3{% endblock %}
+        {% block header_top %}
+            <span class="page-header-eyebrow">{{ 'Company area'|trans }}</span>
+        {% endblock %}
+        {% block header_title %}{{ 'Your vacancies'|trans }}{% endblock %}
+        {% block header_subtitle %}
+            <p class="page-header-meta mb-0">
+                {{ 'Everything you have on the GEWIS career page, plus what is still waiting on you or on us.'|trans }}
+            </p>
+        {% endblock %}
+        {% block header_actions %}
+            <a href="{{ path('company/vacancies/create') }}" class="btn btn-gewis-primary">
+                <span class="fas fa-plus" aria-hidden="true"></span> {{ 'Post a vacancy'|trans }}
+            </a>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block contents %}
+    <ul class="nav nav-pills mb-3" role="tablist">
+        {% for filter, label in {
+            'all': 'All'|trans,
+            'live': 'Live'|trans,
+            'review': 'With GEWIS'|trans,
+            'drafts': 'Drafts'|trans,
+            'closed': 'Closed'|trans,
+        } %}
+            <li class="nav-item">
+                <a class="nav-link {% if filter == overview.filter %}active{% endif %}"
+                   href="{{ path('company/vacancies', 'all' == filter ? {} : {'filter': filter}) }}">
+                    {{ label }}
+                    <span class="badge ms-1">{{ overview.counts[filter] }}</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="panel mt-0">
+        <div class="panel-body">
+            {% include 'partials/career/company/vacancy-table.html.twig' with {
+                'vacancies': overview.vacancies,
+                'emptyMessage': overview.counts.all > 0
+                    ? 'Nothing in this list. Try another tab.'|trans
+                    : 'You have not posted any vacancies yet.'|trans,
+            } only %}
+        </div>
+        <div class="panel-footer small text-muted">
+            {{ 'A new vacancy, and every change to one, is checked by your contact at GEWIS before it appears on the website.'|trans }}
+        </div>
+    </div>
+{% endblock %}

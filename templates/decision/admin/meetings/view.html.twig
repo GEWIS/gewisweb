@@ -13,7 +13,7 @@
 
 {% block contents %}
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-        <h1 class="mb-0">{{ abbr }} {{ meeting.number }} &middot; {{ meeting.type.label|trans }}</h1>
+        <h2 class="mb-0">{{ abbr }} {{ meeting.number }} &middot; {{ meeting.type.label|trans }}</h2>
         <a href="{{ path('meetings/view', {'type': type, 'number': number}) }}" class="btn btn-outline-secondary">
             <span class="fas fa-eye" aria-hidden="true"></span>
             {{ 'View as member'|trans }}

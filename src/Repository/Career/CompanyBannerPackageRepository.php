@@ -8,7 +8,7 @@ use App\Entity\Career\CompanyBannerPackage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-use function array_rand;
+use function shuffle;
 
 /**
  * @extends ServiceEntityRepository<CompanyBannerPackage>
@@ -24,21 +24,33 @@ class CompanyBannerPackageRepository extends ServiceEntityRepository
     }
 
     /**
-     * Returns a random banner from the active banners.
+     * The banners that may be shown right now: published, inside their window, and carrying an image the committee
+     * agreed to.
+     *
+     * They come back shuffled. Whoever is first is the one seen by everybody who does not wait for the carousel to
+     * move on, and that should not be decided by whose contract was signed first.
+     *
+     * @return list<CompanyBannerPackage>
+     *
+     * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType Doctrine getResult() is mixed to Psalm.
      */
-    public function getBannerPackage(): ?CompanyBannerPackage
+    public function findActiveBanners(): array
     {
-        $qb = $this->createQueryBuilder('p');
-        $qb->where('p.published = 1')
+        // The banner links through to the company it belongs to, so that comes along with it.
+        $qb = $this->createQueryBuilder('p')
+            ->addSelect('c')
+            ->join(
+                'p.company',
+                'c',
+            )
+            ->where('p.published = true')
             ->andWhere('p.starts <= CURRENT_DATE()')
-            ->andWhere('p.expires > CURRENT_DATE()');
+            ->andWhere('p.expires > CURRENT_DATE()')
+            ->andWhere('p.image IS NOT NULL');
 
         $banners = $qb->getQuery()->getResult();
+        shuffle($banners);
 
-        if ([] !== $banners) {
-            return $banners[array_rand($banners)];
-        }
-
-        return null;
+        return $banners;
     }
 }

@@ -1,0 +1,106 @@
+{% extends 'layout-sidebar.html.twig' %}
+
+{% set current = company.currentRevision %}
+{% set live = company.liveRevision %}
+
+{% block page_title %}{{ 'Company profile'|trans|page_title }}{{ company.name|page_title }}{{ parent() }}{% endblock %}
+
+{% block sidebar_label %}{{ company.name }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'partials/company-sidebar.html.twig' with {'activeRoute': 'profile'} %}
+{% endblock %}
+
+{% block page_header %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_container_class %}container-fluid px-3{% endblock %}
+        {% block header_top %}
+            <span class="page-header-eyebrow">{{ 'Company area'|trans }}</span>
+        {% endblock %}
+        {% block header_status %}
+            {% if live is not null %}
+                <span class="badge badge-success">{{ 'Profile is live'|trans }}</span>
+            {% else %}
+                <span class="badge badge-secondary">{{ 'Profile is not live yet'|trans }}</span>
+            {% endif %}
+        {% endblock %}
+        {% block header_title %}{{ 'Company profile'|trans }}{% endblock %}
+        {% block header_subtitle %}
+            <p class="page-header-meta mb-0">
+                {{ 'Changes go to your contact at GEWIS first; what is live stays live until they agree.'|trans }}
+            </p>
+        {% endblock %}
+        {% block header_actions %}
+            {% if current is not null and current.status.editableByAuthor %}
+                <a href="{{ path('company/profile/edit') }}" class="btn btn-gewis-primary">{{ 'Continue your draft'|trans }}</a>
+            {% elseif current is not null and current.status.revisable %}
+                <form method="post" action="{{ path('company/profile/revise') }}">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('company_profile_revise') }}">
+                    <button type="submit" class="btn btn-gewis-primary">{{ 'Revise'|trans }}</button>
+                </form>
+            {% endif %}
+            {% if current is not null %}
+                <a href="{{ path('company/profile/status') }}" class="btn btn-outline-gewis-primary">{{ 'Status'|trans }}</a>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block contents %}
+    <div class="row g-4">
+        <div class="col-md-8">
+            <div class="panel mt-0">
+                <div class="panel-heading">
+                    <h3>{{ 'What visitors see'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if live is null %}
+                        <p class="text-muted mb-0">
+                            {{ 'Nothing yet: your profile has not been approved, so your company is not shown on the website.'|trans }}
+                        </p>
+                    {% else %}
+                        {% if live.logo is not null %}
+                            <img class="career-logo-sm mb-3" style="object-fit: cover;" src="{{ image_url(live.logo, 'w320') }}" alt="">
+                        {% endif %}
+                        <dl class="row mb-0">
+                            <dt class="col-sm-3">{{ 'Slogan'|trans }}</dt>
+                            <dd class="col-sm-9">{{ live.slogan|localise_text }}</dd>
+                            <dt class="col-sm-3">{{ 'Website'|trans }}</dt>
+                            <dd class="col-sm-9">{{ live.website|localise_text }}</dd>
+                            <dt class="col-sm-3">{{ 'Description'|trans }}</dt>
+                            <dd class="col-sm-9 markdown">{{ live.description|localise_text|markdown }}</dd>
+                            <dt class="col-sm-3">{{ 'Contact'|trans }}</dt>
+                            <dd class="col-sm-9">
+                                {{ live.contactName ?? '-' }}<br>
+                                {{ live.contactEmail ?? '-' }}<br>
+                                {{ live.contactPhone ?? '-' }}
+                            </dd>
+                        </dl>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <aside class="col-md-4">
+            <div class="panel mt-0">
+                <div class="panel-heading">
+                    <h3>{{ 'What has happened'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled mb-0">
+                        {% for entry in timeline %}
+                            <li class="mb-2">
+                                <div>{{ entry.verb.message(entry.actorDisplayName ?? 'The website'|trans, entry.detail)|trans }}</div>
+                                <div class="text-muted small">
+                                    {{ entry.createdAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="text-muted small">{{ 'Nothing has happened yet.'|trans }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </aside>
+    </div>
+{% endblock %}

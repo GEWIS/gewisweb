@@ -8,7 +8,12 @@ use App\Entity\Career\Company;
 use App\Entity\Career\CompanyJobPackage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+
+use function intval;
+use function mb_strtolower;
+use function trim;
 
 /**
  * @extends ServiceEntityRepository<Company>
@@ -73,6 +78,36 @@ class CompanyRepository extends ServiceEntityRepository
         $this->warmOverviewAssociations($companies);
 
         return $companies;
+    }
+
+    /**
+     * How many companies the public overview would list, for the count the navigation menu carries. The same three
+     * conditions as {@see self::findAllPublic()}, counted rather than hydrated, since the menu is on every page.
+     */
+    public function countPublic(): int
+    {
+        $sql = <<<'QUERY'
+            SELECT COUNT(*) FROM `Company` AS `t1`
+            LEFT JOIN (
+                SELECT `company_id`,
+                    COUNT(`company_id`) AS `totalPackages`,
+                    SUM(
+                        CASE WHEN `expires` <= CURRENT_TIMESTAMP
+                                OR `published` = 0
+                                OR `starts` > CURRENT_TIMESTAMP
+                            THEN 1
+                            ELSE 0
+                        END
+                    ) AS `expiredHiddenOrNotStartedPackages`
+                FROM `CompanyPackage`
+                GROUP BY `company_id`
+            ) `CompanyPackages` ON `CompanyPackages`.`company_id` = `t1`.`id`
+            WHERE `t1`.`published` = 1
+            AND `t1`.`liveRevision_id` IS NOT NULL
+            AND `CompanyPackages`.`totalPackages` > `CompanyPackages`.`expiredHiddenOrNotStartedPackages`
+            QUERY;
+
+        return intval($this->getEntityManager()->getConnection()->fetchOne($sql));
     }
 
     /**
@@ -164,6 +199,81 @@ class CompanyRepository extends ServiceEntityRepository
     }
 
     /**
+     * The companies the vacancy overview offers to filter by, keyed by id. Only the name is read there, so the whole
+     * list is fetched as rows rather than as entities: the picker is rebuilt on every re-render of the component.
+     *
+     * @return array<int, string>
+     */
+    public function findNamesForFilter(): array
+    {
+        $names = [];
+
+        /** @var array{id: int, name: string} $row */
+        foreach (
+            $this->createQueryBuilder('c')
+                ->select(
+                    'c.id',
+                    'c.name',
+                )
+                ->orderBy(
+                    'c.name',
+                    'ASC',
+                )
+                ->getQuery()
+                ->getArrayResult() as $row
+        ) {
+            $names[$row['id']] = $row['name'];
+        }
+
+        return $names;
+    }
+
+    /**
+     * The same overview, a page at a time. GEWIS has enough companies on the books for the full list to be unwieldy,
+     * so the administrative overview pages through it.
+     *
+     * @return Paginator<Company>
+     */
+    public function paginateForAdmin(
+        string $search,
+        int $page,
+        int $pageSize,
+    ): Paginator {
+        // The row shows the state of the working head and counts the packages, and whether a company is shown at all
+        // is worked out from those packages too, so both come along rather than being fetched once per row.
+        $qb = $this->createQueryBuilder('c')
+            ->addSelect(
+                'cr',
+                'p',
+            )
+            ->leftJoin(
+                'c.currentRevision',
+                'cr',
+            )
+            ->leftJoin(
+                'c.packages',
+                'p',
+            )
+            ->orderBy(
+                'c.name',
+                'ASC',
+            );
+
+        $search = trim($search);
+        if ('' !== $search) {
+            $qb->andWhere('LOWER(c.name) LIKE :needle OR LOWER(c.slugName) LIKE :needle')
+                ->setParameter(
+                    'needle',
+                    '%' . mb_strtolower($search) . '%',
+                );
+        }
+
+        $qb->setFirstResult(($page - 1) * $pageSize)->setMaxResults($pageSize);
+
+        return new Paginator($qb);
+    }
+
+    /**
      * Return the company with the given slug.
      *
      * @param string $slugName the slugname to find
@@ -191,13 +301,5 @@ class CompanyRepository extends ServiceEntityRepository
         $this->warmOverviewAssociations([$company]);
 
         return $company;
-    }
-
-    /**
-     * Return a company by a given representative's email address.
-     */
-    public function findCompanyByRepresentativeEmail(string $email): ?Company
-    {
-        return $this->findOneBy(['representativeEmail' => $email]);
     }
 }

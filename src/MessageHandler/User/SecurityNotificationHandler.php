@@ -132,13 +132,12 @@ class SecurityNotificationHandler
     ): User|CompanyUser|null {
         return match ($firewall) {
             Firewall::Main => $this->userRepository->find((int) $userIdentifier),
-            Firewall::Company => $this->companyUserRepository->find((int) $userIdentifier),
+            Firewall::Company => $this->companyUserRepository->loadUserByIdentifier($userIdentifier),
         };
     }
 
     /**
-     * A member always has an address (they could not have signed in otherwise), a company writes to whoever
-     * represents it.
+     * A member always has an address (they could not have signed in otherwise), a representative signs in with theirs.
      *
      * @return array{email: string, name: string}|null
      */
@@ -148,8 +147,8 @@ class SecurityNotificationHandler
             $email = $account->getMember()->getEmail();
             $name = $account->getMember()->getFullName();
         } else {
-            $email = $account->getCompany()->getRepresentativeEmail();
-            $name = $account->getCompany()->getRepresentativeName();
+            $email = $account->getEmail();
+            $name = $account->getName();
         }
 
         if (null === $email) {

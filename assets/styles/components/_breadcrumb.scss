@@ -3,6 +3,7 @@
 
     position: relative;
     z-index: 1;
+    border-bottom: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-translucent);
 
     &:before {
         content: "";

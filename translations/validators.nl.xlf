@@ -5,9 +5,33 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="MvaasYM" resname="A package cannot expire before it starts.">
+        <source>A package cannot expire before it starts.</source>
+        <target state="translated">Een pakket kan niet verlopen voordat het begint.</target>
+      </trans-unit>
+      <trans-unit id="3T8qjGm" resname="A slug starts with a letter and contains only lowercase letters, digits, underscores and hyphens.">
+        <source>A slug starts with a letter and contains only lowercase letters, digits, underscores and hyphens.</source>
+        <target state="translated">Een slug begint met een letter en bevat alleen kleine letters, cijfers, liggende streepjes en koppeltekens.</target>
+      </trans-unit>
+      <trans-unit id="Z4xvutl" resname="Another company already uses this slug.">
+        <source>Another company already uses this slug.</source>
+        <target state="translated">Een ander bedrijf gebruikt deze slug al.</target>
+      </trans-unit>
+      <trans-unit id="5.N8c6E" resname="Another vacancy of this company already uses this slug in this category.">
+        <source>Another vacancy of this company already uses this slug in this category.</source>
+        <target state="translated">Een andere vacature van dit bedrijf gebruikt deze slug al in deze categorie.</target>
+      </trans-unit>
       <trans-unit id="mUY7qf3" resname="At least one language must be used.">
         <source>At least one language must be used.</source>
         <target>Er moet ten minste één taal worden gebruikt.</target>
+      </trans-unit>
+      <trans-unit id="O2fBMa4" resname="Choose an image to upload.">
+        <source>Choose an image to upload.</source>
+        <target state="translated">Kies een afbeelding om te uploaden.</target>
+      </trans-unit>
+      <trans-unit id="NrVT1pI" resname="Choose the job package this vacancy belongs to.">
+        <source>Choose the job package this vacancy belongs to.</source>
+        <target state="translated">Kies het vacaturepakket waar deze vacature bij hoort.</target>
       </trans-unit>
       <trans-unit id="SDwIA.h" resname="Describe how you addressed the requested changes before resubmitting.">
         <source>Describe how you addressed the requested changes before resubmitting.</source>
@@ -28,6 +52,14 @@
       <trans-unit id="iGXOSQU" resname="Enter a full name.">
         <source>Enter a full name.</source>
         <target>Voer een volledige naam in.</target>
+      </trans-unit>
+      <trans-unit id="Uf1hK4Z" resname="Enter a name.">
+        <source>Enter a name.</source>
+        <target state="translated">Vul een naam in.</target>
+      </trans-unit>
+      <trans-unit id="44WBSgF" resname="Enter a slug.">
+        <source>Enter a slug.</source>
+        <target state="translated">Vul een slug in.</target>
       </trans-unit>
       <trans-unit id="HSarwc." resname="Enter a start date and time.">
         <source>Enter a start date and time.</source>
@@ -69,6 +101,18 @@
         <source>Enter an opening date and time.</source>
         <target state="translated">Voer een openingsdatum en -tijd in.</target>
       </trans-unit>
+      <trans-unit id="ITE2E1L" resname="Enter the day the package expires.">
+        <source>Enter the day the package expires.</source>
+        <target state="translated">Vul in op welke dag het pakket verloopt.</target>
+      </trans-unit>
+      <trans-unit id="P36DYjM" resname="Enter the day the package starts.">
+        <source>Enter the day the package starts.</source>
+        <target state="translated">Vul in op welke dag het pakket begint.</target>
+      </trans-unit>
+      <trans-unit id="M.uyRzw" resname="Enter the day the vacancy closes.">
+        <source>Enter the day the vacancy closes.</source>
+        <target state="translated">Vul in op welke dag de vacature sluit.</target>
+      </trans-unit>
       <trans-unit id="B9r0Hn5" resname="Error">
         <source>Error</source>
         <target>Fout</target>
@@ -93,9 +137,17 @@
         <source>Pick the member you want to authorize.</source>
         <target state="translated">Kies het lid dat je wilt machtigen.</target>
       </trans-unit>
+      <trans-unit id="vWblsZz" resname="Please enter a name.">
+        <source>Please enter a name.</source>
+        <target state="translated">Vul een naam in.</target>
+      </trans-unit>
       <trans-unit id="0wZ1438" resname="Please enter a password.">
         <source>Please enter a password.</source>
         <target state="translated">Voer een wachtwoord in.</target>
+      </trans-unit>
+      <trans-unit id="KX8U.WV" resname="Please enter an email address.">
+        <source>Please enter an email address.</source>
+        <target state="translated">Vul een e-mailadres in.</target>
       </trans-unit>
       <trans-unit id="J_hnQBi" resname="Please enter your current password.">
         <source>Please enter your current password.</source>
@@ -141,9 +193,25 @@
         <source>The sign-up list must open in the future.</source>
         <target state="translated">De inschrijflijst moet in de toekomst openen.</target>
       </trans-unit>
+      <trans-unit id="oNTbiHD" resname="The vacancy cannot close before it opens.">
+        <source>The vacancy cannot close before it opens.</source>
+        <target state="translated">De vacature kan niet sluiten voordat zij opent.</target>
+      </trans-unit>
+      <trans-unit id=".UQQM7H" resname="The vacancy cannot stay open past the job package it belongs to.">
+        <source>The vacancy cannot stay open past the job package it belongs to.</source>
+        <target state="translated">De vacature kan niet langer openblijven dan het vacaturepakket waar zij bij hoort.</target>
+      </trans-unit>
       <trans-unit id="z.p0Rex" resname="This field is required.">
         <source>This field is required.</source>
         <target>Dit veld is verplicht.</target>
+      </trans-unit>
+      <trans-unit id="Q5RHBE_" resname="Upload a JPEG, PNG or WebP image.">
+        <source>Upload a JPEG, PNG or WebP image.</source>
+        <target state="translated">Upload een JPEG-, PNG- of WebP-afbeelding.</target>
+      </trans-unit>
+      <trans-unit id="fcfNWQJ" resname="You can only highlight your own vacancies that are currently shown on the website.">
+        <source>You can only highlight your own vacancies that are currently shown on the website.</source>
+        <target state="translated">Je kunt alleen je eigen vacatures uitlichten die op dit moment op de website staan.</target>
       </trans-unit>
       <trans-unit id="vZye7vY" resname="You have to agree to the authorization statement.">
         <source>You have to agree to the authorization statement.</source>

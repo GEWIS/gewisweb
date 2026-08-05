@@ -12,6 +12,7 @@ use App\Entity\Application\Traits\IdentifiableTrait;
 use App\Entity\Career\Company as CompanyModel;
 use App\Entity\Decision\Member as MemberModel;
 use App\Entity\Decision\Organ as OrganModel;
+use App\Entity\User\Enums\UserRoles;
 use App\Repository\Activity\ActivityRepository;
 use DateTime;
 use DateTimeInterface;
@@ -222,6 +223,12 @@ class Activity implements RevisableInterface
         }
 
         $this->setLiveRevision($revision);
+    }
+
+    #[Override]
+    public function restoreLiveRevision(): void
+    {
+        $this->setCurrentRevision($this->getLiveRevision());
     }
 
     /**
@@ -469,6 +476,17 @@ class Activity implements RevisableInterface
     public function getResourceId(): string
     {
         return 'activity';
+    }
+
+    /**
+     * Nobody but the board reviews activities.
+     *
+     * @return list<UserRoles>
+     */
+    #[Override]
+    public function getReviewerRoles(): array
+    {
+        return [];
     }
 
     /**

@@ -45,7 +45,12 @@ final class NotificationTypeTest extends TestCase
             $this->addressedTo(NotificationAddressing::Everyone),
         );
         self::assertSame(
-            [NotificationType::ActivityAwaitingReview],
+            [
+                NotificationType::ActivityAwaitingReview,
+                NotificationType::CompanyRevisionAwaitingReview,
+                NotificationType::VacancyRevisionAwaitingReview,
+                NotificationType::CompanyBannerAwaitingReview,
+            ],
             $this->addressedTo(NotificationAddressing::Role),
         );
         self::assertNotContains(

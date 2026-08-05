@@ -5,9 +5,33 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="MvaasYM" resname="A package cannot expire before it starts.">
+        <source>A package cannot expire before it starts.</source>
+        <target state="translated">A package cannot expire before it starts.</target>
+      </trans-unit>
+      <trans-unit id="3T8qjGm" resname="A slug starts with a letter and contains only lowercase letters, digits, underscores and hyphens.">
+        <source>A slug starts with a letter and contains only lowercase letters, digits, underscores and hyphens.</source>
+        <target state="translated">A slug starts with a letter and contains only lowercase letters, digits, underscores and hyphens.</target>
+      </trans-unit>
+      <trans-unit id="Z4xvutl" resname="Another company already uses this slug.">
+        <source>Another company already uses this slug.</source>
+        <target state="translated">Another company already uses this slug.</target>
+      </trans-unit>
+      <trans-unit id="5.N8c6E" resname="Another vacancy of this company already uses this slug in this category.">
+        <source>Another vacancy of this company already uses this slug in this category.</source>
+        <target state="translated">Another vacancy of this company already uses this slug in this category.</target>
+      </trans-unit>
       <trans-unit id="mUY7qf3" resname="At least one language must be used.">
         <source>At least one language must be used.</source>
         <target>At least one language must be used.</target>
+      </trans-unit>
+      <trans-unit id="O2fBMa4" resname="Choose an image to upload.">
+        <source>Choose an image to upload.</source>
+        <target state="translated">Choose an image to upload.</target>
+      </trans-unit>
+      <trans-unit id="NrVT1pI" resname="Choose the job package this vacancy belongs to.">
+        <source>Choose the job package this vacancy belongs to.</source>
+        <target state="translated">Choose the job package this vacancy belongs to.</target>
       </trans-unit>
       <trans-unit id="SDwIA.h" resname="Describe how you addressed the requested changes before resubmitting.">
         <source>Describe how you addressed the requested changes before resubmitting.</source>
@@ -28,6 +52,14 @@
       <trans-unit id="iGXOSQU" resname="Enter a full name.">
         <source>Enter a full name.</source>
         <target>Enter a full name.</target>
+      </trans-unit>
+      <trans-unit id="Uf1hK4Z" resname="Enter a name.">
+        <source>Enter a name.</source>
+        <target state="translated">Enter a name.</target>
+      </trans-unit>
+      <trans-unit id="44WBSgF" resname="Enter a slug.">
+        <source>Enter a slug.</source>
+        <target state="translated">Enter a slug.</target>
       </trans-unit>
       <trans-unit id="HSarwc." resname="Enter a start date and time.">
         <source>Enter a start date and time.</source>
@@ -69,6 +101,18 @@
         <source>Enter an opening date and time.</source>
         <target state="translated">Enter an opening date and time.</target>
       </trans-unit>
+      <trans-unit id="ITE2E1L" resname="Enter the day the package expires.">
+        <source>Enter the day the package expires.</source>
+        <target state="translated">Enter the day the package expires.</target>
+      </trans-unit>
+      <trans-unit id="P36DYjM" resname="Enter the day the package starts.">
+        <source>Enter the day the package starts.</source>
+        <target state="translated">Enter the day the package starts.</target>
+      </trans-unit>
+      <trans-unit id="M.uyRzw" resname="Enter the day the vacancy closes.">
+        <source>Enter the day the vacancy closes.</source>
+        <target state="translated">Enter the day the vacancy closes.</target>
+      </trans-unit>
       <trans-unit id="B9r0Hn5" resname="Error">
         <source>Error</source>
         <target>Error</target>
@@ -93,9 +137,17 @@
         <source>Pick the member you want to authorize.</source>
         <target state="translated">Pick the member you want to authorize.</target>
       </trans-unit>
+      <trans-unit id="vWblsZz" resname="Please enter a name.">
+        <source>Please enter a name.</source>
+        <target state="translated">Please enter a name.</target>
+      </trans-unit>
       <trans-unit id="0wZ1438" resname="Please enter a password.">
         <source>Please enter a password.</source>
         <target state="translated">Please enter a password.</target>
+      </trans-unit>
+      <trans-unit id="KX8U.WV" resname="Please enter an email address.">
+        <source>Please enter an email address.</source>
+        <target state="translated">Please enter an email address.</target>
       </trans-unit>
       <trans-unit id="J_hnQBi" resname="Please enter your current password.">
         <source>Please enter your current password.</source>
@@ -141,9 +193,25 @@
         <source>The sign-up list must open in the future.</source>
         <target state="translated">The sign-up list must open in the future.</target>
       </trans-unit>
+      <trans-unit id="oNTbiHD" resname="The vacancy cannot close before it opens.">
+        <source>The vacancy cannot close before it opens.</source>
+        <target state="translated">The vacancy cannot close before it opens.</target>
+      </trans-unit>
+      <trans-unit id=".UQQM7H" resname="The vacancy cannot stay open past the job package it belongs to.">
+        <source>The vacancy cannot stay open past the job package it belongs to.</source>
+        <target state="translated">The vacancy cannot stay open past the job package it belongs to.</target>
+      </trans-unit>
       <trans-unit id="z.p0Rex" resname="This field is required.">
         <source>This field is required.</source>
         <target>This field is required.</target>
+      </trans-unit>
+      <trans-unit id="Q5RHBE_" resname="Upload a JPEG, PNG or WebP image.">
+        <source>Upload a JPEG, PNG or WebP image.</source>
+        <target state="translated">Upload a JPEG, PNG or WebP image.</target>
+      </trans-unit>
+      <trans-unit id="fcfNWQJ" resname="You can only highlight your own vacancies that are currently shown on the website.">
+        <source>You can only highlight your own vacancies that are currently shown on the website.</source>
+        <target state="translated">You can only highlight your own vacancies that are currently shown on the website.</target>
       </trans-unit>
       <trans-unit id="vZye7vY" resname="You have to agree to the authorization statement.">
         <source>You have to agree to the authorization statement.</source>

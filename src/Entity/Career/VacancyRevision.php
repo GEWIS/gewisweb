@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Entity\Career;
 
 use App\Entity\Application\AbstractRevision;
+use App\Entity\Application\AbstractRevisionComment;
 use App\Entity\Application\RevisableInterface;
 use App\Entity\Career\Enums\VacancyCategories;
 use App\Repository\Career\VacancyRevisionRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -141,11 +143,37 @@ class VacancyRevision extends AbstractRevision
     )]
     private ?string $contactEmail = null;
 
+    /**
+     * Which of the four kinds of posting this is. Jobs until somebody says otherwise, so a blank revision is complete
+     * enough for a form to bind to.
+     */
     #[Column(
         type: Types::STRING,
         enumType: VacancyCategories::class,
     )]
-    private VacancyCategories $category;
+    private VacancyCategories $category = VacancyCategories::Jobs;
+
+    /**
+     * The day the vacancy starts being shown, or null to show it from the moment it is approved.
+     */
+    #[Column(
+        type: Types::DATE_MUTABLE,
+        nullable: true,
+    )]
+    private ?DateTime $startDate = null;
+
+    /**
+     * The last day the vacancy is shown. Required: a company knows when applications close before it knows anything
+     * else, and a posting nobody has to put an end to is one that quietly goes stale. The owning job package caps it
+     * regardless, since a vacancy cannot outlive the contract it was sold under.
+     *
+     * The window is part of the reviewed content, so moving it goes past the committee like anything else.
+     *
+     * PHP-nullable so a not-yet-filled draft renders an empty field; the column stays NOT NULL and the form's NotBlank
+     * constraint guarantees a value before persist, so a saved revision always has a closing day.
+     */
+    #[Column(type: Types::DATE_MUTABLE)]
+    private ?DateTime $endDate = null;
 
     /**
      * The labels of this revision of the vacancy. Each revision owns its own assignments (carried forward when a draft
@@ -164,12 +192,44 @@ class VacancyRevision extends AbstractRevision
     public function __construct()
     {
         $this->labels = new ArrayCollection();
+
+        // Which localised texts a revision has is its own business, and a form cannot bind to one that has none.
+        // Doctrine does not run this when it hydrates a stored revision, so nothing is thrown away.
+        $this->name = new CareerLocalisedText(
+            null,
+            null,
+        );
+        $this->location = new CareerLocalisedText(
+            null,
+            null,
+        );
+        $this->website = new CareerLocalisedText(
+            null,
+            null,
+        );
+        $this->description = new CareerLocalisedText(
+            null,
+            null,
+        );
+        $this->attachment = new CareerLocalisedText(
+            null,
+            null,
+        );
     }
 
     #[Override]
     public function getRevisable(): RevisableInterface
     {
         return $this->vacancy;
+    }
+
+    /**
+     * @return class-string<AbstractRevisionComment>
+     */
+    #[Override]
+    public function getCommentClass(): string
+    {
+        return VacancyRevisionComment::class;
     }
 
     public function getVacancy(): Vacancy
@@ -329,5 +389,44 @@ class VacancyRevision extends AbstractRevision
     public function setCategory(VacancyCategories $category): void
     {
         $this->category = $category;
+    }
+
+    public function getStartDate(): ?DateTime
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(?DateTime $startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
+    public function getEndDate(): ?DateTime
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(?DateTime $endDate): void
+    {
+        $this->endDate = $endDate;
+    }
+
+    /**
+     * Whether today falls inside the posting window. The last day counts. A revision without a closing day has not
+     * been saved yet, so there is nothing to have fallen outside of.
+     */
+    public function isWithinPostingWindow(): bool
+    {
+        $today = new DateTime('today');
+
+        if (
+            null !== $this->startDate
+            && $today < $this->startDate
+        ) {
+            return false;
+        }
+
+        return null === $this->endDate
+            || $today <= $this->endDate;
     }
 }
