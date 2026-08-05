@@ -51,8 +51,6 @@ class CourseDocumentRepository extends ServiceEntityRepository
     }
 
     /**
-     * The most recently dated documents in the archive, for the overview's "recently added" panel.
-     *
      * Ordered by the date on the document rather than when it was uploaded: a member browsing for material cares which
      * exam is the newest, not which one an administrator happened to file last.
      *
@@ -80,10 +78,8 @@ class CourseDocumentRepository extends ServiceEntityRepository
     }
 
     /**
-     * Documents that are not downloadable yet: still queued, being rendered, or failed.
-     *
-     * This is the queue the education admin leads with. A document nobody can open is the one thing on these pages that
-     * needs somebody to do something, so it is shown before anything else.
+     * The queue the education admin leads with: a document nobody can open is the one thing on those pages that needs
+     * somebody to do something.
      *
      * @return CourseDocument[]
      */
@@ -108,6 +104,35 @@ class CourseDocumentRepository extends ServiceEntityRepository
                 'd.id',
                 'DESC',
             );
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Oldest first, so the backfill works through them in a stable order.
+     *
+     * @param DocumentFlattenStatus[] $statuses
+     *
+     * @return CourseDocument[]
+     */
+    public function findByFlattenStatus(
+        array $statuses,
+        ?int $limit = null,
+    ): array {
+        $qb = $this->createQueryBuilder('d')
+            ->where('d.flattenStatus IN (:statuses)')
+            ->setParameter(
+                'statuses',
+                $statuses,
+            )
+            ->orderBy(
+                'd.id',
+                'ASC',
+            );
+
+        if (null !== $limit) {
+            $qb->setMaxResults($limit);
+        }
 
         return $qb->getQuery()->getResult();
     }

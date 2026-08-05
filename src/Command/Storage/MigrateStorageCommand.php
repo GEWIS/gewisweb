@@ -8,11 +8,13 @@ use App\Entity\Application\Enums\StorageNamespace;
 use App\Entity\Career\CompanyBannerPackage;
 use App\Entity\Career\CompanyRevision;
 use App\Entity\Decision\OrganInformation;
+use App\Entity\Education\CourseDocument;
 use App\Entity\Photo\Album;
 use App\Entity\Photo\Photo;
 use App\Repository\Career\CompanyBannerPackageRepository;
 use App\Repository\Career\CompanyRevisionRepository;
 use App\Repository\Decision\OrganInformationRepository;
+use App\Repository\Education\CourseDocumentRepository;
 use App\Repository\Photo\AlbumRepository;
 use App\Repository\Photo\PhotoRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -69,7 +71,8 @@ use const LOCK_EX;
  *    company logo and banner-package image) at `public/data/company/{companyId}/{2ch}/{rest-of-sha1}.{ext}`. The DB
  *    columns hold the path relative to `public/data/`.
  *  - NEW: everything lives under `data/` (never web-reachable), partitioned per {@see StorageNamespace}, e.g.
- *    `data/photos/albums/{2ch}/`, `data/photos/covers/`, `data/organs/images/`, `data/career/{companyId}/images/`.
+ *    `data/photos/albums/{2ch}/`, `data/photos/covers/`, `data/organs/images/`, `data/career/{companyId}/images/`,
+ *    `data/education/courses/{courseCode}/`.
  *
  * The migration keeps the existing (sha1) filenames (it never re-hashes), so it is instant and adds no disk. It runs
  * in two independent, re-runnable phases:
@@ -112,6 +115,7 @@ final class MigrateStorageCommand extends Command
     private const string KEY_COMPANY_BANNER = 'company-banner';
     private const string KEY_ORGAN_COVER = 'organ-cover';
     private const string KEY_ORGAN_THUMBNAIL = 'organ-thumbnail';
+    private const string KEY_COURSE_DOCUMENT = 'course-document';
 
     /** Outcomes of a single hardlink attempt. */
     private const string LINK_LINKED = 'linked';
@@ -129,6 +133,7 @@ final class MigrateStorageCommand extends Command
         private readonly CompanyRevisionRepository $companyRevisionRepository,
         private readonly CompanyBannerPackageRepository $companyBannerPackageRepository,
         private readonly OrganInformationRepository $organInformationRepository,
+        private readonly CourseDocumentRepository $courseDocumentRepository,
         #[Autowire('%kernel.project_dir%')]
         private readonly string $projectDir,
     ) {
@@ -690,6 +695,11 @@ final class MigrateStorageCommand extends Command
                 'namespace' => StorageNamespace::PhotoOriginal,
             ],
             [
+                'key' => self::KEY_COURSE_DOCUMENT,
+                'field' => 'path',
+                'namespace' => StorageNamespace::EducationDocument,
+            ],
+            [
                 'key' => self::KEY_ALBUM_COVER,
                 'field' => 'coverPath',
                 'namespace' => StorageNamespace::PhotoCover,
@@ -732,6 +742,7 @@ final class MigrateStorageCommand extends Command
             self::KEY_COMPANY_LOGO => $this->companyRevisionRepository,
             self::KEY_COMPANY_BANNER => $this->companyBannerPackageRepository,
             self::KEY_ORGAN_COVER, self::KEY_ORGAN_THUMBNAIL => $this->organInformationRepository,
+            self::KEY_COURSE_DOCUMENT => $this->courseDocumentRepository,
             default => throw new RuntimeException(sprintf('Unknown storage target "%s".', $key)),
         };
 
@@ -757,6 +768,9 @@ final class MigrateStorageCommand extends Command
 
             case $entity instanceof CompanyBannerPackage:
                 return $entity->getImage();
+
+            case $entity instanceof CourseDocument:
+                return $entity->getPath();
 
             case $entity instanceof OrganInformation:
                 return 'thumbnailPath' === $field
@@ -797,6 +811,11 @@ final class MigrateStorageCommand extends Command
 
                 return;
 
+            case $entity instanceof CourseDocument:
+                $entity->setPath($value);
+
+                return;
+
             case $entity instanceof OrganInformation:
                 if ('thumbnailPath' === $field) {
                     $entity->setThumbnailPath($value);
@@ -825,6 +844,9 @@ final class MigrateStorageCommand extends Command
             $id = $entity->getCompany()->getId();
         } elseif ($entity instanceof CompanyBannerPackage) {
             $id = $entity->getCompany()->getId();
+        } elseif ($entity instanceof CourseDocument) {
+            // Course documents are filed per course, and a course is identified by its code rather than a number.
+            return $entity->getCourse()->getCode();
         } else {
             return null;
         }
@@ -846,6 +868,7 @@ final class MigrateStorageCommand extends Command
             self::KEY_COMPANY_BANNER => 'image',
             self::KEY_ORGAN_COVER => 'coverPath',
             self::KEY_ORGAN_THUMBNAIL => 'thumbnailPath',
+            self::KEY_COURSE_DOCUMENT => 'path',
             default => null,
         };
     }
