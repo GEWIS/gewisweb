@@ -7,7 +7,7 @@ x-app-environment: &app_environment
     APP_ENV: "${APP_ENV:-prod}"
     SERVER_NAME: "${SERVER_NAME:-localhost:80}, web:80"
     DEFAULT_URI: "${DEFAULT_URI:-http://localhost}"
-    DATABASE_DSN: "pdo-mysql://${DOCKER_DB_USERNAME:-gewis}:${DOCKER_DB_PASSWORD:-gewis}@${DOCKER_DB_HOST:-mariadb}:${DOCKER_DB_PORT:-3306}/${DOCKER_DB_DATABASE:-gewis}?serverVersion=${DOCKER_DB_VERSION:-11.8.3-mariadb}&charset=${DOCKER_DB_CHARSET:-utf8mb4}&collation=${DOCKER_DB_COLLATION:-utf8mb4_uca1400_ai_ci}"
+    DATABASE_DSN: "pdo-mysql://${DOCKER_DB_USERNAME:-gewis}:${DOCKER_DB_PASSWORD:-gewis}@${DOCKER_DB_HOST:-mariadb}:${DOCKER_DB_PORT:-3306}/${DOCKER_DB_DATABASE:-gewis}?serverVersion=${DOCKER_DB_VERSION:-11.8.8-mariadb}&charset=${DOCKER_DB_CHARSET:-utf8mb4}&collation=${DOCKER_DB_COLLATION:-utf8mb4_uca1400_ai_ci}"
     GEWISDB_DATABASE_DSN: "pgsql://${GEWISDB_DB_USERNAME:-gewisdb}:${GEWISDB_DB_PASSWORD:-gewisdb}@${GEWISDB_DB_HOST:-postgres}:${GEWISDB_DB_PORT:-5432}/${GEWISDB_DB_DATABASE:-gewisdb}?sslmode=require&charset=utf8"
     GEWISDB_API_HOST: "${GEWISDB_API_HOST:-https://database.test.gewis.nl/api}"
     MESSENGER_TRANSPORT_DSN: "amqp://${RABBITMQ_DEFAULT_USER:-guest}:${RABBITMQ_DEFAULT_PASS:-guest}@${RABBITMQ_HOST:-rabbitmq}:${RABBITMQ_PORT:-5672}"
@@ -100,7 +100,7 @@ services:
         networks:
             - gewisweb_network
     valkey:
-        image: valkey/valkey:9.0-alpine
+        image: valkey/valkey:9.1-alpine
         restart: unless-stopped
         hostname: valkey
         volumes:
@@ -117,7 +117,7 @@ services:
             interval: 5s
             retries: 5
     rabbitmq:
-        image: rabbitmq:4.2-alpine
+        image: rabbitmq:4.3-alpine
         restart: unless-stopped
         hostname: rabbitmq
         environment:

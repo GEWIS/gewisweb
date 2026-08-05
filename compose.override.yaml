@@ -53,7 +53,7 @@ services:
     scheduler-default: *worker_dev
     scheduler-gdpr: *worker_dev
     rabbitmq:
-        image: rabbitmq:4.2-management-alpine
+        image: rabbitmq:4.3-management-alpine
         ports:
             - target: 5672
               protocol: tcp
