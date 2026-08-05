@@ -62,6 +62,10 @@ framework:
             'App\Message\Application\SendNotificationDigestMessage': bulk
             'App\Message\Photo\ProcessImageVariantsMessage': images
             'App\Message\Photo\GenerateAlbumCoverMessage': images
+            # Rasterizing an exam and rebuilding a watermarked copy of it are both page-at-a-time image work, so they
+            # belong on the same queue as the photo pipeline rather than in front of anything time-sensitive.
+            'App\Message\Education\FlattenCourseDocumentMessage': images
+            'App\Message\Education\BuildWatermarkedDocumentMessage': images
             'App\Message\User\CompanyUserInviteEmail': high_priority
             'App\Message\Career\CareerReviewDecisionEmail': normal_priority
             'App\Message\User\ExportUserDataMessage': bulk
