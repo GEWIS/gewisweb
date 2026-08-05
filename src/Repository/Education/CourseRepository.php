@@ -13,10 +13,12 @@ use App\ViewModel\Education\CourseOverviewRow;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 use function addcslashes;
 use function array_map;
+use function mb_strtolower;
 use function trim;
 
 /**
@@ -33,8 +35,6 @@ class CourseRepository extends ServiceEntityRepository
     }
 
     /**
-     * Search for courses.
-     *
      * @return Course[]
      */
     public function search(string $query): array
@@ -53,9 +53,6 @@ class CourseRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * A course with its documents already loaded, for the course page.
-     */
     public function findWithDocuments(string $code): ?Course
     {
         $qb = $this->createQueryBuilder('c')
@@ -74,8 +71,6 @@ class CourseRepository extends ServiceEntityRepository
     }
 
     /**
-     * The rows shown in the archive overview, narrowed and ordered as asked.
-     *
      * Courses are counted rather than hydrated: a row only shows two totals and a date, and loading every document of
      * every course to derive them would fetch the whole archive on every keystroke of the search box.
      *
@@ -126,9 +121,8 @@ class CourseRepository extends ServiceEntityRepository
     }
 
     /**
-     * The courses with the most material, for the overview's "most material" panel and the codes offered as popular
-     * searches. Courses with nothing are excluded here, unlike in the archive listing: this panel is a shortcut to
-     * something worth reading, not a record of what is missing.
+     * Courses with nothing are excluded here, unlike in the archive listing: this is a shortcut to something worth
+     * reading, not a record of what is missing.
      *
      * @return CourseOverviewRow[]
      */
@@ -162,8 +156,6 @@ class CourseRepository extends ServiceEntityRepository
     }
 
     /**
-     * The courses manually linked as similar to each of the given codes, keyed by the code they belong to.
-     *
      * A link is entered from one side but means the same thing from both, so both directions are read and merged. The
      * old site only ever rendered one of them, which made a link entered the "wrong" way round invisible.
      *
@@ -210,6 +202,91 @@ class CourseRepository extends ServiceEntityRepository
         return $similar;
     }
 
+    /**
+     * @return Paginator<Course>
+     */
+    public function paginateForAdmin(
+        string $search,
+        CourseFilter $filter,
+        int $page,
+        int $pageSize,
+    ): Paginator {
+        $qb = $this->createQueryBuilder('c')
+            ->orderBy(
+                'c.code',
+                'ASC',
+            )
+            ->setFirstResult(($page - 1) * $pageSize)
+            ->setMaxResults($pageSize);
+
+        $search = trim($search);
+        if ('' !== $search) {
+            $qb->andWhere('c.code LIKE :needle OR LOWER(c.name) LIKE :needle')
+                ->setParameter(
+                    'needle',
+                    '%' . mb_strtolower(addcslashes(
+                        $search,
+                        '%_',
+                    )) . '%',
+                );
+        }
+
+        match ($filter) {
+            CourseFilter::All => null,
+            CourseFilter::Empty => $qb->andWhere('SIZE(c.documents) = 0'),
+            CourseFilter::WithSummaries => $qb->andWhere($qb->expr()->exists(
+                'SELECT 1 FROM ' . Summary::class . ' s WHERE s.course = c',
+            )),
+            CourseFilter::WithExams => $qb->andWhere($qb->expr()->exists(
+                'SELECT 1 FROM ' . Exam::class . ' e WHERE e.course = c',
+            )),
+        };
+
+        return new Paginator(
+            $qb->getQuery(),
+            false,
+        );
+    }
+
+    /**
+     * Keyed by code, in one query rather than one per row.
+     *
+     * @param string[] $codes
+     *
+     * @return array<string, CourseOverviewRow>
+     */
+    public function countsFor(array $codes): array
+    {
+        if ([] === $codes) {
+            return [];
+        }
+
+        $rows = $this->overviewQueryBuilder(
+            null,
+            CourseFilter::All,
+        )
+            ->andWhere('c.code IN (:codes)')
+            ->setParameter(
+                'codes',
+                $codes,
+            )
+            ->getQuery()
+            ->getArrayResult();
+
+        $counts = [];
+        foreach ($rows as $row) {
+            $counts[$row['code']] = new CourseOverviewRow(
+                $row['code'],
+                $row['name'],
+                (int) $row['summaryCount'],
+                (int) $row['examCount'],
+                null !== $row['lastAddedAt'] ? new DateTime($row['lastAddedAt']) : null,
+            );
+        }
+
+        return $counts;
+    }
+
     public function countAll(): int
     {
         return (int) $this->createQueryBuilder('c')
@@ -245,8 +322,7 @@ class CourseRepository extends ServiceEntityRepository
 
     /**
      * Exams and summaries are counted through their own joins rather than a single one over the base class, because DQL
-     * cannot tell the two apart inside an aggregate. Each join is left, so a course with nothing still produces a row —
-     * the archive lists what it is missing.
+     * cannot tell the two apart inside an aggregate. Each join is left, so a course with nothing still produces a row.
      */
     private function overviewQueryBuilder(
         ?string $query,

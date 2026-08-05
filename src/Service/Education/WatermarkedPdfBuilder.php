@@ -23,14 +23,11 @@ use function sys_get_temp_dir;
 /**
  * Rebuilds a course document as a watermarked PDF.
  *
- * Every page is an image, so nothing from the original document is selectable, searchable or extractable — the only
- * text objects in the result are the watermark tag written on the first page. That tag is what an external platform's
- * detector looks for: it names the site the file came from and the download it was built for, and survives being
- * copied, re-uploaded or converted as long as the text layer is left alone. It is also written into the document
- * metadata, which survives a different set of manipulations.
- *
- * The tag is drawn in white at the very top of the page, where a watermarked scan has no content, so it is legible to
- * `pdftotext` without being obtrusive on screen or in print.
+ * Every page is an image, so nothing from the original is selectable, searchable or extractable. The only text objects
+ * in the result are the tag written on the first page and the same string in the document metadata: it names the site
+ * the file came from and the download it was built for, which is what an external platform's detector looks for. The
+ * tag is drawn in white at the very top of the page, where a watermarked scan has no content, so `pdftotext` reads it
+ * without it being obtrusive on screen or in print.
  */
 final readonly class WatermarkedPdfBuilder
 {
@@ -42,6 +39,9 @@ final readonly class WatermarkedPdfBuilder
     private const string TAG_FONT = 'Times';
     private const int TAG_FONT_SIZE = 6;
 
+    /** How far the tag sits from the top-left corner, in points. */
+    private const int TAG_MARGIN = 3;
+
     public function __construct(
         private FileStorage $fileStorage,
         private WatermarkRenderer $watermarkRenderer,
@@ -52,8 +52,6 @@ final readonly class WatermarkedPdfBuilder
     }
 
     /**
-     * Build the watermarked PDF and return it as a string of bytes.
-     *
      * @throws RuntimeException if the document has no rendered pages to rebuild from.
      */
     public function build(CourseDocumentDownload $download): string
@@ -96,7 +94,12 @@ final readonly class WatermarkedPdfBuilder
             ? PdfRasterizer::DPI_SCANNED
             : PdfRasterizer::DPI_DIGITAL;
 
-        $pdf = new FPDF();
+        // Points, because that is what a page size derived from pixels and a resolution comes out in. FPDF measures in
+        // millimetres unless told otherwise, which would silently make every page nearly three times too large.
+        $pdf = new FPDF(
+            'P',
+            'pt',
+        );
         $pdf->SetAutoPageBreak(false);
         $pdf->SetCreator('GEWIS');
         $pdf->SetKeywords($this->tagFor($download));
@@ -144,8 +147,8 @@ final readonly class WatermarkedPdfBuilder
                 255,
             );
             $pdf->Text(
-                1,
-                4,
+                self::TAG_MARGIN,
+                self::TAG_FONT_SIZE + self::TAG_MARGIN,
                 $this->tagFor($download),
             );
         }

@@ -72,6 +72,7 @@
         "symfony/translation": "8.1.*",
         "symfony/twig-bundle": "8.1.*",
         "symfony/uid": "8.1.*",
+        "symfony/ux-autocomplete": "3.4.0",
         "symfony/ux-calendar-link": "3.4.0",
         "symfony/ux-live-component": "3.4.0",
         "symfony/validator": "8.1.*",

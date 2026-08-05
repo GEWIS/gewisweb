@@ -1,4 +1,3 @@
-{# One exam or summary in a list. `downloadable` decides whether it offers a button or explains why it does not. #}
 {% set type = document.getType %}
 {% set summary = type.value == 'summary' %}
 <div class="panel panel-surface {{ downloadable ? '' : 'education-doc-locked' }} {{ first|default(false) ? 'mt-0' : '' }}">
@@ -37,6 +36,7 @@
                 <span class="badge badge-tag">{{ 'Being processed'|trans }}</span>
             {% elseif downloadable %}
                 <form method="post" action="{{ path('education/document_request', {document: document.getId}) }}">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('download-course-document') }}">
                     <button type="submit" class="btn btn-sm btn-gewis-primary">
                         <span class="fas fa-download" aria-hidden="true"></span> {{ 'Download'|trans }}
                     </button>

@@ -6,6 +6,7 @@ namespace App\Repository\Education;
 
 use App\Entity\Education\Course;
 use App\Entity\Education\CourseDocument;
+use App\Entity\Education\Enums\DocumentFlattenStatus;
 use App\Entity\Education\Exam;
 use App\Entity\Education\Summary;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -74,6 +75,39 @@ class CourseDocumentRepository extends ServiceEntityRepository
                 'DESC',
             )
             ->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Documents that are not downloadable yet: still queued, being rendered, or failed.
+     *
+     * This is the queue the education admin leads with. A document nobody can open is the one thing on these pages that
+     * needs somebody to do something, so it is shown before anything else.
+     *
+     * @return CourseDocument[]
+     */
+    public function findNotReady(): array
+    {
+        $qb = $this->createQueryBuilder('d')
+            ->innerJoin(
+                'd.course',
+                'c',
+            )
+            ->addSelect('c')
+            ->where('d.flattenStatus != :ready')
+            ->setParameter(
+                'ready',
+                DocumentFlattenStatus::Ready,
+            )
+            ->orderBy(
+                'd.flattenStatus',
+                'ASC',
+            )
+            ->addOrderBy(
+                'd.id',
+                'DESC',
+            );
 
         return $qb->getQuery()->getResult();
     }

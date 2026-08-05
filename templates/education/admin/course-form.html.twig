@@ -1,0 +1,47 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% set editing = course is not null %}
+
+{% block page_title %}{{ (editing ? course.getCode : 'Add a course'|trans)|page_title }}{{ 'Education'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{# Tom Select first: components/_autocomplete.scss overrides its theme with selectors of equal specificity, so it only
+   wins on source order. #}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('vendor/tom-select/dist/css/tom-select.bootstrap5.css') }}">
+    {{ parent() }}
+{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('admin/education/index') }}">{{ 'Education'|trans }}</a></li>
+    {% if editing %}
+        <li class="breadcrumb-item">
+            <a href="{{ path('admin/education/courses/documents', {code: course.getCode}) }}">{{ course.getCode }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{ 'Edit'|trans }}</li>
+    {% else %}
+        <li class="breadcrumb-item active" aria-current="page">{{ 'Add a course'|trans }}</li>
+    {% endif %}
+{% endblock %}
+
+{% block contents %}
+    <h2>{{ editing ? 'Edit %code%'|trans({'%code%': course.getCode}) : 'Add a course'|trans }}</h2>
+
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="panel mt-0">
+                <div class="panel-body">
+                    {{ form_start(form, {'method': 'POST'}) }}
+                        {{ form_row(form.code) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.similarCoursesTo) }}
+                        <div class="d-flex gap-2">
+                            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-gewis-primary'}}) }}
+                            <a href="{{ path('admin/education/index') }}"
+                               class="btn btn-outline-secondary">{{ 'Cancel'|trans }}</a>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

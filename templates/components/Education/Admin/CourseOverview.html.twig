@@ -1,0 +1,80 @@
+<div {{ attributes }}>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-8">
+                    <label class="form-label" for="education-course-overview-search">{{ 'Search'|trans }}</label>
+                    <input type="search" class="form-control" id="education-course-overview-search"
+                           placeholder="{{ 'Search by code or name'|trans }}"
+                           data-model="debounce(300)|search"
+                           value="{{ this.search }}">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="education-course-overview-filter">{{ 'Show'|trans }}</label>
+                    <select class="form-select" id="education-course-overview-filter" data-model="filter">
+                        {% for option in this.filters %}
+                            <option value="{{ option.value }}" {% if this.filter == option.value %}selected{% endif %}>
+                                {{ option.label|trans }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Code'|trans }}</th>
+                            <th>{{ 'Course'|trans }}</th>
+                            <th class="text-end">{{ 'Summaries'|trans }}</th>
+                            <th class="text-end">{{ 'Exams'|trans }}</th>
+                            <th>{{ 'Most recent'|trans }}</th>
+                            <th class="text-end">{{ 'Actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in this.courses %}
+                            {% set counts = this.counts[course.getCode]|default(null) %}
+                            <tr>
+                                <td><span class="education-code education-code-sm">{{ course.getCode }}</span></td>
+                                <td>{{ course.getName }}</td>
+                                <td class="text-end">{{ counts ? counts.summaryCount : 0 }}</td>
+                                <td class="text-end">{{ counts ? counts.examCount : 0 }}</td>
+                                <td class="text-muted small">
+                                    {{ counts and counts.lastAddedAt ? counts.lastAddedAt|date('j M Y') : 'Never'|trans }}
+                                </td>
+                                <td class="text-end">
+                                    <a href="{{ path('admin/education/courses/documents', {code: course.getCode}) }}"
+                                       class="btn btn-sm btn-outline-secondary">{{ 'Manage'|trans }}</a>
+                                    <a href="{{ path('education/course', {code: course.getCode}) }}"
+                                       class="btn btn-sm btn-outline-secondary"
+                                       title="{{ 'View on the site'|trans }}">
+                                        <span class="fas fa-arrow-up-right-from-square" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    {{ 'No course matches the current search.'|trans }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% include 'partials/application/pagination.html.twig' with {
+                'page': this.page,
+                'totalPages': this.totalPages,
+                'totalCount': this.totalCount,
+                'pageSize': this.pageSize,
+            } only %}
+        </div>
+    </div>
+</div>

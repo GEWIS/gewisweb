@@ -23,6 +23,7 @@ use RuntimeException;
 use Symfony\Component\Process\Process;
 
 use function file_put_contents;
+use function preg_match;
 use function sys_get_temp_dir;
 use function tempnam;
 use function unlink;
@@ -96,6 +97,24 @@ final class CourseDocumentPipelineTest extends DatabaseTestCase
             $download->getReference(),
             $text,
             'The machine-readable tag must name the download it was built for.',
+        );
+
+        // The pages are laid out from a pixel size and a resolution, which comes out in points; FPDF measures in
+        // millimetres unless told otherwise, and getting that wrong makes every page nearly three times too large
+        // without anything else looking amiss.
+        $size = $this->pageSize($this->fileStorage->read($path));
+
+        self::assertEqualsWithDelta(
+            595.0,
+            $size[0],
+            2.0,
+            'A page rendered from an A4 source should come back out A4 wide.',
+        );
+        self::assertEqualsWithDelta(
+            842.0,
+            $size[1],
+            2.0,
+            'A page rendered from an A4 source should come back out A4 tall.',
         );
     }
 
@@ -222,6 +241,43 @@ final class CourseDocumentPipelineTest extends DatabaseTestCase
         }
 
         return $process->getOutput();
+    }
+
+    /**
+     * The size of the first page, in points, as poppler reports it.
+     *
+     * @return array{float, float}
+     */
+    private function pageSize(string $pdf): array
+    {
+        $temporaryFile = $this->temporaryFile();
+        file_put_contents(
+            $temporaryFile,
+            $pdf,
+        );
+
+        $process = new Process([
+            'pdfinfo',
+            $temporaryFile,
+        ]);
+        $process->run();
+
+        unlink($temporaryFile);
+
+        if (
+            1 !== preg_match(
+                '/^Page size:\s+([\d.]+) x ([\d.]+) pts/m',
+                $process->getOutput(),
+                $matches,
+            )
+        ) {
+            throw new RuntimeException('Could not read the page size of the rebuilt document.');
+        }
+
+        return [
+            (float) $matches[1],
+            (float) $matches[2],
+        ];
     }
 
     private function temporaryFile(): string

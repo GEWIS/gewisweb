@@ -116,6 +116,20 @@
     --#{$prefix}panel-bg: var(--#{$prefix}tertiary-bg);
 }
 
+// Matches the album manage view's drag target; the widths and radius come from utilities in the markup.
+.education-dropzone {
+    border-style: dashed !important;
+    border-color: var(--#{$prefix}border-color);
+    cursor: pointer;
+    transition: border-color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+
+    &:hover,
+    &.is-dragging {
+        border-color: $brand-primary;
+        background-color: var(--#{$prefix}secondary-bg);
+    }
+}
+
 .education-empty {
     border: var(--#{$prefix}border-width) dashed var(--#{$prefix}border-color);
     border-radius: var(--#{$prefix}border-radius-lg);
