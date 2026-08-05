@@ -42,8 +42,8 @@ EOF
 # Builders for AssetMapper. The binaries are arch-specific, so select them based on the build target (set by BuildKit)
 # to avoid pulling linux-x64 binaries that only run through (failing) emulation on arm64 hosts (e.g. Apple Silicon).
 ARG TARGETARCH
-ARG SASS_VERSION=1.101.0
-ARG SWC_VERSION=v1.15.43
+ARG SASS_VERSION=1.102.0
+ARG SWC_VERSION=v1.15.47
 
 RUN <<-EOF
     case "$TARGETARCH" in

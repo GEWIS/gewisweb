@@ -97,7 +97,7 @@ jobs:
                 if: steps.assets-cache.outputs.cache-hit != 'true'
                 env:
                     APP_ENV: test
-                    SWC_VERSION: v1.15.43
+                    SWC_VERSION: v1.15.47
                 # The controller and frontpage tests render full pages, so base.html.twig and app.scss resolve the
                 # Font Awesome fonts/sprites and Bootstrap bundle (copied out of vendor/ by assets:update), the
                 # importmap's vendored JS such as the live-component CSS (importmap:install), and the sass/TypeScript
