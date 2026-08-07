@@ -24,6 +24,7 @@ use Symfony\Bundle\MonologBundle\MonologBundle;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
+use Symfony\UX\Autocomplete\AutocompleteBundle;
 use Symfony\UX\CalendarLink\UXCalendarLinkBundle;
 use Symfony\UX\LiveComponent\LiveComponentBundle;
 use Symfony\UX\StimulusBundle\StimulusBundle;
@@ -68,6 +69,7 @@ return [
     EndroidQrCodeBundle::class => ['all' => true],
     AmbtaDoctrineEncryptBundle::class => ['all' => true],
     UXCalendarLinkBundle::class => ['all' => true],
+    AutocompleteBundle::class => ['all' => true],
     AltchaBundle::class => ['all' => true],
     FlysystemBundle::class => ['all' => true],
     JoseFrameworkBundle::class => ['all' => true],

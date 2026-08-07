@@ -52,23 +52,20 @@
                     </div>
                 </div>
                 {% if this.labels is not empty %}
-                    <div class="col-12">
-                        <label class="form-label">{{ 'Labels'|trans }}</label>
-                        <div data-controller="label-chips"
-                             data-label-chips-placeholder-value="{{ 'Search labels...'|trans }}"
-                             data-label-chips-remove-label-value="{{ 'Remove'|trans }}"
-                             data-label-chips-no-results-value="{{ 'No matching labels'|trans }}">
-                            <div class="d-flex flex-wrap gap-3">
-                                {% for label in this.labels %}
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="activity-overview-label-{{ label.id }}"
-                                               data-model="labelFilters" value="{{ label.id }}"
-                                               {% if label.id in this.labelFilters %}checked{% endif %}>
-                                        <label class="form-check-label" for="activity-overview-label-{{ label.id }}">{{ label.getName|localise_text }}</label>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
+                    {# Tom Select replaces the select with markup of its own, which the live component's morph would
+                       take back out on every re-render. The option list never changes, so the subtree is left to it. #}
+                    <div class="col-12" data-live-ignore>
+                        <label class="form-label" for="activity-overview-labels">{{ 'Labels'|trans }}</label>
+                        <select class="form-select" id="activity-overview-labels" multiple
+                                data-model="labelFilters"
+                                data-controller="symfony--ux-autocomplete--autocomplete"
+                                data-placeholder="{{ 'Search labels...'|trans }}">
+                            {% for label in this.labels %}
+                                <option value="{{ label.id }}" {% if label.id in this.labelFilters %}selected{% endif %}>
+                                    {{ label.getName|localise_text }}
+                                </option>
+                            {% endfor %}
+                        </select>
                     </div>
                 {% endif %}
                 </div>

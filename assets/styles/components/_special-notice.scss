@@ -64,6 +64,11 @@ body {
         color: var(--#{$prefix}danger-text-emphasis);
     }
 
+    &.education-locked-notice {
+        background-color: var(--#{$prefix}warning-bg-subtle);
+        color: var(--#{$prefix}warning-text-emphasis);
+    }
+
     > p {
         margin: 0;
     }

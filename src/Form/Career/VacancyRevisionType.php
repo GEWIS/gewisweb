@@ -118,7 +118,8 @@ class VacancyRevisionType extends AbstractType
                         return $label->getName()->getText($language) ?? '';
                     },
                     'multiple' => true,
-                    'expanded' => true,
+                    'expanded' => false,
+                    'autocomplete' => true,
                     'by_reference' => false,
                     'required' => false,
                 ],

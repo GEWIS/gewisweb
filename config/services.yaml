@@ -22,6 +22,9 @@ parameters:
     # Who a company writes to about its profile, vacancies, banner and package. Read by the company area templates
     # through the `external_affairs_email` Twig global.
     app.email.external_affairs: 'ceb@gewis.nl'
+    # The education officer: who a member sends a summary to, and who takes a complaint about a course to the
+    # department. Read by the education pages through the `education_email` Twig global.
+    app.email.education: 'co@gewis.nl'
     # Regulations on the members-area dashboard: slug (used in the URL) to the document's path inside the
     # SFTP-mirrored public archive (`data/public-archive/`), without the `.pdf` extension.
     app.regulations:
@@ -34,6 +37,16 @@ parameters:
         key-policy: 'Policies & Regulations/Key Policy'
         poster-policy: 'Policies & Regulations/Poster Policy'
         privacy-policy: 'Policies & Regulations/Privacy Policy'
+    # Subnets the TU/e uses. An anonymous visitor coming from one of them may download course material, which is the
+    # arrangement under which the department shares its exams: on campus, or logged in as a member. CIDR notation.
+    env(TUE_IP_RANGES): '131.155.0.0/16,100.64.0.0/10'
+    app.education.tue_ranges: '%env(csv:TUE_IP_RANGES)%'
+    # Written into every watermarked download as machine-readable text, so a copy found on an external platform can be
+    # recognised as ours. Deliberately not a secret: it is meant to be found.
+    env(WATERMARK_TAG): 'GEWIS-EDU'
+    app.education.watermark_tag: '%env(string:WATERMARK_TAG)%'
+    # The face the red watermark is drawn in. Shipped by `fonts-dejavu-core`, which the Dockerfile installs explicitly.
+    app.education.watermark_font: '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
     # External tools linked from the members-area dashboard.
     app.members_area_links:
         webmail: '/webmail'
@@ -52,6 +65,10 @@ services:
             $supportedLocales: '%kernel.enabled_locales%' # array
             $mfaEnforcementEnabled: '%app.mfa.enforcement_enabled%' # bool
             $internalAffairsEmail: '%app.email.internal_affairs%' # string
+            $tueRanges: '%app.education.tue_ranges%' # array
+            $watermarkTag: '%app.education.watermark_tag%' # string
+            $watermarkFontPath: '%app.education.watermark_font%' # string
+            $siteUrl: '%env(string:DEFAULT_URI)%' # string
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

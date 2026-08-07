@@ -1,6 +1,207 @@
 {% extends 'layout.html.twig' %}
 
+{% set filter = enum('App\\Entity\\Education\\Enums\\CourseFilter') %}
+
 {% block page_title %}{{ 'Education'|trans|page_title }}{{ parent() }}{% endblock %}
 
+{% block special_notices %}{% include 'partials/education/access-notice.html.twig' %}{% endblock %}
+
+{% block pre_body %}
+    <div class="education-hero">
+        <div class="container py-4">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-7">
+                    <span class="page-header-eyebrow">{{ 'Education'|trans }}</span>
+                    <h2 class="mt-1 mb-2">{{ 'Every old exam, in one place.'|trans }}</h2>
+                    <p class="lead text-body-secondary mb-3">
+                        {{ 'Summaries and past exams shared by members, plus course books, tutoring and where to reach the education officer.'|trans }}
+                    </p>
+                    <form method="get" action="{{ path('education/courses') }}"
+                          class="d-flex flex-wrap gap-2 mb-3" role="search">
+                        <div class="input-group education-hero-search">
+                            <span class="input-group-text" aria-hidden="true">
+                                <span class="fas fa-magnifying-glass"></span>
+                            </span>
+                            <input type="search" name="search" class="form-control"
+                                   aria-label="{{ 'Search courses'|trans }}"
+                                   placeholder="{{ 'Course code or course name, try 2IL50'|trans }}">
+                        </div>
+                        <button type="submit" class="btn btn-gewis-primary">{{ 'Search courses'|trans }}</button>
+                    </form>
+                    {% if topCourses is not empty %}
+                        <div class="d-flex flex-wrap align-items-center gap-2">
+                            <span class="small text-body-secondary">{{ 'Popular:'|trans }}</span>
+                            {% for course in topCourses|slice(0, 4) %}
+                                <a href="{{ path('education/course', {code: course.code}) }}"
+                                   class="badge badge-tag text-decoration-none">{{ course.code }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-lg-5">
+                    <div class="row row-cols-2 g-2">
+                        {% for tile in [
+                            {'value': counts.courses, 'label': 'Courses in the archive'|trans, 'href': path('education/courses')},
+                            {'value': counts.documents, 'label': 'Summaries and exams'|trans, 'href': path('education/courses')},
+                            {'value': counts.coursesWithSummaries, 'label': 'Courses with a summary'|trans, 'href': path('education/courses', {filter: filter.WithSummaries.value})},
+                            {'value': counts.coursesWithoutMaterial, 'label': 'Still missing material'|trans, 'href': path('education/courses', {filter: filter.Empty.value})},
+                        ] %}
+                            <div class="col">
+                                <a href="{{ tile.href }}" class="education-stat">
+                                    <span class="education-stat-value">{{ tile.value }}</span>
+                                    <span class="education-stat-label">{{ tile.label }}</span>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {% block contents %}
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
+                <h3 class="mb-0">{{ 'Recently added material'|trans }}</h3>
+                <a href="{{ path('education/courses') }}" class="fw-semibold">
+                    {{ 'All %count% courses'|trans({'%count%': counts.courses}) }}
+                    <span class="fas fa-arrow-right small" aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div class="mb-4">
+                {% for document in recentDocuments %}
+                    {% set type = document.getType %}
+                    <div class="panel panel-surface {{ loop.first ? 'mt-0' : '' }}">
+                        <div class="panel-body d-flex align-items-center gap-3">
+                            <span class="education-doc-icon {{ type.iconClass }}" aria-hidden="true">
+                                <span class="fas {{ type.icon }}"></span>
+                            </span>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <h5 class="mb-0">
+                                    <a class="stretched-link"
+                                       href="{{ path('education/course', {code: document.getCourse.getCode}) }}">
+                                        {{ document.getCourse.getCode }} &middot; {{ document.getCourse.getName }}
+                                    </a>
+                                </h5>
+                                <span class="d-block small text-body-secondary">
+                                    {{ 'summary' == type.value ? type.label|trans : document.getExamType.label|trans }}
+                                    {% if 'summary' == type.value and document.getAuthor is not null %}
+                                        {{ 'by %author%'|trans({'%author%': document.getAuthor}) }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="flex-shrink-0 text-end small text-body-secondary">
+                                {{ document.getDate|date('j M Y') }}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-body-secondary mb-0">{{ 'Nothing has been added to the archive yet.'|trans }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
+                <h3 class="mb-0">{{ 'Courses with the most material'|trans }}</h3>
+                <a href="{{ path('education/courses') }}" class="fw-semibold">
+                    {{ 'Browse all'|trans }}
+                    <span class="fas fa-arrow-right small" aria-hidden="true"></span>
+                </a>
+            </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-2">
+                {% for course in topCourses %}
+                    <div class="col">
+                        <div class="panel panel-surface h-100 my-0">
+                            <div class="panel-body d-flex align-items-center gap-3">
+                                <span class="education-code education-code-sm" aria-hidden="true">{{ course.code }}</span>
+                                <div class="overflow-hidden">
+                                    <span class="education-course-name">
+                                        <a class="stretched-link text-body"
+                                           href="{{ path('education/course', {code: course.code}) }}">{{ course.name }}</a>
+                                    </span>
+                                    <span class="d-block small text-body-secondary">
+                                        {{ '%count% document|%count% documents'|trans({'%count%': course.getDocumentCount}) }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col">
+                        <p class="text-body-secondary mb-0">{{ 'No course has any material yet.'|trans }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel mt-0">
+                <div class="panel-heading">
+                    <h3>{{ 'Contribute your summary'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="text-body-secondary mb-0">
+                        {{ 'The archive only works because members keep filling it. Send your summary or old exam to the education officer and the next cohort benefits.'|trans }}
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    <a href="mailto:{{ education_email }}" class="panel-footer-link">{{ 'Submit material'|trans }}</a>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Useful links'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled mb-0">
+                        {% for link in [
+                            {'icon': 'fa-book-open', 'url': 'https://gewis.nl/boeken', 'title': 'Books via GEWIS'|trans, 'meta': 'Order your course books at a discount. Deadlines are mailed each quartile.'|trans},
+                            {'icon': 'fa-user-graduate', 'url': 'https://gew.is/requesttutor', 'title': 'Request tutoring'|trans, 'meta': 'We match you with a member who already passed the course.'|trans},
+                            {'icon': 'fa-chalkboard-user', 'url': 'https://gew.is/becometutor', 'title': 'Become a tutor'|trans, 'meta': 'Paid, a few hours a week, on your own schedule.'|trans},
+                        ] %}
+                            <li class="d-flex gap-3 {{ loop.last ? '' : 'mb-3' }}">
+                                <span class="education-doc-icon" aria-hidden="true">
+                                    <span class="fas {{ link.icon }}"></span>
+                                </span>
+                                <span class="overflow-hidden">
+                                    <a class="d-block fw-semibold" href="{{ link.url }}"
+                                       target="_blank" rel="noopener noreferrer">{{ link.title }}</a>
+                                    <span class="d-block small text-body-secondary">{{ link.meta }}</span>
+                                </span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Complaint about TU/e education?'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="text-body-secondary mb-0">
+                        {{ 'Anything from a badly scheduled exam to a course that needs rethinking. The education officer takes it to the department.'|trans }}
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    <a href="mailto:{{ education_email }}" class="panel-footer-link">
+                        {{ 'Contact the education officer'|trans }}
+                    </a>
+                </div>
+            </div>
+
+            {% set board %}<a href="mailto:board@gewis.nl">{{ 'the board'|trans }}</a>{% endset %}
+            <div class="panel panel-accent">
+                <div class="panel-body">
+                    <h4 class="mb-2">{{ 'Disclaimer'|trans }}</h4>
+                    <p class="mb-0">
+                        {{ 'Exams are provided by Education and Student Affairs of the department of Mathematics and Computer Science. If an exam or answer key was uploaded without the author\'s permission, please email %board% to request its removal. Commercial use is not allowed.'|trans({'%board%': board})|raw }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

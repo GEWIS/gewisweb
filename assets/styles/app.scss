@@ -43,6 +43,8 @@ $enable-negative-margins: true;
 @import '../../vendor/twbs/bootstrap/scss/navbar';
 @import '../../vendor/twbs/bootstrap/scss/offcanvas';
 @import '../../vendor/twbs/bootstrap/scss/pagination';
+@import '../../vendor/twbs/bootstrap/scss/progress';
+@import '../../vendor/twbs/bootstrap/scss/spinners';
 @import '../../vendor/twbs/bootstrap/scss/tables';
 @import '../../vendor/twbs/bootstrap/scss/toasts';
 @import '../../vendor/twbs/bootstrap/scss/transitions';
@@ -54,6 +56,7 @@ $enable-negative-margins: true;
 // Custom styling
 // Components
 @import 'components/activity';
+@import 'components/autocomplete';
 @import 'components/balloons';
 @import 'components/banner';
 @import 'components/breadcrumb';
@@ -89,6 +92,7 @@ $enable-negative-margins: true;
 @import 'modules/company';
 @import 'modules/company-form';
 @import 'modules/decision';
+@import 'modules/education';
 @import 'modules/frontpage';
 @import 'modules/photo';
 @import 'modules/profile';

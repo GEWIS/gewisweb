@@ -1,0 +1,124 @@
+{% extends 'layout.html.twig' %}
+
+{% set documents = course.getDocuments %}
+{% set summaries = documents|filter(d => 'summary' == d.getType.value) %}
+{% set exams = documents|filter(d => 'exam' == d.getType.value) %}
+{% set similar = course.getSimilarCourses %}
+
+{% block page_title %}{{ ('%code% - %name%'|trans({'%code%': course.getCode, '%name%': course.getName}))|page_title }}{{ parent() }}{% endblock %}
+
+{% block special_notices %}{% include 'partials/education/access-notice.html.twig' %}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('education/index') }}">{{ 'Education'|trans }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('education/courses') }}">{{ 'Courses'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ course.getCode }}</li>
+{% endblock %}
+
+{% block contents %}
+    <h2 class="d-flex flex-wrap align-items-center gap-2">
+        <span class="education-code">{{ course.getCode }}</span>
+        {{ course.getName }}
+    </h2>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            {% if documents is empty %}
+                <div class="education-empty">
+                    <h4 class="mb-2">{{ 'Nothing has been shared for %code% yet'|trans({'%code%': course.getCode}) }}</h4>
+                    <p class="text-body-secondary mb-3">
+                        {{ 'This course is listed but empty. If you kept your notes, sending them in takes a minute and saves the next cohort a weekend.'|trans }}
+                    </p>
+                    <a href="mailto:{{ education_email }}" class="btn btn-sm btn-gewis-primary">
+                        <span class="fas fa-upload" aria-hidden="true"></span> {{ 'Be the first to upload'|trans }}
+                    </a>
+                </div>
+            {% else %}
+                {% for group in [
+                    {'id': 'summaries', 'title': 'Summaries'|trans, 'documents': summaries},
+                    {'id': 'exams', 'title': 'Exams and answers'|trans, 'documents': exams},
+                ] %}
+                    {% if group.documents is not empty %}
+                        {# A course can hold tens of exams; past a screenful the list starts folded away. #}
+                        {% set collapsed = group.documents|length > 10 %}
+                        <button type="button"
+                                class="panel-collapse-toggle {{ collapsed ? 'collapsed' : '' }} d-flex justify-content-between align-items-center gap-2 w-100 p-0 mb-3 {{ loop.first ? '' : 'mt-4' }} border-0 bg-transparent text-start"
+                                data-bs-toggle="collapse" data-bs-target="#education-{{ group.id }}"
+                                aria-expanded="{{ collapsed ? 'false' : 'true' }}" aria-controls="education-{{ group.id }}">
+                            <h3 class="mb-0">
+                                {{ group.title }}
+                                <span class="badge badge-tag align-middle">{{ group.documents|length }}</span>
+                            </h3>
+                            <span class="fas fa-chevron-down panel-collapse-chevron" aria-hidden="true"></span>
+                        </button>
+                        <div class="collapse {{ collapsed ? '' : 'show' }}" id="education-{{ group.id }}">
+                            {% for document in group.documents %}
+                                {% include 'partials/education/document-row.html.twig' with {
+                                    'document': document,
+                                    'downloadable': is_granted('COURSE_DOCUMENT_DOWNLOAD', document),
+                                    'first': loop.first,
+                                } only %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel mt-0">
+                <div class="panel-heading">
+                    <h3>{{ 'This course'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="row mb-0 small">
+                        <dt class="col-6 fw-normal text-body-secondary">{{ 'Course code'|trans }}</dt>
+                        <dd class="col-6 text-end mb-1">{{ course.getCode }}</dd>
+                        <dt class="col-6 fw-normal text-body-secondary">{{ 'Summaries'|trans }}</dt>
+                        <dd class="col-6 text-end mb-1">{{ summaries|length }}</dd>
+                        <dt class="col-6 fw-normal text-body-secondary">{{ 'Exams and answers'|trans }}</dt>
+                        <dd class="col-6 text-end mb-0">{{ exams|length }}</dd>
+                    </dl>
+                </div>
+            </div>
+
+            {# A course that has nothing, or nothing of the kind you came for, should still point somewhere. Course codes
+               change between curricula, so the same material often lives under a code linked here. #}
+            {% if similar is not empty %}
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ 'Similar courses'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-unstyled mb-0">
+                            {% for other in similar %}
+                                <li class="d-flex align-items-center gap-3 {{ loop.last ? '' : 'mb-2' }}">
+                                    <span class="education-code education-code-sm" aria-hidden="true">{{ other.getCode }}</span>
+                                    <span class="education-course-name">
+                                        <a class="text-body" href="{{ path('education/course', {code: other.getCode}) }}">
+                                            {{ other.getName }}
+                                        </a>
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Contribute your summary'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="text-body-secondary mb-0">
+                        {{ 'Send your summary or old exam for %code% to the education officer and it is added here.'|trans({'%code%': course.getCode}) }}
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    <a href="mailto:{{ education_email }}" class="panel-footer-link">{{ 'Submit material'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

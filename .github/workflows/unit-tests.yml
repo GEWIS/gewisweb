@@ -111,5 +111,12 @@ jobs:
                     bin/console sass:build
                     bin/console typescript:build
 
+            -   name: Install poppler and the watermark font
+                # The course document pipeline shells out to `pdftoppm` and draws its watermark in DejaVu Sans Bold.
+                # Every other environment gets both from the image, but PHPUnit runs on the bare runner here.
+                run: |
+                    sudo apt-get update
+                    sudo apt-get install -y --no-install-recommends fonts-dejavu-core poppler-utils
+
             -   name: Run PHPUnit
                 run: bin/phpunit

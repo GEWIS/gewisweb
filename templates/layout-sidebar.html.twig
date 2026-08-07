@@ -33,7 +33,7 @@
                 </div>
             </nav>
         </aside>
-        <main class="container-fluid flex-grow-1 p-0">
+        <main class="container-fluid flex-grow-1 p-0 d-flex flex-column">
             {% if block('breadcrumbs') is defined and block('breadcrumbs')|trim != '' %}
                 <nav class="navbar-breadcrumb sticky-top" aria-label="breadcrumb">
                     <ol class="breadcrumb m-0 px-2">
@@ -42,7 +42,7 @@
                 </nav>
             {% endif %}
             {% block page_header %}{% endblock %}
-            <section class="mx-auto my-0 pt-2 px-3 overflow-x-auto">
+            <section class="my-0 pt-2 px-3 flex-grow-1 overflow-x-auto">
                 {% block contents %}{% endblock %}
             </section>
         </main>

@@ -1,0 +1,53 @@
+// Autocomplete
+//
+// Tom Select's Bootstrap 5 theme mostly follows Bootstrap's custom properties, but hard-codes the text colour, the
+// chips and the focus ring in the framework blue and in light-theme greys.
+
+.ts-dropdown,
+.ts-control,
+.ts-control input {
+    color: var(--#{$prefix}body-color);
+}
+
+.ts-dropdown {
+    border-color: var(--#{$prefix}border-color);
+}
+
+.ts-dropdown .active {
+    background-color: var(--#{$prefix}secondary-bg);
+}
+
+.ts-wrapper.multi .ts-control > div {
+    background: var(--#{$prefix}secondary-bg);
+    color: var(--#{$prefix}body-color);
+}
+
+.ts-wrapper.multi .ts-control > div.active {
+    background: $gewis-red;
+    color: $white;
+}
+
+.focus .ts-control {
+    border-color: #{tint-color($gewis-red, 25%)};
+    box-shadow: 0 0 0 0.25rem #{rgba($gewis-red, 0.25)};
+}
+
+// Tom Select copies the select's classes onto its wrapper, so Bootstrap floats the label and reserves room for it on
+// the wrapper. The box that is actually drawn is the control inside it, which knows nothing about that and lays its
+// chips out over the label. Give the control the reserved space instead, and let both grow as chips wrap onto a second
+// row.
+// Bootstrap floats the label over the wrapper and reserves room for it there, but the box that draws the content is
+// the control inside, which knows nothing about that and lays its chips over the label. Move the reserved space onto
+// the control, and drop the wrapper's fixed height so it can grow as chips wrap onto a second row. The bottom padding
+// is smaller than Bootstrap's so an empty control still lines up with the plain inputs above it.
+//
+// The second selector repeats the one the vendor theme uses to pad a control that holds something, which is more
+// specific than the first.
+.form-floating > .ts-wrapper {
+    height: auto;
+}
+
+.form-floating > .ts-wrapper .ts-control,
+.form-floating > .ts-wrapper.multi.has-items .ts-control {
+    padding: $form-floating-input-padding-t $form-floating-padding-x 0.375rem;
+}

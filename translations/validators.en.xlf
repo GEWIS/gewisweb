@@ -5,6 +5,22 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="6xn2oL6" resname="A course code contains only letters and digits.">
+        <source>A course code contains only letters and digits.</source>
+        <target state="translated">A course code contains only letters and digits.</target>
+      </trans-unit>
+      <trans-unit id="SnBj2Da" resname="A course code is at least {{ limit }} characters.">
+        <source>A course code is at least {{ limit }} characters.</source>
+        <target state="translated">A course code is at least {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="spLcLEe" resname="A course code is at most {{ limit }} characters.">
+        <source>A course code is at most {{ limit }} characters.</source>
+        <target state="translated">A course code is at most {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="qdAGayA" resname="A course name is at most {{ limit }} characters.">
+        <source>A course name is at most {{ limit }} characters.</source>
+        <target state="translated">A course name is at most {{ limit }} characters.</target>
+      </trans-unit>
       <trans-unit id="MvaasYM" resname="A package cannot expire before it starts.">
         <source>A package cannot expire before it starts.</source>
         <target state="translated">A package cannot expire before it starts.</target>
@@ -100,6 +116,18 @@
       <trans-unit id=".qSOaLw" resname="Enter an opening date and time.">
         <source>Enter an opening date and time.</source>
         <target state="translated">Enter an opening date and time.</target>
+      </trans-unit>
+      <trans-unit id="za5VIsp" resname="Enter the course code.">
+        <source>Enter the course code.</source>
+        <target state="translated">Enter the course code.</target>
+      </trans-unit>
+      <trans-unit id="BpVlGHo" resname="Enter the course name.">
+        <source>Enter the course name.</source>
+        <target state="translated">Enter the course name.</target>
+      </trans-unit>
+      <trans-unit id="PaQzpFY" resname="Enter the date of this document.">
+        <source>Enter the date of this document.</source>
+        <target state="translated">Enter the date of this document.</target>
       </trans-unit>
       <trans-unit id="ITE2E1L" resname="Enter the day the package expires.">
         <source>Enter the day the package expires.</source>

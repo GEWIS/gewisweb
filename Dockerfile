@@ -20,9 +20,11 @@ RUN <<-EOF
     apt-get install -y --no-install-recommends \
         ca-certificates \
         file \
+        fonts-dejavu-core \
         git \
         libicu-dev \
-        libvips42t64
+        libvips42t64 \
+        poppler-utils
     install-php-extensions \
         @composer \
         amqp \
@@ -191,9 +193,14 @@ EOF
 # php-vips loads libvips through FFI `dlopen` at runtime, so `libtree` (which only follows link-time deps) does not
 # collect it into /tmp/libs. Install the runtime library explicitly in this fresh Debian stage. The `ffi` extension .so
 # and its enabling ini are already carried over by the COPY --from lines above.
+#
+# `poppler-utils` provides `pdftoppm`, which rasterizes course documents before they are watermarked. It is invoked as
+# a subprocess rather than linked, so it has to be installed here too. `fonts-dejavu-core` supplies the face the
+# watermark is drawn in; fontconfig already pulls it in, but the watermark would silently stop rendering if that ever
+# changed, so it is named here as well.
 RUN <<-EOF
     apt-get update
-    apt-get install -y --no-install-recommends libvips42t64
+    apt-get install -y --no-install-recommends fonts-dejavu-core libvips42t64 poppler-utils
     rm -rf /var/lib/apt/lists/*
 EOF
 

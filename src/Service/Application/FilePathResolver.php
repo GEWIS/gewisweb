@@ -78,6 +78,18 @@ final readonly class FilePathResolver
                 $path,
                 '/minutes/',
             ) => StorageNamespace::MeetingMinutes,
+            str_starts_with(
+                $path,
+                'education/courses/',
+            ) => StorageNamespace::EducationDocument,
+            str_starts_with(
+                $path,
+                'education/pages/',
+            ) => StorageNamespace::EducationDocumentPage,
+            str_starts_with(
+                $path,
+                'education/downloads/',
+            ) => StorageNamespace::EducationDownload,
             default => null,
         };
     }

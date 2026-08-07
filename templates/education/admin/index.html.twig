@@ -1,22 +1,98 @@
 {% extends 'layout-admin.html.twig' %}
 
-{% block page_title %}{{ 'Overview'|trans|page_title }}{{ 'Education'|trans|page_title }}{{ parent() }}{% endblock %}
+{% block page_title %}{{ 'Course material'|trans|page_title }}{{ 'Education'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block admin_breadcrumbs %}
-    <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('admin/education/index') }}">
-            {{ 'Education'|trans }}
-        </a>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">
-        {{ 'Overview'|trans }}
-    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Education'|trans }}</li>
 {% endblock %}
 
 {% block contents %}
-    <div class="row">
-        <div class="col-md-12">
-            {# TODO #}
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+        <div>
+            <h2 class="mb-1">{{ 'Course material'|trans }}</h2>
+            <p class="text-body-secondary mb-0">{{ 'Publish uploads, fix what they say, and keep the archive tidy.'|trans }}</p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ path('admin/education/courses/add') }}" class="btn btn-outline-secondary">
+                <span class="fas fa-plus" aria-hidden="true"></span> {{ 'Add a course'|trans }}
+            </a>
+            <a href="{{ path('admin/education/documents/upload') }}" class="btn btn-gewis-primary">
+                <span class="fas fa-upload" aria-hidden="true"></span> {{ 'Upload documents'|trans }}
+            </a>
         </div>
     </div>
+
+    <div class="row row-cols-2 row-cols-md-4 g-2 mb-3">
+        {% for tile in [
+            {'value': counts.courses, 'label': 'Courses tracked'|trans},
+            {'value': counts.documents, 'label': 'Published documents'|trans},
+            {'value': unprocessed|length, 'label': 'Not downloadable yet'|trans},
+            {'value': counts.coursesWithoutMaterial, 'label': 'Courses with nothing'|trans},
+        ] %}
+            <div class="col">
+                <div class="panel my-0 h-100">
+                    <div class="panel-body">
+                        <span class="education-stat-value d-block">{{ tile.value }}</span>
+                        <span class="education-stat-label">{{ tile.label }}</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if unprocessed is not empty %}
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'Waiting to become downloadable'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Course'|trans }}</th>
+                                <th>{{ 'Document'|trans }}</th>
+                                <th>{{ 'Status'|trans }}</th>
+                                <th class="text-end">{{ 'Actions'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for document in unprocessed %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('admin/education/courses/documents', {code: document.getCourse.getCode}) }}">
+                                            {{ document.getCourse.getCode }}
+                                        </a>
+                                        <div class="text-muted small">{{ document.getCourse.getName }}</div>
+                                    </td>
+                                    <td>
+                                        {{ document.getType.label|trans }}
+                                        <div class="text-muted small">{{ document.getDate|date('j M Y') }}</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge {{ document.getFlattenStatus.badgeClass }}">
+                                            {{ document.getFlattenStatus.label|trans }}
+                                        </span>
+                                        {% if document.getFlattenError is not null %}
+                                            <div class="text-muted small">{{ document.getFlattenError }}</div>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-end">
+                                        <form method="post" class="d-inline"
+                                              action="{{ path('admin/education/documents/reprocess', {document: document.getId}) }}">
+                                            <input type="hidden" name="_csrf_token"
+                                                   value="{{ csrf_token('education_document_reprocess-' ~ document.getId) }}">
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">{{ 'Process again'|trans }}</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {{ component('Education:Admin:CourseOverview') }}
 {% endblock %}

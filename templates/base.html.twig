@@ -32,6 +32,9 @@
         {% endfor %}
         {# Load CSS #}
         {% block stylesheets %}
+            {# Ahead of app.scss: components/_autocomplete.scss overrides this theme with selectors of equal
+               specificity, so it only wins on source order. #}
+            <link rel="stylesheet" href="{{ asset('vendor/tom-select/dist/css/tom-select.bootstrap5.css') }}">
             <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
             <link rel="stylesheet" href="{{ asset('@symfony/ux-live-component/live.min.css') }}">
         {% endblock %}
@@ -59,6 +62,7 @@
     </head>
     <body class="d-flex flex-column min-vh-100">
         {% include 'partials/application/main-nav.html.twig' %}
+        {% block special_notices %}{% endblock %}
         {% include 'partials/application/announcements.html.twig' %}
         {% block body %}{% endblock %}
         {% include 'partials/application/toasts.html.twig' %}

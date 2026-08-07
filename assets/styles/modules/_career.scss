@@ -99,31 +99,3 @@
 .career-featured-kicker {
     color: #{$gewis-red};
 }
-
-// The one thing on the page addressed to a company rather than to a member, so it is the one brand-coloured surface.
-// Everything in it has to be set explicitly: headings are black site-wide, which is unreadable here.
-.career-cta {
-    padding: 1.0625rem;
-    border-radius: var(--#{$prefix}border-radius-lg);
-    background-color: #{$gewis-red-dark};
-    color: $white;
-
-    h1, h2, h3, h4, h5, h6 {
-        color: $white;
-    }
-
-    p {
-        color: rgba($white, 0.85);
-        font-size: $font-size-sm;
-    }
-
-    .btn {
-        --#{$prefix}btn-bg: #{$white};
-        --#{$prefix}btn-border-color: #{$white};
-        --#{$prefix}btn-color: #{$gewis-red-dark};
-        --#{$prefix}btn-hover-bg: #{$gewis-gray-light};
-        --#{$prefix}btn-hover-border-color: #{$gewis-gray-light};
-        --#{$prefix}btn-hover-color: #{$gewis-red-dark};
-        --#{$prefix}btn-font-weight: 600;
-    }
-}

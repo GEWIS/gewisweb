@@ -1,0 +1,129 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% import 'partials/application/confirm-post-modal.html.twig' as modals %}
+
+{% set documents = course.getDocuments %}
+
+{% block page_title %}{{ course.getCode|page_title }}{{ 'Education'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('admin/education/index') }}">{{ 'Education'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ course.getCode }}</li>
+{% endblock %}
+
+{% block contents %}
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+        <div>
+            <h2 class="mb-1">{{ course.getCode }} &middot; {{ course.getName }}</h2>
+            <p class="text-body-secondary mb-0">
+                {{ '%count% document|%count% documents'|trans({'%count%': documents|length}) }}
+                {% if course.getSimilarCourses is not empty %}
+                    &middot;
+                    {{ 'similar to'|trans }}
+                    {% for similar in course.getSimilarCourses %}
+                        <a href="{{ path('admin/education/courses/documents', {code: similar.getCode}) }}">{{ similar.getCode }}</a>{{ not loop.last ? ',' }}
+                    {% endfor %}
+                {% endif %}
+            </p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ path('education/course', {code: course.getCode}) }}" class="btn btn-outline-secondary">
+                <span class="fas fa-arrow-up-right-from-square" aria-hidden="true"></span> {{ 'View on the site'|trans }}
+            </a>
+            <a href="{{ path('admin/education/courses/edit', {code: course.getCode}) }}" class="btn btn-outline-secondary">
+                {{ 'Edit course'|trans }}
+            </a>
+            <button type="button" class="btn btn-outline-danger"
+                    data-bs-toggle="modal" data-bs-target="#modal-delete-course">
+                {{ 'Remove course'|trans }}
+            </button>
+        </div>
+    </div>
+
+    <div class="panel mt-0">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>{{ 'Document'|trans }}</th>
+                            <th>{{ 'Date'|trans }}</th>
+                            <th>{{ 'Language'|trans }}</th>
+                            <th>{{ 'Pages'|trans }}</th>
+                            <th>{{ 'Status'|trans }}</th>
+                            <th class="text-end">{{ 'Actions'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for document in documents %}
+                            {% set type = document.getType %}
+                            <tr>
+                                <td>
+                                    {{ 'summary' == type.value ? type.label|trans : document.getExamType.label|trans }}
+                                    {% if 'summary' == type.value and document.getAuthor is not null %}
+                                        <div class="text-muted small">{{ document.getAuthor }}</div>
+                                    {% endif %}
+                                    {% if document.getScanned %}
+                                        <span class="badge badge-tag">{{ 'Scanned'|trans }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ document.getDate|date('j M Y') }}</td>
+                                <td>{{ document.getLanguage.label|trans }}</td>
+                                <td>{{ document.getPageCount }}</td>
+                                <td>
+                                    <span class="badge {{ document.getFlattenStatus.badgeClass }}">
+                                        {{ document.getFlattenStatus.label|trans }}
+                                    </span>
+                                    {% if document.getFlattenError is not null %}
+                                        <div class="text-muted small">{{ document.getFlattenError }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    <form method="post" class="d-inline"
+                                          action="{{ path('admin/education/documents/reprocess', {document: document.getId}) }}">
+                                        <input type="hidden" name="_csrf_token"
+                                               value="{{ csrf_token('education_document_reprocess-' ~ document.getId) }}">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">{{ 'Process again'|trans }}</button>
+                                    </form>
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modal-delete-document-{{ document.getId }}">
+                                        {{ 'Remove'|trans }}
+                                    </button>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    {{ 'Nothing has been filed under this course yet.'|trans }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {{ modals.confirm_modal(
+        'modal-delete-course',
+        path('admin/education/courses/delete', {code: course.getCode}),
+        csrf_token('education_course_delete-' ~ course.getCode),
+        'Remove this course?'|trans,
+        '%code% and every document filed under it are removed, along with the files behind them. This cannot be undone.'|trans({'%code%': course.getCode}),
+        'Remove'|trans,
+        'danger',
+    ) }}
+
+    {% for document in documents %}
+        {{ modals.confirm_modal(
+            'modal-delete-document-' ~ document.getId,
+            path('admin/education/documents/delete', {document: document.getId}),
+            csrf_token('education_document_delete-' ~ document.getId),
+            'Remove this document?'|trans,
+            'It disappears from %code% and the files behind it are removed. This cannot be undone.'|trans({'%code%': course.getCode}),
+            'Remove'|trans,
+            'danger',
+        ) }}
+    {% endfor %}
+{% endblock %}

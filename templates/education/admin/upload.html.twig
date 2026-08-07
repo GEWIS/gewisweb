@@ -1,0 +1,98 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% import 'partials/application/confirm-post-modal.html.twig' as modals %}
+
+{% block page_title %}{{ 'Upload documents'|trans|page_title }}{{ 'Education'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('admin/education/index') }}">{{ 'Education'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Upload documents'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    <h2>{{ 'Upload documents'|trans }}</h2>
+
+    <div class="panel mt-0"
+         data-controller="education--bulk-upload"
+         data-education--bulk-upload-url-value="{{ path('admin/education/documents/stage') }}"
+         data-education--bulk-upload-token-value="{{ csrf_token('education-stage-document') }}">
+        <button type="button"
+                class="panel-heading panel-collapse-toggle d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start"
+                data-bs-toggle="collapse" data-bs-target="#upload-documents"
+                aria-expanded="true" aria-controls="upload-documents">
+            <h3 class="mb-0">{{ 'Add documents'|trans }}</h3>
+            <span class="fa-solid fa-chevron-down panel-collapse-chevron"></span>
+        </button>
+        {# pt-0: the .collapse wrapper breaks the `.panel-heading + .panel-body` zero-top-padding rule. #}
+        <div class="collapse show" id="upload-documents">
+            <div class="panel-body pt-0">
+                <div class="education-dropzone text-center p-5 border border-2 rounded"
+                     role="button" tabindex="0"
+                     data-education--bulk-upload-target="dropzone">
+                    <span class="fa-solid fa-cloud-arrow-up fa-2x text-muted mb-2"></span>
+                    <p class="mb-0">{{ 'Drag PDFs here or click to select'|trans }}</p>
+                    <p class="text-muted small mb-0">
+                        {{ 'What each one is gets guessed from its filename. Nothing is visible to a member until you publish it below.'|trans }}
+                    </p>
+                </div>
+                <input type="file" hidden multiple accept="application/pdf"
+                       data-education--bulk-upload-target="input">
+                <ul class="list-unstyled mt-3 mb-0" data-education--bulk-upload-target="list"></ul>
+            </div>
+        </div>
+    </div>
+
+    {% if staged is empty %}
+        <div class="education-empty">
+            <h4 class="mb-2">{{ 'Nothing is waiting to be published'|trans }}</h4>
+            <p class="text-body-secondary mb-0">{{ 'Uploads appear here with their details guessed, ready to be checked.'|trans }}</p>
+        </div>
+    {% else %}
+        <h3>{{ 'Waiting to be published'|trans }}</h3>
+        {% for document in staged %}
+            {% set form = forms[document.getId] %}
+            <div class="panel">
+                <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
+                    <h3 class="mb-0">{{ document.getOriginalFilename }}</h3>
+                    <span class="small text-body-secondary">
+                        {{ 'Uploaded %date%'|trans({'%date%': document.getUploadedAt|date('j M Y, H:i')}) }}
+                        {% if document.getUploadedBy is not null %}
+                            {{ 'by %name%'|trans({'%name%': document.getUploadedBy.getDisplayName}) }}
+                        {% endif %}
+                    </span>
+                </div>
+                {{ form_start(form, {'action': path('admin/education/documents/publish', {staged: document.getId}), 'method': 'POST'}) }}
+                    <div class="panel-body">
+                        <div class="row g-3">
+                            <div class="col-md-3">{{ form_row(form.courseCode) }}</div>
+                            <div class="col-md-3">{{ form_row(form.type) }}</div>
+                            <div class="col-md-3">{{ form_row(form.examType) }}</div>
+                            <div class="col-md-3">{{ form_row(form.author) }}</div>
+                            <div class="col-md-3">{{ form_row(form.date) }}</div>
+                            <div class="col-md-3">{{ form_row(form.language) }}</div>
+                            <div class="col-md-3 d-flex align-items-center">{{ form_row(form.scanned) }}</div>
+                        </div>
+                    </div>
+                    <div class="panel-footer d-flex gap-2">
+                        <button type="submit" class="btn btn-sm btn-gewis-primary">{{ 'Publish'|trans }}</button>
+                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modal-discard-{{ document.getId }}">{{ 'Discard'|trans }}</button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        {% endfor %}
+
+        {% for document in staged %}
+            {{ modals.confirm_modal(
+                'modal-discard-' ~ document.getId,
+                path('admin/education/documents/discard', {staged: document.getId}),
+                csrf_token('education_staged_discard-' ~ document.getId),
+                'Discard this upload?'|trans,
+                '%filename% is removed without being filed. This cannot be undone.'|trans({'%filename%': document.getOriginalFilename}),
+                'Discard'|trans,
+                'danger',
+            ) }}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

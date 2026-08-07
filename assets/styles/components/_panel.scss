@@ -140,3 +140,36 @@
         }
     }
 }
+
+// A panel that has to be read rather than scanned past: filled in the brand red on both themes, so it stands out from
+// the column of ordinary panels around it. Declared after the night block, which is no less specific.
+.panel.panel-accent {
+    --#{$prefix}panel-bg: #{$gewis-red-dark};
+    --#{$prefix}panel-border-color: #{$gewis-red-dark};
+
+    color: $white;
+
+    h1, h2, h3, h4, h5, h6 {
+        color: $white;
+    }
+
+    p {
+        color: rgba($white, 0.85);
+        font-size: $font-size-sm;
+    }
+
+    a:not(.btn) {
+        color: inherit;
+        text-decoration: underline;
+    }
+
+    .btn {
+        --#{$prefix}btn-bg: #{$white};
+        --#{$prefix}btn-border-color: #{$white};
+        --#{$prefix}btn-color: #{$gewis-red-dark};
+        --#{$prefix}btn-hover-bg: #{$gewis-gray-light};
+        --#{$prefix}btn-hover-border-color: #{$gewis-gray-light};
+        --#{$prefix}btn-hover-color: #{$gewis-red-dark};
+        --#{$prefix}btn-font-weight: 600;
+    }
+}
