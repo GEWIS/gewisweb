@@ -27,6 +27,9 @@ use Override;
  * Seeds a handful of publicly visible companies with active packages and vacancies across the vacancy categories, so
  * the career overview and the per-category vacancy listings have something to show.
  *
+ * Only some of them have a logo, because most real profiles do not: the pages fall back to a monogram, which needs
+ * seeding just as much as the case where an image is there.
+ *
  * @phpstan-type VacancyData = array{
  *     slug: string,
  *     category: VacancyCategories,
@@ -43,6 +46,10 @@ class CompanyFixture extends Fixture
 {
     /** @var array<string, VacancyLabel> */
     private array $labels = [];
+
+    public function __construct(private readonly CompanyImageGenerator $imageGenerator)
+    {
+    }
 
     #[Override]
     public function load(ObjectManager $manager): void
@@ -61,6 +68,11 @@ class CompanyFixture extends Fixture
             websiteNl: 'https://example.com/nexunt',
             featured: true,
             bannerFormat: null,
+            // A large square logo, which is what the featured slot on the landing page shows at its biggest.
+            logoSize: [
+                800,
+                800,
+            ],
             highlight: true,
             vacancies: [
                 [
@@ -121,6 +133,8 @@ class CompanyFixture extends Fixture
             websiteNl: 'https://example.com/orbit',
             featured: false,
             bannerFormat: CompanyBannerFormats::Leaderboard,
+            // No logo, so the company pages have to fall back to the monogram for a company that does have a banner.
+            logoSize: null,
             vacancies: [
                 [
                     'slug' => 'data-science-internship',
@@ -167,6 +181,11 @@ class CompanyFixture extends Fixture
             websiteNl: 'https://example.com/delta',
             featured: false,
             bannerFormat: CompanyBannerFormats::Billboard,
+            // A wide logo, the other shape a company hands one over in, so the boxes it is fitted into are exercised.
+            logoSize: [
+                512,
+                256,
+            ],
             vacancies: [
                 [
                     'slug' => 'robotics-traineeship',
@@ -227,6 +246,7 @@ class CompanyFixture extends Fixture
             websiteNl: 'https://example.com/halcyon',
             featured: false,
             bannerFormat: null,
+            logoSize: null,
             vacancies: [
                 [
                     'slug' => 'drivetrain-engineer',
@@ -239,6 +259,125 @@ class CompanyFixture extends Fixture
                 ],
             ],
             contractExpired: true,
+        );
+
+        $this->createCompany(
+            $manager,
+            slug: 'vantsel',
+            name: 'Vantsel',
+            sloganEn: 'Chemistry, scaled up',
+            sloganNl: 'Chemie, opgeschaald',
+            descriptionEn: 'Vantsel takes processes out of the laboratory and onto the production floor.',
+            descriptionNl: 'Vantsel haalt processen uit het laboratorium en zet ze op de productievloer.',
+            websiteEn: 'https://example.com/vantsel',
+            websiteNl: 'https://example.com/vantsel',
+            featured: false,
+            bannerFormat: null,
+            // The widest a real wordmark gets, which is what sets how much room the box has to leave on the sides.
+            logoSize: [
+                900,
+                300,
+            ],
+            vacancies: [
+                [
+                    'slug' => 'process-engineer',
+                    'category' => VacancyCategories::Jobs,
+                    'nameEn' => 'Process Engineer',
+                    'nameNl' => 'Procestechnoloog',
+                    'descriptionEn' => 'Take a process from a bench-scale proof to a line that runs every day.',
+                    'descriptionNl' => 'Breng een proces van labopstelling naar een lijn die elke dag draait.',
+                    'labels' => ['fulltime'],
+                ],
+            ],
+        );
+
+        $this->createCompany(
+            $manager,
+            slug: 'meridian-labs',
+            name: 'Meridian Labs',
+            sloganEn: 'Instruments for people who measure things',
+            sloganNl: 'Instrumenten voor wie dingen meet',
+            descriptionEn: 'Meridian Labs builds measurement instruments for university research groups.',
+            descriptionNl: 'Meridian Labs bouwt meetinstrumenten voor universitaire onderzoeksgroepen.',
+            websiteEn: 'https://example.com/meridian',
+            websiteNl: 'https://example.com/meridian',
+            featured: false,
+            bannerFormat: null,
+            // Barely wider than it is tall, the other end of what companies hand over.
+            logoSize: [
+                640,
+                540,
+            ],
+            vacancies: [
+                [
+                    'slug' => 'measurement-thesis',
+                    'category' => VacancyCategories::ThesisProjects,
+                    'nameEn' => 'Master Thesis: Sensor Calibration',
+                    'nameNl' => 'Afstudeerproject: Sensorkalibratie',
+                    'descriptionEn' => 'Work out how far our instruments drift, and what it would take to stop them.',
+                    'descriptionNl' => 'Zoek uit hoever onze instrumenten driften en wat nodig is om dat te stoppen.',
+                    'labels' => ['hybrid'],
+                ],
+            ],
+        );
+
+        $this->createCompany(
+            $manager,
+            slug: 'koda-interactive',
+            name: 'Koda Interactive',
+            sloganEn: 'Small studio, large worlds',
+            sloganNl: 'Kleine studio, grote werelden',
+            descriptionEn: 'Koda Interactive is a game studio of eleven people in the middle of Eindhoven.',
+            descriptionNl: 'Koda Interactive is een gamestudio van elf mensen midden in Eindhoven.',
+            websiteEn: 'https://example.com/koda',
+            websiteNl: 'https://example.com/koda',
+            featured: false,
+            bannerFormat: null,
+            // Barely larger than the smallest rendition, so nothing has anything to scale down from.
+            logoSize: [
+                160,
+                160,
+            ],
+            vacancies: [
+                [
+                    'slug' => 'gameplay-internship',
+                    'category' => VacancyCategories::Internships,
+                    'nameEn' => 'Gameplay Programming Internship',
+                    'nameNl' => 'Stage Gameplay Programmeren',
+                    'descriptionEn' => 'Ship a feature of your own in a team small enough that you will see it land.',
+                    'descriptionNl' => 'Lever een eigen feature op in een team klein genoeg om het te zien landen.',
+                    'labels' => ['fulltime'],
+                ],
+            ],
+        );
+
+        $this->createCompany(
+            $manager,
+            slug: 'brekhoff-groep',
+            name: 'Brekhoff Groep',
+            sloganEn: 'Building since 1924',
+            sloganNl: 'Bouwen sinds 1924',
+            descriptionEn: 'The Brekhoff Groep engineers the structures underneath large infrastructure projects.',
+            descriptionNl: 'De Brekhoff Groep ontwerpt de constructies onder grote infrastructuurprojecten.',
+            websiteEn: 'https://example.com/brekhoff',
+            websiteNl: 'https://example.com/brekhoff',
+            featured: false,
+            bannerFormat: null,
+            logoSize: null,
+            vacancies: [
+                [
+                    'slug' => 'structural-traineeship',
+                    'category' => VacancyCategories::Traineeships,
+                    'nameEn' => 'Structural Engineering Traineeship',
+                    'nameNl' => 'Traineeship Constructief Ontwerp',
+                    'descriptionEn' => 'Two years across our bridge, tunnel and foundation teams.',
+                    'descriptionNl' => 'Twee jaar langs onze brug-, tunnel- en funderingsteams.',
+                    'labels' => [
+                        'fulltime',
+                        'hybrid',
+                    ],
+                ],
+            ],
         );
 
         $manager->flush();
@@ -271,7 +410,8 @@ class CompanyFixture extends Fixture
     }
 
     /**
-     * @param VacancyData[] $vacancies
+     * @param VacancyData[]                          $vacancies
+     * @param array{positive-int, positive-int}|null $logoSize
      */
     private function createCompany(
         ObjectManager $manager,
@@ -285,6 +425,7 @@ class CompanyFixture extends Fixture
         string $websiteNl,
         bool $featured,
         ?CompanyBannerFormats $bannerFormat,
+        ?array $logoSize,
         array $vacancies,
         bool $highlight = false,
         bool $contractExpired = false,
@@ -340,6 +481,18 @@ class CompanyFixture extends Fixture
         $manager->persist($revision);
         $manager->persist($jobPackage);
 
+        // An image is stored under the id of the company it belongs to, so the company needs one before it can be
+        // given any artwork.
+        $manager->flush();
+
+        if (null !== $logoSize) {
+            $revision->setLogo($this->imageGenerator->storeLogo(
+                $company,
+                $logoSize[0],
+                $logoSize[1],
+            ));
+        }
+
         if (null !== $bannerFormat) {
             $bannerPackage = new CompanyBannerPackage();
             $this->configurePackage(
@@ -347,7 +500,11 @@ class CompanyFixture extends Fixture
                 $company,
             );
             $bannerPackage->setFormat($bannerFormat);
-            $bannerPackage->setImage('data/company/banner/' . $slug . '.png');
+            $bannerPackage->setImage($this->imageGenerator->storeBanner(
+                $company,
+                $bannerFormat,
+                $sloganEn,
+            ));
             $manager->persist($bannerPackage);
         }
 
