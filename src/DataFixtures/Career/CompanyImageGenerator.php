@@ -48,6 +48,10 @@ final readonly class CompanyImageGenerator
     /** The built-in font the captions are drawn in before being scaled up. */
     private const int FONT = 5;
 
+    private const int SQUARE_LOGO_SIZE = 512;
+
+    private const int BANNER_LOGO_HEIGHT = 320;
+
     /** Background colours, picked per company so two of them are told apart at a glance. */
     private const array PALETTE = [
         [
@@ -192,18 +196,55 @@ final readonly class CompanyImageGenerator
         );
     }
 
-    /**
-     * A logo, at whatever size the company happened to hand one over at. Every page fits it into a box of its own, so
-     * the shape it arrives in is exactly the thing worth varying between companies.
-     *
-     * @param positive-int $width
-     * @param positive-int $height
-     */
-    public function storeLogo(
-        Company $company,
-        int $width,
-        int $height,
-    ): string {
+    public function storeSquareLogo(Company $company): string
+    {
+        $size = self::SQUARE_LOGO_SIZE;
+        $image = $this->createCanvas(
+            $size,
+            $size,
+        );
+        $background = $this->colorFor($company->getName());
+        $this->fill(
+            $image,
+            $background,
+            0,
+            0,
+            $size,
+            $size,
+        );
+
+        $this->drawText(
+            $image,
+            $this->monogram($company->getName()),
+            $background,
+            intdiv(
+                $size,
+                2,
+            ),
+            intdiv(
+                $size,
+                2,
+            ),
+            intdiv(
+                $size * 3,
+                5,
+            ),
+            intdiv(
+                $size * 3,
+                5,
+            ),
+        );
+
+        return $this->store(
+            $image,
+            $company,
+        );
+    }
+
+    public function storeBannerLogo(Company $company): string
+    {
+        $height = self::BANNER_LOGO_HEIGHT;
+        $width = $height * (2 + abs(crc32($company->getName())) % 3);
         $image = $this->createCanvas(
             $width,
             $height,
@@ -218,46 +259,57 @@ final readonly class CompanyImageGenerator
             $height,
         );
 
+        $accent = $this->lighten($background);
+        $this->fill(
+            $image,
+            $accent,
+            0,
+            0,
+            $height,
+            $height,
+        );
         $this->drawText(
             $image,
             $this->monogram($company->getName()),
-            $background,
+            $accent,
             intdiv(
-                $width,
+                $height,
                 2,
             ),
             intdiv(
-                $height * 2,
+                $height,
+                2,
+            ),
+            intdiv(
+                $height * 3,
                 5,
             ),
             intdiv(
-                $width * 3,
-                5,
-            ),
-            intdiv(
-                $height * 2,
+                $height * 3,
                 5,
             ),
         );
+
+        $columnWidth = $width - $height;
         $this->drawText(
             $image,
             $company->getName(),
             $background,
-            intdiv(
-                $width,
+            $height + intdiv(
+                $columnWidth,
                 2,
             ),
             intdiv(
-                $height * 4,
-                5,
+                $height,
+                2,
             ),
-            intdiv(
-                $width * 4,
-                5,
+            $columnWidth - intdiv(
+                $height,
+                4,
             ),
             intdiv(
                 $height,
-                6,
+                3,
             ),
         );
 

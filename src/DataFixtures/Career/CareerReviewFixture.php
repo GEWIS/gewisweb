@@ -263,7 +263,8 @@ class CareerReviewFixture extends Fixture implements DependentFixtureInterface
         $draft->setSlogan($source->getSlogan()->copy());
         $draft->setWebsite($source->getWebsite()->copy());
         $draft->setDescription($source->getDescription()->copy());
-        $draft->setLogo($source->getLogo());
+        $draft->setSquareLogo($source->getSquareLogo());
+        $draft->setBannerLogo($source->getBannerLogo());
         $draft->setContactName($source->getContactName());
         $draft->setContactEmail($source->getContactEmail());
         $draft->setContactPhone($source->getContactPhone());

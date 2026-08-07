@@ -9,23 +9,53 @@
     }
 }
 
-// Monogram logo placeholder (until real logo serving exists): a centred initial on a muted square. `-sm` is the small
-// inline mark used on a vacancy card next to the title; the detail pages use a full-width banner variant inline.
 .career-logo {
     display: inline-flex;
+    flex: none;
     align-items: center;
     justify-content: center;
+    object-fit: contain;
+}
+
+.career-logo-monogram {
+    padding: 0.25rem;
+    border-radius: var(--#{$prefix}border-radius);
     font-weight: 700;
     color: var(--#{$prefix}secondary-color);
     background-color: var(--#{$prefix}secondary-bg);
 }
 
+.career-logo-xs {
+    width: 2.5rem;
+    height: 1.875rem;
+    font-size: 0.8125rem;
+}
+
 .career-logo-sm {
-    flex: none;
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 3.5rem;
+    height: 2.625rem;
     font-size: 1.1rem;
-    border-radius: var(--#{$prefix}border-radius);
+}
+
+.career-logo-lg {
+    width: 6rem;
+    height: 4.5rem;
+    font-size: 2rem;
+}
+
+.career-logo-plate {
+    display: flex;
+    width: 100%;
+    max-height: 8rem;
+    padding: 0;
+    border-bottom: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color-translucent);
+    border-radius: 0;
+    font-size: 2.5rem;
+
+    &.career-logo-monogram {
+        height: 8rem;
+        border-radius: 0;
+    }
 }
 
 // Clamp the (rendered Markdown) description teaser on a vacancy card, mirroring `.activity-description-content`.

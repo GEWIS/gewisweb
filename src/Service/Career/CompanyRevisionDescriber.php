@@ -96,17 +96,29 @@ final class CompanyRevisionDescriber extends AbstractRevisionDescriber
                 ],
             ),
             new RevisionSection(
-                t('Logo'),
+                t('Logos'),
                 [
                     $this->field(
-                        t('Logo'),
+                        t('Square logo'),
                         RevisionFieldKind::Image,
-                        $previous?->getLogo(),
-                        $revision->getLogo(),
+                        $previous?->getSquareLogo(),
+                        $revision->getSquareLogo(),
                         $comparable,
                         [
                             'variant' => 'w320',
-                            'class' => 'career-logo-sm',
+                            'class' => 'career-logo-lg',
+                        ],
+                        emptyLabel: t('No logo.'),
+                    ),
+                    $this->field(
+                        t('Banner logo'),
+                        RevisionFieldKind::Image,
+                        $previous?->getBannerLogo(),
+                        $revision->getBannerLogo(),
+                        $comparable,
+                        [
+                            'variant' => 'w640',
+                            'class' => 'career-logo-plate',
                         ],
                         emptyLabel: t('No logo.'),
                     ),

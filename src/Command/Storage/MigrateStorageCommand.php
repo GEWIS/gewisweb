@@ -706,7 +706,7 @@ final class MigrateStorageCommand extends Command
             ],
             [
                 'key' => self::KEY_COMPANY_LOGO,
-                'field' => 'logo',
+                'field' => 'squareLogo',
                 'namespace' => StorageNamespace::CompanyImage,
             ],
             [
@@ -764,7 +764,9 @@ final class MigrateStorageCommand extends Command
                 return $entity->getCoverPath();
 
             case $entity instanceof CompanyRevision:
-                return $entity->getLogo();
+                return 'bannerLogo' === $field
+                    ? $entity->getBannerLogo()
+                    : $entity->getSquareLogo();
 
             case $entity instanceof CompanyBannerPackage:
                 return $entity->getImage();
@@ -802,7 +804,11 @@ final class MigrateStorageCommand extends Command
                 return;
 
             case $entity instanceof CompanyRevision:
-                $entity->setLogo($value);
+                if ('bannerLogo' === $field) {
+                    $entity->setBannerLogo($value);
+                } else {
+                    $entity->setSquareLogo($value);
+                }
 
                 return;
 
@@ -864,7 +870,7 @@ final class MigrateStorageCommand extends Command
         return match ($key) {
             self::KEY_PHOTO => 'path',
             self::KEY_ALBUM_COVER => 'coverPath',
-            self::KEY_COMPANY_LOGO => 'logo',
+            self::KEY_COMPANY_LOGO => 'squareLogo',
             self::KEY_COMPANY_BANNER => 'image',
             self::KEY_ORGAN_COVER => 'coverPath',
             self::KEY_ORGAN_THUMBNAIL => 'thumbnailPath',

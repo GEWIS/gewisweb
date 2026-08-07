@@ -981,6 +981,10 @@
         <source>Banner</source>
         <target state="translated">Banner</target>
       </trans-unit>
+      <trans-unit id="rep8aq2" resname="Banner logo">
+        <source>Banner logo</source>
+        <target state="translated">Bannerlogo</target>
+      </trans-unit>
       <trans-unit id="LNfw4H_" resname="Banners">
         <source>Banners</source>
         <target state="translated">Banners</target>
@@ -2952,6 +2956,10 @@
       <trans-unit id="1TFZ._Z" resname="Logo, story and contact">
         <source>Logo, story and contact</source>
         <target state="translated">Logo, verhaal en contact</target>
+      </trans-unit>
+      <trans-unit id="5CIt_FZ" resname="Logos">
+        <source>Logos</source>
+        <target state="translated">Logo's</target>
       </trans-unit>
       <trans-unit id="4E407bE" resname="Logos and templates">
         <source>Logos and templates</source>
@@ -4981,6 +4989,10 @@
         <source>Sports</source>
         <target>Sport</target>
       </trans-unit>
+      <trans-unit id="vUUuIUT" resname="Square logo">
+        <source>Square logo</source>
+        <target state="translated">Vierkant logo</target>
+      </trans-unit>
       <trans-unit id="oBphsD9" resname="Stale">
         <source>Stale</source>
         <target state="translated">Verouderd</target>
@@ -6660,6 +6672,14 @@
       <trans-unit id="C3pbkFh" resname="Your highlighted vacancies are saved.">
         <source>Your highlighted vacancies are saved.</source>
         <target state="translated">Je uitgelichte vacatures zijn opgeslagen.</target>
+      </trans-unit>
+      <trans-unit id="jpx_gla" resname="Your mark and name side by side, at least %width% pixels wide and wider than it is tall.">
+        <source>Your mark and name side by side, at least %width% pixels wide and wider than it is tall.</source>
+        <target state="translated">Je beeldmerk en naam naast elkaar, minimaal %width% pixels breed en breder dan hoog.</target>
+      </trans-unit>
+      <trans-unit id="SxjslXJ" resname="Your mark on its own, square, at least %size% by %size% pixels.">
+        <source>Your mark on its own, square, at least %size% by %size% pixels.</source>
+        <target state="translated">Alleen je beeldmerk, vierkant, minimaal %size% bij %size% pixels.</target>
       </trans-unit>
       <trans-unit id="Mnrixx." resname="Your message is being sent to %count% recipient(s).">
         <source>Your message is being sent to %count% recipient(s).</source>

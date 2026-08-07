@@ -17,9 +17,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 use function Symfony\Component\Translation\t;
 use function trim;
@@ -37,6 +39,26 @@ use function trim;
  */
 class CompanyRevisionType extends AbstractType
 {
+    private const string MAXIMUM_SIZE = '8M';
+
+    private const array MIME_TYPES = [
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+    ];
+
+    private const int SQUARE_MINIMUM = 320;
+
+    private const int BANNER_MINIMUM_WIDTH = 640;
+
+    private const float SQUARE_MINIMUM_RATIO = 0.9;
+
+    private const float SQUARE_MAXIMUM_RATIO = 1.1;
+
+    private const float BANNER_MINIMUM_RATIO = 1.5;
+
+    private const float BANNER_MAXIMUM_RATIO = 6.0;
+
     #[Override]
     public function buildForm(
         FormBuilderInterface $builder,
@@ -119,34 +141,94 @@ class CompanyRevisionType extends AbstractType
                     'required' => false,
                     'constraints' => [new Length(max: 255)],
                 ],
-            )
-            // Unmapped: the upload is stored by the controller, which puts the resulting path on the revision. Leaving
-            // it empty keeps whatever logo the revision already carries.
-            ->add(
-                'logoFile',
-                FileType::class,
-                [
-                    'label' => t('Logo'),
-                    'required' => false,
-                    'mapped' => false,
-                    'constraints' => [
-                        new File(
-                            maxSize: '8M',
-                            mimeTypes: [
-                                'image/jpeg',
-                                'image/png',
-                                'image/webp',
-                            ],
-                            mimeTypesMessage: 'Upload a JPEG, PNG or WebP image.',
-                        ),
-                    ],
-                ],
             );
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
             $this->primeLanguageToggles(...),
         );
+        $builder->addEventListener(
+            FormEvents::POST_SET_DATA,
+            $this->addLogoFields(...),
+        );
+    }
+
+    /**
+     * Unmapped: the controller stores the upload and puts the path on the revision. Each field is required until the
+     * revision carries that logo, which is why they can only be built once the revision is known.
+     */
+    private function addLogoFields(FormEvent $event): void
+    {
+        $revision = $event->getData();
+        $form = $event->getForm();
+
+        $form->add(
+            'squareLogoFile',
+            FileType::class,
+            [
+                'label' => t('Square logo'),
+                'help' => t(
+                    'Your mark on its own, square, at least %size% by %size% pixels.',
+                    ['%size%' => self::SQUARE_MINIMUM],
+                ),
+                'required' => null === $revision?->getSquareLogo(),
+                'mapped' => false,
+                'constraints' => $this->logoConstraints(
+                    $revision?->getSquareLogo(),
+                    new Image(
+                        maxSize: self::MAXIMUM_SIZE,
+                        mimeTypes: self::MIME_TYPES,
+                        mimeTypesMessage: 'Upload a JPEG, PNG or WebP image.',
+                        minWidth: self::SQUARE_MINIMUM,
+                        minHeight: self::SQUARE_MINIMUM,
+                        maxRatio: self::SQUARE_MAXIMUM_RATIO,
+                        minRatio: self::SQUARE_MINIMUM_RATIO,
+                    ),
+                ),
+            ],
+        );
+
+        $form->add(
+            'bannerLogoFile',
+            FileType::class,
+            [
+                'label' => t('Banner logo'),
+                'help' => t(
+                    'Your mark and name side by side, at least %width% pixels wide and wider than it is tall.',
+                    ['%width%' => self::BANNER_MINIMUM_WIDTH],
+                ),
+                'required' => null === $revision?->getBannerLogo(),
+                'mapped' => false,
+                'constraints' => $this->logoConstraints(
+                    $revision?->getBannerLogo(),
+                    new Image(
+                        maxSize: self::MAXIMUM_SIZE,
+                        mimeTypes: self::MIME_TYPES,
+                        mimeTypesMessage: 'Upload a JPEG, PNG or WebP image.',
+                        minWidth: self::BANNER_MINIMUM_WIDTH,
+                        maxRatio: self::BANNER_MAXIMUM_RATIO,
+                        minRatio: self::BANNER_MINIMUM_RATIO,
+                    ),
+                ),
+            ],
+        );
+    }
+
+    /**
+     * @return list<Constraint>
+     */
+    private function logoConstraints(
+        ?string $stored,
+        Image $image,
+    ): array {
+        if (null !== $stored) {
+            return [$image];
+        }
+
+        return [
+            new NotNull(message: 'Choose an image to upload.'),
+            $image,
+        ];
     }
 
     #[Override]

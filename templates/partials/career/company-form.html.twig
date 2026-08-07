@@ -55,11 +55,17 @@
                         <h3>{{ 'Logo'|trans }}</h3>
                     </div>
                     <div class="panel-body">
-                        {% if form.currentRevision.vars.data is not null and form.currentRevision.vars.data.logo is not null %}
-                            <img class="career-logo-sm mb-3" style="object-fit: cover;"
-                                 src="{{ image_url(form.currentRevision.vars.data.logo, 'w320') }}" alt="">
+                        {% set revision = form.currentRevision.vars.data %}
+                        {% if revision is not null and revision.squareLogo is not null %}
+                            <img class="career-logo career-logo-lg mb-3"
+                                 src="{{ image_url(revision.squareLogo, 'w320') }}" alt="">
                         {% endif %}
-                        {{ form_row(form.currentRevision.logoFile) }}
+                        {{ form_row(form.currentRevision.squareLogoFile) }}
+                        {% if revision is not null and revision.bannerLogo is not null %}
+                            <img class="career-logo career-logo-plate mb-3"
+                                 src="{{ image_url(revision.bannerLogo, 'w640') }}" alt="">
+                        {% endif %}
+                        {{ form_row(form.currentRevision.bannerLogoFile) }}
                     </div>
                 </div>
             </div>

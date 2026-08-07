@@ -52,7 +52,8 @@ final readonly class CompanyRevisionCloner extends AbstractRevisionCloner
         $draft->setSlogan($source->getSlogan()->copy());
         $draft->setDescription($source->getDescription()->copy());
         $draft->setWebsite($source->getWebsite()->copy());
-        $draft->setLogo($source->getLogo());
+        $draft->setSquareLogo($source->getSquareLogo());
+        $draft->setBannerLogo($source->getBannerLogo());
         $draft->setContactName($source->getContactName());
         $draft->setContactAddress($source->getContactAddress());
         $draft->setContactEmail($source->getContactEmail());

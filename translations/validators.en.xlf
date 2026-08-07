@@ -235,7 +235,7 @@
       </trans-unit>
       <trans-unit id="Q5RHBE_" resname="Upload a JPEG, PNG or WebP image.">
         <source>Upload a JPEG, PNG or WebP image.</source>
-        <target state="translated">Upload a JPEG, PNG or WebP image.</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="fcfNWQJ" resname="You can only highlight your own vacancies that are currently shown on the website.">
         <source>You can only highlight your own vacancies that are currently shown on the website.</source>

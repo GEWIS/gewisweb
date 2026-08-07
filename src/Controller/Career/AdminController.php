@@ -24,6 +24,7 @@ use App\Service\Career\CompanyImageUploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -118,8 +119,8 @@ class AdminController extends AbstractController
         // Flushed before the logo so the company has an id, which is the directory its images are stored under.
         $this->entityManager->flush();
 
-        $this->storeLogo(
-            $form->get('currentRevision')->get('logoFile')->getData(),
+        $this->storeLogos(
+            $form,
             $company,
             $revision,
             $user,
@@ -248,8 +249,8 @@ class AdminController extends AbstractController
             );
         }
 
-        $this->storeLogo(
-            $form->get('currentRevision')->get('logoFile')->getData(),
+        $this->storeLogos(
+            $form,
             $company,
             $current,
             $user,
@@ -378,17 +379,49 @@ class AdminController extends AbstractController
     }
 
     /**
-     * Puts an uploaded logo on the revision being worked on, so it only reaches the public page once that revision
-     * does.
+     * A field left empty keeps the logo already on the revision.
+     *
+     * @param FormInterface<Company> $form
      */
-    private function storeLogo(
-        mixed $file,
+    private function storeLogos(
+        FormInterface $form,
         Company $company,
         CompanyRevision $revision,
         User $user,
     ): void {
-        if (!$file instanceof UploadedFile) {
+        $revisionForm = $form->get('currentRevision');
+
+        $square = $this->storeLogo(
+            $revisionForm->get('squareLogoFile')->getData(),
+            $company,
+            $user,
+        );
+        if (null !== $square) {
+            $revision->setSquareLogo($square);
+        }
+
+        $banner = $this->storeLogo(
+            $revisionForm->get('bannerLogoFile')->getData(),
+            $company,
+            $user,
+        );
+        if (null === $banner) {
             return;
+        }
+
+        $revision->setBannerLogo($banner);
+    }
+
+    /**
+     * @return string|null the stored path, or null when nothing was uploaded or it could not be stored
+     */
+    private function storeLogo(
+        mixed $file,
+        Company $company,
+        User $user,
+    ): ?string {
+        if (!$file instanceof UploadedFile) {
+            return null;
         }
 
         $path = $this->imageUploadService->uploadLogo(
@@ -402,15 +435,16 @@ class AdminController extends AbstractController
                 $this->translator->trans('The logo could not be stored, so the previous one is still in use.'),
             );
 
-            return;
+            return null;
         }
 
-        $revision->setLogo($path);
         $this->auditLogger->log(
             $company,
             $user,
             CompanyAuditVerbs::LogoUploaded,
         );
+
+        return $path;
     }
 
     private function backToCompany(Company $company): Response

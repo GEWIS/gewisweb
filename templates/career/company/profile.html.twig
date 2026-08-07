@@ -59,8 +59,13 @@
                             {{ 'Nothing yet: your profile has not been approved, so your company is not shown on the website.'|trans }}
                         </p>
                     {% else %}
-                        {% if live.logo is not null %}
-                            <img class="career-logo-sm mb-3" style="object-fit: cover;" src="{{ image_url(live.logo, 'w320') }}" alt="">
+                        {% if live.squareLogo is not null %}
+                            <img class="career-logo career-logo-lg mb-3"
+                                 src="{{ image_url(live.squareLogo, 'w320') }}" alt="">
+                        {% endif %}
+                        {% if live.bannerLogo is not null %}
+                            <img class="career-logo career-logo-plate mb-3"
+                                 src="{{ image_url(live.bannerLogo, 'w640') }}" alt="">
                         {% endif %}
                         <dl class="row mb-0">
                             <dt class="col-sm-3">{{ 'Slogan'|trans }}</dt>
