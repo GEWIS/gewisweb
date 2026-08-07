@@ -32,6 +32,9 @@
         {% endfor %}
         {# Load CSS #}
         {% block stylesheets %}
+            {# Ahead of app.scss: components/_autocomplete.scss overrides this theme with selectors of equal
+               specificity, so it only wins on source order. #}
+            <link rel="stylesheet" href="{{ asset('vendor/tom-select/dist/css/tom-select.bootstrap5.css') }}">
             <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
             <link rel="stylesheet" href="{{ asset('@symfony/ux-live-component/live.min.css') }}">
         {% endblock %}

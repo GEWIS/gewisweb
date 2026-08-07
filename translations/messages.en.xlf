@@ -3441,10 +3441,6 @@
         <source>No maintenance is planned. The site is fully available.</source>
         <target>No maintenance is planned. The site is fully available.</target>
       </trans-unit>
-      <trans-unit id="YeBrgS2" resname="No matching labels">
-        <source>No matching labels</source>
-        <target state="translated">No matching labels</target>
-      </trans-unit>
       <trans-unit id="TIXl5r3" resname="No meetings match the current filters.">
         <source>No meetings match the current filters.</source>
         <target state="translated">No meetings match the current filters.</target>

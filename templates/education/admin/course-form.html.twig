@@ -4,13 +4,6 @@
 
 {% block page_title %}{{ (editing ? course.getCode : 'Add a course'|trans)|page_title }}{{ 'Education'|trans|page_title }}{{ parent() }}{% endblock %}
 
-{# Tom Select first: components/_autocomplete.scss overrides its theme with selectors of equal specificity, so it only
-   wins on source order. #}
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('vendor/tom-select/dist/css/tom-select.bootstrap5.css') }}">
-    {{ parent() }}
-{% endblock %}
-
 {% block admin_breadcrumbs %}
     <li class="breadcrumb-item"><a href="{{ path('admin/education/index') }}">{{ 'Education'|trans }}</a></li>
     {% if editing %}

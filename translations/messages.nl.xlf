@@ -1771,7 +1771,7 @@
       </trans-unit>
       <trans-unit id="K7bMJ_K" resname="Drag PDFs here or click to select">
         <source>Drag PDFs here or click to select</source>
-        <target>Sleep PDF&apos;s hierheen of klik om te selecteren</target>
+        <target>Sleep PDF's hierheen of klik om te selecteren</target>
       </trans-unit>
       <trans-unit id="SR5PIBx" resname="Drag photos here or click to select">
         <source>Drag photos here or click to select</source>
@@ -3440,10 +3440,6 @@
       <trans-unit id="3YWcfhV" resname="No maintenance is planned. The site is fully available.">
         <source>No maintenance is planned. The site is fully available.</source>
         <target>Er is geen onderhoud gepland. De website is volledig beschikbaar.</target>
-      </trans-unit>
-      <trans-unit id="YeBrgS2" resname="No matching labels">
-        <source>No matching labels</source>
-        <target state="translated">Geen overeenkomende labels</target>
       </trans-unit>
       <trans-unit id="TIXl5r3" resname="No meetings match the current filters.">
         <source>No meetings match the current filters.</source>

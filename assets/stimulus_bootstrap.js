@@ -10,7 +10,6 @@ import EditLockController from './controllers/application/edit_lock_controller.t
 import FormCollectionController from './controllers/application/form_collection_controller.ts';
 import FormStepperController from './controllers/application/form_stepper_controller.ts';
 import InfiniteScrollController from './controllers/application/infinite_scroll_controller.ts';
-import LabelChipsController from './controllers/application/label_chips_controller.ts';
 import LocalisedFieldsController from './controllers/application/localised_fields_controller.ts';
 import MarkdownEditorController from './controllers/application/markdown_editor_controller.ts';
 import ModalCloseController from './controllers/application/modal_close_controller.ts';
@@ -56,7 +55,6 @@ app.register('edit-lock', EditLockController);
 app.register('form-collection', FormCollectionController);
 app.register('form-stepper', FormStepperController);
 app.register('infinite-scroll', InfiniteScrollController);
-app.register('label-chips', LabelChipsController);
 app.register('localised-fields', LocalisedFieldsController);
 app.register('markdown-editor', MarkdownEditorController);
 app.register('modal-close', ModalCloseController);
