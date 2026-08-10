@@ -721,6 +721,10 @@
         <source>All subscribers</source>
         <target>All subscribers</target>
       </trans-unit>
+      <trans-unit id="gOiJzr7" resname="All vacancies">
+        <source>All vacancies</source>
+        <target state="translated">All vacancies</target>
+      </trans-unit>
       <trans-unit id="CdVO0Gm" resname="All years">
         <source>All years</source>
         <target state="translated">All years</target>
@@ -2472,6 +2476,14 @@
       <trans-unit id="Z_zbkeN" resname="Highlight">
         <source>Highlight</source>
         <target state="translated">Highlight</target>
+      </trans-unit>
+      <trans-unit id="RUMuLpj" resname="Highlighted">
+        <source>Highlighted</source>
+        <target state="translated">Highlighted</target>
+      </trans-unit>
+      <trans-unit id="XdAlCJ6" resname="Highlighted vacancies">
+        <source>Highlighted vacancies</source>
+        <target state="translated">Highlighted vacancies</target>
       </trans-unit>
       <trans-unit id="tSusVTR" resname="Highlights">
         <source>Highlights</source>
@@ -4592,6 +4604,10 @@
       <trans-unit id="8fyPK38" resname="Search by code or name">
         <source>Search by code or name</source>
         <target state="translated">Search by code or name</target>
+      </trans-unit>
+      <trans-unit id="XjL6auo" resname="Search by company name">
+        <source>Search by company name</source>
+        <target state="translated">Search by company name</target>
       </trans-unit>
       <trans-unit id="YWrWXBq" resname="Search by company, representative name, or email">
         <source>Search by company, representative name, or email</source>

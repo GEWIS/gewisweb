@@ -84,8 +84,10 @@ final class VacancyRepositoryTest extends DatabaseTestCase
      */
     private function slugsOnTheOverview(): array
     {
+        $repository = $this->repository();
+
         $slugs = [];
-        foreach ($this->repository()->findForOverview() as $vacancy) {
+        foreach ($repository->findForOverviewByIds($repository->findActiveIdsForOverview()) as $vacancy) {
             $slugs[] = $vacancy->getSlugName();
         }
 

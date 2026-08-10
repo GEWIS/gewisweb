@@ -11,6 +11,7 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
+use function array_map;
 use function intval;
 use function mb_strtolower;
 use function trim;
@@ -20,6 +21,27 @@ use function trim;
  */
 class CompanyRepository extends ServiceEntityRepository
 {
+    private const string PUBLIC_SOURCE = <<<'QUERY'
+        FROM `Company` AS `t1`
+        LEFT JOIN (
+            SELECT `company_id`,
+                COUNT(`company_id`) AS `totalPackages`,
+                SUM(
+                    CASE WHEN `expires` <= CURRENT_TIMESTAMP
+                            OR `published` = 0
+                            OR `starts` > CURRENT_TIMESTAMP
+                        THEN 1
+                        ELSE 0
+                    END
+                ) AS `expiredHiddenOrNotStartedPackages`
+            FROM `CompanyPackage`
+            GROUP BY `company_id`
+        ) `CompanyPackages` ON `CompanyPackages`.`company_id` = `t1`.`id`
+        WHERE `t1`.`published` = 1
+        AND `t1`.`liveRevision_id` IS NOT NULL
+        AND `CompanyPackages`.`totalPackages` > `CompanyPackages`.`expiredHiddenOrNotStartedPackages`
+        QUERY;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct(
@@ -43,26 +65,10 @@ class CompanyRepository extends ServiceEntityRepository
         );
 
         $select = $rsmBuilder->generateSelectClause(['c' => 't1']);
+        $source = self::PUBLIC_SOURCE;
 
         $sql = <<<QUERY
-            SELECT {$select} FROM `Company` AS `t1`
-            LEFT JOIN (
-                SELECT `company_id`,
-                    COUNT(`company_id`) AS `totalPackages`,
-                    SUM(
-                        CASE WHEN `expires` <= CURRENT_TIMESTAMP
-                                OR `published` = 0
-                                OR `starts` > CURRENT_TIMESTAMP
-                            THEN 1
-                            ELSE 0
-                        END
-                    ) AS `expiredHiddenOrNotStartedPackages`
-                FROM `CompanyPackage`
-                GROUP BY `company_id`
-            ) `CompanyPackages` ON `CompanyPackages`.`company_id` = `t1`.`id`
-            WHERE `t1`.`published` = 1
-            AND `t1`.`liveRevision_id` IS NOT NULL
-            AND `CompanyPackages`.`totalPackages` > `CompanyPackages`.`expiredHiddenOrNotStartedPackages`
+            SELECT {$select} {$source}
             ORDER BY `t1`.`name` ASC
             QUERY;
 
@@ -81,33 +87,86 @@ class CompanyRepository extends ServiceEntityRepository
     }
 
     /**
+     * The ids of the public companies matching the overview's search box. The order is pinned rather than left to
+     * the database: the overview seeds a shuffle over this list and pages through it, which only holds together if the
+     * same seed always meets the same list.
+     *
+     * @return int[]
+     */
+    public function findPublicIds(string $search): array
+    {
+        $source = self::PUBLIC_SOURCE;
+        $parameters = [];
+
+        $search = trim($search);
+        if ('' !== $search) {
+            $source .= ' AND (LOWER(`t1`.`name`) LIKE :search OR LOWER(`t1`.`slugName`) LIKE :search)';
+            $parameters['search'] = '%' . mb_strtolower($search) . '%';
+        }
+
+        $sql = <<<QUERY
+            SELECT `t1`.`id` {$source}
+            ORDER BY `t1`.`name` ASC
+            QUERY;
+
+        return array_map(
+            'intval',
+            $this->getEntityManager()->getConnection()->fetchFirstColumn(
+                $sql,
+                $parameters,
+            ),
+        );
+    }
+
+    /**
+     * Hydrate the given companies, in the order they are asked for. Ids that no longer resolve to a company are
+     * left out.
+     *
+     * @param int[] $ids
+     *
+     * @return Company[]
+     */
+    public function findPublicByIds(array $ids): array
+    {
+        if ([] === $ids) {
+            return [];
+        }
+
+        $companies = $this->createQueryBuilder(
+            'c',
+            'c.id',
+        )
+            ->where('c.id IN (:ids)')
+            ->setParameter(
+                'ids',
+                $ids,
+            )
+            ->getQuery()
+            ->getResult();
+
+        $this->warmOverviewAssociations($companies);
+
+        $ordered = [];
+        foreach ($ids as $id) {
+            if (!isset($companies[$id])) {
+                continue;
+            }
+
+            $ordered[] = $companies[$id];
+        }
+
+        return $ordered;
+    }
+
+    /**
      * How many companies the public overview would list, for the count the navigation menu carries. The same three
      * conditions as {@see self::findAllPublic()}, counted rather than hydrated, since the menu is on every page.
      */
     public function countPublic(): int
     {
-        $sql = <<<'QUERY'
-            SELECT COUNT(*) FROM `Company` AS `t1`
-            LEFT JOIN (
-                SELECT `company_id`,
-                    COUNT(`company_id`) AS `totalPackages`,
-                    SUM(
-                        CASE WHEN `expires` <= CURRENT_TIMESTAMP
-                                OR `published` = 0
-                                OR `starts` > CURRENT_TIMESTAMP
-                            THEN 1
-                            ELSE 0
-                        END
-                    ) AS `expiredHiddenOrNotStartedPackages`
-                FROM `CompanyPackage`
-                GROUP BY `company_id`
-            ) `CompanyPackages` ON `CompanyPackages`.`company_id` = `t1`.`id`
-            WHERE `t1`.`published` = 1
-            AND `t1`.`liveRevision_id` IS NOT NULL
-            AND `CompanyPackages`.`totalPackages` > `CompanyPackages`.`expiredHiddenOrNotStartedPackages`
-            QUERY;
+        $source = self::PUBLIC_SOURCE;
 
-        return intval($this->getEntityManager()->getConnection()->fetchOne($sql));
+        return intval($this->getEntityManager()->getConnection()->fetchOne('SELECT COUNT(*) ' . $source));
     }
 
     /**

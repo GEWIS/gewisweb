@@ -9,6 +9,10 @@
     }
 }
 
+.vacancy-card-highlighted {
+    --#{$prefix}card-border-color: #{$gewis-red};
+}
+
 .career-logo {
     display: inline-flex;
     flex: none;

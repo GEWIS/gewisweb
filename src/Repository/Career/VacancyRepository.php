@@ -17,6 +17,8 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
+use function array_column;
+use function array_map;
 use function intval;
 use function iterator_to_array;
 use function mb_strtolower;
@@ -161,26 +163,41 @@ class VacancyRepository extends ServiceEntityRepository
     }
 
     /**
-     * Find the publicly visible vacancies for the public overview, narrowed by the optional filters (category, owning
-     * company, assigned labels and a free-text search over the localised name).
+     * The ids of the publicly visible vacancies for the public overview, narrowed by the optional filters (category,
+     * owning company, assigned labels and a free-text search over the localised name), in a fixed order.
      *
-     * This expresses the full "active" predicate ({@see Vacancy::isActive()}) in the query so the filters apply at the
-     * database level: the vacancy and its package must be published and the package within its active window, and the
-     * owning company must be published with an approved revision (an active package implies the company has a
-     * non-expired one, so {@see \App\Entity\Career\Company::isHidden()} reduces to those two checks here). Every
-     * association the card renders is fetch-joined to keep the page free of per-item lazy loads.
+     * The order is pinned rather than left to the database: the overview seeds a shuffle over this list and pages
+     * through it, which only holds together if the same seed always meets the same list. The page that ends up on
+     * screen is hydrated afterwards by {@see self::findForOverviewByIds()}.
      *
      * @param int[] $labelIds
      *
-     * @return Vacancy[]
+     * @return int[]
      */
-    public function findForOverview(
+    public function findActiveIdsForOverview(
         ?VacancyCategories $category = null,
         ?string $companySlugName = null,
         array $labelIds = [],
         string $search = '',
     ): array {
-        $qb = $this->activeVacancyQueryBuilder()
+        $qb = $this->createQueryBuilder('j')
+            ->select('j.id')
+            ->join(
+                'j.package',
+                'p',
+            )
+            ->join(
+                'p.company',
+                'c',
+            )
+            ->join(
+                'j.liveRevision',
+                'lr',
+            )
+            ->join(
+                'lr.name',
+                'name',
+            )
             ->orderBy(
                 'c.name',
                 'ASC',
@@ -189,6 +206,8 @@ class VacancyRepository extends ServiceEntityRepository
                 'j.id',
                 'ASC',
             );
+
+        $this->applyActivePredicate($qb);
 
         if (null !== $category) {
             $qb->andWhere('lr.category = :category')
@@ -237,7 +256,53 @@ class VacancyRepository extends ServiceEntityRepository
                 );
         }
 
-        return $qb->getQuery()->getResult();
+        return array_map(
+            'intval',
+            array_column(
+                $qb->getQuery()->getArrayResult(),
+                'id',
+            ),
+        );
+    }
+
+    /**
+     * Hydrate the given vacancies, in the order they are asked for. The "active" predicate is applied again, so a
+     * vacancy whose package expired between picking the ids and rendering them drops out rather than appearing one
+     * last time.
+     *
+     * @param int[] $ids
+     *
+     * @return Vacancy[]
+     */
+    public function findForOverviewByIds(array $ids): array
+    {
+        if ([] === $ids) {
+            return [];
+        }
+
+        $vacancies = $this->activeVacancyQueryBuilder()
+            ->indexBy(
+                'j',
+                'j.id',
+            )
+            ->andWhere('j.id IN (:ids)')
+            ->setParameter(
+                'ids',
+                $ids,
+            )
+            ->getQuery()
+            ->getResult();
+
+        $ordered = [];
+        foreach ($ids as $id) {
+            if (!isset($vacancies[$id])) {
+                continue;
+            }
+
+            $ordered[] = $vacancies[$id];
+        }
+
+        return $ordered;
     }
 
     /**
@@ -281,9 +346,9 @@ class VacancyRepository extends ServiceEntityRepository
      */
     public function countActiveByCategory(): array
     {
-        // A lean copy of the "active" predicate rather than `activeVacancyQueryBuilder()`, which fetch-joins
-        // everything a card renders and would drag all of that into a query that only counts.
-        $rows = $this->createQueryBuilder('j')
+        // The joins the predicate needs, but none of the fetch joins `activeVacancyQueryBuilder()` adds for the cards:
+        // this query only counts.
+        $qb = $this->createQueryBuilder('j')
             ->select(
                 'lr.category AS category',
                 'COUNT(j.id) AS total',
@@ -300,25 +365,9 @@ class VacancyRepository extends ServiceEntityRepository
                 'j.liveRevision',
                 'lr',
             )
-            ->where('j.published = true')
-            ->andWhere('p.published = true')
-            ->andWhere('p.starts <= :now')
-            ->andWhere('p.expires > :now')
-            ->andWhere('c.published = true')
-            ->andWhere('c.liveRevision IS NOT NULL')
-            ->andWhere('lr.startDate IS NULL OR lr.startDate <= :today')
-            ->andWhere('lr.endDate >= :today')
-            ->setParameter(
-                'now',
-                new DateTime(),
-                Types::DATETIME_MUTABLE,
-            )
-            ->setParameter(
-                'today',
-                new DateTime('today'),
-                Types::DATE_MUTABLE,
-            )
-            ->groupBy('lr.category')
+            ->groupBy('lr.category');
+
+        $rows = $this->applyActivePredicate($qb)
             ->getQuery()
             ->getArrayResult();
 
@@ -349,31 +398,46 @@ class VacancyRepository extends ServiceEntityRepository
                 'ASC',
             );
 
-        // An EXISTS rather than a selected join, so a vacancy picked by two packages is still listed once.
-        $subQuery = $this->getEntityManager()->createQueryBuilder()
-            ->select('1')
-            ->from(
-                CompanyHighlightPackage::class,
-                'highlight',
-            )
-            ->join(
-                'highlight.vacancies',
-                'highlighted',
-            )
-            ->where('highlighted = j')
-            ->andWhere('highlight.published = true')
-            ->andWhere('highlight.starts <= :now')
-            ->andWhere('highlight.expires > :now');
-
-        return $qb->andWhere($qb->expr()->exists($subQuery->getDQL()))
+        return $this->applyHighlightedPredicate($qb)
             ->getQuery()
             ->getResult();
     }
 
     /**
+     * @return int[]
+     */
+    public function findHighlightedIds(): array
+    {
+        $qb = $this->createQueryBuilder('j')
+            ->select('j.id')
+            ->join(
+                'j.package',
+                'p',
+            )
+            ->join(
+                'p.company',
+                'c',
+            )
+            ->join(
+                'j.liveRevision',
+                'lr',
+            );
+
+        $this->applyActivePredicate($qb);
+
+        return array_map(
+            'intval',
+            array_column(
+                $this->applyHighlightedPredicate($qb)->getQuery()->getArrayResult(),
+                'id',
+            ),
+        );
+    }
+
+    /**
      * Find a single publicly visible vacancy by its company, category and slug (the tuple that identifies it in a URL),
      * or null when it does not exist or is not currently active. Shares the "active" predicate and the fetch joins with
-     * {@see self::findForOverview()}, so the detail page renders without lazy loads.
+     * {@see self::findForOverviewByIds()}, so the detail page renders without lazy loads.
      */
     public function findPublicVacancy(
         string $companySlugName,
@@ -404,14 +468,11 @@ class VacancyRepository extends ServiceEntityRepository
 
     /**
      * The base query for publicly visible ("active") vacancies, with every association the cards and the detail page
-     * render fetch-joined. Expresses {@see Vacancy::isActive()} at the database level: the vacancy and its package must
-     * be published and the package within its active window, and the owning company published with an approved revision
-     * (an active package implies a non-expired one, so {@see \App\Entity\Career\Company::isHidden()} reduces to those
-     * two checks here). Callers add their own filters and ordering.
+     * render fetch-joined. Callers add their own filters and ordering.
      */
     private function activeVacancyQueryBuilder(): QueryBuilder
     {
-        return $this->createQueryBuilder('j')
+        $qb = $this->createQueryBuilder('j')
             ->join(
                 'j.package',
                 'p',
@@ -463,8 +524,46 @@ class VacancyRepository extends ServiceEntityRepository
                 'label.name',
                 'labelName',
             )
-            ->addSelect('labelName')
-            ->where('j.published = true')
+            ->addSelect('labelName');
+
+        return $this->applyActivePredicate($qb);
+    }
+
+    /**
+     * Narrow to what companies with a running highlight package have put forward, on a query builder that has the
+     * vacancy as `j`. An EXISTS rather than a selected join, so a vacancy picked by two packages is still listed once.
+     * Reads the `:now` parameter {@see self::applyActivePredicate()} sets, so it is applied after that one.
+     */
+    private function applyHighlightedPredicate(QueryBuilder $qb): QueryBuilder
+    {
+        $subQuery = $this->getEntityManager()->createQueryBuilder()
+            ->select('1')
+            ->from(
+                CompanyHighlightPackage::class,
+                'highlight',
+            )
+            ->join(
+                'highlight.vacancies',
+                'highlighted',
+            )
+            ->where('highlighted = j')
+            ->andWhere('highlight.published = true')
+            ->andWhere('highlight.starts <= :now')
+            ->andWhere('highlight.expires > :now');
+
+        return $qb->andWhere($qb->expr()->exists($subQuery->getDQL()));
+    }
+
+    /**
+     * Express {@see Vacancy::isActive()} at the database level, on a query builder that has the vacancy as `j`, its
+     * package as `p`, the owning company as `c` and the live revision as `lr`: the vacancy and its package must be
+     * published and the package within its active window, and the owning company published with an approved revision
+     * (an active package implies a non-expired one, so {@see \App\Entity\Career\Company::isHidden()} reduces to those
+     * two checks here).
+     */
+    private function applyActivePredicate(QueryBuilder $qb): QueryBuilder
+    {
+        return $qb->andWhere('j.published = true')
             ->andWhere('p.published = true')
             ->andWhere('p.starts <= :now')
             ->andWhere('p.expires > :now')

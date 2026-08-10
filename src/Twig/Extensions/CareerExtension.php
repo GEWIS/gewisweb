@@ -17,7 +17,9 @@ use Symfony\Contracts\Service\ResetInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+use function array_slice;
 use function array_sum;
+use function shuffle;
 
 /**
  * The navigation menu asks for the counts and the featured company on every page, and the career pages ask for the
@@ -124,11 +126,25 @@ class CareerExtension extends AbstractExtension implements ResetInterface
     /**
      * Everything companies with a running highlight package have chosen to put forward, and that is still showable.
      *
+     * Shuffled, and cut down to $limit where one is given: the space was sold to each of these companies alike, so
+     * neither the first slot nor making the cut at all may come down to the alphabet.
+     *
      * @return Vacancy[]
      */
-    public function getHighlightedVacancies(): array
+    public function getHighlightedVacancies(?int $limit = null): array
     {
-        return $this->vacancyRepository->findHighlighted();
+        $vacancies = $this->vacancyRepository->findHighlighted();
+        shuffle($vacancies);
+
+        if (null === $limit) {
+            return $vacancies;
+        }
+
+        return array_slice(
+            $vacancies,
+            0,
+            $limit,
+        );
     }
 
     /**

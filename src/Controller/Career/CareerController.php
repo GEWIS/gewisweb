@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+use function array_slice;
 use function shuffle;
 
 #[Route(
@@ -31,6 +32,11 @@ class CareerController extends AbstractController
      * How much of the landing page's taste of the vacancies is shown before it sends the reader on to the full list.
      */
     private const int LATEST_VACANCY_LIMIT = 4;
+
+    /**
+     * How many companies the landing page's strip shows before it sends the reader on to the full overview.
+     */
+    private const int COMPANY_STRIP_LIMIT = 9;
 
     public function __construct(
         private readonly CompanyRepository $companyRepository,
@@ -51,10 +57,17 @@ class CareerController extends AbstractController
     {
         $companies = $this->companyRepository->findAllPublic();
 
+        // Randomise before slicing, so the strip is not a standing showcase for whoever is early in the alphabet.
+        shuffle($companies);
+
         return $this->render(
             'career/index.html.twig',
             [
-                'companies' => $companies,
+                'companies' => array_slice(
+                    $companies,
+                    0,
+                    self::COMPANY_STRIP_LIMIT,
+                ),
                 'latestVacancies' => $this->vacancyRepository->findLatestForOverview(self::LATEST_VACANCY_LIMIT),
                 'events' => $this->activityRepository->findUpcoming(category: ActivityCategories::Career),
             ],
@@ -62,7 +75,8 @@ class CareerController extends AbstractController
     }
 
     /**
-     * Every company that is currently visible.
+     * Every company that is currently visible. The search, the random order and the paging are all handled by the
+     * {@see \App\Twig\Components\Career\CompanyOverview} live component.
      */
     #[Route(
         path: '/companies',
@@ -70,15 +84,7 @@ class CareerController extends AbstractController
     )]
     public function companies(): Response
     {
-        $companies = $this->companyRepository->findAllPublic();
-
-        // Randomise the order so no company is structurally favoured.
-        shuffle($companies);
-
-        return $this->render(
-            'career/companies.html.twig',
-            ['companies' => $companies],
-        );
+        return $this->render('career/companies.html.twig');
     }
 
     /**

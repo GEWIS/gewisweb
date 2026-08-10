@@ -721,6 +721,10 @@
         <source>All subscribers</source>
         <target>Alle inschrijvers</target>
       </trans-unit>
+      <trans-unit id="gOiJzr7" resname="All vacancies">
+        <source>All vacancies</source>
+        <target state="translated">Alle vacatures</target>
+      </trans-unit>
       <trans-unit id="CdVO0Gm" resname="All years">
         <source>All years</source>
         <target state="translated">Alle jaren</target>
@@ -2472,6 +2476,14 @@
       <trans-unit id="Z_zbkeN" resname="Highlight">
         <source>Highlight</source>
         <target state="translated">Uitlichting</target>
+      </trans-unit>
+      <trans-unit id="RUMuLpj" resname="Highlighted">
+        <source>Highlighted</source>
+        <target state="translated">Uitgelicht</target>
+      </trans-unit>
+      <trans-unit id="XdAlCJ6" resname="Highlighted vacancies">
+        <source>Highlighted vacancies</source>
+        <target state="translated">Uitgelichte vacatures</target>
       </trans-unit>
       <trans-unit id="tSusVTR" resname="Highlights">
         <source>Highlights</source>
@@ -4592,6 +4604,10 @@
       <trans-unit id="8fyPK38" resname="Search by code or name">
         <source>Search by code or name</source>
         <target state="translated">Zoek op code of naam</target>
+      </trans-unit>
+      <trans-unit id="XjL6auo" resname="Search by company name">
+        <source>Search by company name</source>
+        <target state="translated">Zoek op bedrijfsnaam</target>
       </trans-unit>
       <trans-unit id="YWrWXBq" resname="Search by company, representative name, or email">
         <source>Search by company, representative name, or email</source>

@@ -1,4 +1,10 @@
+{#
+    A vacancy as a card. Pass `highlighted` to mark it as one a company has a running highlight package behind:
+
+    {% include 'partials/career/vacancy-card.html.twig' with {'vacancy': vacancy, 'highlighted': true} only %}
+#}
 {% set company = vacancy.getCompany %}
+{% set highlighted = highlighted|default(false) %}
 {% set vacancyUrl = path('career/vacancy', {
     companySlug: company.getSlugName,
     category: vacancy.getCategory.value,
@@ -7,8 +13,13 @@
 <div class="col">
     {# The title's stretched-link makes the whole card open the vacancy. The company link needs position-relative and
        z-2 to stay clickable on top of it. #}
-    <div class="card company-card h-100">
+    <div class="card company-card h-100{{ highlighted ? ' vacancy-card-highlighted' : '' }}">
         <div class="card-body d-flex flex-column gap-2">
+            {% if highlighted %}
+                <span class="page-header-eyebrow career-featured-kicker">
+                    <span class="fas fa-star" aria-hidden="true"></span> {{ 'Highlighted'|trans }}
+                </span>
+            {% endif %}
             <div class="d-flex align-items-center gap-2">
                 {% include 'partials/career/logo.html.twig' with {
                     'logo': company.getSquareLogo,
