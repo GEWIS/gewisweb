@@ -173,6 +173,10 @@
         <source>%count% banners are waiting for a decision.</source>
         <target state="translated">%count% banners wachten op een beslissing.</target>
       </trans-unit>
+      <trans-unit id="2jo5BH5" resname="%count% bodies have submitted their page for review.">
+        <source>%count% bodies have submitted their page for review.</source>
+        <target state="translated">%count% organen hebben hun pagina ter beoordeling ingediend.</target>
+      </trans-unit>
       <trans-unit id="p5ZiG8E" resname="%count% company profiles have been submitted for review.">
         <source>%count% company profiles have been submitted for review.</source>
         <target state="translated">%count% bedrijfsprofielen zijn ter beoordeling ingediend.</target>
@@ -308,6 +312,10 @@
       <trans-unit id="knysdqX" resname="%name% has submitted a new profile for review.">
         <source>%name% has submitted a new profile for review.</source>
         <target state="translated">%name% heeft een nieuw profiel ter beoordeling ingediend.</target>
+      </trans-unit>
+      <trans-unit id="NLlYcga" resname="%name% has submitted changes to its page for review.">
+        <source>%name% has submitted changes to its page for review.</source>
+        <target state="translated">%name% heeft wijzigingen aan de pagina ter beoordeling ingediend.</target>
       </trans-unit>
       <trans-unit id="G7xodsD" resname="%name% turns %age% today!">
         <source>%name% turns %age% today!</source>
@@ -1037,6 +1045,10 @@
         <source>Bodies</source>
         <target state="translated">Organen</target>
       </trans-unit>
+      <trans-unit id="HhEEeIT" resname="Bodies awaiting review">
+        <source>Bodies awaiting review</source>
+        <target state="translated">Organen die op beoordeling wachten</target>
+      </trans-unit>
       <trans-unit id="cGXWNw." resname="Body">
         <source>Body</source>
         <target>Orgaan</target>
@@ -1484,6 +1496,10 @@
       <trans-unit id="_w4mUjs" resname="Courses with the most material">
         <source>Courses with the most material</source>
         <target state="translated">Vakken met het meeste materiaal</target>
+      </trans-unit>
+      <trans-unit id="F_k2krt" resname="Cover">
+        <source>Cover</source>
+        <target state="translated">Omslag</target>
       </trans-unit>
       <trans-unit id="_mm3l_9" resname="Create">
         <source>Create</source>
@@ -2589,6 +2605,10 @@
         <source>Image</source>
         <target state="translated">Afbeelding</target>
       </trans-unit>
+      <trans-unit id="fQdHKPd" resname="Images">
+        <source>Images</source>
+        <target state="translated">Afbeeldingen</target>
+      </trans-unit>
       <trans-unit id="0QlUu9B" resname="Immediately">
         <source>Immediately</source>
         <target>Direct</target>
@@ -3397,6 +3417,10 @@
         <source>No course matches your search</source>
         <target state="translated">Geen enkel vak voldoet aan je zoekopdracht</target>
       </trans-unit>
+      <trans-unit id="gyFjxj." resname="No cover.">
+        <source>No cover.</source>
+        <target state="translated">Geen omslag.</target>
+      </trans-unit>
       <trans-unit id="k9navuj" resname="No custom fields.">
         <source>No custom fields.</source>
         <target state="translated">Geen aangepaste velden.</target>
@@ -3512,6 +3536,10 @@
       <trans-unit id="6I5cJhu" resname="No subscriptions yet.">
         <source>No subscriptions yet.</source>
         <target>Nog geen inschrijvingen.</target>
+      </trans-unit>
+      <trans-unit id="kO1oHcs" resname="No thumbnail.">
+        <source>No thumbnail.</source>
+        <target state="translated">Geen miniatuur.</target>
       </trans-unit>
       <trans-unit id="RYQ3Knf" resname="No vacancies are open right now.">
         <source>No vacancies are open right now.</source>
@@ -3828,6 +3856,10 @@
       <trans-unit id="jIJBJwZ" resname="Packages">
         <source>Packages</source>
         <target state="translated">Pakketten</target>
+      </trans-unit>
+      <trans-unit id="Xcvfje6" resname="Page">
+        <source>Page</source>
+        <target state="translated">Pagina</target>
       </trans-unit>
       <trans-unit id="zvMpy.G" resname="Page %page% of %totalPages% (%totalCount% records)">
         <source>Page %page% of %totalPages% (%totalCount% records)</source>
@@ -4792,6 +4824,10 @@
       <trans-unit id="A4mwZuN" resname="Shared by a member">
         <source>Shared by a member</source>
         <target state="translated">Gedeeld door een lid</target>
+      </trans-unit>
+      <trans-unit id="L.x0Usl" resname="Short description">
+        <source>Short description</source>
+        <target state="translated">Korte beschrijving</target>
       </trans-unit>
       <trans-unit id="qVigwtg" resname="Shortly before a sign-up you are on closes">
         <source>Shortly before a sign-up you are on closes</source>
@@ -5897,6 +5933,10 @@
         <source>This window overlaps an existing maintenance window.</source>
         <target>Dit venster overlapt een bestaand onderhoudsvenster.</target>
       </trans-unit>
+      <trans-unit id="ZRcslng" resname="Thumbnail">
+        <source>Thumbnail</source>
+        <target state="translated">Miniatuur</target>
+      </trans-unit>
       <trans-unit id="OmjSafb" resname="Time &amp; place">
         <source>Time &amp; place</source>
         <target state="translated"><![CDATA[Tijd & locatie]]></target>
@@ -6400,6 +6440,10 @@
       <trans-unit id="HfaO6.G" resname="What you upload goes onto the website straight away. Use this when a company sends its artwork to the committee instead of uploading it itself.">
         <source>What you upload goes onto the website straight away. Use this when a company sends its artwork to the committee instead of uploading it itself.</source>
         <target state="translated">Wat je uploadt komt meteen op de website te staan. Gebruik dit wanneer een bedrijf zijn beeldmateriaal naar de commissie stuurt in plaats van het zelf te uploaden.</target>
+      </trans-unit>
+      <trans-unit id="TDgj7w9" resname="When a body has changed its page and is waiting to be reviewed">
+        <source>When a body has changed its page and is waiting to be reviewed</source>
+        <target state="translated">Wanneer een orgaan zijn pagina heeft gewijzigd en op beoordeling wacht</target>
       </trans-unit>
       <trans-unit id="Ke53rYN" resname="When a company has something waiting to be reviewed">
         <source>When a company has something waiting to be reviewed</source>

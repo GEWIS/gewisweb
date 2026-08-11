@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Service\Decision;
 
-use App\Entity\Decision\OrganInformation;
+use App\Entity\Decision\OrganInformationRevision;
 use App\Service\Application\FileReferenceProviderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Override;
 
 /**
- * Keeps an organ cover or thumbnail alive while any organ still points at its content-addressed path. Both the cover
- * and the thumbnail live in the same namespace and could share bytes, so either column referencing the path vetoes its
- * deletion.
+ * Keeps a body's image alive while any revision of any page still points at its content-addressed path. All four
+ * columns count: an uploaded original is what a crop is moved against later, and a revision that was cloned shares both
+ * the original and the cut with the one it came from, so any of them referencing the path vetoes its deletion.
  */
 final readonly class OrganImageReferenceProvider implements FileReferenceProviderInterface
 {
@@ -25,13 +25,15 @@ final readonly class OrganImageReferenceProvider implements FileReferenceProvide
     public function references(string $path): bool
     {
         return (int) $this->entityManager->createQueryBuilder()
-            ->select('COUNT(organ)')
+            ->select('COUNT(revision)')
             ->from(
-                OrganInformation::class,
-                'organ',
+                OrganInformationRevision::class,
+                'revision',
             )
-            ->where('organ.coverPath = :path')
-            ->orWhere('organ.thumbnailPath = :path')
+            ->where('revision.bannerPath = :path')
+            ->orWhere('revision.logoPath = :path')
+            ->orWhere('revision.bannerSource = :path')
+            ->orWhere('revision.logoSource = :path')
             ->setParameter(
                 'path',
                 $path,

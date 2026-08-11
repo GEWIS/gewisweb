@@ -7,7 +7,7 @@ namespace App\Controller\Application;
 use App\Entity\Application\Enums\ImageVariant;
 use App\Entity\Photo\Enums\AlbumType;
 use App\Entity\Photo\Photo;
-use App\Repository\Decision\OrganInformationRepository;
+use App\Repository\Decision\OrganInformationRevisionRepository;
 use App\Repository\Photo\AlbumRepository;
 use App\Repository\Photo\PhotoRepository;
 use App\Security\Photo\PhotoVoter;
@@ -40,7 +40,7 @@ final class LegacyDataController extends AbstractController
         private readonly ImageUrlBuilder $urlBuilder,
         private readonly PhotoRepository $photoRepository,
         private readonly AlbumRepository $albumRepository,
-        private readonly OrganInformationRepository $organInformationRepository,
+        private readonly OrganInformationRevisionRepository $organInformationRevisionRepository,
     ) {
     }
 
@@ -85,32 +85,67 @@ final class LegacyDataController extends AbstractController
             }
         }
 
-        $organ = $this->organInformationRepository->findOneByImageBasename($basename);
-        if (null !== $organ) {
-            $thumbnailPath = $organ->getThumbnailPath();
+        $revision = $this->organInformationRevisionRepository->findOneByImageBasename($basename);
+        if (null !== $revision) {
+            // Which of the two images was asked for is decided per image, over both the upload and the cut that is
+            // shown. Falling through to the banner would answer a request for a logo with the wrong picture, and a
+            // permanent redirect at that.
+            $logoPath = $revision->getLogoPath();
             if (
-                null !== $thumbnailPath
-                && str_ends_with(
-                    $thumbnailPath,
-                    '/' . $basename,
+                null !== $logoPath
+                && (
+                    $this->named(
+                        $logoPath,
+                        $basename,
+                    )
+                    || $this->named(
+                        $revision->getLogoSource(),
+                        $basename,
+                    )
                 )
             ) {
                 return $this->publicRedirect(
-                    $thumbnailPath,
-                    ImageVariant::Square,
+                    $logoPath,
+                    ImageVariant::W320,
                 );
             }
 
-            $coverPath = $organ->getCoverPath();
-            if (null !== $coverPath) {
+            $bannerPath = $revision->getBannerPath();
+            if (
+                null !== $bannerPath
+                && (
+                    $this->named(
+                        $bannerPath,
+                        $basename,
+                    )
+                    || $this->named(
+                        $revision->getBannerSource(),
+                        $basename,
+                    )
+                )
+            ) {
                 return $this->publicRedirect(
-                    $coverPath,
+                    $bannerPath,
                     ImageVariant::W960,
                 );
             }
         }
 
         throw new NotFoundHttpException();
+    }
+
+    /**
+     * Whether a stored path is the file that was asked for.
+     */
+    private function named(
+        ?string $path,
+        string $basename,
+    ): bool {
+        return null !== $path
+            && str_ends_with(
+                $path,
+                '/' . $basename,
+            );
     }
 
     /**

@@ -16,17 +16,21 @@ use App\Entity\Career\CompanyRevisionComment;
 use App\Entity\Career\Vacancy;
 use App\Entity\Career\VacancyRevision;
 use App\Entity\Career\VacancyRevisionComment;
+use App\Entity\Decision\OrganInformation;
+use App\Entity\Decision\OrganInformationRevision;
+use App\Entity\Decision\OrganInformationRevisionComment;
 use App\Entity\User\Enums\UserRoles;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
+use function array_unique;
 use function is_subclass_of;
 
 /**
- * The contract every revisable domain answers, exercised against all three of them at once. Code that works across
- * domains — the discarder, the review controllers, the voter — leans on exactly these methods, so a fourth domain that
- * gets one of them wrong should fail here rather than at the far end of a review screen.
+ * The contract every revisable domain answers, exercised against all of them at once. Code that works across
+ * domains, the discarder, the review controllers and the voter, leans on exactly these methods, so a domain that gets
+ * one of them wrong should fail here rather than at the far end of a review screen.
  */
 final class RevisionContractsTest extends TestCase
 {
@@ -75,6 +79,20 @@ final class RevisionContractsTest extends TestCase
             $vacancy,
             $vacancyLive,
             $vacancyDraft,
+        ];
+
+        $information = new OrganInformation();
+        $informationLive = new OrganInformationRevision();
+        $informationDraft = new OrganInformationRevision();
+        $information->addRevision($informationLive);
+        $information->addRevision($informationDraft);
+        $information->setLiveRevision($informationLive);
+        $information->setCurrentRevision($informationDraft);
+
+        yield 'organ information' => [
+            $information,
+            $informationLive,
+            $informationDraft,
         ];
     }
 
@@ -143,6 +161,10 @@ final class RevisionContractsTest extends TestCase
             [UserRoles::CompanyAdmin],
             new Vacancy()->getReviewerRoles(),
         );
+        self::assertSame(
+            [],
+            new OrganInformation()->getReviewerRoles(),
+        );
     }
 
     public function testTheCommentClassesAreDistinctPerDomain(): void
@@ -158,6 +180,29 @@ final class RevisionContractsTest extends TestCase
         self::assertSame(
             VacancyRevisionComment::class,
             new VacancyRevision()->getCommentClass(),
+        );
+        self::assertSame(
+            OrganInformationRevisionComment::class,
+            new OrganInformationRevision()->getCommentClass(),
+        );
+    }
+
+    /**
+     * Every domain answers with its own resource id, since the edit lock keys on it: two domains sharing one would
+     * let a body's page and an activity with the same number lock each other out.
+     */
+    public function testTheResourceIdsAreDistinctPerDomain(): void
+    {
+        $ids = [
+            new Activity()->getResourceId(),
+            new Company()->getResourceId(),
+            new Vacancy()->getResourceId(),
+            new OrganInformation()->getResourceId(),
+        ];
+
+        self::assertSame(
+            $ids,
+            array_unique($ids),
         );
     }
 }

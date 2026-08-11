@@ -37,7 +37,8 @@ final readonly class NotificationContextResolver
             NotificationType::ActivityAwaitingReview,
             NotificationType::CompanyRevisionAwaitingReview,
             NotificationType::VacancyRevisionAwaitingReview,
-            NotificationType::CompanyBannerAwaitingReview => null,
+            NotificationType::CompanyBannerAwaitingReview,
+            NotificationType::OrganInformationRevisionAwaitingReview => null,
             // Nothing to fill in: the sentence says all of it on its own.
             NotificationType::DataExportReady => '',
             NotificationType::SignupClosing,

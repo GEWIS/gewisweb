@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Repository\Decision;
 
+use App\Entity\Decision\Organ;
 use App\Entity\Decision\OrganInformation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
-use function addcslashes;
 
 /**
  * @extends ServiceEntityRepository<OrganInformation>
@@ -24,25 +23,10 @@ class OrganInformationRepository extends ServiceEntityRepository
     }
 
     /**
-     * The organ information whose cover or thumbnail path ends with the given filename, used to resolve a legacy
-     * `/data/{2ch}/{file}` URL onto the migrated organ image (organ images re-root that same filename).
+     * The page belonging to this body, or null while nobody has started one.
      */
-    public function findOneByImageBasename(string $basename): ?OrganInformation
+    public function findForOrgan(Organ $organ): ?OrganInformation
     {
-        $suffix = '%/' . addcslashes(
-            $basename,
-            '%_',
-        );
-
-        return $this->createQueryBuilder('organ')
-            ->where('organ.coverPath LIKE :suffix')
-            ->orWhere('organ.thumbnailPath LIKE :suffix')
-            ->setParameter(
-                'suffix',
-                $suffix,
-            )
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
+        return $this->findOneBy(['organ' => $organ]);
     }
 }

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Controller\Application;
 
 use App\Controller\Application\LegacyDataController;
-use App\Entity\Decision\Organ;
 use App\Entity\Decision\OrganInformation;
+use App\Entity\Decision\OrganInformationRevision;
 use App\Entity\Photo\Album;
 use App\Entity\Photo\Photo;
 use App\Entity\User\Enums\UserRoles;
@@ -60,15 +60,18 @@ final class LegacyDataControllerTest extends DatabaseTestCase
 
     public function testOrganImageRedirectsToTheServedUrl(): void
     {
-        $organ = $this->entityManager->getRepository(Organ::class)->findOneBy([]);
+        $information = $this->entityManager->getRepository(OrganInformation::class)->findOneBy([]);
         self::assertInstanceOf(
-            Organ::class,
-            $organ,
+            OrganInformation::class,
+            $information,
         );
-        $information = new OrganInformation();
-        $information->setOrgan($organ);
-        $information->setCoverPath('organs/images/legacy-organ-c12.jpg');
-        $this->entityManager->persist($information);
+
+        $revision = $information->getCurrentRevision();
+        self::assertInstanceOf(
+            OrganInformationRevision::class,
+            $revision,
+        );
+        $revision->setBannerPath('organs/images/legacy-organ-c12.jpg');
         $this->entityManager->flush();
 
         $response = $this->controller()->resolve('ef/legacy-organ-c12.jpg');

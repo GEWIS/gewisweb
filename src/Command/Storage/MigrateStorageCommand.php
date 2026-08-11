@@ -7,13 +7,13 @@ namespace App\Command\Storage;
 use App\Entity\Application\Enums\StorageNamespace;
 use App\Entity\Career\CompanyBannerPackage;
 use App\Entity\Career\CompanyRevision;
-use App\Entity\Decision\OrganInformation;
+use App\Entity\Decision\OrganInformationRevision;
 use App\Entity\Education\CourseDocument;
 use App\Entity\Photo\Album;
 use App\Entity\Photo\Photo;
 use App\Repository\Career\CompanyBannerPackageRepository;
 use App\Repository\Career\CompanyRevisionRepository;
-use App\Repository\Decision\OrganInformationRepository;
+use App\Repository\Decision\OrganInformationRevisionRepository;
 use App\Repository\Education\CourseDocumentRepository;
 use App\Repository\Photo\AlbumRepository;
 use App\Repository\Photo\PhotoRepository;
@@ -115,6 +115,8 @@ final class MigrateStorageCommand extends Command
     private const string KEY_COMPANY_BANNER = 'company-banner';
     private const string KEY_ORGAN_COVER = 'organ-cover';
     private const string KEY_ORGAN_THUMBNAIL = 'organ-thumbnail';
+    private const string KEY_ORGAN_BANNER_SOURCE = 'organ-banner-source';
+    private const string KEY_ORGAN_LOGO_SOURCE = 'organ-logo-source';
     private const string KEY_COURSE_DOCUMENT = 'course-document';
 
     /** Outcomes of a single hardlink attempt. */
@@ -132,7 +134,7 @@ final class MigrateStorageCommand extends Command
         private readonly AlbumRepository $albumRepository,
         private readonly CompanyRevisionRepository $companyRevisionRepository,
         private readonly CompanyBannerPackageRepository $companyBannerPackageRepository,
-        private readonly OrganInformationRepository $organInformationRepository,
+        private readonly OrganInformationRevisionRepository $organInformationRevisionRepository,
         private readonly CourseDocumentRepository $courseDocumentRepository,
         #[Autowire('%kernel.project_dir%')]
         private readonly string $projectDir,
@@ -724,6 +726,19 @@ final class MigrateStorageCommand extends Command
                 'field' => 'thumbnailPath',
                 'namespace' => StorageNamespace::OrganImage,
             ],
+            // A body's images are kept twice over: the file as it was uploaded, and the cut of it that is shown. The
+            // migration that split them filled both columns with the same legacy path, so both have to be rewritten,
+            // or the edit screen ends up framing a file that is no longer where it says it is.
+            [
+                'key' => self::KEY_ORGAN_BANNER_SOURCE,
+                'field' => 'bannerSource',
+                'namespace' => StorageNamespace::OrganImage,
+            ],
+            [
+                'key' => self::KEY_ORGAN_LOGO_SOURCE,
+                'field' => 'logoSource',
+                'namespace' => StorageNamespace::OrganImage,
+            ],
         ];
     }
 
@@ -741,7 +756,10 @@ final class MigrateStorageCommand extends Command
             self::KEY_ALBUM_COVER => $this->albumRepository,
             self::KEY_COMPANY_LOGO => $this->companyRevisionRepository,
             self::KEY_COMPANY_BANNER => $this->companyBannerPackageRepository,
-            self::KEY_ORGAN_COVER, self::KEY_ORGAN_THUMBNAIL => $this->organInformationRepository,
+            self::KEY_ORGAN_COVER,
+            self::KEY_ORGAN_THUMBNAIL,
+            self::KEY_ORGAN_BANNER_SOURCE,
+            self::KEY_ORGAN_LOGO_SOURCE => $this->organInformationRevisionRepository,
             self::KEY_COURSE_DOCUMENT => $this->courseDocumentRepository,
             default => throw new RuntimeException(sprintf('Unknown storage target "%s".', $key)),
         };
@@ -774,10 +792,13 @@ final class MigrateStorageCommand extends Command
             case $entity instanceof CourseDocument:
                 return $entity->getPath();
 
-            case $entity instanceof OrganInformation:
-                return 'thumbnailPath' === $field
-                    ? $entity->getThumbnailPath()
-                    : $entity->getCoverPath();
+            case $entity instanceof OrganInformationRevision:
+                return match ($field) {
+                    'thumbnailPath' => $entity->getLogoPath(),
+                    'bannerSource' => $entity->getBannerSource(),
+                    'logoSource' => $entity->getLogoSource(),
+                    default => $entity->getBannerPath(),
+                };
 
             default:
                 throw new RuntimeException(sprintf('Cannot read a storage path from "%s".', $entity::class));
@@ -822,12 +843,13 @@ final class MigrateStorageCommand extends Command
 
                 return;
 
-            case $entity instanceof OrganInformation:
-                if ('thumbnailPath' === $field) {
-                    $entity->setThumbnailPath($value);
-                } else {
-                    $entity->setCoverPath($value);
-                }
+            case $entity instanceof OrganInformationRevision:
+                match ($field) {
+                    'thumbnailPath' => $entity->setLogoPath($value),
+                    'bannerSource' => $entity->setBannerSource($value),
+                    'logoSource' => $entity->setLogoSource($value),
+                    default => $entity->setBannerPath($value),
+                };
 
                 return;
 
@@ -891,7 +913,7 @@ final class MigrateStorageCommand extends Command
             self::KEY_ALBUM_COVER => $this->albumRepository->find($id),
             self::KEY_COMPANY_LOGO => $this->companyRevisionRepository->find($id),
             self::KEY_COMPANY_BANNER => $this->companyBannerPackageRepository->find($id),
-            self::KEY_ORGAN_COVER, self::KEY_ORGAN_THUMBNAIL => $this->organInformationRepository->find($id),
+            self::KEY_ORGAN_COVER, self::KEY_ORGAN_THUMBNAIL => $this->organInformationRevisionRepository->find($id),
             default => null,
         };
     }

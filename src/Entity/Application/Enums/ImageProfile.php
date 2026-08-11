@@ -20,7 +20,10 @@ enum ImageProfile: string
     /** Generated album cover mosaics: the cover crops. */
     case AlbumCover = 'album-cover';
 
-    /** Organ images: square thumbnail and cover crops, plus a page-width fit. */
+    /**
+     * Organ images: the width-fit ladder, because a body chooses the crop itself and what is stored already has the
+     * shape it will be shown in. The same ladder serves the uploaded original, which the crop is chosen on.
+     */
     case OrganImage = 'organ-image';
 
     /** Company logos: small renditions at near-lossless quality (flat colour/text smears under lossy). */
@@ -64,11 +67,10 @@ enum ImageProfile: string
                 ImageVariant::Cover2x,
             ],
             self::OrganImage => [
-                ImageVariant::Square,
-                ImageVariant::Square2x,
-                ImageVariant::Cover,
-                ImageVariant::Cover2x,
+                ImageVariant::W320,
+                ImageVariant::W640,
                 ImageVariant::W960,
+                ImageVariant::W1280,
             ],
             self::CompanyLogo => [
                 ImageVariant::W320,
