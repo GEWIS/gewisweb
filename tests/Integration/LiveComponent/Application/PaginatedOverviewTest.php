@@ -11,6 +11,7 @@ use App\Twig\Components\Career\Admin\CompanyOverview;
 
 use function array_intersect;
 use function array_map;
+use function min;
 use function sprintf;
 
 /**
@@ -43,7 +44,11 @@ final class PaginatedOverviewTest extends DatabaseTestCase
         $this->seedCompanies(15);
         $overview = $this->overview();
         $firstPage = $this->names($overview);
-        $expected = $overview->getTotalCount() - 10;
+        $pageSize = CompanyOverview::PAGE_SIZES[0];
+        $expected = min(
+            $pageSize,
+            $overview->getTotalCount() - $pageSize,
+        );
 
         $overview->gotoPage(2);
 
@@ -83,7 +88,7 @@ final class PaginatedOverviewTest extends DatabaseTestCase
         $overview->pageSize = 7;
 
         self::assertCount(
-            10,
+            CompanyOverview::PAGE_SIZES[0],
             $overview->getRows(),
         );
     }

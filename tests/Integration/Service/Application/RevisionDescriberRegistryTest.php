@@ -42,7 +42,7 @@ final class RevisionDescriberRegistryTest extends DatabaseTestCase
         );
     }
 
-    public function testACompanyDescribesItselfIncludingTheLogoItsOwnScreenUsedToLeaveOut(): void
+    public function testACompanyDescribesItselfIncludingTheLogosItsOwnScreenUsedToLeaveOut(): void
     {
         $company = $this->entityManager->getRepository(Company::class)->findOneBy(['slugName' => 'nexunt']);
         self::assertInstanceOf(
@@ -56,12 +56,13 @@ final class RevisionDescriberRegistryTest extends DatabaseTestCase
             [
                 'Profile',
                 'Contact details',
-                'Logo',
+                'Logos',
             ],
             $this->headings($revision),
         );
         self::assertSame(
             [
+                RevisionFieldKind::Image,
                 RevisionFieldKind::Image,
             ],
             array_map(

@@ -92,7 +92,13 @@ class CompanyRevision extends AbstractRevision
         type: Types::STRING,
         nullable: true,
     )]
-    private ?string $logo = null;
+    private ?string $squareLogo = null;
+
+    #[Column(
+        type: Types::STRING,
+        nullable: true,
+    )]
+    private ?string $bannerLogo = null;
 
     #[Column(
         type: Types::STRING,
@@ -202,14 +208,24 @@ class CompanyRevision extends AbstractRevision
         $this->website = $website;
     }
 
-    public function getLogo(): ?string
+    public function getSquareLogo(): ?string
     {
-        return $this->logo;
+        return $this->squareLogo;
     }
 
-    public function setLogo(?string $logo): void
+    public function setSquareLogo(?string $squareLogo): void
     {
-        $this->logo = $logo;
+        $this->squareLogo = $squareLogo;
+    }
+
+    public function getBannerLogo(): ?string
+    {
+        return $this->bannerLogo;
+    }
+
+    public function setBannerLogo(?string $bannerLogo): void
+    {
+        $this->bannerLogo = $bannerLogo;
     }
 
     public function getContactName(): ?string

@@ -721,6 +721,10 @@
         <source>All subscribers</source>
         <target>All subscribers</target>
       </trans-unit>
+      <trans-unit id="gOiJzr7" resname="All vacancies">
+        <source>All vacancies</source>
+        <target state="translated">All vacancies</target>
+      </trans-unit>
       <trans-unit id="CdVO0Gm" resname="All years">
         <source>All years</source>
         <target state="translated">All years</target>
@@ -980,6 +984,10 @@
       <trans-unit id=".q1_j4L" resname="Banner">
         <source>Banner</source>
         <target state="translated">Banner</target>
+      </trans-unit>
+      <trans-unit id="rep8aq2" resname="Banner logo">
+        <source>Banner logo</source>
+        <target state="translated">Banner logo</target>
       </trans-unit>
       <trans-unit id="LNfw4H_" resname="Banners">
         <source>Banners</source>
@@ -2469,6 +2477,14 @@
         <source>Highlight</source>
         <target state="translated">Highlight</target>
       </trans-unit>
+      <trans-unit id="RUMuLpj" resname="Highlighted">
+        <source>Highlighted</source>
+        <target state="translated">Highlighted</target>
+      </trans-unit>
+      <trans-unit id="XdAlCJ6" resname="Highlighted vacancies">
+        <source>Highlighted vacancies</source>
+        <target state="translated">Highlighted vacancies</target>
+      </trans-unit>
       <trans-unit id="tSusVTR" resname="Highlights">
         <source>Highlights</source>
         <target state="translated">Highlights</target>
@@ -2952,6 +2968,10 @@
       <trans-unit id="1TFZ._Z" resname="Logo, story and contact">
         <source>Logo, story and contact</source>
         <target state="translated">Logo, story and contact</target>
+      </trans-unit>
+      <trans-unit id="5CIt_FZ" resname="Logos">
+        <source>Logos</source>
+        <target state="translated">Logos</target>
       </trans-unit>
       <trans-unit id="4E407bE" resname="Logos and templates">
         <source>Logos and templates</source>
@@ -4585,6 +4605,10 @@
         <source>Search by code or name</source>
         <target state="translated">Search by code or name</target>
       </trans-unit>
+      <trans-unit id="XjL6auo" resname="Search by company name">
+        <source>Search by company name</source>
+        <target state="translated">Search by company name</target>
+      </trans-unit>
       <trans-unit id="YWrWXBq" resname="Search by company, representative name, or email">
         <source>Search by company, representative name, or email</source>
         <target state="translated">Search by company, representative name, or email</target>
@@ -4980,6 +5004,10 @@
       <trans-unit id="U_RKQ4r" resname="Sports">
         <source>Sports</source>
         <target>Sports</target>
+      </trans-unit>
+      <trans-unit id="vUUuIUT" resname="Square logo">
+        <source>Square logo</source>
+        <target state="translated">Square logo</target>
       </trans-unit>
       <trans-unit id="oBphsD9" resname="Stale">
         <source>Stale</source>
@@ -6660,6 +6688,14 @@
       <trans-unit id="C3pbkFh" resname="Your highlighted vacancies are saved.">
         <source>Your highlighted vacancies are saved.</source>
         <target state="translated">Your highlighted vacancies are saved.</target>
+      </trans-unit>
+      <trans-unit id="jpx_gla" resname="Your mark and name side by side, at least %width% pixels wide and wider than it is tall.">
+        <source>Your mark and name side by side, at least %width% pixels wide and wider than it is tall.</source>
+        <target state="translated">Your mark and name side by side, at least %width% pixels wide and wider than it is tall.</target>
+      </trans-unit>
+      <trans-unit id="SxjslXJ" resname="Your mark on its own, square, at least %size% by %size% pixels.">
+        <source>Your mark on its own, square, at least %size% by %size% pixels.</source>
+        <target state="translated">Your mark on its own, square, at least %size% by %size% pixels.</target>
       </trans-unit>
       <trans-unit id="Mnrixx." resname="Your message is being sent to %count% recipient(s).">
         <source>Your message is being sent to %count% recipient(s).</source>

@@ -90,8 +90,12 @@ final class CompanyRevisionClonerTest extends TestCase
         );
 
         self::assertSame(
-            'logo.png',
-            $draft->getLogo(),
+            'square.png',
+            $draft->getSquareLogo(),
+        );
+        self::assertSame(
+            'banner.png',
+            $draft->getBannerLogo(),
         );
         self::assertSame(
             'Jane Doe',
@@ -153,7 +157,8 @@ final class CompanyRevisionClonerTest extends TestCase
             'https://example.com/en',
             'https://example.com/nl',
         ));
-        $source->setLogo('logo.png');
+        $source->setSquareLogo('square.png');
+        $source->setBannerLogo('banner.png');
         $source->setContactName('Jane Doe');
         $source->setContactAddress('Street 1');
         $source->setContactEmail('jane@example.com');

@@ -1,0 +1,15 @@
+{#
+    A company's logo, or the monogram it falls back to without one:
+
+    {% include 'partials/career/logo.html.twig' with {'logo': company.getLogo, 'name': company.getName, 'class': 'career-logo-sm'} only %}
+
+    Pass `alt` where the logo is the only thing naming the company.
+#}
+{% if logo is not empty %}
+    <img class="career-logo {{ class }}"
+         loading="lazy"
+         alt="{{ alt|default('') }}"
+         src="{{ image_url(logo, 'w320') }}">
+{% else %}
+    <span class="career-logo career-logo-monogram {{ class }}" aria-hidden="true">{{ name|slice(0, 1)|upper }}</span>
+{% endif %}

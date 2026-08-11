@@ -11,8 +11,8 @@ use Override;
 
 /**
  * Keeps a company logo alive while any revision, in any approval chain, still points at its content-addressed path.
- * Cloning a revision carries the logo path forward by value, so several revisions share one physical file; the file may
- * only be reclaimed once the last referencing revision is gone.
+ * Cloning a revision carries both logo paths forward by value, so several revisions share one physical file; the file
+ * may only be reclaimed once the last referencing revision is gone.
  */
 final readonly class CompanyLogoReferenceProvider implements FileReferenceProviderInterface
 {
@@ -30,7 +30,7 @@ final readonly class CompanyLogoReferenceProvider implements FileReferenceProvid
                 CompanyRevision::class,
                 'revision',
             )
-            ->where('revision.logo = :path')
+            ->where('revision.squareLogo = :path OR revision.bannerLogo = :path')
             ->setParameter(
                 'path',
                 $path,

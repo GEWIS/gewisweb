@@ -38,6 +38,13 @@ use function random_bytes;
  */
 class CareerReviewFixture extends Fixture implements DependentFixtureInterface
 {
+    /** The slogan Orbit Analytics submitted, and the line on the banner they proposed alongside it. */
+    private const string SUBMITTED_SLOGAN = 'Turning data into decisions, faster';
+
+    public function __construct(private readonly CompanyImageGenerator $imageGenerator)
+    {
+    }
+
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -104,7 +111,7 @@ class CareerReviewFixture extends Fixture implements DependentFixtureInterface
         $draft->setStatus(RevisionStatus::Submitted);
         $draft->setAuthorCompanyUser($author);
         $draft->setSlogan(new CareerLocalisedText(
-            'Turning data into decisions, faster',
+            self::SUBMITTED_SLOGAN,
             'Sneller van data naar beslissingen',
         ));
 
@@ -193,6 +200,10 @@ class CareerReviewFixture extends Fixture implements DependentFixtureInterface
         $manager->persist($reply);
     }
 
+    /**
+     * New artwork waiting for the committee next to the banner that is still running. It carries the slogan the
+     * company submitted along with it, which is the ordinary reason to redo a banner in the first place.
+     */
     private function proposeABanner(
         ObjectManager $manager,
         Company $company,
@@ -204,7 +215,11 @@ class CareerReviewFixture extends Fixture implements DependentFixtureInterface
             }
 
             $package->proposeImage(
-                'data/company/banner/orbit-analytics-proposed.png',
+                $this->imageGenerator->storeBanner(
+                    $company,
+                    $package->getFormat(),
+                    self::SUBMITTED_SLOGAN,
+                ),
                 $author,
             );
             $manager->persist($package);
@@ -248,7 +263,8 @@ class CareerReviewFixture extends Fixture implements DependentFixtureInterface
         $draft->setSlogan($source->getSlogan()->copy());
         $draft->setWebsite($source->getWebsite()->copy());
         $draft->setDescription($source->getDescription()->copy());
-        $draft->setLogo($source->getLogo());
+        $draft->setSquareLogo($source->getSquareLogo());
+        $draft->setBannerLogo($source->getBannerLogo());
         $draft->setContactName($source->getContactName());
         $draft->setContactEmail($source->getContactEmail());
         $draft->setContactPhone($source->getContactPhone());

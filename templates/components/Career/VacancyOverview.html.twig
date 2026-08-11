@@ -54,13 +54,47 @@
         </div>
     </div>
 
+    {% set highlightedIds = this.highlightedIds %}
+
+    {% if this.highlightedVacancies is not empty %}
+        <h3 class="h5 mb-3">
+            <span class="fas fa-star career-featured-kicker small" aria-hidden="true"></span>
+            {{ 'Highlighted'|trans }}
+        </h3>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4 mb-4">
+            {% for vacancy in this.highlightedVacancies %}
+                {% include 'partials/career/vacancy-card.html.twig' with {
+                    'vacancy': vacancy,
+                    'highlighted': true,
+                } only %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     {% if this.vacancies is empty %}
         <p class="text-muted text-center py-4">{{ 'No vacancies match the current filters.'|trans }}</p>
     {% else %}
+        {% if this.highlightedVacancies is not empty %}
+            <h3 class="h5 mb-3">{{ 'All vacancies'|trans }}</h3>
+        {% endif %}
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
             {% for vacancy in this.vacancies %}
-                {% include 'partials/career/vacancy-card.html.twig' with {'vacancy': vacancy} only %}
+                {% include 'partials/career/vacancy-card.html.twig' with {
+                    'vacancy': vacancy,
+                    'highlighted': vacancy.getId in highlightedIds,
+                } only %}
             {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if this.hasMore %}
+        <div data-controller="infinite-scroll" class="text-center py-3">
+            <button type="button" class="btn btn-outline-secondary"
+                    data-action="live#action" data-live-action-param="loadMore"
+                    data-infinite-scroll-target="button">
+                {{ 'Load more'|trans }}
+            </button>
+            <div data-infinite-scroll-target="sentinel" aria-hidden="true"></div>
         </div>
     {% endif %}
 </div>

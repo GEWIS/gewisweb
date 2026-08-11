@@ -62,6 +62,25 @@
 {% block contents %}
     <div class="row g-4">
         <div class="col-lg-8">
+            {% set highlighted = highlighted_vacancies(4) %}
+            {% if highlighted is not empty %}
+                <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
+                    <h3 class="mb-0">
+                        <span class="fas fa-star career-featured-kicker small" aria-hidden="true"></span>
+                        {{ 'Highlighted vacancies'|trans }}
+                    </h3>
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-2 g-3 mb-4">
+                    {% for vacancy in highlighted %}
+                        {% include 'partials/career/vacancy-card.html.twig' with {
+                            'vacancy': vacancy,
+                            'highlighted': true,
+                        } only %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
                 <h3 class="mb-0">{{ 'Latest vacancies'|trans }}</h3>
                 <a href="{{ path('career/vacancies') }}" class="fw-semibold">
@@ -75,12 +94,11 @@
                     {% set company = vacancy.getCompany %}
                     <div class="panel panel-surface {{ loop.first ? 'mt-0' : '' }}">
                         <div class="panel-body d-flex gap-3">
-                            {% if company.getLogo %}
-                                <img class="career-logo-sm" style="object-fit: cover;" loading="lazy"
-                                     src="{{ image_url(company.getLogo, 'w320') }}" alt="">
-                            {% else %}
-                                <span class="career-logo career-logo-sm" aria-hidden="true">{{ company.getName|slice(0, 1)|upper }}</span>
-                            {% endif %}
+                            {% include 'partials/career/logo.html.twig' with {
+                                'logo': company.getSquareLogo,
+                                'name': company.getName,
+                                'class': 'career-logo-sm',
+                            } only %}
                             <div class="flex-grow-1 overflow-hidden">
                                 <h5 class="mb-0">
                                     <a class="stretched-link" href="{{ path('career/vacancy', {
@@ -128,12 +146,11 @@
                     <div class="col">
                         <div class="panel panel-surface h-100 my-0">
                             <div class="panel-body d-flex align-items-center gap-3">
-                                {% if company.getLogo %}
-                                    <img class="career-logo-xs" style="object-fit: cover;" loading="lazy"
-                                         src="{{ image_url(company.getLogo, 'w320') }}" alt="">
-                                {% else %}
-                                    <span class="career-logo career-logo-xs" aria-hidden="true">{{ company.getName|slice(0, 1)|upper }}</span>
-                                {% endif %}
+                                {% include 'partials/career/logo.html.twig' with {
+                                    'logo': company.getSquareLogo,
+                                    'name': company.getName,
+                                    'class': 'career-logo-xs',
+                                } only %}
                                 <div class="overflow-hidden">
                                     <span class="career-company-name">
                                         <a class="stretched-link text-body"
@@ -166,14 +183,12 @@
                 {% set featuredCompany = featuredPackage.getCompany %}
                 {% set featuredOpenings = featuredCompany.getNumberOfActiveJobs() %}
                 <div class="panel mt-0">
-                    <div class="career-featured-banner">
-                        {% if featuredCompany.getLogo %}
-                            <img loading="lazy" src="{{ image_url(featuredCompany.getLogo, 'w640') }}"
-                                 alt="{{ featuredCompany.getName }}">
-                        {% else %}
-                            <span class="career-logo career-logo-lg" aria-hidden="true">{{ featuredCompany.getName|slice(0, 1)|upper }}</span>
-                        {% endif %}
-                    </div>
+                    {% include 'partials/career/logo.html.twig' with {
+                        'logo': featuredCompany.getBannerLogo,
+                        'name': featuredCompany.getName,
+                        'class': 'career-logo-plate',
+                        'alt': featuredCompany.getName,
+                    } only %}
                     <div class="panel-body">
                         <span class="page-header-eyebrow career-featured-kicker">
                             <span class="fas fa-star" aria-hidden="true"></span> {{ 'Featured this month'|trans }}

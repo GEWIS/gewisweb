@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Form\Career;
 
 use App\Entity\Career\Company;
+use App\Entity\Career\CompanyRevision;
 use App\Form\Application\LocalisedTextType;
 use App\Form\Career\CompanyRevisionType;
 use App\Form\Career\CompanyType;
@@ -14,6 +15,7 @@ use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\FormExtensionInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Validation;
@@ -97,7 +99,7 @@ final class CompanyTypeTest extends TypeTestCase
         self::assertTrue($form->has('currentRevision'));
     }
 
-    public function testTheContentAndTheLogoUploadAreOfferedToBothAudiences(): void
+    public function testTheContentAndBothLogoUploadsAreOfferedToBothAudiences(): void
     {
         $revision = $this->factory->create(
             CompanyType::class,
@@ -113,7 +115,8 @@ final class CompanyTypeTest extends TypeTestCase
                 'contactEmail',
                 'contactPhone',
                 'contactAddress',
-                'logoFile',
+                'squareLogoFile',
+                'bannerLogoFile',
                 'languageDutch',
                 'languageEnglish',
             ] as $field
@@ -123,6 +126,60 @@ final class CompanyTypeTest extends TypeTestCase
                 $field,
             );
         }
+    }
+
+    public function testBothLogosAreDemandedUntilTheProfileCarriesThem(): void
+    {
+        $company = new Company();
+        $revision = new CompanyRevision();
+        $company->addRevision($revision);
+        $company->setCurrentRevision($revision);
+
+        foreach (
+            [
+                'squareLogoFile',
+                'bannerLogoFile',
+            ] as $field
+        ) {
+            self::assertTrue(
+                $this->logoField(
+                    $company,
+                    $field,
+                )->getConfig()->getRequired(),
+                $field,
+            );
+        }
+
+        $revision->setSquareLogo('career/1/images/square.png');
+        $revision->setBannerLogo('career/1/images/banner.png');
+
+        foreach (
+            [
+                'squareLogoFile',
+                'bannerLogoFile',
+            ] as $field
+        ) {
+            self::assertFalse(
+                $this->logoField(
+                    $company,
+                    $field,
+                )->getConfig()->getRequired(),
+                $field,
+            );
+        }
+    }
+
+    /**
+     * @return FormInterface<mixed>
+     */
+    private function logoField(
+        Company $company,
+        string $field,
+    ): FormInterface {
+        return $this->factory->create(
+            CompanyType::class,
+            $company,
+        )->get('currentRevision')->get($field);
     }
 
     /**

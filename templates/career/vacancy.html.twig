@@ -21,9 +21,12 @@
     <div class="row g-4">
         <div class="col-lg-4 col-xl-3">
             <div class="card company-card mb-4">
-                <div class="card-img-top d-flex align-items-center justify-content-center bg-body-secondary py-5">
-                    <span class="display-5 text-muted">{{ company.getName|slice(0, 1)|upper }}</span>
-                </div>
+                {% include 'partials/career/logo.html.twig' with {
+                    'logo': company.getBannerLogo,
+                    'name': company.getName,
+                    'class': 'career-logo-plate',
+                    'alt': company.getName,
+                } only %}
                 <div class="card-body">
                     <p class="mb-1">
                         <a href="{{ path('career/company', {slug: company.getSlugName}) }}">{{ company.getName }}</a>

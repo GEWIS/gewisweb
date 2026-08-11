@@ -312,11 +312,19 @@ class Company implements RevisableInterface
     }
 
     /**
-     * Display proxy. Get the company's logo.
+     * Display proxy. Get the company's square logo.
      */
-    public function getLogo(): ?string
+    public function getSquareLogo(): ?string
     {
-        return $this->getDisplayRevision()->getLogo();
+        return $this->getDisplayRevision()->getSquareLogo();
+    }
+
+    /**
+     * Display proxy. Get the company's banner logo.
+     */
+    public function getBannerLogo(): ?string
+    {
+        return $this->getDisplayRevision()->getBannerLogo();
     }
 
     /**
@@ -576,7 +584,8 @@ class Company implements RevisableInterface
      * @return array{
      *     name: string,
      *     slugName: string,
-     *     logo: ?string,
+     *     squareLogo: ?string,
+     *     bannerLogo: ?string,
      *     contactName: ?string,
      *     contactEmail: ?string,
      *     contactAddress: ?string,
@@ -597,7 +606,8 @@ class Company implements RevisableInterface
         $arraycopy['name'] = $this->getName();
         $arraycopy['slugName'] = $this->getSlugName();
 
-        $arraycopy['logo'] = $this->getLogo();
+        $arraycopy['squareLogo'] = $this->getSquareLogo();
+        $arraycopy['bannerLogo'] = $this->getBannerLogo();
         $arraycopy['contactName'] = $this->getContactName();
         $arraycopy['contactEmail'] = $this->getContactEmail();
         $arraycopy['contactAddress'] = $this->getContactAddress();

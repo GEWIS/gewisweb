@@ -157,26 +157,24 @@ class CompanyProfileController extends AbstractRevisionReviewController
             );
         }
 
-        $file = $form->get('currentRevision')->get('logoFile')->getData();
-        if ($file instanceof UploadedFile) {
-            $path = $this->imageUploadService->uploadLogo(
-                $company,
-                $file,
-            );
+        $revisionForm = $form->get('currentRevision');
 
-            if (null === $path) {
-                $this->addFlash(
-                    AlertTypes::Warning->value,
-                    $this->translator->trans('The logo could not be stored, so the previous one is still in use.'),
-                );
-            } else {
-                $current->setLogo($path);
-                $this->auditLogger->log(
-                    $company,
-                    $companyUser,
-                    CompanyAuditVerbs::LogoUploaded,
-                );
-            }
+        $square = $this->storeLogo(
+            $revisionForm->get('squareLogoFile')->getData(),
+            $company,
+            $companyUser,
+        );
+        if (null !== $square) {
+            $current->setSquareLogo($square);
+        }
+
+        $banner = $this->storeLogo(
+            $revisionForm->get('bannerLogoFile')->getData(),
+            $company,
+            $companyUser,
+        );
+        if (null !== $banner) {
+            $current->setBannerLogo($banner);
         }
 
         $current->setLastEditedByCompanyUser($companyUser);
@@ -470,5 +468,40 @@ class CompanyProfileController extends AbstractRevisionReviewController
         }
 
         return $current;
+    }
+
+    /**
+     * @return string|null the stored path, or null when nothing was uploaded or it could not be stored
+     */
+    private function storeLogo(
+        mixed $file,
+        Company $company,
+        CompanyUser $companyUser,
+    ): ?string {
+        if (!$file instanceof UploadedFile) {
+            return null;
+        }
+
+        $path = $this->imageUploadService->uploadLogo(
+            $company,
+            $file,
+        );
+
+        if (null === $path) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('The logo could not be stored, so the previous one is still in use.'),
+            );
+
+            return null;
+        }
+
+        $this->auditLogger->log(
+            $company,
+            $companyUser,
+            CompanyAuditVerbs::LogoUploaded,
+        );
+
+        return $path;
     }
 }
