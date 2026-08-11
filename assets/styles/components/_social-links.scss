@@ -12,8 +12,12 @@
     }
 }
 
-.social-links-inline {
+// A row of icons that stand for a link each. Social links use it; so does anything else that sits beside them and
+// should not stand out against them, such as the email and website icons in the footer of a body's card.
+.social-links-inline,
+.icon-links {
     display: inline-flex;
+    align-items: center;
     gap: 0.625rem;
     font-size: 1.125rem;
 

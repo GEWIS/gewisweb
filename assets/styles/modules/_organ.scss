@@ -6,16 +6,61 @@
     object-fit: cover;
     background-size: cover;
     background-position: center;
-    border-radius: var(--bs-border-radius);
+    border-radius: var(--#{$prefix}border-radius);
 }
 
-// What a body is recognised by on an overview card.
+// What a body is recognised by on an overview card. A flex box rather than a plain image, since the same class dresses
+// the monogram a body without a logo falls back to, and that is a span with a letter in it.
 .organ-logo {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    border-radius: var(--bs-border-radius);
+    border-radius: var(--#{$prefix}border-radius);
+}
+
+// Leading a card, the logo follows the card's own top corners rather than rounding all four of its own.
+.organ-card {
+    .organ-logo {
+        border-radius: var(--#{$prefix}card-inner-border-radius) var(--#{$prefix}card-inner-border-radius) 0 0;
+    }
+}
+
+// The first letter of a body's abbreviation, for one that has not uploaded a logo.
+.organ-logo-monogram {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--#{$prefix}secondary-color);
+    background-color: var(--#{$prefix}secondary-bg);
+}
+
+// Where a body can be reached, one way per row.
+.organ-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    li {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+    }
+
+    .fas,
+    .fab {
+        width: 1.125rem;
+        text-align: center;
+        color: var(--#{$prefix}secondary-color);
+    }
+}
+
+.organ-contact-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--#{$prefix}secondary-color);
 }
 
 // The frame that picks what part of an uploaded image is used. Cropper puts its canvas next to the image and hides the

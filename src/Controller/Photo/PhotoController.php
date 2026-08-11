@@ -150,7 +150,30 @@ class PhotoController extends AbstractController
     public function weeklyManifest(int $year): JsonResponse
     {
         return new JsonResponse(
-            $this->photoService->getWeeklyManifest($this->weeklyPhotoService->getPhotosInYear($year)),
+            $this->photoService->getVirtualAlbumManifest($this->weeklyPhotoService->getPhotosInYear($year)),
+        );
+    }
+
+    /**
+     * The viewer manifest for a body's virtual album: the photos it is tagged in, each deep-linked to its real album.
+     */
+    #[Route(
+        path: '/body/{organ}/manifest',
+        name: 'body_manifest',
+        requirements: ['organ' => '\d+'],
+    )]
+    public function bodyManifest(int $organ): JsonResponse
+    {
+        $organEntity = $this->organRepository->findOrgan($organ)
+            ?? throw new NotFoundHttpException();
+
+        return new JsonResponse(
+            $this->photoService->getVirtualAlbumManifest(
+                $this->photoRepository->getAlbumPhotos(new OrganAlbum(
+                    $organ,
+                    $organEntity,
+                )),
+            ),
         );
     }
 

@@ -15,6 +15,7 @@ use App\Entity\Decision\SubDecision\Annulment;
 use App\Entity\Decision\SubDecision\Discharge;
 use App\Entity\Decision\SubDecision\Foundation;
 use App\Entity\Decision\SubDecision\Installation;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -245,6 +246,7 @@ class DecisionFixture extends Fixture implements DependentFixtureInterface
         $manager->flush();
 
         $this->loadSecondOrgan($manager);
+        $this->loadFormerOrgan($manager);
         $this->loadBoardDecisions($manager);
         $this->loadMeetingTextDecisions($manager);
     }
@@ -343,6 +345,58 @@ class DecisionFixture extends Fixture implements DependentFixtureInterface
 
         $this->addReference(
             'organ-keur',
+            $organ,
+        );
+    }
+
+    /**
+     * A committee that went by the same letters as GETÉST does now, founded and abrogated years earlier. Bodies reuse
+     * an abbreviation, and the pages of both have to be reachable, so the seed carries a pair that only the year tells
+     * apart.
+     */
+    private function loadFormerOrgan(ObjectManager $manager): void
+    {
+        $decision = new Decision();
+        $decision->setMeeting($this->getReference('meeting-BV-1800', Meeting::class));
+        $decision->setPoint(3);
+        $decision->setNumber(1);
+        $decision->setContentEN('');
+        $decision->setContentNL('');
+
+        $manager->persist($decision);
+
+        $foundation = new Foundation();
+        $foundation->setAbbr('GETÉST');
+        $foundation->setName('GEWIS\'ers Testten Éigenlijk Structureel Te-weinig');
+        $foundation->setOrganType(OrganTypes::Committee);
+        $foundation->setDecision($decision);
+        $foundation->setSequence(1);
+        $foundation->setContentEN('');
+        $foundation->setContentNL(sprintf(
+            '%s %s met afkorting %s wordt opgericht.',
+            ucfirst($foundation->getOrganType()->value),
+            $foundation->getName(),
+            $foundation->getAbbr(),
+        ));
+
+        $manager->persist($foundation);
+        $manager->flush();
+
+        // Dated by hand rather than from the meeting it hangs off: the seeded calendar only covers the last few
+        // months, and two bodies founded in the same year would be indistinguishable by year.
+        $organ = new Organ();
+        $organ->setName($foundation->getName());
+        $organ->setAbbr($foundation->getAbbr());
+        $organ->setFoundation($foundation);
+        $organ->setType($foundation->getOrganType());
+        $organ->setFoundationDate(new DateTime('-9 years'));
+        $organ->setAbrogationDate(new DateTime('-6 years'));
+
+        $manager->persist($organ);
+        $manager->flush();
+
+        $this->addReference(
+            'organ-getest-former',
             $organ,
         );
     }

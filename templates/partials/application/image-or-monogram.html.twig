@@ -11,11 +11,12 @@
 
     Pass `alt` where the image is the only thing naming its subject.
 #}
+{% set extraClass = class|default('') %}
 {% if path is not empty %}
-    <img class="{{ baseClass }} {{ class }}"
+    <img class="{{ baseClass }} {{ extraClass }}"
          loading="lazy"
          alt="{{ alt|default('') }}"
          src="{{ image_url(path, variant|default('w320')) }}">
 {% else %}
-    <span class="{{ baseClass }} {{ baseClass }}-monogram {{ class }}" aria-hidden="true">{{ name|slice(0, 1)|upper }}</span>
+    <span class="{{ baseClass }} {{ baseClass }}-monogram {{ extraClass }}" aria-hidden="true">{{ name|slice(0, 1)|upper }}</span>
 {% endif %}

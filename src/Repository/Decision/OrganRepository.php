@@ -13,6 +13,10 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
+use function array_map;
+use function mb_strtolower;
+use function trim;
+
 /**
  * @extends ServiceEntityRepository<Organ>
  */
@@ -48,11 +52,171 @@ class OrganRepository extends ServiceEntityRepository
             );
 
         if (null !== $type) {
+            // A backed enum is converted to its value by Doctrine; naming the enum class as the parameter type would
+            // ask DBAL for a column type by that name, which there is none.
             $qb->andWhere('o.type = :type')
                 ->setParameter(
                     'type',
                     $type,
-                    OrganTypes::class,
+                );
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * The ids of the bodies of one kind that an overview lists, in alphabetical order. Ids rather than entities so the
+     * overview can shuffle or page them before hydrating only the ones it shows.
+     *
+     * @return int[]
+     */
+    public function findOverviewIds(
+        OrganTypes $type,
+        bool $abrogated,
+        string $search = '',
+    ): array {
+        $qb = $this->createQueryBuilder('o')
+            ->select('o.id')
+            ->where('o.type = :type')
+            ->setParameter(
+                'type',
+                $type,
+            )
+            ->orderBy(
+                'o.abbr',
+                'ASC',
+            );
+
+        $now = new DateTime();
+        if ($abrogated) {
+            $qb->andWhere('o.abrogationDate IS NOT NULL')
+                ->andWhere('o.abrogationDate <= :now')
+                ->setParameter(
+                    'now',
+                    $now,
+                    Types::DATETIME_MUTABLE,
+                );
+        } else {
+            $qb->andWhere($qb->expr()->orX(
+                $qb->expr()->isNull('o.abrogationDate'),
+                $qb->expr()->gt(
+                    'o.abrogationDate',
+                    ':now',
+                ),
+            ))
+                ->setParameter(
+                    'now',
+                    $now,
+                    Types::DATETIME_MUTABLE,
+                );
+        }
+
+        $search = trim($search);
+        if ('' !== $search) {
+            $qb->andWhere($qb->expr()->orX(
+                'LOWER(o.abbr) LIKE :search',
+                'LOWER(o.name) LIKE :search',
+            ))
+                ->setParameter(
+                    'search',
+                    '%' . mb_strtolower($search) . '%',
+                );
+        }
+
+        return array_map(
+            static fn (array $row): int => (int) $row['id'],
+            $qb->getQuery()->getScalarResult(),
+        );
+    }
+
+    /**
+     * Hydrate the given bodies, in the order they are asked for, with the page each one is shown by. Ids that no longer
+     * resolve to a body are left out.
+     *
+     * @param int[] $ids
+     *
+     * @return Organ[]
+     */
+    public function findOverviewByIds(array $ids): array
+    {
+        if ([] === $ids) {
+            return [];
+        }
+
+        $organs = $this->createQueryBuilder(
+            'o',
+            'o.id',
+        )
+            ->addSelect(
+                'i',
+                'lr',
+                'sd',
+                'sl',
+            )
+            ->leftJoin(
+                'o.organInformation',
+                'i',
+            )
+            ->leftJoin(
+                'i.liveRevision',
+                'lr',
+            )
+            ->leftJoin(
+                'lr.shortDescription',
+                'sd',
+            )
+            ->leftJoin(
+                'lr.socialLinks',
+                'sl',
+            )
+            ->where('o.id IN (:ids)')
+            ->setParameter(
+                'ids',
+                $ids,
+            )
+            ->getQuery()
+            ->getResult();
+
+        $ordered = [];
+        foreach ($ids as $id) {
+            if (!isset($organs[$id])) {
+                continue;
+            }
+
+            $ordered[] = $organs[$id];
+        }
+
+        return $ordered;
+    }
+
+    /**
+     * Every body that has gone by this abbreviation, newest first. An abbreviation is reused: a committee is
+     * abrogated and years later another one is founded under the same letters, and both have a page of their own.
+     *
+     * @return Organ[]
+     */
+    public function findAllByAbbr(
+        string $abbr,
+        ?OrganTypes $type = null,
+    ): array {
+        $qb = $this->createQueryBuilder('o')
+            ->where('o.abbr = :abbr')
+            ->setParameter(
+                'abbr',
+                $abbr,
+            )
+            ->orderBy(
+                'o.foundationDate',
+                'DESC',
+            );
+
+        if (null !== $type) {
+            // A backed enum is converted to its value by Doctrine; naming the enum class as the parameter type would
+            // ask DBAL for a column type by that name, which there is none.
+            $qb->andWhere('o.type = :type')
+                ->setParameter(
+                    'type',
+                    $type,
                 );
         }
 
@@ -160,11 +324,12 @@ class OrganRepository extends ServiceEntityRepository
             );
 
         if (null !== $type) {
+            // A backed enum is converted to its value by Doctrine; naming the enum class as the parameter type would
+            // ask DBAL for a column type by that name, which there is none.
             $qb->andWhere('o.type = :type')
                 ->setParameter(
                     'type',
                     $type,
-                    OrganTypes::class,
                 );
         }
 
@@ -232,11 +397,12 @@ class OrganRepository extends ServiceEntityRepository
             );
 
         if (null !== $type) {
+            // A backed enum is converted to its value by Doctrine; naming the enum class as the parameter type would
+            // ask DBAL for a column type by that name, which there is none.
             $qb->andWhere('o.type = :type')
                 ->setParameter(
                     'type',
                     $type,
-                    OrganTypes::class,
                 );
         }
 

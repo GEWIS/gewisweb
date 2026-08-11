@@ -1,0 +1,44 @@
+{#
+    Who is in a body, one collapsible panel per kind of membership, closed to begin with: a body can have dozens of
+    members, and somebody reading its page came for the page rather than the roll call.
+
+    {% include 'partials/decision/organ-members.html.twig' with {'organ': organ, 'members': members} only %}
+#}
+{% macro roll(id, label, people) %}
+    <div class="panel">
+        <button type="button"
+                class="panel-heading panel-collapse-toggle d-flex justify-content-between align-items-center gap-2 w-100 border-0 bg-transparent text-start collapsed"
+                data-bs-toggle="collapse" data-bs-target="#{{ id }}"
+                aria-expanded="false" aria-controls="{{ id }}">
+            <h3 class="mb-0">{{ label }} <span class="badge badge-secondary ms-1">{{ people|length }}</span></h3>
+            <span class="fa-solid fa-chevron-down panel-collapse-chevron"></span>
+        </button>
+        <div class="collapse" id="{{ id }}">
+            <div class="list-group list-group-flush">
+                {% for person in people %}
+                    {% set member = person.member is defined ? person.member : person %}
+                    <a class="list-group-item list-group-item-action d-flex flex-wrap align-items-baseline gap-2"
+                       href="{{ path('members/view', {'member': member.getLidnr}) }}">
+                        <span class="flex-grow-1">{{ member.getFullName }}</span>
+                        {% if person.functions is defined and person.functions is not empty %}
+                            <span class="text-muted small">{{ person.functions|join(', ') }}</span>
+                        {% endif %}
+                    </a>
+                {% else %}
+                    <p class="list-group-item text-muted small mb-0">{{ 'Nobody is installed right now.'|trans }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% import _self as roll %}
+
+{% if organ.isAbrogated %}
+    {{ roll.roll('organ-former-members', 'Old members'|trans, members.former) }}
+{% else %}
+    {{ roll.roll('organ-members', 'Members'|trans, members.active) }}
+    {% if members.inactive is not empty %}
+        {{ roll.roll('organ-inactive-members', 'Inactive members'|trans, members.inactive) }}
+    {% endif %}
+{% endif %}

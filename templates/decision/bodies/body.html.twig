@@ -1,0 +1,213 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ organ.getName|page_title }}{{ parent() }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% set overview = {
+        'committee': 'association/committees',
+        'fraternity': 'association/fraternities',
+        'avc': 'association/gmm-bodies/committees',
+        'avw': 'association/gmm-bodies/taskforces',
+        'kcc': 'association/gmm-bodies/financial-audit-committees',
+        'rva': 'association/gmm-bodies/advisory-boards',
+        'sc': 'association/gmm-bodies/voting-committees',
+    }[organ.getType.value] %}
+    <li class="breadcrumb-item">
+        <a href="{{ page_path(category: 'vereniging', categoryEn: 'association') }}">{{ 'Association'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item"><a href="{{ path(overview) }}">{{ organ.getType.pluralLabel|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ organ.getAbbr }}</li>
+{% endblock %}
+
+{% block pre_body %}
+    {% embed 'partials/application/page-header.html.twig' %}
+        {% block header_top %}
+            {% if information is not null and information.getBannerPath is not null %}
+                <img class="organ-banner mb-3" src="{{ image_url(information.getBannerPath, 'w1280') }}" alt="">
+            {% endif %}
+        {% endblock %}
+
+        {% block header_status %}
+            <div class="page-header-meta d-flex flex-wrap align-items-center gap-2">
+                <span>{{ organ.getType.label|trans }}</span>
+                {% if organ.isAbrogated %}
+                    <span class="badge badge-secondary">{{ 'Abrogated'|trans }}</span>
+                {% else %}
+                    <span class="badge badge-success">{{ 'Active'|trans }}</span>
+                {% endif %}
+            </div>
+        {% endblock %}
+
+        {% block header_title %}{{ organ.getName }}{% endblock %}
+
+        {% block header_subtitle %}
+            <p class="page-header-meta mb-0">
+                {{ organ.getAbbr }} &middot;
+                {% if organ.isAbrogated %}
+                    {{ organ.getFoundationDate|date('Y') }}&ndash;{{ organ.getAbrogationDate|date('Y') }}
+                {% else %}
+                    {{ 'Active since %year%'|trans({'%year%': organ.getFoundationDate|date('Y')}) }}
+                {% endif %}
+            </p>
+        {% endblock %}
+
+        {% block header_actions %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if information is not null and information.getEmail is not null %}
+                    <a href="mailto:{{ information.getEmail }}" class="btn btn-outline-gewis-primary">
+                        <span class="fas fa-envelope" aria-hidden="true"></span> {{ 'Email us'|trans }}
+                    </a>
+                {% endif %}
+                <a href="{{ path('photo/album', {'type': 'body', 'album': organ.getId}) }}"
+                   class="btn btn-outline-gewis-primary">
+                    <span class="fas fa-images" aria-hidden="true"></span> {{ 'Photos'|trans }}
+                </a>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block contents %}
+    {% set email = information ? information.getEmail : null %}
+    {% set signedIn = is_granted('IS_AUTHENTICATED_FULLY') %}
+
+    {% if iterations is not empty %}
+        {# The same letters have belonged to more than one body, so say which one this is and offer the others. #}
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-4">
+            <span class="text-muted small">{{ 'Other bodies by this name:'|trans }}</span>
+            {% for iteration in iterations %}
+                {% set label = iteration.sharesItsYear ? iteration.key : iteration.year %}
+                {% set label = iteration.abrogatedIn is not null ? label ~ '–' ~ iteration.abrogatedIn : label %}
+                {% if iteration.current %}
+                    <span class="badge badge-secondary">{{ label }}</span>
+                {% else %}
+                    <a class="badge badge-tag text-decoration-none"
+                       href="{{ path('association/body', {
+                           'type': organ.getType.value,
+                           'abbr': organ.getAbbr,
+                           'founded': iteration.key,
+                       }) }}">{{ label }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="panel mt-0">
+                <div class="panel-heading">
+                    <h3>{{ 'What we do'|trans }}</h3>
+                </div>
+                <div class="panel-body markdown">
+                    {% if information is not null and information.getDescription is not null %}
+                        {{ information.getDescription|localise_text|markdown }}
+                    {% else %}
+                        <p class="text-muted mb-0">
+                            {{ 'This body has not written an introduction. What is below is what the association archive knows about it.'|trans }}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if signedIn %}
+                {% include 'partials/decision/organ-members.html.twig' with {
+                    'organ': organ,
+                    'members': members,
+                } only %}
+            {% else %}
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>{{ organ.isAbrogated ? 'Old members'|trans : 'Members'|trans }}</h3>
+                    </div>
+                    <div class="panel-body d-flex flex-wrap align-items-center gap-3">
+                        <span class="fas fa-lock text-muted" aria-hidden="true"></span>
+                        <span class="flex-grow-1">
+                            {{ 'Member names are only visible to signed-in GEWIS members.'|trans }}
+                        </span>
+                        <a href="{{ path('user_login') }}" class="btn btn-gewis-primary">{{ 'Sign in'|trans }}</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-4">
+            {# What is on the panel first: how to reach a body is what most readers came for. #}
+            {% set hasContact = information is not null and (
+                (signedIn and email is not null)
+                or information.getWebsite is not null
+                or information.getSocialLinks|length > 0
+            ) %}
+            {% if hasContact %}
+                <div class="panel mt-0">
+                    <div class="panel-heading">
+                        <h3>{{ 'Get in touch'|trans }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="organ-contact list-unstyled mb-0">
+                            {% if signedIn and email is not null %}
+                                <li>
+                                    <span class="fas fa-envelope" aria-hidden="true"></span>
+                                    <span>
+                                        <span class="organ-contact-label">{{ 'Email address'|trans }}</span>
+                                        <a href="mailto:{{ email }}">{{ email }}</a>
+                                    </span>
+                                </li>
+                            {% endif %}
+                            {% if information.getWebsite is not null %}
+                                <li>
+                                    <span class="fas fa-globe" aria-hidden="true"></span>
+                                    <span>
+                                        <span class="organ-contact-label">{{ 'Website'|trans }}</span>
+                                        <a href="{{ information.getWebsite }}" target="_blank" rel="noopener noreferrer">
+                                            {{ information.getWebsite }}
+                                        </a>
+                                    </span>
+                                </li>
+                            {% endif %}
+                            {% for link in information.getSocialLinks %}
+                                <li>
+                                    <span class="{{ link.getPlatform.icon }}" aria-hidden="true"></span>
+                                    <span>
+                                        <span class="organ-contact-label">{{ link.getPlatform.name }}</span>
+                                        <a href="{{ link.getUrl }}" target="_blank" rel="noopener noreferrer">
+                                            {{ link.getDisplayHandle }}
+                                        </a>
+                                    </span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+
+            {# The same panel the homepage and the career overview show their agenda in. #}
+            <div class="panel{{ hasContact ? '' : ' mt-0' }}">
+                <div class="panel-heading">
+                    <h3>{{ 'Activities'|trans }}</h3>
+                </div>
+                {% if activities is not empty %}
+                    <div class="panel-body pb-0">
+                        {% for activity in activities %}
+                            {% include 'partials/activity/agenda-item.html.twig' with {'activity': activity} only %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="panel-body">
+                        <small class="text-body-secondary">
+                            {{ organ.isAbrogated
+                                ? 'This body no longer organises activities.'|trans
+                                : 'No activities planned'|trans }}
+                        </small>
+                    </div>
+                {% endif %}
+                {# The cross-year search rather than a year's archive: it is the only view that reaches every
+                   association year at once, which is what a body that ended years ago needs. #}
+                <div class="panel-footer">
+                    <a href="{{ path('activity/search', {'organ': organ.getId}) }}" class="panel-footer-link">
+                        {{ 'Organised previously'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
