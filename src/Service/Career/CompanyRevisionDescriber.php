@@ -96,6 +96,14 @@ final class CompanyRevisionDescriber extends AbstractRevisionDescriber
                 ],
             ),
             new RevisionSection(
+                t('Social media'),
+                $this->socialFields(
+                    $previous?->getSocialLinks(),
+                    $revision->getSocialLinks(),
+                    $comparable,
+                ),
+            ),
+            new RevisionSection(
                 t('Logos'),
                 [
                     $this->field(

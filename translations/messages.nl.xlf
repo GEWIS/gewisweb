@@ -2173,6 +2173,10 @@
         <source>Festive effects</source>
         <target>Feestelijke effecten</target>
       </trans-unit>
+      <trans-unit id="BG1GyKQ" resname="Fill in the username, not the whole link. Pasting a link works too, everything after the username is thrown away.">
+        <source>Fill in the username, not the whole link. Pasting a link works too, everything after the username is thrown away.</source>
+        <target state="translated">Vul de gebruikersnaam in, niet de hele link. Een link plakken werkt ook, alles na de gebruikersnaam wordt weggelaten.</target>
+      </trans-unit>
       <trans-unit id="WhpqrmK" resname="Filter by name or email">
         <source>Filter by name or email</source>
         <target>Filter op naam of e-mail</target>
@@ -4976,6 +4980,10 @@
       <trans-unit id="e9EhDeS" resname="Social drink">
         <source>Social drink</source>
         <target>Borrel</target>
+      </trans-unit>
+      <trans-unit id=".MScbU9" resname="Social media">
+        <source>Social media</source>
+        <target state="translated">Sociale media</target>
       </trans-unit>
       <trans-unit id="LTyr6e2" resname="Somebody else is editing %subject% right now.">
         <source>Somebody else is editing %subject% right now.</source>

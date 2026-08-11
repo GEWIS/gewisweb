@@ -1,0 +1,29 @@
+.social-links {
+    li {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+    }
+
+    .social-links-icon {
+        width: 1.125rem;
+        text-align: center;
+        color: var(--bs-secondary-color);
+    }
+}
+
+.social-links-inline {
+    display: inline-flex;
+    gap: 0.625rem;
+    font-size: 1.125rem;
+
+    a {
+        color: var(--bs-secondary-color);
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            color: var(--bs-link-hover-color);
+        }
+    }
+}

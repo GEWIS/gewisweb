@@ -61,6 +61,14 @@
                                 <li class="list-group-item text-muted small">{{ 'No open vacancies'|trans }}</li>
                             {% endif %}
                         </ul>
+                        {% if company.getSocialLinks|length > 0 %}
+                            <div class="card-footer text-body-secondary">
+                                {% include 'partials/application/social-links.html.twig' with {
+                                    'links': company.getSocialLinks,
+                                    'inline': true,
+                                } only %}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

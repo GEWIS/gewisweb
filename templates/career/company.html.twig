@@ -26,6 +26,7 @@
                     or company.getContactPhone is not null
                     or company.getContactEmail is not null
                     or website is not empty
+                    or company.getSocialLinks|length > 0
                 %}
                     <div class="card-body">
                         <h6 class="text-uppercase text-body-secondary">{{ 'Contact'|trans }}</h6>
@@ -46,12 +47,15 @@
                             </p>
                         {% endif %}
                         {% if website is not empty %}
-                            <p class="mb-0">
+                            <p class="mb-1">
                                 <a href="{{ website }}" target="_blank" rel="noopener noreferrer">
                                     {{ 'Visit website'|trans }}
                                 </a>
                             </p>
                         {% endif %}
+                        {% include 'partials/application/social-links.html.twig' with {
+                            'links': company.getSocialLinks,
+                        } only %}
                     </div>
                 {% endif %}
             </div>

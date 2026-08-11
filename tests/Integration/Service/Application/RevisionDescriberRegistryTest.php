@@ -56,6 +56,7 @@ final class RevisionDescriberRegistryTest extends DatabaseTestCase
             [
                 'Profile',
                 'Contact details',
+                'Social media',
                 'Logos',
             ],
             $this->headings($revision),
@@ -70,8 +71,48 @@ final class RevisionDescriberRegistryTest extends DatabaseTestCase
                 $this->describe(
                     $revision,
                     RevisionAudience::Everyone,
-                )[2]->fields,
+                )[3]->fields,
             ),
+        );
+    }
+
+    /**
+     * The section only lists the platforms one side or the other mentions, so a company that is on two of them gets two
+     * fields rather than one per platform on offer.
+     */
+    public function testACompanyOnlyDescribesTheSocialPlatformsItIsOn(): void
+    {
+        $company = $this->entityManager->getRepository(Company::class)->findOneBy(['slugName' => 'nexunt']);
+        self::assertInstanceOf(
+            Company::class,
+            $company,
+        );
+
+        $social = $this->describe(
+            $this->currentRevision($company),
+            RevisionAudience::Everyone,
+        )[2];
+
+        self::assertCount(
+            2,
+            $social->fields,
+        );
+        $labels = [];
+        foreach ($social->fields as $field) {
+            $label = $field->label;
+            self::assertInstanceOf(
+                TranslatableMessage::class,
+                $label,
+            );
+            $labels[] = $label->getMessage();
+        }
+
+        self::assertSame(
+            [
+                'Instagram',
+                'GitHub',
+            ],
+            $labels,
         );
     }
 

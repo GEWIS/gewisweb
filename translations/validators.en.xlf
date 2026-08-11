@@ -233,9 +233,21 @@
         <source>This field is required.</source>
         <target>This field is required.</target>
       </trans-unit>
+      <trans-unit id="oPx44_P" resname="This is not a valid Discord invite code.">
+        <source>This is not a valid Discord invite code.</source>
+        <target state="translated">This is not a valid Discord invite code.</target>
+      </trans-unit>
+      <trans-unit id="2l0C8FY" resname="This is not a valid username.">
+        <source>This is not a valid username.</source>
+        <target state="translated">This is not a valid username.</target>
+      </trans-unit>
       <trans-unit id="Q5RHBE_" resname="Upload a JPEG, PNG or WebP image.">
         <source>Upload a JPEG, PNG or WebP image.</source>
-        <target></target>
+        <target state="translated">Upload a JPEG, PNG or WebP image.</target>
+      </trans-unit>
+      <trans-unit id="25GvEX2" resname="Write a Mastodon account as username@instance.">
+        <source>Write a Mastodon account as username@instance.</source>
+        <target state="translated">Write a Mastodon account as username@instance.</target>
       </trans-unit>
       <trans-unit id="fcfNWQJ" resname="You can only highlight your own vacancies that are currently shown on the website.">
         <source>You can only highlight your own vacancies that are currently shown on the website.</source>

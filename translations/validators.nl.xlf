@@ -233,9 +233,21 @@
         <source>This field is required.</source>
         <target>Dit veld is verplicht.</target>
       </trans-unit>
+      <trans-unit id="oPx44_P" resname="This is not a valid Discord invite code.">
+        <source>This is not a valid Discord invite code.</source>
+        <target state="translated">Dit is geen geldige Discord-uitnodigingscode.</target>
+      </trans-unit>
+      <trans-unit id="2l0C8FY" resname="This is not a valid username.">
+        <source>This is not a valid username.</source>
+        <target state="translated">Dit is geen geldige gebruikersnaam.</target>
+      </trans-unit>
       <trans-unit id="Q5RHBE_" resname="Upload a JPEG, PNG or WebP image.">
         <source>Upload a JPEG, PNG or WebP image.</source>
-        <target></target>
+        <target state="translated">Upload een JPEG-, PNG- of WebP-afbeelding.</target>
+      </trans-unit>
+      <trans-unit id="25GvEX2" resname="Write a Mastodon account as username@instance.">
+        <source>Write a Mastodon account as username@instance.</source>
+        <target state="translated">Schrijf een Mastodon-account als gebruikersnaam@instantie.</target>
       </trans-unit>
       <trans-unit id="fcfNWQJ" resname="You can only highlight your own vacancies that are currently shown on the website.">
         <source>You can only highlight your own vacancies that are currently shown on the website.</source>

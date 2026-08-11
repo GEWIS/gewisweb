@@ -1,0 +1,29 @@
+{#
+    The places something can be followed, one line each, with the handle as the link text:
+
+    {% include 'partials/application/social-links.html.twig' with {'links': company.getSocialLinks} only %}
+
+    Pass `inline` to get just the icons, for a card footer where there is no room to spell them out.
+#}
+{% if links|length > 0 %}
+    {% if inline|default(false) %}
+        <span class="social-links social-links-inline">
+            {% for link in links %}
+                <a href="{{ link.getUrl }}" target="_blank" rel="noopener noreferrer"
+                   title="{{ link.getPlatform.name }}">
+                    <span class="{{ link.getPlatform.icon }}" aria-hidden="true"></span>
+                    <span class="visually-hidden">{{ link.getPlatform.name }}</span>
+                </a>
+            {% endfor %}
+        </span>
+    {% else %}
+        <ul class="social-links list-unstyled mb-0">
+            {% for link in links %}
+                <li>
+                    <span class="{{ link.getPlatform.icon }} social-links-icon" aria-hidden="true"></span>
+                    <a href="{{ link.getUrl }}" target="_blank" rel="noopener noreferrer">{{ link.getDisplayHandle }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endif %}

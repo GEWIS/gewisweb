@@ -6,14 +6,19 @@ namespace App\Entity\Career;
 
 use App\Entity\Application\AbstractRevision;
 use App\Entity\Application\AbstractRevisionComment;
+use App\Entity\Application\Enums\SocialPlatform;
 use App\Entity\Application\RevisableInterface;
+use App\Entity\Application\Traits\HasSocialLinksTrait;
 use App\Repository\Career\CompanyRevisionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Override;
 
@@ -26,6 +31,8 @@ use Override;
 #[HasLifecycleCallbacks]
 class CompanyRevision extends AbstractRevision
 {
+    use HasSocialLinksTrait;
+
     /**
      * The company this revision belongs to.
      */
@@ -124,8 +131,27 @@ class CompanyRevision extends AbstractRevision
     )]
     private ?string $contactPhone = null;
 
+    /**
+     * Where else this company can be followed. Owned by the revision, so adding or dropping one is reviewed like
+     * anything else the profile says.
+     *
+     * @var Collection<array-key, CompanySocialLink>
+     */
+    #[OneToMany(
+        targetEntity: CompanySocialLink::class,
+        mappedBy: 'revision',
+        cascade: [
+            'persist',
+            'remove',
+        ],
+        orphanRemoval: true,
+    )]
+    private Collection $socialLinks;
+
     public function __construct()
     {
+        $this->socialLinks = new ArrayCollection();
+
         // Which localised texts a revision has is its own business, and a form cannot bind to one that has none.
         // Doctrine does not run this when it hydrates a stored revision, so nothing is thrown away.
         $this->slogan = new CareerLocalisedText(
@@ -256,6 +282,24 @@ class CompanyRevision extends AbstractRevision
     public function setContactEmail(?string $contactEmail): void
     {
         $this->contactEmail = $contactEmail;
+    }
+
+    /**
+     * @return Collection<array-key, CompanySocialLink>
+     */
+    #[Override]
+    public function getSocialLinks(): Collection
+    {
+        return $this->socialLinks;
+    }
+
+    #[Override]
+    protected function newSocialLink(SocialPlatform $platform): CompanySocialLink
+    {
+        $link = new CompanySocialLink($platform);
+        $link->setRevision($this);
+
+        return $link;
     }
 
     public function getContactPhone(): ?string

@@ -173,12 +173,14 @@ class CompanyRepository extends ServiceEntityRepository
      * Eagerly loads everything the company overview renders onto the given (already managed) companies, so the page
      * does not fan out into a lazy load per association.
      *
-     * The overview reads each company's live revision and its localised texts (slogan, description, website), plus the
-     * active vacancies grouped per package. Since every {@see CareerLocalisedText} lives in its own row, lazy loading
-     * them is the dominant source of the N+1 explosion. Two fetch-joining queries warm the identity map instead: one
-     * for the companies (a single to-many join on the packages) and one for the vacancies (whose collection lives on
-     * the {@see CompanyJobPackage} subclass and so cannot be joined through the base package in the same query). The
-     * results are discarded; hydrating them populates the associations on the managed instances passed in.
+     * The overview reads each company's live revision and its localised texts (slogan, description, website), the
+     * places it can be followed, plus the active vacancies grouped per package. Since every {@see CareerLocalisedText}
+     * lives in its own row, lazy loading them is the dominant source of the N+1 explosion. Three fetch-joining queries
+     * warm the identity map instead: one for the companies (a single to-many join on the packages), one for the social
+     * links (a second to-many join, which in the same query would multiply the rows by the packages), and one for the
+     * vacancies (whose collection lives on the {@see CompanyJobPackage} subclass and so cannot be joined through the
+     * base package in the same query). The results are discarded; hydrating them populates the associations on the
+     * managed instances passed in.
      *
      * @param Company[] $companies
      */
@@ -211,6 +213,27 @@ class CompanyRepository extends ServiceEntityRepository
             ->leftJoin(
                 'c.packages',
                 'package',
+            )
+            ->where('c IN (:companies)')
+            ->setParameter(
+                'companies',
+                $companies,
+            )
+            ->getQuery()
+            ->getResult();
+
+        $this->createQueryBuilder('c')
+            ->addSelect(
+                'liveRevision',
+                'socialLink',
+            )
+            ->join(
+                'c.liveRevision',
+                'liveRevision',
+            )
+            ->leftJoin(
+                'liveRevision.socialLinks',
+                'socialLink',
             )
             ->where('c IN (:companies)')
             ->setParameter(
