@@ -15,6 +15,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Throwable;
 
 use function file_put_contents;
+use function intval;
 use function max;
 use function min;
 use function round;
@@ -66,13 +67,15 @@ final readonly class OrganImageUploadService extends AbstractImageUploadService
      * Cut the chosen part out of a stored original and store that as an image of its own, so what the page is served
      * has the shape it is shown in and no rendition has to guess at a crop.
      *
-     * @param array<string, float> $crop x, y, width and height as fractions of the original
+     * @param array<string, float> $crop         x, y, width and height as fractions of the original
+     * @param int                  $minimumWidth the narrowest the cut may come out, which is what the upload had to be
      *
      * @return string|null the stored path, or null when the crop could not be applied
      */
     public function applyCrop(
         string $sourcePath,
         array $crop,
+        int $minimumWidth,
     ): ?string {
         $localPath = tempnam(
             sys_get_temp_dir(),
@@ -102,6 +105,19 @@ final readonly class OrganImageUploadService extends AbstractImageUploadService
                 || 0 === $height
             ) {
                 return null;
+            }
+
+            // An upload has to be of a certain width, so a rectangle that would cut out less than that is grown, in
+            // shape, until it is. The picker holds itself to the same floor, so this only ever meets a hand-made
+            // request, and growing beats storing something the upload itself would have been refused for.
+            if ($width < $minimumWidth) {
+                $grow = min(
+                    $minimumWidth / $width,
+                    $image->width() / $width,
+                    $image->height() / $height,
+                );
+                $width = intval(round($width * $grow));
+                $height = intval(round($height * $grow));
             }
 
             $left = min(
@@ -150,6 +166,27 @@ final readonly class OrganImageUploadService extends AbstractImageUploadService
             return null;
         } finally {
             unlink($localPath);
+        }
+    }
+
+    /**
+     * How wide a stored original is. The crop picker needs it to say how small a frame may get: it is drawn on a
+     * rendition, and a rendition says nothing about the original beyond being no wider than it.
+     *
+     * @return int|null the width in pixels, or null when the file cannot be read
+     */
+    public function sourceWidth(?string $path): ?int
+    {
+        if (null === $path) {
+            return null;
+        }
+
+        try {
+            return $this->imageManagerProvider->create()
+                ->decodeBinary($this->fileStorage->read($path))
+                ->width();
+        } catch (Throwable) {
+            return null;
         }
     }
 

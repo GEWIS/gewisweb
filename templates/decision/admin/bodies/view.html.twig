@@ -1,0 +1,135 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ organ.getAbbr|page_title }}{{ 'Bodies'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/decision/bodies/index') }}">{{ 'Bodies'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ organ.getAbbr }}</li>
+{% endblock %}
+
+{% block contents %}
+    {% set live = information ? information.getLiveRevision : null %}
+
+    <div class="row mb-3">
+        <div class="col-md-12 d-flex flex-wrap justify-content-between align-items-start gap-2">
+            <div>
+                <h2 class="mb-1">{{ organ.getName }} <small class="text-muted">({{ organ.getAbbr }})</small></h2>
+                <p class="text-muted mb-0">
+                    {% if revision is null %}
+                        {{ 'This body has no page yet.'|trans }}
+                    {% else %}
+                        {{ 'Revision #%number%'|trans({'%number%': revision.getRevisionNumber}) }}
+                        {% include 'partials/application/revision-status-badge.html.twig' with {
+                            'status': revision.getStatus,
+                            'live': live ? live.getRevisionNumber : null,
+                        } only %}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                {% if revision is null or revision.getStatus.isEditableByAuthor %}
+                    <a href="{{ path('admin/decision/bodies/edit', {'organ': organ.getId}) }}"
+                       class="btn btn-gewis-primary">
+                        {{ revision is null ? 'Start a page'|trans : 'Edit the draft'|trans }}
+                    </a>
+                {% else %}
+                    <form method="post" action="{{ path('admin/decision/bodies/revise', {'organ': organ.getId}) }}">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('body_revise-' ~ organ.getId) }}">
+                        <button type="submit" class="btn btn-gewis-primary">{{ 'Revise the page'|trans }}</button>
+                    </form>
+                {% endif %}
+                {% if revision is not null %}
+                    <a href="{{ path('admin/decision/bodies/approvals/review', {'revision': revision.getId}) }}"
+                       class="btn btn-outline-secondary">{{ 'Open the review'|trans }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if revision is null %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <p class="mb-0">
+                            {{ 'Write a description, add a logo and a banner, and say where else your body can be followed. The board looks at it before anything appears on the website.'|trans }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-9">
+                {# The revision being worked on rather than the one that is live: somebody who just saved a change came
+                   here to see it, and a page whose first revision is still with the board has nothing live at all. #}
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3>
+                            {{ revision is same as(live)
+                                ? 'What visitors see'|trans
+                                : 'What this revision says'|trans }}
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        {% if revision is not same as(live) %}
+                            <p class="text-muted">
+                                {% if live is null %}
+                                    {{ 'Nothing of this page is on the website yet.'|trans }}
+                                {% else %}
+                                    {{ 'Visitors still see revision #%number%.'|trans({
+                                        '%number%': live.getRevisionNumber,
+                                    }) }}
+                                {% endif %}
+                            </p>
+                        {% endif %}
+
+                        {% if revision.getBannerPath is not null %}
+                            <img class="organ-banner mb-3" src="{{ image_url(revision.getBannerPath, 'w960') }}" alt="">
+                        {% endif %}
+                        <dl class="row mb-0">
+                            {% if revision.getLogoPath is not null %}
+                                <dt class="col-sm-3">{{ 'Logo'|trans }}</dt>
+                                <dd class="col-sm-9">
+                                    <img class="organ-logo organ-image-current organ-image-current-logo"
+                                         src="{{ image_url(revision.getLogoPath, 'w320') }}" alt="">
+                                </dd>
+                            {% endif %}
+                            <dt class="col-sm-3">{{ 'Short description'|trans }}</dt>
+                            <dd class="col-sm-9">{{ revision.getShortDescription|localise_text }}</dd>
+                            <dt class="col-sm-3">{{ 'Description'|trans }}</dt>
+                            <dd class="col-sm-9 markdown">{{ revision.getDescription|localise_text|markdown }}</dd>
+                            {% if revision.getEmail is not null %}
+                                <dt class="col-sm-3">{{ 'Email address'|trans }}</dt>
+                                <dd class="col-sm-9">{{ revision.getEmail }}</dd>
+                            {% endif %}
+                            {% if revision.getWebsite is not null %}
+                                <dt class="col-sm-3">{{ 'Website'|trans }}</dt>
+                                <dd class="col-sm-9">{{ revision.getWebsite }}</dd>
+                            {% endif %}
+                            {% if revision.getSocialLinks|length > 0 %}
+                                <dt class="col-sm-3">{{ 'Social media'|trans }}</dt>
+                                <dd class="col-sm-9">
+                                    {% include 'partials/application/social-links.html.twig' with {
+                                        'links': revision.getSocialLinks,
+                                    } only %}
+                                </dd>
+                            {% endif %}
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="col-md-3">
+                {% include 'partials/application/revision-comments.html.twig' with {
+                    'comments': comments,
+                    'commentAction': path('admin/decision/bodies/approvals/comment', {'revision': revision.getId}),
+                    'csrfToken': csrf_token('body_review_comment-' ~ revision.getId),
+                    'audienceNote': 'Visible to the body and the board. Use it to ask a question or leave a note.'|trans,
+                } only %}
+            </aside>
+        </div>
+    {% endif %}
+{% endblock %}

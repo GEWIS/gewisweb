@@ -1,0 +1,77 @@
+{#
+    One of a body's images: what the website shows now, what this frame would make of it, a box to choose another file,
+    and the frame that picks the part of it that is shown.
+
+    {% include 'partials/decision/organ-image-field.html.twig' with {
+        'fileField': revisionForm.bannerFile,
+        'cropField': revisionForm.bannerCropData,
+        'source': revision.getBannerSource,
+        'crop': revision.getBannerCrop,
+        'live': live ? live.getBannerPath : null,
+        'sourceWidth': bannerSourceWidth,
+        'ratio': 4,
+        'shape': 'banner',
+    } only %}
+
+    The crop that is in force arrives here rather than in the boxes that are submitted. Those stay empty until a frame
+    is drawn, so a page saved without JavaScript never sends back a rectangle that was chosen on another image.
+
+    The frame is drawn on the file as it was uploaded rather than on the cut, so moving it never compounds: the server
+    always cuts from the original. Choosing a file shows it straight away, framed, before anything is saved.
+
+    Without JavaScript the frame never appears, the preview stays empty, and the file is stored whole, which is a
+    reasonable image either way.
+#}
+{% set minimumWidth = fileField.vars.attr['data-minimum-width']|default(0) %}
+{% set minimumHeight = fileField.vars.attr['data-minimum-height']|default(0) %}
+<div data-controller="image-crop"
+     data-image-crop-ratio-value="{{ ratio }}"
+     data-image-crop-minimum-width-value="{{ minimumWidth }}"
+     data-image-crop-minimum-height-value="{{ minimumHeight }}"
+     data-image-crop-source-width-value="{{ sourceWidth|default(0) }}"
+     data-image-crop-rectangle-value="{{ (crop ?? {})|json_encode }}">
+    {{ form_row(fileField, {'attr': fileField.vars.attr|merge({
+        'data-image-crop-target': 'file',
+        'data-action': 'image-crop#choose',
+    })}) }}
+
+    {# Asked for here: a floating row leaves the help out, and what the file has to measure is worth knowing before one
+       is picked rather than after it is turned away. #}
+    {{ form_help(fileField) }}
+
+    <p class="text-danger small mb-2 d-none" data-image-crop-target="message">
+        {{ 'That image is too small. Pick one of at least %width% by %height% pixels.'|trans({
+            '%width%': minimumWidth,
+            '%height%': minimumHeight,
+        }) }}
+    </p>
+
+    {# The two side by side and the same size, so what is being chosen can be held against what it would replace. #}
+    <div class="row g-2 mb-2">
+        <div class="col-6">
+            <p class="text-muted small mb-1">{{ 'On the website now'|trans }}</p>
+            <div class="organ-image-preview organ-image-preview-{{ shape }}">
+                {% if live is not null %}
+                    <img src="{{ image_url(live, 'w640') }}" alt="">
+                {% else %}
+                    <span class="text-muted small fst-italic">{{ 'Nothing yet.'|trans }}</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-6">
+            <p class="text-muted small mb-1">{{ 'What you are choosing'|trans }}</p>
+            <div class="organ-image-preview organ-image-preview-{{ shape }}" data-image-crop-target="preview"></div>
+        </div>
+    </div>
+
+    <div class="organ-image-crop" data-image-crop-target="frame" {{ source is null ? 'hidden' : '' }}>
+        <p class="text-muted small mb-1">{{ 'Drag the frame over the part that should be shown'|trans }}</p>
+        <img data-image-crop-target="image"
+             {% if source is not null %}src="{{ image_url(source, 'w1280') }}"{% endif %}
+             alt="{{ 'The image to crop'|trans }}">
+        {{ form_widget(cropField.x, {'attr': {'data-image-crop-target': 'x'}}) }}
+        {{ form_widget(cropField.y, {'attr': {'data-image-crop-target': 'y'}}) }}
+        {{ form_widget(cropField.width, {'attr': {'data-image-crop-target': 'width'}}) }}
+        {{ form_widget(cropField.height, {'attr': {'data-image-crop-target': 'height'}}) }}
+    </div>
+</div>

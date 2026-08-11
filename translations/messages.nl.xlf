@@ -413,6 +413,10 @@
         <source>API Users</source>
         <target state="translated">API-gebruikers</target>
       </trans-unit>
+      <trans-unit id="KNRiz0N" resname="Abbreviation">
+        <source>Abbreviation</source>
+        <target state="translated">Afkorting</target>
+      </trans-unit>
       <trans-unit id="N8J6fEh" resname="About %company%">
         <source>About %company%</source>
         <target>Over %company%</target>
@@ -1497,10 +1501,6 @@
         <source>Courses with the most material</source>
         <target state="translated">Vakken met het meeste materiaal</target>
       </trans-unit>
-      <trans-unit id="F_k2krt" resname="Cover">
-        <source>Cover</source>
-        <target state="translated">Omslag</target>
-      </trans-unit>
       <trans-unit id="_mm3l_9" resname="Create">
         <source>Create</source>
         <target state="translated">Aanmaken</target>
@@ -1797,6 +1797,10 @@
         <source>Drag photos here or click to select</source>
         <target state="translated">Sleep foto's hierheen of klik om te selecteren</target>
       </trans-unit>
+      <trans-unit id="4ngH3n8" resname="Drag the frame over the part that should be shown">
+        <source>Drag the frame over the part that should be shown</source>
+        <target state="translated">Sleep het kader over het deel dat getoond moet worden</target>
+      </trans-unit>
       <trans-unit id="xKyF7Wn" resname="Draw after being open for (hours)">
         <source>Draw after being open for (hours)</source>
         <target>Loten na geopend te zijn geweest (uren)</target>
@@ -1892,6 +1896,10 @@
       <trans-unit id="QpE1D.X" resname="Edit the %type% package">
         <source>Edit the %type% package</source>
         <target state="translated">%type%-pakket bewerken</target>
+      </trans-unit>
+      <trans-unit id="Lb8PGCv" resname="Edit the draft">
+        <source>Edit the draft</source>
+        <target state="translated">Concept bewerken</target>
       </trans-unit>
       <trans-unit id="5ImdDDP" resname="Edit your profile">
         <source>Edit your profile</source>
@@ -2388,6 +2396,10 @@
       <trans-unit id="AUgafTZ" resname="Go to security">
         <source>Go to security</source>
         <target>Ga naar beveiliging</target>
+      </trans-unit>
+      <trans-unit id="ZHObb2W" resname="Go to the body">
+        <source>Go to the body</source>
+        <target state="translated">Naar het orgaan</target>
       </trans-unit>
       <trans-unit id="Y9O9JwI" resname="Go to the original album">
         <source>Go to the original album</source>
@@ -2985,6 +2997,10 @@
         <source>Logo</source>
         <target state="translated">Logo</target>
       </trans-unit>
+      <trans-unit id="HH4bITk" resname="Logo and banner">
+        <source>Logo and banner</source>
+        <target state="translated">Logo en banner</target>
+      </trans-unit>
       <trans-unit id="1TFZ._Z" resname="Logo, story and contact">
         <source>Logo, story and contact</source>
         <target state="translated">Logo, verhaal en contact</target>
@@ -3393,6 +3409,10 @@
         <source>No approved activities.</source>
         <target state="translated">Geen goedgekeurde activiteiten.</target>
       </trans-unit>
+      <trans-unit id="m7_DW7w" resname="No banner.">
+        <source>No banner.</source>
+        <target state="translated">Geen banner.</target>
+      </trans-unit>
       <trans-unit id="WlD_vYJ" resname="No comments yet.">
         <source>No comments yet.</source>
         <target state="translated">Nog geen opmerkingen.</target>
@@ -3416,10 +3436,6 @@
       <trans-unit id="bGLrVwk" resname="No course matches your search">
         <source>No course matches your search</source>
         <target state="translated">Geen enkel vak voldoet aan je zoekopdracht</target>
-      </trans-unit>
-      <trans-unit id="gyFjxj." resname="No cover.">
-        <source>No cover.</source>
-        <target state="translated">Geen omslag.</target>
       </trans-unit>
       <trans-unit id="k9navuj" resname="No custom fields.">
         <source>No custom fields.</source>
@@ -3537,10 +3553,6 @@
         <source>No subscriptions yet.</source>
         <target>Nog geen inschrijvingen.</target>
       </trans-unit>
-      <trans-unit id="kO1oHcs" resname="No thumbnail.">
-        <source>No thumbnail.</source>
-        <target state="translated">Geen miniatuur.</target>
-      </trans-unit>
       <trans-unit id="RYQ3Knf" resname="No vacancies are open right now.">
         <source>No vacancies are open right now.</source>
         <target state="translated">Er staan op dit moment geen vacatures open.</target>
@@ -3645,6 +3657,10 @@
         <source>Nothing is waiting to be published</source>
         <target state="translated">Er wacht niets op publicatie</target>
       </trans-unit>
+      <trans-unit id="uVnZbDf" resname="Nothing of this page is on the website yet.">
+        <source>Nothing of this page is on the website yet.</source>
+        <target state="translated">Er staat nog niets van deze pagina op de website.</target>
+      </trans-unit>
       <trans-unit id="_v3krlb" resname="Nothing right now: this vacancy is with your contact at GEWIS.">
         <source>Nothing right now: this vacancy is with your contact at GEWIS.</source>
         <target state="translated">Op dit moment niets: deze vacature ligt bij je contactpersoon bij GEWIS.</target>
@@ -3660,6 +3676,10 @@
       <trans-unit id="Pgw1rmH" resname="Nothing yet">
         <source>Nothing yet</source>
         <target state="translated">Nog niets</target>
+      </trans-unit>
+      <trans-unit id="Z1f59KJ" resname="Nothing yet.">
+        <source>Nothing yet.</source>
+        <target state="translated">Nog niets.</target>
       </trans-unit>
       <trans-unit id="kR1m9jw" resname="Nothing yet: your profile has not been approved, so your company is not shown on the website.">
         <source>Nothing yet: your profile has not been approved, so your company is not shown on the website.</source>
@@ -3728,6 +3748,10 @@
       <trans-unit id="sGdI_d5" resname="Open positions">
         <source>Open positions</source>
         <target>Openstaande posities</target>
+      </trans-unit>
+      <trans-unit id="w922Boa" resname="Open the review">
+        <source>Open the review</source>
+        <target state="translated">Beoordeling openen</target>
       </trans-unit>
       <trans-unit id="FMN.q3t" resname="Open the review queue">
         <source>Open the review queue</source>
@@ -3869,6 +3893,10 @@
         <source>Page Not Found</source>
         <target state="translated">Pagina niet gevonden</target>
       </trans-unit>
+      <trans-unit id="G0cZIlj" resname="Page banner">
+        <source>Page banner</source>
+        <target state="translated">Paginabanner</target>
+      </trans-unit>
       <trans-unit id="T67yG3A" resname="Pages">
         <source>Pages</source>
         <target state="translated">Pagina's</target>
@@ -3964,6 +3992,10 @@
       <trans-unit id="2XET5_C" resname="Photos you are tagged in">
         <source>Photos you are tagged in</source>
         <target state="translated">Foto’s waarin je getagd bent</target>
+      </trans-unit>
+      <trans-unit id="ocGduiE" resname="Pick a body to write its page. Changes are shown on the website once the board has approved them.">
+        <source>Pick a body to write its page. Changes are shown on the website once the board has approved them.</source>
+        <target state="translated">Kies een orgaan om zijn pagina te schrijven. Wijzigingen staan op de website zodra het bestuur ze heeft goedgekeurd.</target>
       </trans-unit>
       <trans-unit id="C_d4kR9" resname="Pick a long, unique password - at least 16 characters and not found in any known data breach.">
         <source>Pick a long, unique password - at least 16 characters and not found in any known data breach.</source>
@@ -4489,6 +4521,10 @@
         <source>Revise</source>
         <target state="translated">Herzien</target>
       </trans-unit>
+      <trans-unit id="l4xCf3V" resname="Revise the page">
+        <source>Revise the page</source>
+        <target state="translated">Pagina herzien</target>
+      </trans-unit>
       <trans-unit id="VlmEn6w" resname="Revised only">
         <source>Revised only</source>
         <target state="translated">Alleen herzien</target>
@@ -4584,6 +4620,10 @@
       <trans-unit id="yYPpJpq" resname="Saving keeps this as a draft. It only appears on the website once the committee approves it.">
         <source>Saving keeps this as a draft. It only appears on the website once the committee approves it.</source>
         <target state="translated">Opslaan houdt dit een concept. Het verschijnt pas op de website als de commissie het goedkeurt.</target>
+      </trans-unit>
+      <trans-unit id="6A6ClvU" resname="Saving keeps this as a draft. It only reaches the website once the board approves it.">
+        <source>Saving keeps this as a draft. It only reaches the website once the board approves it.</source>
+        <target state="translated">Opslaan houdt dit een concept. Het komt pas op de website zodra het bestuur het goedkeurt.</target>
       </trans-unit>
       <trans-unit id="qlb7CCM" resname="Saving keeps this as a draft. It only reaches the website once the committee approves it.">
         <source>Saving keeps this as a draft. It only reaches the website once the committee approves it.</source>
@@ -4889,6 +4929,10 @@
         <source>Shown publicly</source>
         <target state="translated">Openbaar getoond</target>
       </trans-unit>
+      <trans-unit id="I2rXukq" resname="Shown to signed-in members only.">
+        <source>Shown to signed-in members only.</source>
+        <target state="translated">Alleen zichtbaar voor ingelogde leden.</target>
+      </trans-unit>
       <trans-unit id="SRkcmW5" resname="Shown until">
         <source>Shown until</source>
         <target state="translated">Getoond tot</target>
@@ -5056,6 +5100,10 @@
       <trans-unit id="qpMwoA4" resname="Start">
         <source>Start</source>
         <target>Start</target>
+      </trans-unit>
+      <trans-unit id="7L2Samp" resname="Start a page">
+        <source>Start a page</source>
+        <target state="translated">Pagina beginnen</target>
       </trans-unit>
       <trans-unit id="zhXKTua" resname="Start date and time">
         <source>Start date and time</source>
@@ -5256,6 +5304,10 @@
       <trans-unit id="Wtbw0Nt" resname="That file could not be stored. Try a JPEG, PNG or WebP image.">
         <source>That file could not be stored. Try a JPEG, PNG or WebP image.</source>
         <target state="translated">Dat bestand kon niet worden opgeslagen. Probeer een JPEG-, PNG- of WebP-afbeelding.</target>
+      </trans-unit>
+      <trans-unit id="wXKjgUO" resname="That image is too small. Pick one of at least %width% by %height% pixels.">
+        <source>That image is too small. Pick one of at least %width% by %height% pixels.</source>
+        <target state="translated">Die afbeelding is te klein. Kies er een van minstens %width% bij %height% pixels.</target>
       </trans-unit>
       <trans-unit id="msHdLBE" resname="That recipient group is not available for this sign-up list.">
         <source>That recipient group is not available for this sign-up list.</source>
@@ -5461,6 +5513,10 @@
         <source>The external subscriber has been added.</source>
         <target>De externe inschrijver is toegevoegd.</target>
       </trans-unit>
+      <trans-unit id="o3N.0Uq" resname="The image to crop">
+        <source>The image to crop</source>
+        <target state="translated">De afbeelding om bij te snijden</target>
+      </trans-unit>
       <trans-unit id="zMSM59q" resname="The information the token carries about the member.">
         <source>The information the token carries about the member.</source>
         <target>De informatie die het token over het lid bevat.</target>
@@ -5524,6 +5580,10 @@
       <trans-unit id="AQaEWNl" resname="The package was saved.">
         <source>The package was saved.</source>
         <target state="translated">Het pakket is opgeslagen.</target>
+      </trans-unit>
+      <trans-unit id="4Op3lcu" resname="The page was updated.">
+        <source>The page was updated.</source>
+        <target state="translated">De pagina is bijgewerkt.</target>
       </trans-unit>
       <trans-unit id="sbbDOd." resname="The photo of the week can only be hidden on Monday morning, before noon.">
         <source>The photo of the week can only be hidden on Monday morning, before noon.</source>
@@ -5612,6 +5672,14 @@
       <trans-unit id="I98XGR_" resname="The website is undergoing maintenance. You cannot sign in right now.">
         <source>The website is undergoing maintenance. You cannot sign in right now.</source>
         <target>De website is in onderhoud. Je kunt op dit moment niet inloggen.</target>
+      </trans-unit>
+      <trans-unit id="hcf2Bo8" resname="The wide strip across the top of your own page, at least %width% by %height% pixels.">
+        <source>The wide strip across the top of your own page, at least %width% by %height% pixels.</source>
+        <target state="translated">De brede strook boven aan je eigen pagina, minstens %width% bij %height% pixels.</target>
+      </trans-unit>
+      <trans-unit id="KOIJoYX" resname="The wide strip your own page leads with, much wider than it is tall.">
+        <source>The wide strip your own page leads with, much wider than it is tall.</source>
+        <target state="translated">De brede strook waarmee je eigen pagina begint, veel breder dan hoog.</target>
       </trans-unit>
       <trans-unit id="tl9akBK" resname="Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.">
         <source>Their TOTP secret and backup codes will be discarded and every active session for the user will be terminated. Use this when a device has been lost or compromised.</source>
@@ -5753,6 +5821,10 @@
         <source>This album does not contain any photos.</source>
         <target>Dit album bevat geen foto's.</target>
       </trans-unit>
+      <trans-unit id="FwBHIYr" resname="This body has no page yet.">
+        <source>This body has no page yet.</source>
+        <target state="translated">Dit orgaan heeft nog geen pagina.</target>
+      </trans-unit>
       <trans-unit id="qITaaEH" resname="This company has no packages.">
         <source>This company has no packages.</source>
         <target state="translated">Dit bedrijf heeft geen pakketten.</target>
@@ -5845,6 +5917,10 @@
         <source>This page is asymptotically approaching existence</source>
         <target state="translated">Deze pagina nadert asymptotisch zijn bestaan</target>
       </trans-unit>
+      <trans-unit id="eZCPKdq" resname="This page is not a draft right now. Revise it to start a new one.">
+        <source>This page is not a draft right now. Revise it to start a new one.</source>
+        <target state="translated">Deze pagina is op dit moment geen concept. Herzie haar om een nieuw concept te beginnen.</target>
+      </trans-unit>
       <trans-unit id="tgF_q1R" resname="This page is not bijective">
         <source>This page is not bijective</source>
         <target state="translated">Deze pagina is niet bijectief</target>
@@ -5853,9 +5929,17 @@
         <source>This page is undefined</source>
         <target state="translated">Deze pagina is niet gedefinieerd</target>
       </trans-unit>
+      <trans-unit id="mBORSa4" resname="This page is with the board. Wait for their decision before revising it again.">
+        <source>This page is with the board. Wait for their decision before revising it again.</source>
+        <target state="translated">Deze pagina ligt bij het bestuur. Wacht op hun beslissing voordat je haar opnieuw herziet.</target>
+      </trans-unit>
       <trans-unit id="GKLKGDL" resname="This page might be imaginary">
         <source>This page might be imaginary</source>
         <target state="translated">Deze pagina is mogelijk imaginair</target>
+      </trans-unit>
+      <trans-unit id="bh4weH5" resname="This page was closed. Get in touch with the board to reopen it.">
+        <source>This page was closed. Get in touch with the board to reopen it.</source>
+        <target state="translated">Deze pagina is gesloten. Neem contact op met het bestuur om haar te heropenen.</target>
       </trans-unit>
       <trans-unit id="fJIT1yK" resname="This page was garbage collected">
         <source>This page was garbage collected</source>
@@ -5932,10 +6016,6 @@
       <trans-unit id="woCE4nm" resname="This window overlaps an existing maintenance window.">
         <source>This window overlaps an existing maintenance window.</source>
         <target>Dit venster overlapt een bestaand onderhoudsvenster.</target>
-      </trans-unit>
-      <trans-unit id="ZRcslng" resname="Thumbnail">
-        <source>Thumbnail</source>
-        <target state="translated">Miniatuur</target>
       </trans-unit>
       <trans-unit id="OmjSafb" resname="Time &amp; place">
         <source>Time &amp; place</source>
@@ -6289,6 +6369,10 @@
         <source>Visibility</source>
         <target state="translated">Zichtbaarheid</target>
       </trans-unit>
+      <trans-unit id="aM.tmpV" resname="Visible to the body and the board. Use it to ask a question or leave a note.">
+        <source>Visible to the body and the board. Use it to ask a question or leave a note.</source>
+        <target state="translated">Zichtbaar voor het orgaan en het bestuur. Gebruik dit om een vraag te stellen of een opmerking achter te laten.</target>
+      </trans-unit>
       <trans-unit id="GX1.z_N" resname="Visible to the company and the committee. Use it to ask a question or leave a note.">
         <source>Visible to the company and the committee. Use it to ask a question or leave a note.</source>
         <target state="translated">Zichtbaar voor het bedrijf en de commissie. Gebruik dit om een vraag te stellen of een notitie achter te laten.</target>
@@ -6304,6 +6388,10 @@
       <trans-unit id="fXTip_t" resname="Visit website">
         <source>Visit website</source>
         <target>Bezoek website</target>
+      </trans-unit>
+      <trans-unit id="deMdem5" resname="Visitors still see revision #%number%.">
+        <source>Visitors still see revision #%number%.</source>
+        <target state="translated">Bezoekers zien nog revisie #%number%.</target>
       </trans-unit>
       <trans-unit id="6AGp2Yf" resname="Vote for photo of the week">
         <source>Vote for photo of the week</source>
@@ -6429,9 +6517,17 @@
         <source>What runs out or starts before %date%.</source>
         <target state="translated">Wat afloopt of begint voor %date%.</target>
       </trans-unit>
+      <trans-unit id="eVvNiBE" resname="What this revision says">
+        <source>What this revision says</source>
+        <target state="translated">Wat deze revisie zegt</target>
+      </trans-unit>
       <trans-unit id="uTIUVPM" resname="What visitors see">
         <source>What visitors see</source>
         <target state="translated">Wat bezoekers zien</target>
+      </trans-unit>
+      <trans-unit id="rbjRnnm" resname="What you are choosing">
+        <source>What you are choosing</source>
+        <target state="translated">Wat je nu kiest</target>
       </trans-unit>
       <trans-unit id="SfCm20f" resname="What you can do">
         <source>What you can do</source>
@@ -6440,6 +6536,14 @@
       <trans-unit id="HfaO6.G" resname="What you upload goes onto the website straight away. Use this when a company sends its artwork to the committee instead of uploading it itself.">
         <source>What you upload goes onto the website straight away. Use this when a company sends its artwork to the committee instead of uploading it itself.</source>
         <target state="translated">Wat je uploadt komt meteen op de website te staan. Gebruik dit wanneer een bedrijf zijn beeldmateriaal naar de commissie stuurt in plaats van het zelf te uploaden.</target>
+      </trans-unit>
+      <trans-unit id="Msjnx0j" resname="What your body is recognised by on an overview card, at least %width% by %height% pixels.">
+        <source>What your body is recognised by on an overview card, at least %width% by %height% pixels.</source>
+        <target state="translated">Waaraan je orgaan wordt herkend op een overzichtskaart, minstens %width% bij %height% pixels.</target>
+      </trans-unit>
+      <trans-unit id="EYgzCv_" resname="What your body is recognised by on an overview card.">
+        <source>What your body is recognised by on an overview card.</source>
+        <target state="translated">Waaraan je orgaan wordt herkend op een overzichtskaart.</target>
       </trans-unit>
       <trans-unit id="TDgj7w9" resname="When a body has changed its page and is waiting to be reviewed">
         <source>When a body has changed its page and is waiting to be reviewed</source>
@@ -6485,6 +6589,10 @@
         <source>Where the member is sent with the token after authenticating.</source>
         <target>Waar het lid met het token naartoe gaat na het authenticeren.</target>
       </trans-unit>
+      <trans-unit id="rxAC8kj" resname="Where to find you">
+        <source>Where to find you</source>
+        <target state="translated">Waar je te vinden bent</target>
+      </trans-unit>
       <trans-unit id="klYLh_k" resname="Which is basically the same thing.">
         <source>Which is basically the same thing.</source>
         <target state="translated">Wat in feite hetzelfde is.</target>
@@ -6525,6 +6633,10 @@
         <source>Workshop</source>
         <target>Workshop</target>
       </trans-unit>
+      <trans-unit id="610a7aJ" resname="Write a description, add a logo and a banner, and say where else your body can be followed. The board looks at it before anything appears on the website.">
+        <source>Write a description, add a logo and a banner, and say where else your body can be followed. The board looks at it before anything appears on the website.</source>
+        <target state="translated">Schrijf een beschrijving, voeg een logo en een banner toe en vertel waar je orgaan nog meer te volgen is. Het bestuur kijkt ernaar voordat er iets op de website verschijnt.</target>
+      </trans-unit>
       <trans-unit id="s999yGF" resname="Written by %author%">
         <source>Written by %author%</source>
         <target state="translated">Geschreven door %author%</target>
@@ -6564,6 +6676,10 @@
       <trans-unit id="_vpO.88" resname="You are logged in as">
         <source>You are logged in as</source>
         <target state="translated">Je bent aangemeld als</target>
+      </trans-unit>
+      <trans-unit id="o1OY6J3" resname="You are not installed in any body right now.">
+        <source>You are not installed in any body right now.</source>
+        <target state="translated">Je bent op dit moment in geen enkel orgaan geïnstalleerd.</target>
       </trans-unit>
       <trans-unit id="aRT9wOd" resname="You are signed up.">
         <source>You are signed up.</source>
@@ -6692,6 +6808,10 @@
       <trans-unit id="FAlgKoh" resname="Your banner runs between the news items on the home page and on the career page, so your contact at GEWIS looks at a new one before it goes up.">
         <source>Your banner runs between the news items on the home page and on the career page, so your contact at GEWIS looks at a new one before it goes up.</source>
         <target state="translated">Je banner staat tussen de nieuwsberichten op de homepagina en op de carrièrepagina, dus je contactpersoon bij GEWIS bekijkt een nieuwe voordat die online komt.</target>
+      </trans-unit>
+      <trans-unit id="4dmVYmo" resname="Your changes are saved, but an image could not be stored. Try uploading it again.">
+        <source>Your changes are saved, but an image could not be stored. Try uploading it again.</source>
+        <target state="translated">Je wijzigingen zijn opgeslagen, maar een afbeelding kon niet worden opgeslagen. Probeer die opnieuw te uploaden.</target>
       </trans-unit>
       <trans-unit id="WcSRa2P" resname="Your changes are saved. Submit them for review when you are ready.">
         <source>Your changes are saved. Submit them for review when you are ready.</source>
@@ -6933,6 +7053,10 @@
         <source>more deadlines</source>
         <target>meer deadlines</target>
       </trans-unit>
+      <trans-unit id="kItPvyq" resname="not on the website yet">
+        <source>not on the website yet</source>
+        <target state="translated">nog niet op de website</target>
+      </trans-unit>
       <trans-unit id="fl1sHmm" resname="on approval">
         <source>on approval</source>
         <target state="translated">bij goedkeuring</target>
@@ -6984,6 +7108,10 @@
       <trans-unit id="8uyKHwB" resname="this company">
         <source>this company</source>
         <target>dit bedrijf</target>
+      </trans-unit>
+      <trans-unit id="8vY69Lo" resname="this page">
+        <source>this page</source>
+        <target state="translated">deze pagina</target>
       </trans-unit>
       <trans-unit id="PpyRnaW" resname="this vacancy">
         <source>this vacancy</source>

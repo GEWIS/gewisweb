@@ -60,6 +60,53 @@ class OrganRepository extends ServiceEntityRepository
     }
 
     /**
+     * Eagerly loads what the administrative overview reads off each body: its page, the revision being worked on, the
+     * one before that and the one visitors see. Without this every row lazy-loads four associations of its own, which
+     * for the board, who sees every body there is, runs into the hundreds of queries.
+     *
+     * The result is discarded; hydrating it fills the associations on the bodies that were passed in.
+     *
+     * @param Organ[] $organs
+     */
+    public function warmPageAssociations(array $organs): void
+    {
+        if ([] === $organs) {
+            return;
+        }
+
+        $this->createQueryBuilder('o')
+            ->addSelect(
+                'i',
+                'current',
+                'previous',
+                'live',
+            )
+            ->leftJoin(
+                'o.organInformation',
+                'i',
+            )
+            ->leftJoin(
+                'i.currentRevision',
+                'current',
+            )
+            ->leftJoin(
+                'current.previousRevision',
+                'previous',
+            )
+            ->leftJoin(
+                'i.liveRevision',
+                'live',
+            )
+            ->where('o IN (:organs)')
+            ->setParameter(
+                'organs',
+                $organs,
+            )
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Check if an organ with id `$id` is not abrogated.
      */
     public function findActiveById(int $id): ?Organ

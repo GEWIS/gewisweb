@@ -1,0 +1,76 @@
+// The wide strip a body's own page leads with, at the shape it is cut to.
+.organ-banner {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 4;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--bs-border-radius);
+}
+
+// What a body is recognised by on an overview card.
+.organ-logo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--bs-border-radius);
+}
+
+// The frame that picks what part of an uploaded image is used. Cropper puts its canvas next to the image and hides the
+// image itself, so the height belongs to the box around both.
+//
+// The image is fitted inside the canvas, so the canvas is what decides how large the thing being framed is drawn. It
+// grows with the column it sits in, up to a ceiling: large enough to see what is being cut, short enough that the two
+// frames beside each other are both in view.
+.organ-image-crop {
+    max-width: 100%;
+
+    cropper-canvas {
+        width: 100%;
+        height: clamp(9rem, 18vw, 15rem);
+    }
+
+    img {
+        max-width: 100%;
+    }
+}
+
+// The pair above the frame: what the website is showing, and what the frame currently holds. Both are one box at the
+// shape the image is cut to, so the two are the same size and can be compared at a glance rather than by eye.
+.organ-image-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--#{$prefix}border-color);
+    border-radius: var(--#{$prefix}border-radius);
+    overflow: hidden;
+
+    canvas,
+    img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.organ-image-preview-banner {
+    aspect-ratio: 4;
+}
+
+// What is in use now, small enough to sit above the frame rather than push it off the screen.
+.organ-image-current {
+    max-width: 100%;
+}
+
+.organ-image-current-logo {
+    max-width: 11rem;
+}
+
+.organ-image-current-banner {
+    max-width: 22rem;
+}

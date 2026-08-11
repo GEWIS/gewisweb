@@ -1,0 +1,48 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ subjectName|page_title }}{{ 'Review'|trans|page_title }}{{ 'Bodies'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>{{ diff_styles() }}</style>
+{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/decision/bodies/index') }}">{{ 'Bodies'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/decision/bodies/approvals/index') }}">{{ 'Review'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ subjectName }}</li>
+{% endblock %}
+
+{% block contents %}
+    {% embed 'partials/application/review-screen.html.twig' with {
+        'subjectName': organ.getName ~ ' (' ~ organ.getAbbr ~ ')',
+        'revision': revision,
+        'previous': previous,
+        'sections': sections,
+        'comments': comments,
+        'decisionForm': decisionForm,
+        'canDiscard': canDiscard,
+        'showAuthor': true,
+        'firstRevisionNote': 'This is the first revision; nothing to compare against.'|trans,
+        'actionsHeading': 'Actions'|trans,
+        'decideAction': path('admin/decision/bodies/approvals/decide', {'revision': revision.getId}),
+        'commentAction': path('admin/decision/bodies/approvals/comment', {'revision': revision.getId}),
+        'commentToken': csrf_token('body_review_comment-' ~ revision.getId),
+        'commentAudienceNote': 'Visible to the body and the board. Use it to ask a question or leave a note.'|trans,
+        'discardAction': path('admin/decision/bodies/approvals/discard', {'revision': revision.getId}),
+        'discardToken': csrf_token('body_discard-' ~ revision.getId),
+        'discardBody': 'The changes in this draft will be lost and the live version restored.'|trans,
+        'organ': organ,
+    } only %}
+        {% block review_header_actions %}
+            <a href="{{ path('admin/decision/bodies/view', {'organ': organ.getId}) }}"
+               class="btn btn-sm btn-outline-secondary">
+                <span class="fas fa-sitemap" aria-hidden="true"></span> {{ 'Go to the body'|trans }}
+            </a>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

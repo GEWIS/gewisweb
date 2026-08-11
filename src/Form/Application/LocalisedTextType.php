@@ -20,6 +20,9 @@ use function Symfony\Component\Translation\t;
  * `data_class` (e.g. {@see ActivityLocalisedText} or a Career localised text). Values are read/written through the
  * entity's accessors via the field `getter`/`setter`, so the shared base needs no form-only setters.
  *
+ * `value_constraints` applies to both languages at once, since a limit on what a field may say is a property of the
+ * field rather than of the language it is written in.
+ *
  * @extends AbstractType<LocalisedTextModel>
  */
 class LocalisedTextType extends AbstractType
@@ -40,6 +43,7 @@ class LocalisedTextType extends AbstractType
                 [
                     'label' => t('Dutch'),
                     'required' => false,
+                    'constraints' => $options['value_constraints'],
                     'getter' => static fn (LocalisedTextModel $text): ?string => $text->getValueNL(),
                     'setter' => static function (
                         LocalisedTextModel $text,
@@ -55,6 +59,7 @@ class LocalisedTextType extends AbstractType
                 [
                     'label' => t('English'),
                     'required' => false,
+                    'constraints' => $options['value_constraints'],
                     'getter' => static fn (LocalisedTextModel $text): ?string => $text->getValueEN(),
                     'setter' => static function (
                         LocalisedTextModel $text,
@@ -72,10 +77,15 @@ class LocalisedTextType extends AbstractType
         $resolver->setDefaults([
             'data_class' => ActivityLocalisedText::class,
             'multiline' => false,
+            'value_constraints' => [],
         ]);
         $resolver->setAllowedTypes(
             'multiline',
             'bool',
+        );
+        $resolver->setAllowedTypes(
+            'value_constraints',
+            'array',
         );
     }
 }
