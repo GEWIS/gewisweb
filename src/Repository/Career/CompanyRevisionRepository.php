@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repository\Career;
 
-use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\Career\CompanyRevision;
+use App\Repository\Application\FindsRevisionsForReviewTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CompanyRevisionRepository extends ServiceEntityRepository
 {
+    use FindsRevisionsForReviewTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct(
@@ -30,7 +32,7 @@ class CompanyRevisionRepository extends ServiceEntityRepository
     public function findForReview(): array
     {
         // The queue says who put each one forward, which is either a member or a representative.
-        return $this->createQueryBuilder('r')
+        $builder = $this->createQueryBuilder('r')
             ->addSelect(
                 's',
                 'c',
@@ -52,20 +54,12 @@ class CompanyRevisionRepository extends ServiceEntityRepository
             ->leftJoin(
                 'r.authorCompanyUser',
                 'acu',
-            )
-            ->where('r.status IN (:statuses)')
-            ->setParameter(
-                'statuses',
-                [
-                    RevisionStatus::Submitted->value,
-                    RevisionStatus::InReview->value,
-                ],
-            )
-            ->orderBy(
-                'r.createdAt',
-                'ASC',
-            )
-            ->getQuery()
+            );
+
+        $this->whereAwaitingReview($builder);
+        $this->orderOldestFirst($builder);
+
+        return $builder->getQuery()
             ->getResult();
     }
 }

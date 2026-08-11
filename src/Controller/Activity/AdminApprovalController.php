@@ -7,16 +7,13 @@ namespace App\Controller\Activity;
 use App\Controller\Application\AbstractRevisionReviewController;
 use App\Entity\Activity\ActivityRevision;
 use App\Entity\Activity\SignupList;
-use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\RevisionInterface;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Activity\ActivityRevisionCommentRepository;
 use App\Repository\Activity\ActivityRevisionRepository;
-use App\Security\Application\RevisionVoter;
 use App\Service\Activity\SignupListMigrator;
-use App\Service\Application\RevisionDiscarder;
 use App\Util\Activity\PastActivityRule;
 use App\ViewModel\Application\ReviewQueueRow;
 use App\ViewModel\Application\RevisionActions;
@@ -52,7 +49,6 @@ class AdminApprovalController extends AbstractRevisionReviewController
         private readonly ActivityRevisionRepository $revisionRepository,
         private readonly ActivityRevisionCommentRepository $commentRepository,
         private readonly SignupListMigrator $signupListMigrator,
-        private readonly RevisionDiscarder $draftDiscarder,
     ) {
     }
 
@@ -153,39 +149,10 @@ class AdminApprovalController extends AbstractRevisionReviewController
     )]
     public function discard(ActivityRevision $revision): Response
     {
-        // Discarding a draft is editing it away, so it is gated exactly like editing: a Draft, by an owner or reviewer.
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::EDIT,
+        return $this->discardDraft(
             $revision,
+            'admin/activities/index',
         );
-
-        // There must be a live (approved) version to fall back to. A brand-new activity's draft has nothing to revert
-        // to, so removing it would delete the whole activity, which is deliberately left to the stale-draft cleanup.
-        $live = $revision->getActivity()->getLiveRevision();
-        if (
-            null === $live
-            || $live === $revision
-        ) {
-            $this->addFlash(
-                AlertTypes::Warning->value,
-                $this->translator->trans('This draft cannot be discarded.'),
-            );
-
-            return $this->redirectToRoute(
-                'admin/activities/approvals/review',
-                ['revision' => $revision->getId()],
-            );
-        }
-
-        $this->draftDiscarder->discardToLive($revision);
-        $this->entityManager->flush();
-
-        $this->addFlash(
-            AlertTypes::Success->value,
-            $this->translator->trans('Draft discarded; the activity was reverted to its live version.'),
-        );
-
-        return $this->redirectToRoute('admin/activities/index');
     }
 
     #[Override]

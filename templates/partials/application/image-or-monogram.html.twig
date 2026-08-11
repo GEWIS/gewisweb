@@ -1,0 +1,21 @@
+{#
+    A stored image, or the first letter of whatever it depicts when there is none:
+
+    {% include 'partials/application/image-or-monogram.html.twig' with {
+        'path': company.getSquareLogo,
+        'name': company.getName,
+        'variant': 'w320',
+        'baseClass': 'career-logo',
+        'class': 'career-logo-sm',
+    } only %}
+
+    Pass `alt` where the image is the only thing naming its subject.
+#}
+{% if path is not empty %}
+    <img class="{{ baseClass }} {{ class }}"
+         loading="lazy"
+         alt="{{ alt|default('') }}"
+         src="{{ image_url(path, variant|default('w320')) }}">
+{% else %}
+    <span class="{{ baseClass }} {{ baseClass }}-monogram {{ class }}" aria-hidden="true">{{ name|slice(0, 1)|upper }}</span>
+{% endif %}

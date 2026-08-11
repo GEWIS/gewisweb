@@ -11,6 +11,7 @@ use App\Entity\User\User;
 use App\Form\Application\ReviewDecisionType;
 use App\Service\Application\RevisionActionResolver;
 use App\Service\Application\RevisionDescriberRegistry;
+use App\Service\Application\RevisionDiscarder;
 use App\ViewModel\Application\RevisionActions;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,6 +40,8 @@ abstract class AbstractRevisionController extends AbstractController
 
     protected RevisionDescriberRegistry $revisionDescribers;
 
+    protected RevisionDiscarder $revisionDiscarder;
+
     protected EntityManagerInterface $entityManager;
 
     protected TranslatorInterface $translator;
@@ -53,6 +56,7 @@ abstract class AbstractRevisionController extends AbstractController
     public function setRevisionDependencies(
         RevisionActionResolver $revisionActionResolver,
         RevisionDescriberRegistry $revisionDescribers,
+        RevisionDiscarder $revisionDiscarder,
         EntityManagerInterface $entityManager,
         TranslatorInterface $translator,
         #[Target('revisionStateMachine')]
@@ -60,6 +64,7 @@ abstract class AbstractRevisionController extends AbstractController
     ): void {
         $this->revisionActionResolver = $revisionActionResolver;
         $this->revisionDescribers = $revisionDescribers;
+        $this->revisionDiscarder = $revisionDiscarder;
         $this->entityManager = $entityManager;
         $this->translator = $translator;
         $this->revisionStateMachine = $revisionStateMachine;

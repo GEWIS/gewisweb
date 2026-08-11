@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Career;
 
 use App\Controller\Application\AbstractRevisionReviewController;
-use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\Application\RevisionInterface;
 use App\Entity\Career\CompanyRevision;
 use App\Entity\Career\VacancyRevision;
@@ -16,8 +15,6 @@ use App\Repository\Career\CompanyRevisionCommentRepository;
 use App\Repository\Career\CompanyRevisionRepository;
 use App\Repository\Career\VacancyRevisionCommentRepository;
 use App\Repository\Career\VacancyRevisionRepository;
-use App\Security\Application\RevisionVoter;
-use App\Service\Application\RevisionDiscarder;
 use App\ViewModel\Application\ReviewQueueRow;
 use App\ViewModel\Application\RevisionActions;
 use Override;
@@ -56,7 +53,6 @@ class AdminApprovalController extends AbstractRevisionReviewController
         private readonly CompanyRevisionCommentRepository $companyCommentRepository,
         private readonly VacancyRevisionCommentRepository $vacancyCommentRepository,
         private readonly CompanyPackageRepository $packageRepository,
-        private readonly RevisionDiscarder $draftDiscarder,
     ) {
     }
 
@@ -324,45 +320,6 @@ class AdminApprovalController extends AbstractRevisionReviewController
         return $this->redirectToRoute(
             $this->reviewRoute($revision),
             ['revision' => $revision->getId()],
-        );
-    }
-
-    /**
-     * Throwing a draft away and pointing the aggregate back at what is live. Which aggregate it hangs off is the
-     * revision's own business, so only where the reviewer lands afterwards differs per domain.
-     *
-     * @param array<string, int|string|null> $routeParameters
-     */
-    private function discardDraft(
-        CompanyRevision|VacancyRevision $revision,
-        string $route,
-        array $routeParameters = [],
-    ): Response {
-        $this->denyAccessUnlessGranted(
-            RevisionVoter::EDIT,
-            $revision,
-        );
-
-        if (!$this->revisionActions($revision)->isDiscardable) {
-            $this->addFlash(
-                AlertTypes::Warning->value,
-                $this->translator->trans('This draft cannot be discarded.'),
-            );
-
-            return $this->reviewResponse($revision);
-        }
-
-        $this->draftDiscarder->discardToLive($revision);
-        $this->entityManager->flush();
-
-        $this->addFlash(
-            AlertTypes::Success->value,
-            $this->translator->trans('The draft was discarded and the live version restored.'),
-        );
-
-        return $this->redirectToRoute(
-            $route,
-            $routeParameters,
         );
     }
 

@@ -1769,10 +1769,6 @@
         <source>Draft</source>
         <target state="translated">Concept</target>
       </trans-unit>
-      <trans-unit id="KAXcPJ." resname="Draft discarded; the activity was reverted to its live version.">
-        <source>Draft discarded; the activity was reverted to its live version.</source>
-        <target state="translated">Concept weggegooid; de activiteit is teruggezet naar de live versie.</target>
-      </trans-unit>
       <trans-unit id="Iv2b3Nc" resname="Drafts">
         <source>Drafts</source>
         <target state="translated">Concepten</target>

@@ -5,11 +5,11 @@
 
     Pass `alt` where the logo is the only thing naming the company.
 #}
-{% if logo is not empty %}
-    <img class="career-logo {{ class }}"
-         loading="lazy"
-         alt="{{ alt|default('') }}"
-         src="{{ image_url(logo, 'w320') }}">
-{% else %}
-    <span class="career-logo career-logo-monogram {{ class }}" aria-hidden="true">{{ name|slice(0, 1)|upper }}</span>
-{% endif %}
+{% include 'partials/application/image-or-monogram.html.twig' with {
+    'path': logo,
+    'name': name,
+    'alt': alt|default(''),
+    'variant': 'w320',
+    'baseClass': 'career-logo',
+    'class': class|default(''),
+} only %}
