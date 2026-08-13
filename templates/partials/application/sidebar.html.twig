@@ -40,7 +40,7 @@
 {% endmacro %}
 
 {% macro section(id, icon, label, active, children) %}
-    {% set open = active or children|filter(child => child.active ?? false)|length > 0 %}
+    {% set open = active or children|filter(child => (child.active ?? false))|length > 0 %}
     <li>
         <button class="sidebar-link {{ active ? 'active' : '' }} {{ open ? '' : 'collapsed' }}" type="button"
                 data-bs-toggle="collapse" data-bs-target="#sidebar-section-{{ id }}"

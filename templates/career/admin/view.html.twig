@@ -87,7 +87,7 @@
                     <ul class="list-unstyled mb-0">
                         {% for entry in timeline %}
                             <li class="mb-2">
-                                <div>{{ entry.verb.message(entry.actorDisplayName ?? 'The website'|trans, entry.detail)|trans }}</div>
+                                <div>{{ entry.verb.message(entry.actorDisplayName ?? ('The website'|trans), entry.detail)|trans }}</div>
                                 <div class="text-muted small">
                                     {{ entry.createdAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
                                 </div>
