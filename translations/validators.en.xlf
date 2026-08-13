@@ -37,6 +37,10 @@
         <source>Another company already uses this slug.</source>
         <target state="translated">Another company already uses this slug.</target>
       </trans-unit>
+      <trans-unit id="IiV6tg8" resname="Another page already answers to this address.">
+        <source>Another page already answers to this address.</source>
+        <target state="translated">Another page already answers to this address.</target>
+      </trans-unit>
       <trans-unit id="5.N8c6E" resname="Another vacancy of this company already uses this slug in this category.">
         <source>Another vacancy of this company already uses this slug in this category.</source>
         <target state="translated">Another vacancy of this company already uses this slug in this category.</target>
@@ -165,6 +169,10 @@
         <source>Feedback is required when requesting changes or rejecting.</source>
         <target state="translated">Feedback is required when requesting changes or rejecting.</target>
       </trans-unit>
+      <trans-unit id="S7Cy0qe" resname="Fill in a closing date before approving this poll.">
+        <source>Fill in a closing date before approving this poll.</source>
+        <target state="translated">Fill in a closing date before approving this poll.</target>
+      </trans-unit>
       <trans-unit id="7PRHlDo" resname="Fill in the Dutch text.">
         <source>Fill in the Dutch text.</source>
         <target state="translated">Fill in the Dutch text.</target>
@@ -172,6 +180,10 @@
       <trans-unit id="vXqmZv8" resname="Fill in the English text.">
         <source>Fill in the English text.</source>
         <target state="translated">Fill in the English text.</target>
+      </trans-unit>
+      <trans-unit id="Qx9GHFL" resname="Fill this in for both languages.">
+        <source>Fill this in for both languages.</source>
+        <target state="translated">Fill this in for both languages.</target>
       </trans-unit>
       <trans-unit id="Dtm28Py" resname="Only one option can be preselected as the default.">
         <source>Only one option can be preselected as the default.</source>
@@ -209,6 +221,10 @@
         <source>The activity must start in the future.</source>
         <target state="translated">The activity must start in the future.</target>
       </trans-unit>
+      <trans-unit id="LQXFO1L" resname="The closing date must be in the future.">
+        <source>The closing date must be in the future.</source>
+        <target state="translated">The closing date must be in the future.</target>
+      </trans-unit>
       <trans-unit id="GrfPh7K" resname="The email address may not be longer than {{ limit }} characters.">
         <source>The email address may not be longer than {{ limit }} characters.</source>
         <target state="translated">The email address may not be longer than {{ limit }} characters.</target>
@@ -244,6 +260,10 @@
       <trans-unit id=".UQQM7H" resname="The vacancy cannot stay open past the job package it belongs to.">
         <source>The vacancy cannot stay open past the job package it belongs to.</source>
         <target state="translated">The vacancy cannot stay open past the job package it belongs to.</target>
+      </trans-unit>
+      <trans-unit id="OhNUwCI" resname="The website already answers to this address, so a page cannot take it.">
+        <source>The website already answers to this address, so a page cannot take it.</source>
+        <target state="translated">The website already answers to this address, so a page cannot take it.</target>
       </trans-unit>
       <trans-unit id="z.p0Rex" resname="This field is required.">
         <source>This field is required.</source>

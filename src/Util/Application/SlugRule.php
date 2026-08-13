@@ -24,6 +24,13 @@ final class SlugRule
      */
     public const string ROUTE_REQUIREMENT = '[a-z][0-9a-z_\-]*';
 
+    /**
+     * The same shape, held between three and thirty-two characters. Used where the slug is the whole of what somebody
+     * types or passes on: a one-letter address says nothing about where it leads, and one longer than this is not an
+     * address anybody reads out.
+     */
+    public const string BOUNDED_PATTERN = '/\A[a-z][0-9a-z_\-]{2,31}\z/';
+
     public static function matches(string $slug): bool
     {
         return 1 === preg_match(

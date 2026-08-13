@@ -1,0 +1,79 @@
+# yaml-language-server: $schema=../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+# What a custom page is allowed to contain. A page is written in a visual editor and stored as HTML, so what the editor
+# produces is trusted no further than anything else that arrives over a form: this is applied on save, and what it
+# returns is the only thing that is ever stored.
+#
+# Everything not named here is dropped, which covers script, form, object, embed, every event handler and every
+# `javascript:` URL without any of them having to be listed.
+framework:
+    html_sanitizer:
+        sanitizers:
+            app.page_sanitizer:
+                # A page can be long. The default of 20000 characters silently truncates one that is, which would lose
+                # the end of somebody's work without saying so.
+                max_input_length: 500000
+                allow_elements:
+                    # Structure and text.
+                    h1: ['class', 'style', 'id']
+                    h2: ['class', 'style', 'id']
+                    h3: ['class', 'style', 'id']
+                    h4: ['class', 'style', 'id']
+                    h5: ['class', 'style', 'id']
+                    h6: ['class', 'style', 'id']
+                    p: ['class', 'style']
+                    div: ['class', 'style']
+                    section: ['class', 'style']
+                    span: ['class', 'style']
+                    blockquote: ['class', 'style']
+                    figure: ['class', 'style']
+                    figcaption: ['class', 'style']
+                    hr: ['class', 'style']
+                    br: ['class']
+                    # Lists.
+                    ul: ['class', 'style']
+                    ol: ['class', 'style', 'start', 'type']
+                    li: ['class', 'style']
+                    dl: ['class', 'style']
+                    dt: ['class', 'style']
+                    dd: ['class', 'style']
+                    # Tables.
+                    table: ['class', 'style']
+                    thead: ['class', 'style']
+                    tbody: ['class', 'style']
+                    tfoot: ['class', 'style']
+                    tr: ['class', 'style']
+                    th: ['class', 'style', 'colspan', 'rowspan', 'scope']
+                    td: ['class', 'style', 'colspan', 'rowspan']
+                    caption: ['class', 'style']
+                    colgroup: ['class', 'style', 'span']
+                    col: ['class', 'style', 'span']
+                    # Inline formatting.
+                    strong: ['class', 'style']
+                    b: ['class', 'style']
+                    em: ['class', 'style']
+                    i: ['class', 'style']
+                    u: ['class', 'style']
+                    s: ['class', 'style']
+                    sub: ['class', 'style']
+                    sup: ['class', 'style']
+                    code: ['class', 'style']
+                    pre: ['class', 'style']
+                    # Links and media.
+                    a: ['class', 'style', 'href', 'title', 'target', 'rel']
+                    img: ['class', 'style', 'src', 'alt', 'title', 'width', 'height', 'loading']
+                    iframe: ['class', 'style', 'src', 'allowfullscreen', 'width', 'height', 'title']
+                # An image is only kept when it is served from our own /img/ pipeline, which is what the editor
+                # uploads into. Everything else about its source is beside the point, so there is no `data` scheme
+                # here and no absolute host to allow.
+                with_attribute_sanitizers:
+                    - 'App\Service\Frontpage\PageImageSourceSanitizer'
+                allowed_link_schemes: ['http', 'https', 'mailto']
+                allow_relative_links: true
+                allowed_media_schemes: ['http', 'https']
+                # Images uploaded through the page editor are served from our own /img/ pipeline, so they arrive as
+                # site-relative paths rather than absolute URLs.
+                allow_relative_medias: true
+                # The two video hosts the content security policy already allows to be framed. The sanitizer applies
+                # one host list to every kind of media, so an image from one of them would pass too; under the CSP
+                # that is harmless, and the alternative is refusing embedded video altogether.
+                allowed_media_hosts: ['www.youtube-nocookie.com', 'player.vimeo.com']

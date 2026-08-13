@@ -123,4 +123,10 @@ $form-switch-bg-image-night: url("data:image/svg+xml,<svg xmlns='http://www.w3.o
     .form-switch .form-check-input:not(:checked) {
         --#{$prefix}form-switch-bg: #{escape-svg($form-switch-bg-image-night)};
     }
+
+    // Bootstrap fills the addon with `--#{$prefix}tertiary-bg`, which the night theme leaves at its light value, so
+    // the addon keeps a pale background while its text turns light with the rest of the form.
+    .input-group-text {
+        background-color: var(--#{$prefix}secondary-bg);
+    }
 }

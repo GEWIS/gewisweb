@@ -132,6 +132,11 @@
                     'label': 'Poll approvals'|trans,
                     'active': is_module_active(['frontpage', 'adminpollapproval']),
                 } : null,
+                is_granted('ROLE_BOARD') ? {
+                    'href': path('admin/frontpage/pages/index'),
+                    'label': 'Pages'|trans,
+                    'active': is_module_active(['frontpage', 'adminpage']),
+                } : null,
             ]|filter(child => child is not null)) }}
 
             {% set photoWeekly = is_module_active(['photo', 'admin', 'weekly']) %}

@@ -33,6 +33,7 @@ import SignupListController from './controllers/activity/signup_list_controller.
 // Frontpage-specific controllers.
 import BirthdayRotatorController from './controllers/frontpage/birthday_rotator_controller.ts';
 import InfimumController from './controllers/frontpage/infimum_controller.ts';
+import PageEditorController from './controllers/frontpage/page_editor_controller.ts';
 
 // Decision-specific controllers.
 import DocumentUploadController from './controllers/decision/document_upload_controller.ts';
@@ -84,6 +85,7 @@ app.register('signup-list', SignupListController);
 
 app.register('birthday-rotator', BirthdayRotatorController);
 app.register('infimum', InfimumController);
+app.register('page-editor', PageEditorController);
 
 app.register('album-search', AlbumSearchController);
 app.register('photo-cover', CoverController);

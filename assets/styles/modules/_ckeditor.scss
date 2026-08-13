@@ -59,3 +59,9 @@
     // Match Bootstrap's corner radius
     --ck-border-radius: var(--bs-border-radius);
 }
+
+// A custom page is written whole rather than a paragraph at a time, so its editor opens at something like the height
+// of a page instead of growing out of a single line.
+.page-content .ck-editor__editable_inline {
+    min-height: 24rem;
+}

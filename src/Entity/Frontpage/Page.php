@@ -5,21 +5,29 @@ declare(strict_types=1);
 namespace App\Entity\Frontpage;
 
 use App\Entity\Application\Traits\IdentifiableTrait;
+use App\Entity\Application\Traits\TimestampableTrait;
 use App\Entity\User\Enums\UserRoles;
 use App\Repository\Frontpage\PageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 
 /**
- * Page.
+ * A page the association writes itself, addressed by its own words rather than by an id: everything on the website
+ * that is neither news, an activity, nor a body's own page.
+ *
+ * The content is stored as HTML and rendered as-is, so it is sanitized on the way in; see
+ * {@see \App\Service\Frontpage\PageAdminService}.
  */
 #[Entity(repositoryClass: PageRepository::class)]
+#[HasLifecycleCallbacks]
 class Page
 {
     use IdentifiableTrait;
+    use TimestampableTrait;
 
     /**
      * Category of the page.

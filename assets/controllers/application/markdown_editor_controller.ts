@@ -1,32 +1,14 @@
 import { Controller } from '@hotwired/stimulus';
+import { CkEditorInstance, CkEditorModule, createEditor } from '../../js/ckeditor.ts';
 import { flattenFloatingLabel } from '../../js/floating_label.ts';
 
-// Minimal surface of CKEditor 5 we use. We vendor the official self-contained browser ESM bundle
-// (assets/js/ckeditor5/ckeditor5.js, mapped as `ckeditor5` in importmap.php) instead of resolving the npm package
-// through the importmap: the package's entry re-exports the @ckeditor/* source tree, which the jsDelivr resolver
-// cannot ESM-ify. The browser bundle inlines everything (no dependency tree to keep patched).
-interface CkEditorInstance {
-    getData(): string;
-    setData(data: string): void;
-    destroy(): Promise<unknown>;
-    enableReadOnlyMode(lockId: string): void;
-    disableReadOnlyMode(lockId: string): void;
-    model: { document: { on(event: string, callback: () => void): void } };
-}
-
-interface CkEditorModule {
-    ClassicEditor: {
-        create(element: HTMLElement, config: Record<string, unknown>): Promise<CkEditorInstance>;
-    };
-    [exportName: string]: unknown;
-}
-
 /**
- * Turns a `<textarea>` into a CKEditor 5 Markdown editor. The textarea stays in the DOM as the bound source of truth:
- * the editor's Markdown (GFM, via the Markdown plugin) is written back to it and a bubbling `input` event is fired, so
- * both a Symfony form POST and a Live Component `data-model` binding keep working.
+ * Turns a `<textarea>` into a CKEditor 5 Markdown editor (GFM, via the Markdown plugin). What is typed is written back
+ * to the textarea, which stays the bound source of truth; see js/ckeditor.ts.
  *
- * The bundle is loaded with a dynamic `import()` on first use, keeping ~1.9 MB off pages without an editor.
+ * The editor is built as the page opens, not when the box is first pressed: the bundle is large, but nearly every box
+ * it is put on sits on a screen whose whole purpose is writing, and there a download in the way of the first keystroke
+ * costs more than it saves.
  *
  * `data-markdown-editor-toolbar-value="minimal"` selects the restricted toolbar (the sign-up email) and `"comment"`
  * the four inline marks a poll comment may carry; the default is the full toolbar (activity descriptions).
@@ -58,6 +40,7 @@ export default class extends Controller {
         flattenFloatingLabel(this.textarea);
         this.observer = new MutationObserver(() => this.applyDisabledState());
         this.observer.observe(this.textarea, { attributes: true, attributeFilter: ['disabled'] });
+
         void this.createEditor();
     }
 
@@ -78,35 +61,18 @@ export default class extends Controller {
             return;
         }
 
-        const ckeditor = (await import('ckeditor5')) as unknown as CkEditorModule;
-        // Re-check after the await: the controller may have disconnected meanwhile.
-        if (null !== this.editor || this.aborted) {
-            return;
-        }
+        const editor = await createEditor(
+            this.textarea,
+            this.languageValue,
+            (c) => this.config(c),
+            () => this.aborted || null !== this.editor,
+        );
 
-        const config = this.config(ckeditor);
-        if ('nl' === this.languageValue) {
-            // The bundle ships English built in; the Dutch UI comes from a separate translations module.
-            const dutch = await import('ckeditor5/translations/nl.js');
-            if (null !== this.editor || this.aborted) {
-                return;
-            }
-            config.language = 'nl';
-            config.translations = [(dutch as { default: unknown }).default];
-        }
-
-        const editor = await ckeditor.ClassicEditor.create(this.textarea, config);
-        if (this.aborted) {
-            void editor.destroy();
+        if (null === editor) {
             return;
         }
 
         this.editor = editor;
-        editor.model.document.on('change:data', () => {
-            this.textarea.value = editor.getData();
-            // Bubbles past a `data-live-ignore` boundary to the Live Component root, and is carried on form submit.
-            this.textarea.dispatchEvent(new Event('input', { bubbles: true }));
-        });
         this.applyDisabledState();
     }
 

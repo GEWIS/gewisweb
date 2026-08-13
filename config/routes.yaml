@@ -22,10 +22,13 @@ image_serve:
 page_route:
     path: /{_locale}/{category}/{subCategory}/{name}
     controller: App\Controller\Frontpage\PageController::index
+    # A segment that does not read as a slug is not a page here, and falls through to the catch-all below. Deliberately
+    # not the bounded rule the page form holds a new address to: how long an address may be is a rule about writing one,
+    # and a page that was published before it existed still has to answer.
     requirements:
-        category: '[a-zA-Z][a-zA-Z0-9_-]*'
-        subCategory: '[a-zA-Z][a-zA-Z0-9_-]*'
-        name: '[a-zA-Z][a-zA-Z0-9_-]*'
+        category: !php/const App\Util\Application\SlugRule::ROUTE_REQUIREMENT
+        subCategory: !php/const App\Util\Application\SlugRule::ROUTE_REQUIREMENT
+        name: !php/const App\Util\Application\SlugRule::ROUTE_REQUIREMENT
     defaults:
         subCategory: null
         name: null
