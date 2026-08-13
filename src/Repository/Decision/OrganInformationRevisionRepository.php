@@ -10,7 +10,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 use function addcslashes;
-use function intval;
 
 /**
  * @extends ServiceEntityRepository<OrganInformationRevision>
@@ -28,7 +27,8 @@ class OrganInformationRevisionRepository extends ServiceEntityRepository
     }
 
     /**
-     * The pages waiting on the board, oldest first. The queue names each one by its body, so the organ comes along.
+     * The pages waiting on the board, oldest first. The queue names each one by its body and says what is live while
+     * it waits, so the organ and that revision come along.
      *
      * @return OrganInformationRevision[]
      */
@@ -39,6 +39,7 @@ class OrganInformationRevisionRepository extends ServiceEntityRepository
                 'i',
                 'o',
                 'a',
+                'lr',
             )
             ->join(
                 'r.organInformation',
@@ -51,6 +52,10 @@ class OrganInformationRevisionRepository extends ServiceEntityRepository
             ->leftJoin(
                 'r.author',
                 'a',
+            )
+            ->leftJoin(
+                'i.liveRevision',
+                'lr',
             );
 
         $this->whereAwaitingReview($builder);
@@ -84,21 +89,5 @@ class OrganInformationRevisionRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
-    }
-
-    /**
-     * How many pages are waiting on the board, for the overviews that only say so rather than list them.
-     */
-    public function countForReview(): int
-    {
-        $builder = $this->createQueryBuilder('r')
-            ->select('COUNT(r.id)');
-
-        $this->whereAwaitingReview($builder);
-
-        return intval(
-            $builder->getQuery()
-                ->getSingleScalarResult(),
-        );
     }
 }

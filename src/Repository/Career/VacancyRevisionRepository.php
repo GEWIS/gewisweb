@@ -35,13 +35,15 @@ class VacancyRevisionRepository extends ServiceEntityRepository
      */
     public function findForReview(): array
     {
-        // The queue says who put each one forward, which is either a member or a representative.
+        // The queue says who put each one forward, which is either a member or a representative, and what is live
+        // while it waits.
         $builder = $this->createQueryBuilder('r')
             ->addSelect(
                 'n',
                 'j',
                 'a',
                 'acu',
+                'lr',
             )
             ->join(
                 'r.name',
@@ -58,6 +60,10 @@ class VacancyRevisionRepository extends ServiceEntityRepository
             ->leftJoin(
                 'r.authorCompanyUser',
                 'acu',
+            )
+            ->leftJoin(
+                'j.liveRevision',
+                'lr',
             );
 
         $this->whereAwaitingReview($builder);
@@ -68,10 +74,10 @@ class VacancyRevisionRepository extends ServiceEntityRepository
     }
 
     /**
-     * How many vacancies are waiting on the committee, for the overviews that only say so rather than list them. Pass
-     * a company to count only its own, which is what its page shows.
+     * How many of one company's vacancies are waiting on the committee, which is what its own page shows. The count
+     * across every company is the one the trait does.
      */
-    public function countForReview(?Company $company = null): int
+    public function countForReviewOf(Company $company): int
     {
         $builder = $this->createQueryBuilder('r')
             ->select('COUNT(r.id)');
@@ -79,22 +85,20 @@ class VacancyRevisionRepository extends ServiceEntityRepository
         $this->whereAwaitingReview($builder);
 
         // A vacancy belongs to a company through the package it was posted under, so the count hops over that.
-        if (null !== $company) {
-            $builder->join(
-                'r.vacancy',
-                'v',
+        $builder->join(
+            'r.vacancy',
+            'v',
+        )
+            ->join(
+                'v.package',
+                'p',
             )
-                ->join(
-                    'v.package',
-                    'p',
-                )
-                ->andWhere('p.company = :company')
-                ->setParameter(
-                    'company',
-                    $company->getId(),
-                    Types::INTEGER,
-                );
-        }
+            ->andWhere('p.company = :company')
+            ->setParameter(
+                'company',
+                $company->getId(),
+                Types::INTEGER,
+            );
 
         return intval(
             $builder->getQuery()

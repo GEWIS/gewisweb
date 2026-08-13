@@ -52,14 +52,16 @@ trait FindsRevisionsForReviewTrait
     }
 
     /**
-     * Oldest first, so nothing sits in a queue unanswered while later submissions are dealt with.
+     * Longest waiting first, so nothing sits in a queue unanswered while later submissions are dealt with. By when it
+     * was submitted rather than by when it was written: a draft somebody spent a week on is not older than one
+     * submitted the day it was started.
      */
     protected function orderOldestFirst(
         QueryBuilder $builder,
         string $alias = 'r',
     ): QueryBuilder {
         return $builder->orderBy(
-            $alias . '.createdAt',
+            $alias . '.submittedAt',
             'ASC',
         );
     }

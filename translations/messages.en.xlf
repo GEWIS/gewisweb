@@ -2549,6 +2549,10 @@
         <source>Go to the original album</source>
         <target state="translated">Go to the original album</target>
       </trans-unit>
+      <trans-unit id="_L_bQqk" resname="Go to the queue">
+        <source>Go to the queue</source>
+        <target state="translated">Go to the queue</target>
+      </trans-unit>
       <trans-unit id="mOS.NAR" resname="Good to know">
         <source>Good to know</source>
         <target state="translated">Good to know</target>
@@ -3241,9 +3245,17 @@
         <source>Manage all vacancies</source>
         <target state="translated">Manage all vacancies</target>
       </trans-unit>
+      <trans-unit id="2052uWi" resname="Manage announcements">
+        <source>Manage announcements</source>
+        <target state="translated">Manage announcements</target>
+      </trans-unit>
       <trans-unit id="Zqc1Y9t" resname="Manage library">
         <source>Manage library</source>
         <target state="translated">Manage library</target>
+      </trans-unit>
+      <trans-unit id="jtGgAWS" resname="Manage maintenance">
+        <source>Manage maintenance</source>
+        <target state="translated">Manage maintenance</target>
       </trans-unit>
       <trans-unit id="0AZrzL3" resname="Manage vacancies">
         <source>Manage vacancies</source>
@@ -3861,6 +3873,10 @@
         <source>Nothing in this list. Try another tab.</source>
         <target state="translated">Nothing in this list. Try another tab.</target>
       </trans-unit>
+      <trans-unit id="uyXddNC" resname="Nothing is being announced at the moment.">
+        <source>Nothing is being announced at the moment.</source>
+        <target state="translated">Nothing is being announced at the moment.</target>
+      </trans-unit>
       <trans-unit id="Lq2OJnZ" resname="Nothing is highlighted right now.">
         <source>Nothing is highlighted right now.</source>
         <target state="translated">Nothing is highlighted right now.</target>
@@ -3868,6 +3884,10 @@
       <trans-unit id="ZxOrgM4" resname="Nothing is waiting to be published">
         <source>Nothing is waiting to be published</source>
         <target state="translated">Nothing is waiting to be published</target>
+      </trans-unit>
+      <trans-unit id="lpP5F4X" resname="Nothing is waiting.">
+        <source>Nothing is waiting.</source>
+        <target state="translated">Nothing is waiting.</target>
       </trans-unit>
       <trans-unit id="uVnZbDf" resname="Nothing of this page is on the website yet.">
         <source>Nothing of this page is on the website yet.</source>
@@ -3936,6 +3956,10 @@
       <trans-unit id="KtZNzny" resname="Older posts">
         <source>Older posts</source>
         <target state="translated">Older posts</target>
+      </trans-unit>
+      <trans-unit id="4ZqPu6x" resname="Oldest %duration%">
+        <source>Oldest %duration%</source>
+        <target state="translated">Oldest %duration%</target>
       </trans-unit>
       <trans-unit id="svuF9zU" resname="On Thursdays, there is a %link_start%social drink%link_end% from 16.30 to 19.00.">
         <source>On Thursdays, there is a %link_start%social drink%link_end% from 16.30 to 19.00.</source>
@@ -6133,6 +6157,10 @@
         <source>There is no upcoming GMM planned to authorize someone for.</source>
         <target state="translated">There is no upcoming GMM planned to authorize someone for.</target>
       </trans-unit>
+      <trans-unit id="veRJHWk" resname="There is nothing here waiting on you. What you can do is in the menu on the left.">
+        <source>There is nothing here waiting on you. What you can do is in the menu on the left.</source>
+        <target state="translated">There is nothing here waiting on you. What you can do is in the menu on the left.</target>
+      </trans-unit>
       <trans-unit id="ENSM6jA" resname="There is nothing to review right now.">
         <source>There is nothing to review right now.</source>
         <target state="translated">There is nothing to review right now.</target>
@@ -6849,6 +6877,10 @@
         <source>Voting Committees</source>
         <target state="translated">Voting Committees</target>
       </trans-unit>
+      <trans-unit id="UZb.OLh" resname="Waiting">
+        <source>Waiting</source>
+        <target state="translated">Waiting</target>
+      </trans-unit>
       <trans-unit id="YAEWQZx" resname="Waiting for a decision">
         <source>Waiting for a decision</source>
         <target state="translated">Waiting for a decision</target>
@@ -6864,6 +6896,10 @@
       <trans-unit id="JN_gtmg" resname="Waiting list">
         <source>Waiting list</source>
         <target>Waiting list</target>
+      </trans-unit>
+      <trans-unit id="AdKXPfr" resname="Waiting longest">
+        <source>Waiting longest</source>
+        <target state="translated">Waiting longest</target>
       </trans-unit>
       <trans-unit id="NR4jmQJ" resname="Waiting to be processed">
         <source>Waiting to be processed</source>

@@ -1216,6 +1216,16 @@ class ActivityFixture extends Fixture implements DependentFixtureInterface
         $revision = new ActivityRevision();
         $revision->setAuthor($author);
         $revision->setStatus($status);
+
+        // What the board still has to look at is dated, since a queue is ordered and coloured by how long something
+        // has been waiting on it.
+        if (
+            RevisionStatus::Submitted === $status
+            || RevisionStatus::InReview === $status
+        ) {
+            $revision->setSubmittedAt(new DateTime('-2 days'));
+        }
+
         $revision->setRevisionNumber($revisionNumber);
         $revision->setPreviousRevision($previous);
         $revision->setName(new ActivityLocalisedText($content['name']['en'], $content['name']['nl']));

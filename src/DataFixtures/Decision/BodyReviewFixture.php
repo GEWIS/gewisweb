@@ -13,6 +13,7 @@ use App\Entity\Decision\OrganInformation;
 use App\Entity\Decision\OrganInformationRevision;
 use App\Entity\Decision\OrganInformationRevisionComment;
 use App\Entity\User\User;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -51,6 +52,7 @@ class BodyReviewFixture extends Fixture implements DependentFixtureInterface
 
         $draft = new OrganInformationRevision();
         $draft->setStatus(RevisionStatus::Submitted);
+        $draft->setSubmittedAt(new DateTime('-4 days'));
         $draft->setRevisionNumber(2);
         $draft->setPreviousRevision($live);
         $draft->setAuthor($author);

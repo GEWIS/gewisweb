@@ -73,6 +73,24 @@ interface RevisionInterface
     public function setReviewedAt(?DateTime $reviewedAt): void;
 
     /**
+     * When this revision was handed to its reviewers, which is how long whatever is waiting on it has been waiting.
+     * Null while it never has been, which is every draft.
+     */
+    public function getSubmittedAt(): ?DateTime;
+
+    /**
+     * Stamped by the listener on the `submit` transition. Application code submits a revision through
+     * `$workflow->apply()`, never by calling this directly.
+     */
+    public function setSubmittedAt(?DateTime $submittedAt): void;
+
+    /**
+     * When this revision was written, which for a draft that was worked on for a while is well before it was
+     * submitted.
+     */
+    public function getCreatedAt(): DateTime;
+
+    /**
      * The stable aggregate this revision belongs to.
      */
     public function getRevisable(): RevisableInterface;

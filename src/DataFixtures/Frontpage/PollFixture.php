@@ -309,6 +309,16 @@ class PollFixture extends Fixture implements DependentFixtureInterface
         $revision = new PollRevision();
         $revision->setStatus($status);
         $revision->setAuthor($this->member($creator));
+
+        // What the board still has to look at is dated, since a queue is ordered and coloured by how long something
+        // has been waiting on it.
+        if (
+            RevisionStatus::Submitted === $status
+            || RevisionStatus::InReview === $status
+        ) {
+            $revision->setSubmittedAt(new DateTime('-2 days'));
+        }
+
         $revision->setQuestion(new FrontpageLocalisedText(
             $questionEN,
             $questionNL,

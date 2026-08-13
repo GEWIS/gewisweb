@@ -13,8 +13,7 @@ use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Form\Frontpage\PollReviewDecisionType;
 use App\Repository\Frontpage\PollRevisionCommentRepository;
-use App\Repository\Frontpage\PollRevisionRepository;
-use App\ViewModel\Application\ReviewQueueRow;
+use App\Service\Frontpage\PollReviewQueueProvider;
 use App\ViewModel\Application\RevisionActions;
 use DateTime;
 use Override;
@@ -43,7 +42,7 @@ use function assert;
 class AdminPollApprovalController extends AbstractRevisionReviewController
 {
     public function __construct(
-        private readonly PollRevisionRepository $revisionRepository,
+        private readonly PollReviewQueueProvider $queueProvider,
         private readonly PollRevisionCommentRepository $commentRepository,
     ) {
     }
@@ -57,17 +56,7 @@ class AdminPollApprovalController extends AbstractRevisionReviewController
     {
         return $this->render(
             'frontpage/admin/polls/approvals/index.html.twig',
-            [
-                'rows' => ReviewQueueRow::fromRevisions(
-                    $this->revisionRepository->findForReview(),
-                    static function (RevisionInterface $revision): string {
-                        assert($revision instanceof PollRevision);
-
-                        return $revision->getQuestion()->getText(Languages::current()) ?? '';
-                    },
-                    'admin/frontpage/polls/approvals/review',
-                ),
-            ],
+            ['rows' => $this->queueProvider->queue()->rows],
         );
     }
 

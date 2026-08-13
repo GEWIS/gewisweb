@@ -7,15 +7,13 @@ namespace App\Controller\Activity;
 use App\Controller\Application\AbstractRevisionReviewController;
 use App\Entity\Activity\ActivityRevision;
 use App\Entity\Activity\SignupList;
-use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\RevisionInterface;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Activity\ActivityRevisionCommentRepository;
-use App\Repository\Activity\ActivityRevisionRepository;
+use App\Service\Activity\ActivityReviewQueueProvider;
 use App\Service\Activity\SignupListMigrator;
 use App\Util\Activity\PastActivityRule;
-use App\ViewModel\Application\ReviewQueueRow;
 use App\ViewModel\Application\RevisionActions;
 use Override;
 use Symfony\Component\ExpressionLanguage\Expression;
@@ -27,7 +25,6 @@ use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 use function assert;
-use function strval;
 
 /**
  * The shared review surface for activities:
@@ -46,7 +43,7 @@ use function strval;
 class AdminApprovalController extends AbstractRevisionReviewController
 {
     public function __construct(
-        private readonly ActivityRevisionRepository $revisionRepository,
+        private readonly ActivityReviewQueueProvider $queueProvider,
         private readonly ActivityRevisionCommentRepository $commentRepository,
         private readonly SignupListMigrator $signupListMigrator,
     ) {
@@ -61,17 +58,7 @@ class AdminApprovalController extends AbstractRevisionReviewController
     {
         return $this->render(
             'activity/admin/approvals/index.html.twig',
-            [
-                'rows' => ReviewQueueRow::fromRevisions(
-                    $this->revisionRepository->findForReview(),
-                    static function (RevisionInterface $revision): string {
-                        assert($revision instanceof ActivityRevision);
-
-                        return strval($revision->getName()->getText(Languages::current()));
-                    },
-                    'admin/activities/approvals/review',
-                ),
-            ],
+            ['rows' => $this->queueProvider->queue()->rows],
         );
     }
 

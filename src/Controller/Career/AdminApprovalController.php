@@ -12,10 +12,9 @@ use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Career\CompanyPackageRepository;
 use App\Repository\Career\CompanyRevisionCommentRepository;
-use App\Repository\Career\CompanyRevisionRepository;
 use App\Repository\Career\VacancyRevisionCommentRepository;
-use App\Repository\Career\VacancyRevisionRepository;
-use App\ViewModel\Application\ReviewQueueRow;
+use App\Service\Career\CompanyReviewQueueProvider;
+use App\Service\Career\VacancyReviewQueueProvider;
 use App\ViewModel\Application\RevisionActions;
 use Override;
 use Symfony\Component\ExpressionLanguage\Expression;
@@ -48,8 +47,8 @@ use function assert;
 class AdminApprovalController extends AbstractRevisionReviewController
 {
     public function __construct(
-        private readonly CompanyRevisionRepository $companyRevisionRepository,
-        private readonly VacancyRevisionRepository $vacancyRevisionRepository,
+        private readonly CompanyReviewQueueProvider $companyQueueProvider,
+        private readonly VacancyReviewQueueProvider $vacancyQueueProvider,
         private readonly CompanyRevisionCommentRepository $companyCommentRepository,
         private readonly VacancyRevisionCommentRepository $vacancyCommentRepository,
         private readonly CompanyPackageRepository $packageRepository,
@@ -65,24 +64,8 @@ class AdminApprovalController extends AbstractRevisionReviewController
         return $this->render(
             'career/admin/approvals/index.html.twig',
             [
-                'companyRows' => ReviewQueueRow::fromRevisions(
-                    $this->companyRevisionRepository->findForReview(),
-                    static function (RevisionInterface $revision): string {
-                        assert($revision instanceof CompanyRevision);
-
-                        return $revision->getCompany()->getName();
-                    },
-                    'admin/career/approvals/company',
-                ),
-                'vacancyRows' => ReviewQueueRow::fromRevisions(
-                    $this->vacancyRevisionRepository->findForReview(),
-                    static function (RevisionInterface $revision): string {
-                        assert($revision instanceof VacancyRevision);
-
-                        return $revision->getVacancy()->getSlugName();
-                    },
-                    'admin/career/approvals/vacancy',
-                ),
+                'companyRows' => $this->companyQueueProvider->queue()->rows,
+                'vacancyRows' => $this->vacancyQueueProvider->queue()->rows,
                 'pendingBanners' => $this->packageRepository->findPendingBanners(),
             ],
         );

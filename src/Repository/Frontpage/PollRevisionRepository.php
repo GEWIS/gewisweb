@@ -27,8 +27,8 @@ class PollRevisionRepository extends ServiceEntityRepository
     }
 
     /**
-     * The questions waiting on the board, oldest first. A queue row names the poll by its question, so that comes
-     * along with it.
+     * The questions waiting on the board, oldest first. A queue row names the poll by its question and says what is
+     * live while it waits, so both come along with it.
      *
      * @return PollRevision[]
      */
@@ -39,6 +39,7 @@ class PollRevisionRepository extends ServiceEntityRepository
                 'p',
                 'q',
                 'a',
+                'lr',
             )
             ->join(
                 'r.poll',
@@ -51,6 +52,10 @@ class PollRevisionRepository extends ServiceEntityRepository
             ->leftJoin(
                 'r.author',
                 'a',
+            )
+            ->leftJoin(
+                'p.liveRevision',
+                'lr',
             );
 
         $this->whereAwaitingReview($builder);
