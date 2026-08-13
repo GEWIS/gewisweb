@@ -7133,6 +7133,10 @@
         <source>You are not installed in any body right now.</source>
         <target state="translated">Je bent op dit moment in geen enkel orgaan geïnstalleerd.</target>
       </trans-unit>
+      <trans-unit id="Nuc3gMU" resname="You are only reachable at your university address, which stops working once you graduate. Ask the board or the secretary to change it to one that outlives your studies.">
+        <source>You are only reachable at your university address, which stops working once you graduate. Ask the board or the secretary to change it to one that outlives your studies.</source>
+        <target state="translated">Je bent alleen bereikbaar op je universiteitsadres, dat stopt met werken zodra je afstudeert. Vraag het bestuur of de secretaris om het te wijzigen naar een adres dat je studie overleeft.</target>
+      </trans-unit>
       <trans-unit id="aRT9wOd" resname="You are signed up.">
         <source>You are signed up.</source>
         <target>Je bent ingeschreven.</target>
@@ -7312,6 +7316,10 @@
       <trans-unit id="qWru1FD" resname="Your edit session expired; reopen the activity and try again.">
         <source>Your edit session expired; reopen the activity and try again.</source>
         <target state="translated">Je bewerkingssessie is verlopen; open de activiteit opnieuw en probeer het nogmaals.</target>
+      </trans-unit>
+      <trans-unit id="nyZTzfw" resname="Your email address will expire">
+        <source>Your email address will expire</source>
+        <target state="translated">Je e-mailadres komt te vervallen</target>
       </trans-unit>
       <trans-unit id="C3pbkFh" resname="Your highlighted vacancies are saved.">
         <source>Your highlighted vacancies are saved.</source>
