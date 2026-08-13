@@ -18,8 +18,12 @@ use Override;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
+use function html_entity_decode;
+use function mb_strlen;
+use function mb_substr;
 use function preg_replace_callback;
 use function strip_tags;
+use function trim;
 
 /**
  * Renders Markdown to safe HTML: raw HTML is escaped, unsafe links are dropped, external links open safely in a new
@@ -27,6 +31,9 @@ use function strip_tags;
  */
 final class MarkdownExtension extends AbstractExtension
 {
+    /** How much of an article an excerpt is taken from: well past the longest one any list row shows. */
+    private const int EXCERPT_SOURCE_LENGTH = 1500;
+
     private ?MarkdownConverter $converter = null;
 
     /**
@@ -46,7 +53,42 @@ final class MarkdownExtension extends AbstractExtension
                 $this->markdownComment(...),
                 ['is_safe' => ['html']],
             ),
+            new TwigFilter(
+                'markdown_excerpt',
+                $this->markdownExcerpt(...),
+            ),
         ];
+    }
+
+    /**
+     * The opening words of a piece of Markdown as plain text, for a list row that shows what an article is about
+     * before the reader opens it. Longer than the excerpt gets an ellipsis.
+     *
+     * What comes back is text and not HTML: the escaping the converter did is undone, so an ampersand somebody wrote
+     * is an ampersand again by the time Twig escapes it the once. Deliberately not marked safe for that reason.
+     */
+    public function markdownExcerpt(
+        ?string $text,
+        int $length,
+    ): string {
+        // Only the opening of the article is converted: a list row should not pay for a full render of a long one.
+        $body = trim(html_entity_decode(strip_tags($this->markdown(
+            mb_substr(
+                $text ?? '',
+                0,
+                self::EXCERPT_SOURCE_LENGTH,
+            ),
+        ))));
+
+        if (mb_strlen($body) <= $length) {
+            return $body;
+        }
+
+        return trim(mb_substr(
+            $body,
+            0,
+            $length,
+        )) . '…';
     }
 
     /**

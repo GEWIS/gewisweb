@@ -1,0 +1,30 @@
+{#
+    One item in a news list, as the contents of a panel body. Nothing here names who wrote it: news is the association
+    speaking, not a person, and the entity holds no author.
+
+    Pass `item`.
+#}
+{% set isNew = date(item.date) > date('-7 days') %}
+
+<article class="news-item d-flex gap-3">
+    <div class="news-item__date text-center flex-shrink-0">
+        <span class="d-block text-uppercase small fw-bold text-primary-emphasis">{{ item.date|format_date(pattern: 'MMM', locale: app.request.locale) }}</span>
+        <span class="d-block fs-4 fw-bold lh-1">{{ item.date|format_date(pattern: 'dd', locale: app.request.locale) }}</span>
+        <span class="d-block small text-muted">{{ item.date|format_date(pattern: 'yyyy', locale: app.request.locale) }}</span>
+    </div>
+    <div class="flex-grow-1 min-w-0">
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+            <a class="badge {{ item.category.badgeClass }}"
+               href="{{ path('news/index', {'category': item.category.value}) }}">{{ item.category|trans }}</a>
+            {% if isNew %}
+                <span class="badge badge-success">{{ 'New'|trans }}</span>
+            {% endif %}
+        </div>
+        <h3 class="h5 mb-1">
+            <a href="{{ path('news/view', {'item': item.id}) }}">{{ item.title }}</a>
+        </h3>
+        <p class="text-muted mb-0">
+            {{ item.content|markdown_excerpt(220) }}
+        </p>
+    </div>
+</article>

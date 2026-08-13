@@ -121,6 +121,14 @@
         <source>Enter an opening date and time.</source>
         <target state="translated">Enter an opening date and time.</target>
       </trans-unit>
+      <trans-unit id="KaqxOsr" resname="Enter the Dutch title.">
+        <source>Enter the Dutch title.</source>
+        <target state="translated">Enter the Dutch title.</target>
+      </trans-unit>
+      <trans-unit id="Tj7T5__" resname="Enter the English title.">
+        <source>Enter the English title.</source>
+        <target state="translated">Enter the English title.</target>
+      </trans-unit>
       <trans-unit id="za5VIsp" resname="Enter the course code.">
         <source>Enter the course code.</source>
         <target state="translated">Enter the course code.</target>
@@ -132,6 +140,10 @@
       <trans-unit id="PaQzpFY" resname="Enter the date of this document.">
         <source>Enter the date of this document.</source>
         <target state="translated">Enter the date of this document.</target>
+      </trans-unit>
+      <trans-unit id="NF9iuTf" resname="Enter the date this news item carries.">
+        <source>Enter the date this news item carries.</source>
+        <target state="translated">Enter the date this news item carries.</target>
       </trans-unit>
       <trans-unit id="ITE2E1L" resname="Enter the day the package expires.">
         <source>Enter the day the package expires.</source>
@@ -252,6 +264,14 @@
       <trans-unit id="25GvEX2" resname="Write a Mastodon account as username@instance.">
         <source>Write a Mastodon account as username@instance.</source>
         <target state="translated">Write a Mastodon account as username@instance.</target>
+      </trans-unit>
+      <trans-unit id="UHdO4_j" resname="Write the Dutch text.">
+        <source>Write the Dutch text.</source>
+        <target state="translated">Write the Dutch text.</target>
+      </trans-unit>
+      <trans-unit id="1DwTE3E" resname="Write the English text.">
+        <source>Write the English text.</source>
+        <target state="translated">Write the English text.</target>
       </trans-unit>
       <trans-unit id="fcfNWQJ" resname="You can only highlight your own vacancies that are currently shown on the website.">
         <source>You can only highlight your own vacancies that are currently shown on the website.</source>

@@ -1,22 +1,98 @@
 {% extends 'layout-admin.html.twig' %}
+{% import 'partials/application/confirm-post-modal.html.twig' as modals %}
 
 {% block page_title %}{{ 'Overview'|trans|page_title }}{{ 'News'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block admin_breadcrumbs %}
-    <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('admin/frontpage/news/index') }}">
-            {{ 'News'|trans }}
-        </a>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/frontpage/news/index') }}">{{ 'News'|trans }}</a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">
-        {{ 'Overview'|trans }}
-    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Overview'|trans }}</li>
 {% endblock %}
 
 {% block contents %}
-    <div class="row">
-        <div class="col-md-12">
-            {# TODO #}
+    <div class="row mb-3">
+        <div class="col-md-12 d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <h2 class="mb-0">{{ 'News'|trans }}</h2>
+            <a href="{{ path('admin/frontpage/news/create') }}" class="btn btn-gewis-primary">
+                <span class="fas fa-plus"></span> {{ 'Write news'|trans }}
+            </a>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body">
+                    {% if totalCount == 0 %}
+                        <p class="text-muted mb-0">{{ 'Nothing has been published yet.'|trans }}</p>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'Title'|trans }}</th>
+                                        <th>{{ 'Category'|trans }}</th>
+                                        <th>{{ 'Date'|trans }}</th>
+                                        <th class="text-end">{{ 'Actions'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items %}
+                                        <tr>
+                                            <td>
+                                                <a href="{{ path('admin/frontpage/news/edit', {'item': item.id}) }}">
+                                                    {{ item.title }}
+                                                </a>
+                                                {% if item.pinned %}
+                                                    <span class="fas fa-thumbtack text-muted ms-1"
+                                                          title="{{ 'Pinned'|trans }}"></span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <span class="badge {{ item.category.badgeClass }}">
+                                                    {{ item.category|trans }}
+                                                </span>
+                                            </td>
+                                            <td class="text-muted small">{{ item.date|format_date(pattern: 'd MMM yyyy', locale: app.request.locale) }}</td>
+                                            <td class="text-end">
+                                                <a href="{{ path('admin/frontpage/news/edit', {'item': item.id}) }}"
+                                                   class="btn btn-sm btn-outline-gewis-primary">{{ 'Edit'|trans }}</a>
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modal-delete-news-{{ item.id }}">
+                                                    {{ 'Delete'|trans }}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {% include 'partials/application/pagination.html.twig' with {
+                            'route': 'admin/frontpage/news/index',
+                            'routeParams': {},
+                            'page': currentPage,
+                            'pageSize': pageSize,
+                            'totalCount': totalCount,
+                            'totalPages': (totalCount / pageSize)|round(0, 'ceil'),
+                        } only %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for item in items %}
+        {{ modals.confirm_modal(
+            'modal-delete-news-' ~ item.id,
+            path('admin/frontpage/news/delete', {'item': item.id}),
+            csrf_token('news_delete-' ~ item.id),
+            'Delete this news item?'|trans,
+            'The item disappears from the website and the archive. This cannot be undone.'|trans,
+            'Delete'|trans,
+            'danger',
+        ) }}
+    {% endfor %}
 {% endblock %}

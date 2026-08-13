@@ -1,0 +1,56 @@
+{#
+    The news form, shared by the create and edit pages. The two languages sit side by side with the same markdown
+    editor an activity's description uses.
+#}
+{{ form_start(form, {'method': 'POST', 'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_errors(form) }}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'General'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">{{ form_row(form.date) }}</div>
+                    <div class="col-md-6">{{ form_row(form.category) }}</div>
+                </div>
+                {{ form_row(form.pinned) }}
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'Text'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-2"><span class="flag-icon flag-icon-nl"></span> {{ 'Dutch'|trans }}</div>
+                        {{ form_row(form.dutchTitle) }}
+                        {{ form_row(form.dutchContent, {'attr': {
+                            'data-controller': 'markdown-editor',
+                            'data-markdown-editor-language-value': app.request.locale,
+                        }}) }}
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-2"><span class="flag-icon flag-icon-en"></span> {{ 'English'|trans }}</div>
+                        {{ form_row(form.englishTitle) }}
+                        {{ form_row(form.englishContent, {'attr': {
+                            'data-controller': 'markdown-editor',
+                            'data-markdown-editor-language-value': app.request.locale,
+                        }}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-gewis-primary">{{ 'Save'|trans }}</button>
+            <a href="{{ path('admin/frontpage/news/index') }}" class="btn btn-secondary">{{ 'Cancel'|trans }}</a>
+        </div>
+    </div>
+</div>
+
+{{ form_end(form) }}

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Entity\Frontpage;
 
+use App\Entity\Application\Enums\Languages;
 use App\Entity\Application\Traits\IdentifiableTrait;
+use App\Entity\Frontpage\Enums\NewsCategory;
 use App\Repository\Frontpage\NewsItemRepository;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
@@ -12,7 +14,8 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 
 /**
- * News item.
+ * A piece of news the board or a committee put out. The titles and the bodies are written per language and the body is
+ * markdown, which is what the website renders it as.
  */
 #[Entity(repositoryClass: NewsItemRepository::class)]
 class NewsItem
@@ -38,22 +41,41 @@ class NewsItem
     private string $englishTitle;
 
     /**
-     * The english HTML content of the news.
+     * The English body of the news item, as markdown.
      */
     #[Column(type: Types::TEXT)]
     private string $englishContent;
 
     /**
-     * The english HTML content of the news.
+     * The Dutch body of the news item, as markdown.
      */
     #[Column(type: Types::TEXT)]
     private string $dutchContent;
+
+    /**
+     * What the item is about, which is what the feed's filter narrows by.
+     */
+    #[Column(
+        type: Types::STRING,
+        enumType: NewsCategory::class,
+    )]
+    private NewsCategory $category = NewsCategory::Association;
 
     /**
      * Whether this news item is pinned to the top of the news section or not.
      */
     #[Column(type: Types::BOOLEAN)]
     private bool $pinned;
+
+    public function getCategory(): NewsCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(NewsCategory $category): void
+    {
+        $this->category = $category;
+    }
 
     public function getPinned(): bool
     {
@@ -88,6 +110,26 @@ class NewsItem
     public function getDutchContent(): string
     {
         return $this->dutchContent;
+    }
+
+    /**
+     * The title in the language the site is being read in.
+     */
+    public function getTitle(): string
+    {
+        return Languages::Dutch === Languages::current()
+            ? $this->dutchTitle
+            : $this->englishTitle;
+    }
+
+    /**
+     * The body in the language the site is being read in, as markdown.
+     */
+    public function getContent(): string
+    {
+        return Languages::Dutch === Languages::current()
+            ? $this->dutchContent
+            : $this->englishContent;
     }
 
     public function setDate(DateTime $date): void

@@ -749,6 +749,10 @@
         <source>All documents</source>
         <target state="translated">Alle documenten</target>
       </trans-unit>
+      <trans-unit id="SKV_hOt" resname="All news">
+        <source>All news</source>
+        <target state="translated">Al het nieuws</target>
+      </trans-unit>
       <trans-unit id="XvSLL98" resname="All photo tags of you have been removed.">
         <source>All photo tags of you have been removed.</source>
         <target>Alle fototags van jou zijn verwijderd.</target>
@@ -1473,6 +1477,10 @@
         <source>Contact the education officer</source>
         <target state="translated">Neem contact op met de onderwijscommissaris</target>
       </trans-unit>
+      <trans-unit id="AbWvrhO" resname="Content">
+        <source>Content</source>
+        <target state="translated">Inhoud</target>
+      </trans-unit>
       <trans-unit id="Xj30MRg" resname="Continue">
         <source>Continue</source>
         <target state="translated">Doorgaan</target>
@@ -1685,6 +1693,10 @@
         <source>Default</source>
         <target state="translated">Standaard</target>
       </trans-unit>
+      <trans-unit id="Z_crX_u" resname="Delete">
+        <source>Delete</source>
+        <target state="translated">Verwijderen</target>
+      </trans-unit>
       <trans-unit id="nooMqa8" resname="Delete album">
         <source>Delete album</source>
         <target state="translated">Album verwijderen</target>
@@ -1696,6 +1708,10 @@
       <trans-unit id="7PFOWds" resname="Delete selected">
         <source>Delete selected</source>
         <target state="translated">Selectie verwijderen</target>
+      </trans-unit>
+      <trans-unit id="P21LgGI" resname="Delete this news item?">
+        <source>Delete this news item?</source>
+        <target state="translated">Dit nieuwsbericht verwijderen?</target>
       </trans-unit>
       <trans-unit id="l9KZflr" resname="Deleted">
         <source>Deleted</source>
@@ -1972,6 +1988,10 @@
       <trans-unit id="pXgY911" resname="Edit label">
         <source>Edit label</source>
         <target state="translated">Label bewerken</target>
+      </trans-unit>
+      <trans-unit id="qizitBJ" resname="Edit news item">
+        <source>Edit news item</source>
+        <target state="translated">Nieuwsbericht bewerken</target>
       </trans-unit>
       <trans-unit id="MOCb9jo" resname="Edit sign-up">
         <source>Edit sign-up</source>
@@ -3809,6 +3829,10 @@
         <source>Nothing has been filed under this course yet.</source>
         <target state="translated">Er is nog niets onder dit vak opgeslagen.</target>
       </trans-unit>
+      <trans-unit id="vRTf2Ll" resname="Nothing has been published yet.">
+        <source>Nothing has been published yet.</source>
+        <target state="translated">Er is nog niets gepubliceerd.</target>
+      </trans-unit>
       <trans-unit id="Eo_Mzqu" resname="Nothing has been shared for %code% yet">
         <source>Nothing has been shared for %code% yet</source>
         <target state="translated">Er is nog niets gedeeld voor %code%</target>
@@ -4224,6 +4248,14 @@
       <trans-unit id="kyf_fMQ" resname="Pick which of your vacancies appear on the career page. There is no limit per category.">
         <source>Pick which of your vacancies appear on the career page. There is no limit per category.</source>
         <target state="translated">Kies welke van je vacatures op de carrièrepagina verschijnen. Er is geen limiet per categorie.</target>
+      </trans-unit>
+      <trans-unit id="JhpfIbJ" resname="Pin to the top of the news">
+        <source>Pin to the top of the news</source>
+        <target state="translated">Bovenaan het nieuws vastzetten</target>
+      </trans-unit>
+      <trans-unit id="L7WbXfl" resname="Pinned">
+        <source>Pinned</source>
+        <target state="translated">Vastgezet</target>
       </trans-unit>
       <trans-unit id="u7c4pso" resname="Place on photo">
         <source>Place on photo</source>
@@ -5829,6 +5861,10 @@
         <source>The invitation has been withdrawn.</source>
         <target state="translated">De uitnodiging is ingetrokken.</target>
       </trans-unit>
+      <trans-unit id="0xUBmCr" resname="The item disappears from the website and the archive. This cannot be undone.">
+        <source>The item disappears from the website and the archive. This cannot be undone.</source>
+        <target state="translated">Het bericht verdwijnt van de website en uit het archief. Dit kan niet ongedaan worden gemaakt.</target>
+      </trans-unit>
       <trans-unit id="2gIWC.K" resname="The label was added.">
         <source>The label was added.</source>
         <target state="translated">Het label is toegevoegd.</target>
@@ -5864,6 +5900,18 @@
       <trans-unit id="miIqAD3" resname="The minutes of this meeting. Uploading them marks the meeting complete for members, even if no decisions were taken.">
         <source>The minutes of this meeting. Uploading them marks the meeting complete for members, even if no decisions were taken.</source>
         <target state="translated">De notulen van deze vergadering. Door ze te uploaden wordt de vergadering voor leden als afgerond gemarkeerd, ook als er geen besluiten zijn genomen.</target>
+      </trans-unit>
+      <trans-unit id="osYh7EY" resname="The news item was published.">
+        <source>The news item was published.</source>
+        <target state="translated">Het nieuwsbericht is gepubliceerd.</target>
+      </trans-unit>
+      <trans-unit id="j4o2B.G" resname="The news item was removed.">
+        <source>The news item was removed.</source>
+        <target state="translated">Het nieuwsbericht is verwijderd.</target>
+      </trans-unit>
+      <trans-unit id="628vu0x" resname="The news item was saved.">
+        <source>The news item was saved.</source>
+        <target state="translated">Het nieuwsbericht is opgeslagen.</target>
       </trans-unit>
       <trans-unit id="HtoOQkb" resname="The package was added.">
         <source>The package was added.</source>
@@ -6048,6 +6096,10 @@
       <trans-unit id="mftjN3u" resname="There is no banner on the website yet.">
         <source>There is no banner on the website yet.</source>
         <target state="translated">Er staat nog geen banner op de website.</target>
+      </trans-unit>
+      <trans-unit id="3EvuDat" resname="There is no news here yet.">
+        <source>There is no news here yet.</source>
+        <target state="translated">Hier staat nog geen nieuws.</target>
       </trans-unit>
       <trans-unit id="vDMX2Ig" resname="There is no poll running at the moment.">
         <source>There is no poll running at the moment.</source>
@@ -7008,6 +7060,10 @@
       <trans-unit id="610a7aJ" resname="Write a description, add a logo and a banner, and say where else your body can be followed. The board looks at it before anything appears on the website.">
         <source>Write a description, add a logo and a banner, and say where else your body can be followed. The board looks at it before anything appears on the website.</source>
         <target state="translated">Schrijf een beschrijving, voeg een logo en een banner toe en vertel waar je orgaan nog meer te volgen is. Het bestuur kijkt ernaar voordat er iets op de website verschijnt.</target>
+      </trans-unit>
+      <trans-unit id="YNeNcIg" resname="Write news">
+        <source>Write news</source>
+        <target state="translated">Nieuws schrijven</target>
       </trans-unit>
       <trans-unit id="s999yGF" resname="Written by %author%">
         <source>Written by %author%</source>

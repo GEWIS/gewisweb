@@ -1,0 +1,58 @@
+<div {{ attributes }}>
+    {# data-live-ignore keeps the panel (and the focused search field) stable across live re-renders. #}
+    <div class="collapse mb-3" id="news-filters" data-live-ignore>
+        <div class="panel my-0">
+            <div class="panel-body">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-8">
+                        <label class="form-label" for="news-overview-search">{{ 'Search'|trans }}</label>
+                        <input type="search" class="form-control" id="news-overview-search"
+                               placeholder="{{ 'Search by title or text'|trans }}"
+                               data-model="debounce(300)|search"
+                               value="{{ this.search }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label" for="news-overview-category">{{ 'Category'|trans }}</label>
+                        <select class="form-select" id="news-overview-category" data-model="category">
+                            <option value="">{{ 'Any'|trans }}</option>
+                            {% for category in this.categories %}
+                                <option value="{{ category.value }}" {% if this.category == category.value %}selected{% endif %}>
+                                    {{ category|trans }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% set itemsByMonth = this.itemsByMonth %}
+    {% if itemsByMonth is empty %}
+        <p class="text-muted text-center py-4">{{ 'There is no news to show.'|trans }}</p>
+    {% else %}
+        {% for items in itemsByMonth %}
+            <div class="month-divider">
+                {{ items|first.date|format_datetime(pattern: 'MMMM yyyy', locale: app.request.locale) }}
+            </div>
+            {% for item in items %}
+                <div class="panel">
+                    <div class="panel-body">
+                        {% include 'partials/frontpage/news-item.html.twig' with {'item': item} %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+    {% if this.hasMore %}
+        <div data-controller="infinite-scroll" class="text-center py-3">
+            <button type="button" class="btn btn-outline-secondary"
+                    data-action="live#action" data-live-action-param="loadMore"
+                    data-infinite-scroll-target="button">
+                {{ 'Load more'|trans }}
+            </button>
+            <div data-infinite-scroll-target="sentinel" aria-hidden="true"></div>
+        </div>
+    {% endif %}
+</div>
