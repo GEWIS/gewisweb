@@ -231,6 +231,48 @@ abstract class AbstractRevisionReviewController extends AbstractRevisionControll
     }
 
     /**
+     * Throwing a draft away and pointing the aggregate back at what is live. Which aggregate it hangs off is the
+     * revision's own business, so only where the reader lands afterwards differs per domain.
+     *
+     * @param array<string, int|string|null> $routeParameters
+     */
+    protected function discardDraft(
+        RevisionInterface $revision,
+        string $route,
+        array $routeParameters = [],
+    ): Response {
+        // Discarding a draft is editing it away, so it is gated exactly like editing: a Draft, by an owner or reviewer.
+        $this->denyAccessUnlessGranted(
+            RevisionVoter::EDIT,
+            $revision,
+        );
+
+        // There must be something live to fall back to. The first draft of a brand-new aggregate has nothing behind
+        // it, so discarding it would be a deletion, which is left to the stale-draft cleanup instead.
+        if (!$this->revisionActions($revision)->isDiscardable) {
+            $this->addFlash(
+                AlertTypes::Warning->value,
+                $this->translator->trans('This draft cannot be discarded.'),
+            );
+
+            return $this->reviewResponse($revision);
+        }
+
+        $this->revisionDiscarder->discardToLive($revision);
+        $this->entityManager->flush();
+
+        $this->addFlash(
+            AlertTypes::Success->value,
+            $this->translator->trans('The draft was discarded and the live version restored.'),
+        );
+
+        return $this->redirectToRoute(
+            $route,
+            $routeParameters,
+        );
+    }
+
+    /**
      * Add whatever was typed in the discussion box. Posted as a plain field rather than a form, so an empty box is
      * simply ignored.
      */

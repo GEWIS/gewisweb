@@ -6,6 +6,7 @@ namespace App\Repository\Activity;
 
 use App\Entity\Activity\ActivityRevision;
 use App\Entity\Application\Enums\RevisionStatus;
+use App\Repository\Application\FindsRevisionsForReviewTrait;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
@@ -16,6 +17,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ActivityRevisionRepository extends ServiceEntityRepository
 {
+    use FindsRevisionsForReviewTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct(
@@ -31,7 +34,7 @@ class ActivityRevisionRepository extends ServiceEntityRepository
      */
     public function findForReview(): array
     {
-        return $this->createQueryBuilder('r')
+        $builder = $this->createQueryBuilder('r')
             ->addSelect(
                 'n',
                 'a',
@@ -43,20 +46,12 @@ class ActivityRevisionRepository extends ServiceEntityRepository
             ->join(
                 'r.activity',
                 'a',
-            )
-            ->where('r.status IN (:statuses)')
-            ->setParameter(
-                'statuses',
-                [
-                    RevisionStatus::Submitted->value,
-                    RevisionStatus::InReview->value,
-                ],
-            )
-            ->orderBy(
-                'r.createdAt',
-                'ASC',
-            )
-            ->getQuery()
+            );
+
+        $this->whereAwaitingReview($builder);
+        $this->orderOldestFirst($builder);
+
+        return $builder->getQuery()
             ->getResult();
     }
 

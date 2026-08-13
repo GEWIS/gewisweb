@@ -9,6 +9,7 @@ import DismissibleController from './controllers/application/dismissible_control
 import EditLockController from './controllers/application/edit_lock_controller.ts';
 import FormCollectionController from './controllers/application/form_collection_controller.ts';
 import FormStepperController from './controllers/application/form_stepper_controller.ts';
+import ImageCropController from './controllers/application/image_crop_controller.ts';
 import InfiniteScrollController from './controllers/application/infinite_scroll_controller.ts';
 import LocalisedFieldsController from './controllers/application/localised_fields_controller.ts';
 import MarkdownEditorController from './controllers/application/markdown_editor_controller.ts';
@@ -54,6 +55,7 @@ app.register('dismissible', DismissibleController);
 app.register('edit-lock', EditLockController);
 app.register('form-collection', FormCollectionController);
 app.register('form-stepper', FormStepperController);
+app.register('image-crop', ImageCropController);
 app.register('infinite-scroll', InfiniteScrollController);
 app.register('localised-fields', LocalisedFieldsController);
 app.register('markdown-editor', MarkdownEditorController);

@@ -1,0 +1,46 @@
+<div {{ attributes }}>
+    <div class="collapse mb-3" id="body-filters-{{ this.type }}-{{ this.abrogated ? 'past' : 'now' }}">
+        <div class="panel my-0">
+            <div class="panel-body">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label" for="body-overview-search-{{ this.type }}-{{ this.abrogated ? 'past' : 'now' }}">
+                            {{ 'Search'|trans }}
+                        </label>
+                        <input type="search" class="form-control"
+                               id="body-overview-search-{{ this.type }}-{{ this.abrogated ? 'past' : 'now' }}"
+                               placeholder="{{ 'Search by abbreviation or name'|trans }}"
+                               data-model="debounce(300)|search"
+                               value="{{ this.search }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if this.organs is empty %}
+        <p class="text-muted text-center py-4">
+            {{ this.search is empty ? this.emptyMessage : 'No bodies match the current search.'|trans }}
+        </p>
+    {% else %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+            {% for organ in this.organs %}
+                {% include 'partials/decision/organ-card.html.twig' with {
+                    'organ': organ,
+                    'dated': this.dated,
+                } only %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if this.hasMore %}
+        <div data-controller="infinite-scroll" class="text-center py-3">
+            <button type="button" class="btn btn-outline-secondary"
+                    data-action="live#action" data-live-action-param="loadMore"
+                    data-infinite-scroll-target="button">
+                {{ 'Load more'|trans }}
+            </button>
+            <div data-infinite-scroll-target="sentinel" aria-hidden="true"></div>
+        </div>
+    {% endif %}
+</div>

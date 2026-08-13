@@ -1,0 +1,57 @@
+{#
+    One body on an overview: its logo, what it calls itself, and the line or two it introduces itself with.
+
+    {% include 'partials/decision/organ-card.html.twig' with {'organ': organ} only %}
+
+    Pass `dated` to link with the body's foundation year, which is what tells two bodies apart when an abbreviation has
+    been reused. The historical overviews always do; the current ones do not, so a live body keeps the short address.
+#}
+{% set information = organ.getOrganInformation %}
+{# A dated link carries the whole founding date: two bodies founded in the same year share a year but never a date,
+   and a card knows nothing about its namesakes to tell which case it is in. #}
+{% set url = path('association/body', {
+    'type': organ.getType.value,
+    'abbr': organ.getAbbr,
+    'founded': dated|default(false) ? organ.getFoundationDate|date('Y-m-d') : null,
+}) %}
+<div class="col">
+    <div class="card organ-card h-100">
+        <a class="card-img-top text-decoration-none" href="{{ url }}">
+            {% include 'partials/application/image-or-monogram.html.twig' with {
+                'path': information ? information.getLogoPath : null,
+                'name': organ.getAbbr,
+                'variant': 'w320',
+                'baseClass': 'organ-logo',
+                'alt': organ.getName,
+            } only %}
+        </a>
+        <div class="card-body">
+            <h5 class="card-title mb-1"><a href="{{ url }}">{{ organ.getAbbr }}</a></h5>
+            <h6 class="card-subtitle text-muted fw-normal mb-2">{{ organ.getName }}</h6>
+            {% if information and information.getShortDescription %}
+                <p class="card-text small">{{ information.getShortDescription|localise_text }}</p>
+            {% endif %}
+        </div>
+        {% if information %}
+            <div class="card-footer text-body-secondary icon-links flex-wrap">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') and information.getEmail is not null %}
+                    <a href="mailto:{{ information.getEmail }}" title="{{ 'Email address'|trans }}">
+                        <span class="fas fa-envelope" aria-hidden="true"></span>
+                        <span class="visually-hidden">{{ 'Email address'|trans }}</span>
+                    </a>
+                {% endif %}
+                {% if information.getWebsite is not null %}
+                    <a href="{{ information.getWebsite }}" target="_blank" rel="noopener noreferrer"
+                       title="{{ 'Website'|trans }}">
+                        <span class="fas fa-globe" aria-hidden="true"></span>
+                        <span class="visually-hidden">{{ 'Website'|trans }}</span>
+                    </a>
+                {% endif %}
+                {% include 'partials/application/social-links.html.twig' with {
+                    'links': information.getSocialLinks,
+                    'inline': true,
+                } only %}
+            </div>
+        {% endif %}
+    </div>
+</div>

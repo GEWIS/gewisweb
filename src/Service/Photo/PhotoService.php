@@ -49,14 +49,15 @@ final readonly class PhotoService
     }
 
     /**
-     * The viewer manifest for a virtual weekly album: one entry per photo of the week, each carrying a deep link to its
-     * real album so the viewer can offer a "go to the original album" button. Access is checked by the caller.
+     * The viewer manifest for a virtual album: the photos it gathers, each carrying a deep link to its real album so
+     * the viewer can offer a "go to the original album" button rather than sending the reader there on every click.
+     * Used by the photos of the week and by a body's tagged photos. Access is checked by the caller.
      *
      * @param Photo[] $photos
      *
      * @return list<ManifestEntry>
      */
-    public function getWeeklyManifest(array $photos): array
+    public function getVirtualAlbumManifest(array $photos): array
     {
         $entries = [];
         foreach ($photos as $photo) {

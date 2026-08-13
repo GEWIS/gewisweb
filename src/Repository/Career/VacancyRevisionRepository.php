@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Repository\Career;
 
-use App\Entity\Application\Enums\RevisionStatus;
 use App\Entity\Career\Company;
 use App\Entity\Career\VacancyRevision;
+use App\Repository\Application\FindsRevisionsForReviewTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\Persistence\ManagerRegistry;
@@ -18,6 +18,8 @@ use function intval;
  */
 class VacancyRevisionRepository extends ServiceEntityRepository
 {
+    use FindsRevisionsForReviewTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct(
@@ -34,7 +36,7 @@ class VacancyRevisionRepository extends ServiceEntityRepository
     public function findForReview(): array
     {
         // The queue says who put each one forward, which is either a member or a representative.
-        return $this->createQueryBuilder('r')
+        $builder = $this->createQueryBuilder('r')
             ->addSelect(
                 'n',
                 'j',
@@ -56,20 +58,12 @@ class VacancyRevisionRepository extends ServiceEntityRepository
             ->leftJoin(
                 'r.authorCompanyUser',
                 'acu',
-            )
-            ->where('r.status IN (:statuses)')
-            ->setParameter(
-                'statuses',
-                [
-                    RevisionStatus::Submitted->value,
-                    RevisionStatus::InReview->value,
-                ],
-            )
-            ->orderBy(
-                'r.createdAt',
-                'ASC',
-            )
-            ->getQuery()
+            );
+
+        $this->whereAwaitingReview($builder);
+        $this->orderOldestFirst($builder);
+
+        return $builder->getQuery()
             ->getResult();
     }
 
@@ -80,15 +74,9 @@ class VacancyRevisionRepository extends ServiceEntityRepository
     public function countForReview(?Company $company = null): int
     {
         $builder = $this->createQueryBuilder('r')
-            ->select('COUNT(r.id)')
-            ->where('r.status IN (:statuses)')
-            ->setParameter(
-                'statuses',
-                [
-                    RevisionStatus::Submitted->value,
-                    RevisionStatus::InReview->value,
-                ],
-            );
+            ->select('COUNT(r.id)');
+
+        $this->whereAwaitingReview($builder);
 
         // A vacancy belongs to a company through the package it was posted under, so the count hops over that.
         if (null !== $company) {

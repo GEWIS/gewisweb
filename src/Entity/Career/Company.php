@@ -344,6 +344,16 @@ class Company implements RevisableInterface
     }
 
     /**
+     * Display proxy. Get where else the company can be followed.
+     *
+     * @return Collection<array-key, CompanySocialLink>
+     */
+    public function getSocialLinks(): Collection
+    {
+        return $this->getDisplayRevision()->getSocialLinks();
+    }
+
+    /**
      * Return true if the company should not be visible to the user, and false if it should be visible to the user.
      */
     public function isHidden(): bool

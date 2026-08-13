@@ -651,7 +651,7 @@ final class SignupOverview
 
         // Fall back to CIB (Internal Affairs) rather than an organiser's personal address when the organ has no public
         // email (or an empty one).
-        $organEmail = $this->activity->getOrgan()?->getApprovedOrganInformation()?->getEmail();
+        $organEmail = $this->activity->getOrgan()?->getOrganInformation()?->getEmail();
         $replyTo = null !== $organEmail && '' !== $organEmail
             ? $organEmail
             : $this->internalAffairsEmail;

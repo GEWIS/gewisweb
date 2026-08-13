@@ -100,14 +100,14 @@
                             <li>
                                 <h6 class="dropdown-header">{{ 'Bodies'|trans }}</h6>
                             </li>
-                            {{ menu.item('#', 'fa-people-group', enum('App\\Entity\\Decision\\Enums\\OrganTypes').Committee.pluralLabel|trans) }}
-                            {{ menu.item('#', 'fa-people-roof', enum('App\\Entity\\Decision\\Enums\\OrganTypes').Fraternity.pluralLabel|trans) }}
+                            {{ menu.item(path('association/committees'), 'fa-people-group', enum('App\\Entity\\Decision\\Enums\\OrganTypes').Committee.pluralLabel|trans) }}
+                            {{ menu.item(path('association/fraternities'), 'fa-people-roof', enum('App\\Entity\\Decision\\Enums\\OrganTypes').Fraternity.pluralLabel|trans) }}
                             {{ menu.section('gmm-bodies', 'fa-scale-balanced', 'GMM Bodies'|trans, [
-                                {'href': '#', 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').RvA.pluralLabel|trans},
-                                {'href': '#', 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').KCC.pluralLabel|trans},
-                                {'href': '#', 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').AVW.pluralLabel|trans},
-                                {'href': '#', 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').SC.pluralLabel|trans},
-                                {'href': '#', 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').AVC.pluralLabel|trans},
+                                {'href': path('association/gmm-bodies/advisory-boards'), 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').RvA.pluralLabel|trans},
+                                {'href': path('association/gmm-bodies/financial-audit-committees'), 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').KCC.pluralLabel|trans},
+                                {'href': path('association/gmm-bodies/taskforces'), 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').AVW.pluralLabel|trans},
+                                {'href': path('association/gmm-bodies/voting-committees'), 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').SC.pluralLabel|trans},
+                                {'href': path('association/gmm-bodies/committees'), 'label': enum('App\\Entity\\Decision\\Enums\\OrganTypes').AVC.pluralLabel|trans},
                             ]) }}
 
                             <li><hr class="dropdown-divider"></li>

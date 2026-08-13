@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Career;
 
 use App\Entity\Application\Enums\RevisionStatus;
+use App\Entity\Application\Enums\SocialPlatform;
 use App\Entity\Career\CareerLocalisedText;
 use App\Entity\Career\Company;
 use App\Entity\Career\CompanyBannerPackage;
@@ -419,6 +420,10 @@ class CompanyFixture extends Fixture
         $revision->setContactName('Recruitment Team');
         $revision->setContactEmail('recruitment@' . $slug . '.example.com');
         $revision->setContactPhone('+31 40 000 0000');
+        $revision->updateSocialLinks([
+            SocialPlatform::Instagram->value => $slug,
+            SocialPlatform::GitHub->value => $slug,
+        ]);
 
         $company->addRevision($revision);
         $company->setCurrentRevision($revision);

@@ -552,6 +552,50 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
+     * Find a body's upcoming, publicly visible activities, soonest first. Used by the panel on a body's own page, so
+     * it reads the live (approved) revision the way every other public path does.
+     *
+     * @return Activity[]
+     */
+    public function findUpcomingByOrgan(
+        Organ $organ,
+        int $limit,
+    ): array {
+        return $this->createQueryBuilder('a')
+            ->addSelect(
+                'lr',
+                'n',
+            )
+            ->join(
+                'a.liveRevision',
+                'lr',
+            )
+            ->join(
+                'lr.name',
+                'n',
+            )
+            ->andWhere('a.unpublishedAt IS NULL')
+            ->andWhere('IDENTITY(lr.organ) = :organId')
+            ->andWhere('lr.endTime > :now')
+            ->setParameter(
+                'organId',
+                $organ->getId(),
+            )
+            ->setParameter(
+                'now',
+                new DateTime(),
+                Types::DATETIME_MUTABLE,
+            )
+            ->orderBy(
+                'lr.beginTime',
+                'ASC',
+            )
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * The upcoming activities, soonest first, for the panels that only list what is coming: the frontpage agenda, and
      * (narrowed to the career category) the events on the career landing page. Three is what fits such a panel beside
      * the page it sits next to, so that is what a caller gets unless it asks for something else.

@@ -58,7 +58,7 @@
                     </div>
 
                     {% set organ = activity.getOrgan %}
-                    {% set organInformation = organ is not null ? organ.getApprovedOrganInformation : null %}
+                    {% set organInformation = organ is not null ? organ.getOrganInformation : null %}
                     {% set organEmail = organInformation is not null ? organInformation.getEmail : null %}
                     {# Obfuscate the @ so the addresses are not trivially scraped from the public page. #}
                     {% set atSeparator = ' ' ~ '[at]'|trans ~ ' ' %}

@@ -1,0 +1,35 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Old committees'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ page_path(category: 'vereniging', categoryEn: 'association') }}">{{ 'Association'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('association/committees') }}">
+            {{ enum('App\\Entity\\Decision\\Enums\\OrganTypes').Committee.pluralLabel|trans }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Old committees'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+        <div>
+            <h2 class="mb-1">{{ 'Old committees'|trans }}</h2>
+            <p class="text-muted mb-0">
+                {{ 'GEWIS has had many different committees over the years, learn more about this rich history below!'|trans }}
+            </p>
+        </div>
+        {% include 'partials/filter-toggle.html.twig' with { target: 'body-filters-committee-past' } only %}
+    </div>
+
+    {# Dated links: an abbreviation is reused, and an old committee must not send a reader to its namesake. #}
+    {{ component('Decision:BodyOverview', {
+        type: enum('App\\Entity\\Decision\\Enums\\OrganTypes').Committee.value,
+        abrogated: true,
+        dated: true,
+        emptyMessage: 'No committees have been abrogated yet.'|trans,
+    }) }}
+{% endblock %}

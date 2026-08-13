@@ -1,0 +1,33 @@
+.social-links {
+    li {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+    }
+
+    .social-links-icon {
+        width: 1.125rem;
+        text-align: center;
+        color: var(--bs-secondary-color);
+    }
+}
+
+// A row of icons that stand for a link each. Social links use it; so does anything else that sits beside them and
+// should not stand out against them, such as the email and website icons in the footer of a body's card.
+.social-links-inline,
+.icon-links {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 1.125rem;
+
+    a {
+        color: var(--bs-secondary-color);
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            color: var(--bs-link-hover-color);
+        }
+    }
+}

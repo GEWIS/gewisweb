@@ -135,6 +135,10 @@
                         </div>
                     </div>
                 </div>
+
+                {% include 'partials/application/social-links-form.html.twig' with {
+                    'field': form.currentRevision.socialLinks,
+                } only %}
             </div>
         </div>
     </div>

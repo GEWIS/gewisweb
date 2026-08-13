@@ -44,12 +44,18 @@
                 },
             ]|filter(child => child is not null)) }}
 
-            {{ sidebar.link(
-                path('admin/decision/bodies/index'),
-                'fa-sitemap',
-                'Bodies'|trans,
-                is_module_active(['decision', 'adminbody']),
-            ) }}
+            {{ sidebar.section('bodies', 'fa-sitemap', 'Bodies'|trans, is_module_active(['decision', 'adminbody']) or is_module_active(['decision', 'adminbodyapproval']), [
+                {
+                    'href': path('admin/decision/bodies/index'),
+                    'label': 'Overview'|trans,
+                    'active': is_module_active(['decision', 'adminbody']),
+                },
+                is_granted('ROLE_BOARD') ? {
+                    'href': path('admin/decision/bodies/approvals/index'),
+                    'label': 'Approvals'|trans,
+                    'active': is_module_active(['decision', 'adminbodyapproval']),
+                } : null,
+            ]|filter(child => child is not null)) }}
         {% endif %}
 
         {% if is_granted('ROLE_BOARD') %}

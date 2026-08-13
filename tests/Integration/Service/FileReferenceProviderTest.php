@@ -6,8 +6,8 @@ namespace App\Tests\Integration\Service;
 
 use App\Entity\Career\CompanyBannerPackage;
 use App\Entity\Career\CompanyRevision;
-use App\Entity\Decision\Organ;
 use App\Entity\Decision\OrganInformation;
+use App\Entity\Decision\OrganInformationRevision;
 use App\Service\Application\FileStorage;
 use App\Service\Career\CompanyBannerReferenceProvider;
 use App\Service\Career\CompanyLogoReferenceProvider;
@@ -81,25 +81,35 @@ final class FileReferenceProviderTest extends DatabaseTestCase
         self::assertTrue($provider->references('career/2/images/proposed-banner.png'));
     }
 
-    public function testOrganCoverAndThumbnailAreBothReferenced(): void
+    /**
+     * All four columns count. The cut is what a page serves, and the original is what the crop is moved against
+     * later, so neither may be reclaimed while a revision still names it.
+     */
+    public function testEveryOrganImageColumnIsReferenced(): void
     {
-        // The seed has organs but no organ information yet, so attach a fresh one carrying the two image paths.
-        $organ = $this->entityManager->getRepository(Organ::class)->findOneBy([]);
+        $information = $this->entityManager->getRepository(OrganInformation::class)->findOneBy([]);
         self::assertInstanceOf(
-            Organ::class,
-            $organ,
-            'The seed is expected to contain an organ.',
+            OrganInformation::class,
+            $information,
+            'The seed is expected to contain a body page.',
         );
-        $information = new OrganInformation();
-        $information->setOrgan($organ);
-        $information->setCoverPath('organs/images/cover-reference-test.png');
-        $information->setThumbnailPath('organs/images/thumbnail-reference-test.png');
-        $this->entityManager->persist($information);
+
+        $revision = $information->getCurrentRevision();
+        self::assertInstanceOf(
+            OrganInformationRevision::class,
+            $revision,
+        );
+        $revision->setBannerSource('organs/images/cover-source-reference-test.png');
+        $revision->setBannerPath('organs/images/cover-reference-test.png');
+        $revision->setLogoSource('organs/images/thumbnail-source-reference-test.png');
+        $revision->setLogoPath('organs/images/thumbnail-reference-test.png');
         $this->entityManager->flush();
 
         $provider = new OrganImageReferenceProvider($this->entityManager);
 
+        self::assertTrue($provider->references('organs/images/cover-source-reference-test.png'));
         self::assertTrue($provider->references('organs/images/cover-reference-test.png'));
+        self::assertTrue($provider->references('organs/images/thumbnail-source-reference-test.png'));
         self::assertTrue($provider->references('organs/images/thumbnail-reference-test.png'));
         self::assertFalse($provider->references('organs/images/not-referenced.png'));
     }

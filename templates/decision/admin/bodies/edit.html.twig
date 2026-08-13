@@ -1,0 +1,224 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ 'Edit'|trans|page_title }}{{ organ.getAbbr|page_title }}{{ 'Bodies'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/ckeditor5/ckeditor5.css') }}">
+{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/decision/bodies/index') }}">{{ 'Bodies'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/decision/bodies/view', {'organ': organ.getId}) }}">{{ organ.getAbbr }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Edit'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    {% set live = information.getLiveRevision %}
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h2 class="mb-1">{{ organ.getName }} <small class="text-muted">({{ organ.getAbbr }})</small></h2>
+            <p class="text-muted mb-0">
+                {{ 'Saving keeps this as a draft. It only reaches the website once the board approves it.'|trans }}
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div data-controller="edit-lock"
+                 data-edit-lock-ping-url-value="{{ path('admin/decision/bodies/edit_ping', {'organ': organ.getId}) }}"
+                 data-edit-lock-release-url-value="{{ path('admin/decision/bodies/edit_release', {'organ': organ.getId}) }}"
+                 data-edit-lock-csrf-token-value="{{ csrf_token('body_edit_lock') }}"
+                 data-edit-lock-lost-message-value="{{ 'You no longer hold the edit lock; it was taken over or expired. Reload the page to continue editing.'|trans }}">
+                {# novalidate: a required field can sit on a hidden step, where native validation blocks the submit
+                   invisibly. Server-side validation is authoritative and the stepper jumps to the first errored step. #}
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_errors(form) }}
+                {% set revisionForm = form.currentRevision %}
+
+                {# Every step stays in the DOM (hidden, never disabled) so the single POST carries all fields. #}
+                <div data-controller="localised-fields form-stepper">
+                    <ol class="form-stepper" role="tablist">
+                        <li class="form-stepper__step" role="presentation">
+                            <button type="button" class="form-stepper__btn" role="tab"
+                                    data-form-stepper-target="tab"
+                                    data-action="form-stepper#goto" data-form-stepper-index-param="0">
+                                <span class="form-stepper__num">1</span>
+                                <span class="form-stepper__label">{{ 'Page'|trans }}</span>
+                            </button>
+                        </li>
+                        <li class="form-stepper__step" role="presentation">
+                            <button type="button" class="form-stepper__btn" role="tab"
+                                    data-form-stepper-target="tab"
+                                    data-action="form-stepper#goto" data-form-stepper-index-param="1">
+                                <span class="form-stepper__num">2</span>
+                                <span class="form-stepper__label">{{ 'Where to find you'|trans }}</span>
+                            </button>
+                        </li>
+                        <li class="form-stepper__step" role="presentation">
+                            <button type="button" class="form-stepper__btn" role="tab"
+                                    data-form-stepper-target="tab"
+                                    data-action="form-stepper#goto" data-form-stepper-index-param="2">
+                                <span class="form-stepper__num">3</span>
+                                <span class="form-stepper__label">{{ 'Logo and banner'|trans }}</span>
+                            </button>
+                        </li>
+                    </ol>
+
+                    <div data-form-stepper-target="step">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3>{{ 'Page'|trans }}</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            {{ form_row(revisionForm.languageDutch, {
+                                                'label': '<span class="flag-icon flag-icon-nl"></span> ' ~ ('Dutch'|trans),
+                                                'label_html': true,
+                                                'attr': {
+                                                    'data-localised-fields-target': 'dutchToggle',
+                                                    'data-action': 'localised-fields#apply',
+                                                },
+                                            }) }}
+                                        </div>
+                                        <hr>
+                                        {{ form_row(revisionForm.shortDescription.valueNL, {
+                                            'label': 'Short description'|trans,
+                                            'attr': {'data-localised-fields-target': 'dutch'},
+                                        }) }}
+                                        {{ form_row(revisionForm.description.valueNL, {
+                                            'label': 'Description'|trans,
+                                            'attr': {
+                                                'data-localised-fields-target': 'dutch',
+                                                'data-controller': 'markdown-editor',
+                                                'data-markdown-editor-language-value': app.request.locale,
+                                            },
+                                        }) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            {{ form_row(revisionForm.languageEnglish, {
+                                                'label': '<span class="flag-icon flag-icon-en"></span> ' ~ ('English'|trans),
+                                                'label_html': true,
+                                                'attr': {
+                                                    'data-localised-fields-target': 'englishToggle',
+                                                    'data-action': 'localised-fields#apply',
+                                                },
+                                            }) }}
+                                        </div>
+                                        <hr>
+                                        {{ form_row(revisionForm.shortDescription.valueEN, {
+                                            'label': 'Short description'|trans,
+                                            'attr': {'data-localised-fields-target': 'english'},
+                                        }) }}
+                                        {{ form_row(revisionForm.description.valueEN, {
+                                            'label': 'Description'|trans,
+                                            'attr': {
+                                                'data-localised-fields-target': 'english',
+                                                'data-controller': 'markdown-editor',
+                                                'data-markdown-editor-language-value': app.request.locale,
+                                            },
+                                        }) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div data-form-stepper-target="step">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3>{{ 'Contact details'|trans }}</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">{{ form_row(revisionForm.email) }}</div>
+                                    <div class="col-md-6">{{ form_row(revisionForm.website) }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% include 'partials/application/social-links-form.html.twig' with {
+                            'field': revisionForm.socialLinks,
+                        } only %}
+                    </div>
+
+                    <div data-form-stepper-target="step">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="panel mt-0 h-100">
+                                    <div class="panel-heading">
+                                        <h3>{{ 'Logo'|trans }}</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p class="text-muted">
+                                            {{ 'What your body is recognised by on an overview card.'|trans }}
+                                        </p>
+                                        {% include 'partials/decision/organ-image-field.html.twig' with {
+                                            'fileField': revisionForm.logoFile,
+                                            'cropField': revisionForm.logoCropData,
+                                            'source': revision.getLogoSource,
+                                            'crop': revision.getLogoCrop,
+                                            'live': live ? live.getLogoPath : null,
+                                            'sourceWidth': logoSourceWidth,
+                                            'ratio': constant('App\\Form\\Decision\\OrganInformationRevisionType::LOGO_RATIO'),
+                                            'shape': 'logo',
+                                        } only %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="panel mt-0 h-100">
+                                    <div class="panel-heading">
+                                        <h3>{{ 'Page banner'|trans }}</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p class="text-muted">
+                                            {{ 'The wide strip your own page leads with, much wider than it is tall.'|trans }}
+                                        </p>
+                                        {% include 'partials/decision/organ-image-field.html.twig' with {
+                                            'fileField': revisionForm.bannerFile,
+                                            'cropField': revisionForm.bannerCropData,
+                                            'source': revision.getBannerSource,
+                                            'crop': revision.getBannerCrop,
+                                            'live': live ? live.getBannerPath : null,
+                                            'sourceWidth': bannerSourceWidth,
+                                            'ratio': constant('App\\Form\\Decision\\OrganInformationRevisionType::BANNER_RATIO'),
+                                            'shape': 'banner',
+                                        } only %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 d-flex justify-content-end gap-2">
+                        <a href="{{ path('admin/decision/bodies/view', {'organ': organ.getId}) }}" class="btn btn-link">
+                            {{ 'Cancel'|trans }}
+                        </a>
+                        <button type="button" class="btn btn-outline-secondary"
+                                data-form-stepper-target="back" data-action="form-stepper#previous">
+                            {{ 'Back'|trans }}
+                        </button>
+                        <button type="button" class="btn btn-gewis-primary"
+                                data-form-stepper-target="next" data-action="form-stepper#next">
+                            {{ 'Next'|trans }}
+                        </button>
+                        <button type="submit" class="btn btn-gewis-primary" data-form-stepper-target="submit">
+                            {{ 'Save draft'|trans }}
+                        </button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

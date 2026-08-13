@@ -2,25 +2,29 @@
 
 {% block page_title %}{{ 'Photos'|trans|page_title }}{{ organ.getName|page_title }}{{ parent() }}{% endblock %}
 
-{% block contents %}
-    <h3 class="mb-4">{{ organ.getName }}</h3>
+{# Photos fill the full width of the window, like a regular album. #}
+{% block container_class %}container-fluid{% endblock %}
 
-    {% if photos is empty %}
-        <p class="text-muted">
-            {{ '%name% has not been tagged in any photos yet.'|trans({ '%name%': organ.getName }) }}
-        </p>
-    {% else %}
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
-            {% for photo in photos %}
-                <div class="col">
-                    {# Each photo lives in a real album, so open it there at the deep-linked position. #}
-                    <a class="d-block ratio ratio-1x1 bg-body-secondary rounded overflow-hidden"
-                       href="{{ path('photo/album', { type: 'album', album: photo.album.id }) }}#pid={{ photo.id }}">
-                        <img class="w-100 h-100" style="object-fit: cover;" loading="lazy"
-                             src="{{ image_url(photo.path, 'w320') }}" alt="">
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('vendor/photoswipe/dist/photoswipe.min.css') }}">
+{% endblock %}
+
+{% block contents %}
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+        <h2 class="mb-0">{{ organ.getName }}</h2>
+        <a class="btn btn-outline-secondary btn-sm" href="{{ path('association/body', {
+            'type': organ.getType.value,
+            'abbr': organ.getAbbr,
+            'founded': organ.getFoundationDate|date('Y-m-d'),
+        }) }}">
+            <span class="fa-solid fa-arrow-left me-1"></span>{{ 'Back to the body'|trans }}
+        </a>
+    </div>
+
+    {# The same viewer as a real album: a photo opens here, and the viewer offers the way to its own album. #}
+    {% import 'partials/photo/gallery.html.twig' as gallery %}
+    <div {{ gallery.attributes(path('photo/body_manifest', { organ: organ.getId }), false) }}>
+        {{ gallery.grid('%name% has not been tagged in any photos yet.'|trans({ '%name%': organ.getName })) }}
+    </div>
 {% endblock %}

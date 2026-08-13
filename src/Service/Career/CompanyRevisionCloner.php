@@ -14,9 +14,9 @@ use function assert;
 
 /**
  * Spawns the next Draft {@see CompanyRevision} from an existing one (for "changes requested", reopening, or editing
- * an approved company profile). The localised texts are deep-copied into fresh rows so orphan-removal can never delete
- * the source revision's content; the logo and contact details are copied by value. The shared workflow wiring
- * (authorship, revision number, chain link) lives in {@see AbstractRevisionCloner}.
+ * an approved company profile). The localised texts and social links are deep-copied into fresh rows so orphan-removal
+ * can never delete the source revision's content; the logo and contact details are copied by value. The shared workflow
+ * wiring (authorship, revision number, chain link) lives in {@see AbstractRevisionCloner}.
  */
 final readonly class CompanyRevisionCloner extends AbstractRevisionCloner
 {
@@ -48,6 +48,12 @@ final readonly class CompanyRevisionCloner extends AbstractRevisionCloner
     ): void {
         assert($source instanceof CompanyRevision);
         assert($draft instanceof CompanyRevision);
+
+        foreach ($source->getSocialLinks() as $link) {
+            $copy = $link->copy();
+            $copy->setRevision($draft);
+            $draft->getSocialLinks()->add($copy);
+        }
 
         $draft->setSlogan($source->getSlogan()->copy());
         $draft->setDescription($source->getDescription()->copy());

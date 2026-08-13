@@ -24,9 +24,9 @@ use Symfony\Component\Workflow\WorkflowInterface;
 use function array_map;
 
 /**
- * Both listeners hang off the shared revision workflow, so they see every domain's transitions and have to ignore the
- * ones that are not theirs. These pin that they do, and that a career transition reaches the right side: the committee
- * gets a notification when something is submitted, the company gets an email when it is decided.
+ * Submissions and decisions both hang off the shared revision workflow, so they see every domain's transitions and have
+ * to answer for their own only. These pin that a career transition reaches the right side: the committee gets a
+ * notification when something is submitted, the company gets an email when it is decided.
  */
 final class CareerNotificationWiringTest extends DatabaseTestCase
 {

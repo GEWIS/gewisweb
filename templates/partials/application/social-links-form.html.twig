@@ -1,0 +1,22 @@
+{#
+    The one-box-per-platform social links panel, for any form that embeds SocialLinksType:
+
+    {% include 'partials/application/social-links-form.html.twig' with {'field': form.currentRevision.socialLinks} only %}
+#}
+<div class="panel">
+    <div class="panel-heading">
+        <h3>{{ 'Social media'|trans }}</h3>
+    </div>
+    <div class="panel-body">
+        <p class="text-muted">
+            {{ 'Fill in the username, not the whole link. Pasting a link works too, everything after the username is thrown away.'|trans }}
+        </p>
+        <div class="row">
+            {% for row in field %}
+                <div class="col-md-6">
+                    {{ form_row(row, {'help': null}) }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

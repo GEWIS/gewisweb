@@ -3,20 +3,80 @@
 {% block page_title %}{{ 'Overview'|trans|page_title }}{{ 'Bodies'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block admin_breadcrumbs %}
-    <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('admin/decision/bodies/index') }}">
-            {{ 'Bodies'|trans }}
-        </a>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/decision/bodies/index') }}">{{ 'Bodies'|trans }}</a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">
-        {{ 'Overview'|trans }}
-    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Overview'|trans }}</li>
 {% endblock %}
 
 {% block contents %}
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <h2 class="mb-1">{{ 'Bodies'|trans }}</h2>
+            <p class="text-muted mb-0">
+                {{ 'Pick a body to write its page. Changes are shown on the website once the board has approved them.'|trans }}
+            </p>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
-            {# TODO #}
+            <div class="panel">
+                <div class="panel-body">
+                    {% if rows is empty %}
+                        <p class="text-muted mb-0">{{ 'You are not installed in any body right now.'|trans }}</p>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'Abbreviation'|trans }}</th>
+                                        <th>{{ 'Name'|trans }}</th>
+                                        <th>{{ 'Type'|trans }}</th>
+                                        <th>{{ 'Page'|trans }}</th>
+                                        <th class="text-end">{{ 'Actions'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in rows %}
+                                        {% set url = path('admin/decision/bodies/view', {'organ': row.organ.getId}) %}
+                                        <tr>
+                                            <td><a href="{{ url }}"><strong>{{ row.organ.getAbbr }}</strong></a></td>
+                                            <td><a href="{{ url }}">{{ row.organ.getName }}</a></td>
+                                            <td class="text-muted small">{{ row.organ.getType.label|trans }}</td>
+                                            <td>
+                                                {% if row.status is null %}
+                                                    <span class="badge badge-secondary">{{ 'Not started'|trans }}</span>
+                                                {% else %}
+                                                    {% include 'partials/application/revision-status-badge.html.twig' with {
+                                                        'status': row.status,
+                                                        'live': row.liveRevisionNumber,
+                                                    } only %}
+                                                    {% if row.changesRequested %}
+                                                        <span class="badge badge-warning">{{ 'Changes requested'|trans }}</span>
+                                                    {% endif %}
+                                                    {% if not row.published %}
+                                                        <span class="text-muted small">{{ 'not on the website yet'|trans }}</span>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-end">
+                                                <a href="{{ url }}" class="btn btn-sm btn-outline-gewis-primary">
+                                                    {{ row.status is null ? 'Start a page'|trans : 'Open'|trans }}
+                                                </a>
+                                                {% if row.status is not null and row.status.editableByAuthor %}
+                                                    <a href="{{ path('admin/decision/bodies/approvals/review', {'revision': row.currentRevisionId}) }}"
+                                                       class="btn btn-sm btn-outline-success">{{ 'Submit for review'|trans }}</a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -28,6 +28,7 @@ enum NotificationType: string
     case CompanyRevisionAwaitingReview = 'company_revision_awaiting_review';
     case VacancyRevisionAwaitingReview = 'vacancy_revision_awaiting_review';
     case CompanyBannerAwaitingReview = 'company_banner_awaiting_review';
+    case OrganInformationRevisionAwaitingReview = 'organ_information_revision_awaiting_review';
 
     public function icon(): string
     {
@@ -44,6 +45,7 @@ enum NotificationType: string
             self::SignupClosing, self::SignupClosingWithFields => 'fa-hourglass-half',
             self::CompanyRevisionAwaitingReview, self::VacancyRevisionAwaitingReview => 'fa-clipboard-check',
             self::CompanyBannerAwaitingReview => 'fa-image',
+            self::OrganInformationRevisionAwaitingReview => 'fa-clipboard-check',
         };
     }
 
@@ -63,6 +65,7 @@ enum NotificationType: string
             self::SignupClosing, self::SignupClosingWithFields => NotificationCategory::SignupReminders,
             self::CompanyRevisionAwaitingReview, self::VacancyRevisionAwaitingReview,
             self::CompanyBannerAwaitingReview => NotificationCategory::CareerReviews,
+            self::OrganInformationRevisionAwaitingReview => NotificationCategory::BodyReviews,
         };
     }
 
@@ -77,6 +80,7 @@ enum NotificationType: string
             self::SignupClosing, self::SignupClosingWithFields => NotificationAddressing::Account,
             self::CompanyRevisionAwaitingReview, self::VacancyRevisionAwaitingReview,
             self::CompanyBannerAwaitingReview => NotificationAddressing::Role,
+            self::OrganInformationRevisionAwaitingReview => NotificationAddressing::Role,
         };
     }
 
@@ -100,6 +104,7 @@ enum NotificationType: string
             self::CompanyRevisionAwaitingReview => 'admin/career/approvals/company',
             self::VacancyRevisionAwaitingReview => 'admin/career/approvals/vacancy',
             self::CompanyBannerAwaitingReview => 'admin/career/approvals/index',
+            self::OrganInformationRevisionAwaitingReview => 'admin/decision/bodies/approvals/review',
         };
     }
 
@@ -119,6 +124,7 @@ enum NotificationType: string
             self::DataExportReady => 'user_settings_data_export_download',
             self::CompanyRevisionAwaitingReview, self::VacancyRevisionAwaitingReview,
             self::CompanyBannerAwaitingReview => 'admin/career/approvals/index',
+            self::OrganInformationRevisionAwaitingReview => 'admin/decision/bodies/approvals/index',
         };
     }
 
@@ -169,6 +175,10 @@ enum NotificationType: string
                 '%count% banners are waiting for a decision.',
                 ['%count%' => $count],
             ),
+            self::OrganInformationRevisionAwaitingReview => new TranslatableMessage(
+                '%count% bodies have submitted their page for review.',
+                ['%count%' => $count],
+            ),
         };
     }
 
@@ -204,7 +214,8 @@ enum NotificationType: string
             ],
             self::ActivityPublished => ['activity' => $subjectId],
             self::ActivityAwaitingReview, self::CompanyRevisionAwaitingReview,
-            self::VacancyRevisionAwaitingReview => ['revision' => $subjectId],
+            self::VacancyRevisionAwaitingReview,
+            self::OrganInformationRevisionAwaitingReview => ['revision' => $subjectId],
             self::CompanyBannerAwaitingReview => [],
             self::SignIn, self::PasswordChanged, self::MfaEnabled,
             self::MfaDisabled, self::BackupCodesRegenerated, self::DataExportReady => [],
@@ -227,7 +238,8 @@ enum NotificationType: string
             self::DataExportReady => new TranslatableMessage('Download your data'),
             self::SignupClosing, self::SignupClosingWithFields => new TranslatableMessage('View the activity'),
             self::ActivityAwaitingReview, self::CompanyRevisionAwaitingReview,
-            self::VacancyRevisionAwaitingReview => new TranslatableMessage('Review it'),
+            self::VacancyRevisionAwaitingReview,
+            self::OrganInformationRevisionAwaitingReview => new TranslatableMessage('Review it'),
             self::CompanyBannerAwaitingReview => new TranslatableMessage('View the banners'),
         };
     }
@@ -292,6 +304,10 @@ enum NotificationType: string
                 '%name% has proposed a new banner.',
                 ['%name%' => $name],
             ),
+            self::OrganInformationRevisionAwaitingReview => new TranslatableMessage(
+                '%name% has submitted changes to its page for review.',
+                ['%name%' => $name],
+            ),
         };
     }
 
@@ -307,7 +323,7 @@ enum NotificationType: string
             self::AlbumPublished, self::ActivityPublished, self::DataExportReady,
             self::ActivityAwaitingReview, self::SignupClosing, self::SignupClosingWithFields,
             self::CompanyRevisionAwaitingReview, self::VacancyRevisionAwaitingReview,
-            self::CompanyBannerAwaitingReview => null,
+            self::CompanyBannerAwaitingReview, self::OrganInformationRevisionAwaitingReview => null,
             self::SignIn => 'New sign-in to your GEWIS account',
             self::PasswordChanged => 'Your GEWIS password was changed',
             self::MfaEnabled => 'Two-factor authentication enabled on your GEWIS account',

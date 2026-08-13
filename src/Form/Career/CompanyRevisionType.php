@@ -7,6 +7,7 @@ namespace App\Form\Career;
 use App\Entity\Career\CareerLocalisedText;
 use App\Entity\Career\CompanyRevision;
 use App\Form\Application\LocalisedTextType;
+use App\Form\Application\SocialLinksType;
 use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -140,6 +141,21 @@ class CompanyRevisionType extends AbstractType
                     'label' => t('Address'),
                     'required' => false,
                     'constraints' => [new Length(max: 255)],
+                ],
+            )
+            ->add(
+                'socialLinks',
+                SocialLinksType::class,
+                [
+                    // The form works in handles; turning those into rows is the revision's business, because that is
+                    // the side the foreign key lives on.
+                    'getter' => static fn (CompanyRevision $revision): array => $revision->getSocialHandles(),
+                    'setter' => static function (
+                        CompanyRevision $revision,
+                        array $handles,
+                    ): void {
+                        $revision->updateSocialLinks($handles);
+                    },
                 ],
             );
 

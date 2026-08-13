@@ -143,11 +143,9 @@ class Organ
     private Collection $subdecisions;
 
     /**
-     * All organInformation for this organ.
-     *
-     * @var Collection<array-key, OrganInformation>
+     * The body's page on the website, or null while nobody has started one.
      */
-    #[OneToMany(
+    #[OneToOne(
         mappedBy: 'organ',
         targetEntity: OrganInformation::class,
         cascade: [
@@ -155,13 +153,12 @@ class Organ
             'remove',
         ],
     )]
-    private Collection $organInformation;
+    private ?OrganInformation $organInformation = null;
 
     public function __construct()
     {
         $this->members = new ArrayCollection();
         $this->subdecisions = new ArrayCollection();
-        $this->organInformation = new ArrayCollection();
     }
 
     /**
@@ -322,27 +319,16 @@ class Organ
     }
 
     /**
-     * Returns all organ information.
-     *
-     * @return Collection<array-key, OrganInformation>
+     * The body's page, whatever state it is in, or null while nobody has started one.
      */
-    public function getOrganInformation(): Collection
+    public function getOrganInformation(): ?OrganInformation
     {
         return $this->organInformation;
     }
 
-    /**
-     * Returns the approved information for an organ.
-     */
-    public function getApprovedOrganInformation(): ?OrganInformation
+    public function setOrganInformation(?OrganInformation $organInformation): void
     {
-        foreach ($this->organInformation as $information) {
-            if (null !== $information->getApprover()) {
-                return $information;
-            }
-        }
-
-        return null;
+        $this->organInformation = $organInformation;
     }
 
     public function isAbrogated(): bool
