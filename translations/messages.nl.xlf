@@ -325,10 +325,6 @@
         <source>%name% has submitted changes to its page for review.</source>
         <target state="translated">%name% heeft wijzigingen aan de pagina ter beoordeling ingediend.</target>
       </trans-unit>
-      <trans-unit id="G7xodsD" resname="%name% turns %age% today!">
-        <source>%name% turns %age% today!</source>
-        <target state="translated">%name% wordt vandaag %age%!</target>
-      </trans-unit>
       <trans-unit id="oPN8.NH" resname="%name% will be able to sign in to the career portal again.">
         <source>%name% will be able to sign in to the career portal again.</source>
         <target state="translated">%name% kan weer inloggen op het carrièreportaal.</target>
@@ -757,6 +753,10 @@
         <source>All photo tags of you have been removed.</source>
         <target>Alle fototags van jou zijn verwijderd.</target>
       </trans-unit>
+      <trans-unit id="3OSGD_W" resname="All posts">
+        <source>All posts</source>
+        <target state="translated">Alle berichten</target>
+      </trans-unit>
       <trans-unit id="EkTt9Lc" resname="All rights reserved.">
         <source>All rights reserved.</source>
         <target state="translated">Alle rechten voorbehouden.</target>
@@ -1072,6 +1072,10 @@
       <trans-unit id="6lQYTVL" resname="Be the first to upload">
         <source>Be the first to upload</source>
         <target state="translated">Wees de eerste die iets aanlevert</target>
+      </trans-unit>
+      <trans-unit id="FuiCO8H" resname="Become a member">
+        <source>Become a member</source>
+        <target state="translated">Lid worden</target>
       </trans-unit>
       <trans-unit id="HPVMGyh" resname="Become a tutor">
         <source>Become a tutor</source>
@@ -2177,6 +2181,10 @@
         <source>Everything for members in one place: your account, association resources, meeting decisions, and regulations.</source>
         <target state="translated">Alles voor leden op één plek: je account, verenigingszaken, vergaderbesluiten en reglementen.</target>
       </trans-unit>
+      <trans-unit id="okg42Xh" resname="Everything happening around the association: news, activities and photos.">
+        <source>Everything happening around the association: news, activities and photos.</source>
+        <target state="translated">Alles wat er rond de vereniging gebeurt: nieuws, activiteiten en foto's.</target>
+      </trans-unit>
       <trans-unit id="09wa3mW" resname="Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you. Notices about your own account and your privacy are always sent and cannot be turned off.">
         <source>Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you. Notices about your own account and your privacy are always sent and cannot be turned off.</source>
         <target state="translated">Alles verschijnt op de website. Kies over welke onderwerpen je ook e-mail wilt en hoe vaak. Meldingen over je eigen account en je privacy worden altijd verstuurd en kunnen niet worden uitgezet.</target>
@@ -2933,10 +2941,6 @@
         <source>It was declared, but never initialised.</source>
         <target state="translated">Het werd gedeclareerd, maar nooit geïnitialiseerd.</target>
       </trans-unit>
-      <trans-unit id="UNY_kxG" resname="It's %name%'s birthday!">
-        <source>It's %name%'s birthday!</source>
-        <target>%name% is jarig!</target>
-      </trans-unit>
       <trans-unit id="ayQt.7Z" resname="Its sub-albums and photos are deleted as well. This cannot be undone.">
         <source>Its sub-albums and photos are deleted as well. This cannot be undone.</source>
         <target state="translated">De subalbums en foto's worden ook verwijderd. Dit kan niet ongedaan worden gemaakt.</target>
@@ -3104,10 +3108,6 @@
       <trans-unit id="a5w5Bbx" resname="Loading">
         <source>Loading</source>
         <target state="translated">Bezig met laden</target>
-      </trans-unit>
-      <trans-unit id="sRyfMnf" resname="Loading an infimum...">
-        <source>Loading an infimum...</source>
-        <target state="translated">Een infimum aan het laden...</target>
       </trans-unit>
       <trans-unit id="l7vSiQN" resname="Loading tags…">
         <source>Loading tags…</source>
@@ -3665,6 +3665,10 @@
         <source>No fraternities have retired yet.</source>
         <target state="translated">Er zijn nog geen disputen met pensioen.</target>
       </trans-unit>
+      <trans-unit id="GyWX4yY" resname="No infimum could be fetched right now.">
+        <source>No infimum could be fetched right now.</source>
+        <target state="translated">Er kon nu geen infimum worden opgehaald.</target>
+      </trans-unit>
       <trans-unit id="p6gBsIs" resname="No invitations are outstanding.">
         <source>No invitations are outstanding.</source>
         <target state="translated">Er staan geen uitnodigingen open.</target>
@@ -3928,6 +3932,10 @@
       <trans-unit id="AxXKYah" resname="Older">
         <source>Older</source>
         <target state="translated">Ouder</target>
+      </trans-unit>
+      <trans-unit id="KtZNzny" resname="Older posts">
+        <source>Older posts</source>
+        <target state="translated">Oudere berichten</target>
       </trans-unit>
       <trans-unit id="svuF9zU" resname="On Thursdays, there is a %link_start%social drink%link_end% from 16.30 to 19.00.">
         <source>On Thursdays, there is a %link_start%social drink%link_end% from 16.30 to 19.00.</source>
@@ -4257,6 +4265,10 @@
         <source>Pinned</source>
         <target state="translated">Vastgezet</target>
       </trans-unit>
+      <trans-unit id="OUcGp6z" resname="Pinned by the board">
+        <source>Pinned by the board</source>
+        <target state="translated">Vastgezet door het bestuur</target>
+      </trans-unit>
       <trans-unit id="u7c4pso" resname="Place on photo">
         <source>Place on photo</source>
         <target state="translated">Plaats op foto</target>
@@ -4488,6 +4500,10 @@
       <trans-unit id="jbzcBcE" resname="Read more">
         <source>Read more</source>
         <target state="translated">Lees meer</target>
+      </trans-unit>
+      <trans-unit id="V8Gwq5Q" resname="Read post">
+        <source>Read post</source>
+        <target state="translated">Bericht lezen</target>
       </trans-unit>
       <trans-unit id="KJPSfn5" resname="Read-only">
         <source>Read-only</source>
@@ -5485,6 +5501,10 @@
         <source>Subject</source>
         <target>Onderwerp</target>
       </trans-unit>
+      <trans-unit id="9m8DOBg" resname="Submit">
+        <source>Submit</source>
+        <target state="translated">Insturen</target>
+      </trans-unit>
       <trans-unit id="XtfAdDH" resname="Submit for review">
         <source>Submit for review</source>
         <target state="translated">Indienen ter beoordeling</target>
@@ -5688,6 +5708,10 @@
       <trans-unit id="JxA9KfQ" resname="The association has not been asked anything yet.">
         <source>The association has not been asked anything yet.</source>
         <target state="translated">Er is de vereniging nog niets gevraagd.</target>
+      </trans-unit>
+      <trans-unit id="No5PPEG" resname="The association of Mathematics &amp; Computer Science at TU/e">
+        <source>The association of Mathematics &amp; Computer Science at TU/e</source>
+        <target state="translated"><![CDATA[De vereniging van Wiskunde & Informatica aan de TU/e]]></target>
       </trans-unit>
       <trans-unit id="StkJda7" resname="The association-wide library. Each meeting selects which of these apply and pins the exact version its members see; updating a document here never changes an existing selection.">
         <source>The association-wide library. Each meeting selects which of these apply and pins the exact version its members see; updating a document here never changes an existing selection.</source>
@@ -6593,6 +6617,10 @@
         <source>Upcoming</source>
         <target>Aankomend</target>
       </trans-unit>
+      <trans-unit id="sXpQzoe" resname="Upcoming activities">
+        <source>Upcoming activities</source>
+        <target state="translated">Komende activiteiten</target>
+      </trans-unit>
       <trans-unit id="fsm4kAQ" resname="Upcoming events">
         <source>Upcoming events</source>
         <target state="translated">Aankomende evenementen</target>
@@ -6908,10 +6936,6 @@
       <trans-unit id="pBWX65Q" resname="Welcome back, %name%">
         <source>Welcome back, %name%</source>
         <target state="translated">Welkom terug, %name%</target>
-      </trans-unit>
-      <trans-unit id="qLp0Jrc" resname="Welcome to the website of study association GEWIS, the study association of the department of Mathematics &amp; Computer Science at Eindhoven University of Technology.">
-        <source>Welcome to the website of study association GEWIS, the study association of the department of Mathematics &amp; Computer Science at Eindhoven University of Technology.</source>
-        <target state="translated"><![CDATA[Welkom op de website van studievereniging GEWIS, de studievereniging van de faculteit Wiskunde & Informatica aan de Technische Universiteit Eindhoven.]]></target>
       </trans-unit>
       <trans-unit id="2EooDJ5" resname="Welcome. Your account is ready.">
         <source>Welcome. Your account is ready.</source>
@@ -7560,6 +7584,10 @@
       <trans-unit id="PpyRnaW" resname="this vacancy">
         <source>this vacancy</source>
         <target state="translated">deze vacature</target>
+      </trans-unit>
+      <trans-unit id=".CszX4u" resname="turns %age%">
+        <source>turns %age%</source>
+        <target state="translated">wordt %age%</target>
       </trans-unit>
       <trans-unit id="W3MzJgn" resname="unavailable">
         <source>unavailable</source>

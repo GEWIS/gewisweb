@@ -60,6 +60,23 @@ final class RealtimeNotifier
         );
     }
 
+    /**
+     * A fresh infimum for everyone who is signed in as a member, on one shared topic. What goes here is the same for
+     * all of them and none of it is theirs in particular, so there is nothing to be gained by a topic per member; it
+     * is private only because a passer-by has no business subscribing to it.
+     */
+    public function rotateInfimum(string $infimum): void
+    {
+        $this->publish(
+            'gewis/members',
+            [
+                'type' => RealtimeEventType::InfimumRotate->value,
+                'infimum' => $infimum,
+            ],
+            true,
+        );
+    }
+
     public function toPublic(RealtimePayload $payload): void
     {
         $this->publish(

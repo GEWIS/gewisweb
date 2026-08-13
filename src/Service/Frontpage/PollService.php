@@ -13,7 +13,6 @@ use App\Entity\Frontpage\PollOption;
 use App\Entity\Frontpage\PollRevision;
 use App\Entity\Frontpage\PollVote;
 use App\Repository\Frontpage\PollCommentReactionRepository;
-use App\Repository\Frontpage\PollRepository;
 use App\Repository\Frontpage\PollVoteRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,17 +28,11 @@ final readonly class PollService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private PollRepository $pollRepository,
         private PollVoteRepository $pollVoteRepository,
         private PollCommentReactionRepository $reactionRepository,
         #[Target('revisionStateMachine')]
         private WorkflowInterface $revisionStateMachine,
     ) {
-    }
-
-    public function getCurrentPoll(): ?Poll
-    {
-        return $this->pollRepository->findCurrentPoll();
     }
 
     /**

@@ -28,7 +28,9 @@ $body-bg-dark: #0E0E11;
 $body-color: $gewis-gray-dark;
 $body-color-dark: $gewis-gray-light;
 
+// Bootstrap derives the dark one from `$primary`, which is deliberately its own blue here, so it is set as well.
 $primary-text-emphasis: $gewis-red;
+$primary-text-emphasis-dark: $gewis-red;
 $secondary-text-emphasis: #959595;
 
 $body-secondary-color-dark: #acacac;

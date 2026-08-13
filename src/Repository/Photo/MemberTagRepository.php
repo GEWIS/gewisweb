@@ -6,11 +6,11 @@ namespace App\Repository\Photo;
 
 use App\Entity\Decision\Member;
 use App\Entity\Photo\MemberTag;
-use App\Entity\Photo\Photo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
+use function array_values;
 use function boolval;
 use function intval;
 
@@ -193,61 +193,51 @@ class MemberTagRepository extends ServiceEntityRepository
     }
 
     /**
-     * Returns a recent tag for the member who has the most tags from a set of members.
+     * The newest photo each of these members is tagged in, at most one per member. A member nobody has ever tagged
+     * simply does not appear, which is what lets the birthday panel rotate between the members it can show rather
+     * than showing the same one all day.
      *
      * @param Member[] $members
+     *
+     * @return MemberTag[]
      */
-    public function getMostActiveMemberTag(array $members): ?MemberTag
+    public function findMostRecentTagPerMember(array $members): array
     {
-        $qb = $this->createQueryBuilder('t');
+        if ([] === $members) {
+            return [];
+        }
 
-        // Retrieve the lidnr of the member with the most tags
-        $qb->select('IDENTITY(t.member), COUNT(t.member) as tag_count')
+        // A groupwise max in one round trip, instead of a query per member.
+        /** @var list<MemberTag> $candidates */
+        $candidates = $this->createQueryBuilder('t')
+            ->addSelect('p')
+            ->join(
+                't.photo',
+                'p',
+            )
             ->where('t.member IN (:members)')
+            ->andWhere(
+                'p.dateTime = (SELECT MAX(p2.dateTime) FROM ' . MemberTag::class . ' t2'
+                . ' JOIN t2.photo p2 WHERE t2.member = t.member)',
+            )
             ->setParameter(
                 'members',
                 $members,
             )
-            ->groupBy('t.member')
-            ->setMaxResults(1)
-            ->orderBy(
-                'tag_count',
-                'DESC',
-            );
+            ->getQuery()
+            ->getResult();
 
-        $res = $qb->getQuery()->getResult();
+        // Two photos can share a timestamp; a member still gets at most one tag.
+        $tags = [];
+        foreach ($candidates as $candidate) {
+            $lidnr = $candidate->getMember()->getLidnr();
+            if (isset($tags[$lidnr])) {
+                continue;
+            }
 
-        if ([] === $res) {
-            return null;
+            $tags[$lidnr] = $candidate;
         }
 
-        $lidnr = $res[0][1];
-
-        // Retrieve the most recent tag of a member
-        $qb2 = $this->createQueryBuilder('t');
-        $qb2->join(
-            Photo::class,
-            'p',
-            'WITH',
-            'p.id = t.photo',
-        )
-            ->where('t.member = :member')
-            ->setParameter(
-                'member',
-                $lidnr,
-            )
-            ->setMaxResults(1)
-            ->orderBy(
-                'p.dateTime',
-                'DESC',
-            );
-
-        $res = $qb2->getQuery()->getResult();
-
-        if ([] === $res) {
-            return null;
-        }
-
-        return $res[0];
+        return array_values($tags);
     }
 }

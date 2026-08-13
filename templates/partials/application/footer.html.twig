@@ -8,8 +8,12 @@
                 <div class="row">
                     <div class="col-sm-9">
                         {% if is_granted('ROLE_USER') %}
-                            <h4>{{ 'Infimum'|trans }}</h4>
-                            <p id="infimum-footer">{{ 'Loading an infimum...'|trans }}</p>
+                            <div data-controller="infimum"
+                                 data-infimum-url-value="{{ path('infimum') }}"
+                                 data-infimum-unavailable-value="{{ 'No infimum could be fetched right now.'|trans }}">
+                                <h4>{{ 'Infimum'|trans }}</h4>
+                                <p data-infimum-target="quote">{{ 'Loading an infimum...'|trans }}</p>
+                            </div>
                         {% endif %}
                         <p class="mt-3">
                             &copy; 2013

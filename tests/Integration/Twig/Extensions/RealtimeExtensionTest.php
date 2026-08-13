@@ -26,11 +26,12 @@ final class RealtimeExtensionTest extends KernelTestCase
         );
     }
 
-    public function testSomeoneSignedInAlsoGetsTheirOwnTopic(): void
+    public function testSomeoneSignedInAlsoGetsTheirOwnTopicAndTheMembersOne(): void
     {
         self::assertSame(
             [
                 'gewis/public',
+                'gewis/members',
                 'gewis/user/main/8025',
             ],
             $this->topicsFor(new UsernamePasswordToken(
@@ -38,6 +39,30 @@ final class RealtimeExtensionTest extends KernelTestCase
                 'main',
                 ['ROLE_USER'],
             )),
+        );
+    }
+
+    /**
+     * A company user is signed in but is not a member, so what every member is shown at once is not theirs to
+     * receive.
+     */
+    public function testACompanyUserDoesNotGetTheMembersTopic(): void
+    {
+        self::assertNotContains(
+            'gewis/members',
+            $this->topicsFor(new UsernamePasswordToken(
+                $this->member(),
+                'main',
+                ['ROLE_COMPANY_USER'],
+            )),
+        );
+    }
+
+    public function testAPasserByDoesNotGetTheMembersTopic(): void
+    {
+        self::assertNotContains(
+            'gewis/members',
+            $this->topicsFor(null),
         );
     }
 

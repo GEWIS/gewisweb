@@ -1,0 +1,26 @@
+{#
+    A news item the board put at the top. Names nobody, for the same reason the ordinary row does not.
+
+    Pass `item`.
+#}
+<article class="panel news-pinned">
+    <div class="news-pinned__banner px-3 py-2">
+        <span class="fas fa-thumbtack" aria-hidden="true"></span> {{ 'Pinned by the board'|trans }}
+    </div>
+    <div class="panel-body">
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+            <a class="badge {{ item.category.badgeClass }}"
+               href="{{ path('news/index', {'category': item.category.value}) }}">{{ item.category|trans }}</a>
+            <span class="text-muted small">{{ item.date|format_date(pattern: 'd MMMM yyyy', locale: app.request.locale) }}</span>
+        </div>
+        <h3 class="h4">
+            <a href="{{ path('news/view', {'item': item.id}) }}">{{ item.title }}</a>
+        </h3>
+        <p class="text-muted">
+            {{ item.content|markdown_excerpt(260) }}
+        </p>
+        <a href="{{ path('news/view', {'item': item.id}) }}" class="btn btn-sm btn-gewis-primary">
+            {{ 'Read post'|trans }} <span class="fas fa-arrow-right"></span>
+        </a>
+    </div>
+</article>

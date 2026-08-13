@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Twig\Extensions;
 
+use App\Entity\User\Enums\UserRoles;
 use App\Service\User\SessionManager;
 use Override;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -87,6 +88,12 @@ class RealtimeExtension extends AbstractExtension
         // password.
         if (!$this->security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $topics;
+        }
+
+        // What every member is shown at once, such as the infimum being rotated. A company user is signed in but is
+        // not a member, so this sits behind the role rather than behind being signed in at all.
+        if ($this->security->isGranted(UserRoles::User->value)) {
+            $topics[] = 'gewis/members';
         }
 
         $user = $this->security->getUser();
