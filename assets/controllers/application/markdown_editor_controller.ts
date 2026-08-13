@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
+import { flattenFloatingLabel } from '../../js/floating_label.ts';
 
 // Minimal surface of CKEditor 5 we use. We vendor the official self-contained browser ESM bundle
 // (assets/js/ckeditor5/ckeditor5.js, mapped as `ckeditor5` in importmap.php) instead of resolving the npm package
@@ -6,6 +7,7 @@ import { Controller } from '@hotwired/stimulus';
 // cannot ESM-ify. The browser bundle inlines everything (no dependency tree to keep patched).
 interface CkEditorInstance {
     getData(): string;
+    setData(data: string): void;
     destroy(): Promise<unknown>;
     enableReadOnlyMode(lockId: string): void;
     disableReadOnlyMode(lockId: string): void;
@@ -26,8 +28,12 @@ interface CkEditorModule {
  *
  * The bundle is loaded with a dynamic `import()` on first use, keeping ~1.9 MB off pages without an editor.
  *
- * `data-markdown-editor-toolbar-value="minimal"` selects the restricted toolbar (the sign-up email); the default is
- * the full toolbar (activity descriptions).
+ * `data-markdown-editor-toolbar-value="minimal"` selects the restricted toolbar (the sign-up email) and `"comment"`
+ * the four inline marks a poll comment may carry; the default is the full toolbar (activity descriptions).
+ *
+ * `clear()` empties the editor, for a form that is not reloaded after it is sent: a live component that keeps its
+ * textarea behind `data-live-ignore` cannot empty it through a re-render, so it says so with a browser event instead
+ * (`data-action="poll-comment:posted@window->markdown-editor#clear"`).
  *
  * Coordinates with the `localised-fields` controller without coupling to it: when that disables the textarea (an
  * unchecked language is not submitted), a MutationObserver puts the editor into read-only mode; the disabled textarea
@@ -49,7 +55,7 @@ export default class extends Controller {
 
     connect(): void {
         this.aborted = false;
-        this.flattenFloatingLabel();
+        flattenFloatingLabel(this.textarea);
         this.observer = new MutationObserver(() => this.applyDisabledState());
         this.observer.observe(this.textarea, { attributes: true, attributeFilter: ['disabled'] });
         void this.createEditor();
@@ -104,6 +110,11 @@ export default class extends Controller {
         this.applyDisabledState();
     }
 
+    clear(): void {
+        this.editor?.setData('');
+        this.textarea.value = '';
+    }
+
     private applyDisabledState(): void {
         if (null === this.editor) {
             return;
@@ -116,26 +127,19 @@ export default class extends Controller {
         }
     }
 
-    // The Bootstrap floating label is absolutely positioned and would overlap the editor; drop the floating behaviour
-    // and lift the field's `<label>` above the editor as a normal caption.
-    private flattenFloatingLabel(): void {
-        const wrapper = this.textarea.closest('.form-floating');
-        if (null === wrapper) {
-            return;
-        }
-
-        wrapper.classList.remove('form-floating');
-        const label = wrapper.querySelector('label');
-        if (null !== label) {
-            label.classList.add('form-label');
-            wrapper.prepend(label);
-        }
-    }
-
-    // 'minimal' (sign-up email): only the inline formatting the restricted email Markdown renders. 'full' (activity
-    // descriptions): the complete set. The Markdown plugin makes getData()/initial data GFM Markdown in both cases.
+    // The Markdown plugin makes getData() and the initial data GFM Markdown whichever toolbar is asked for.
     // 'GPL' license key: valid for this GPL-3.0 project (CKEditor 5 >= v44 requires a key).
     private config(c: CkEditorModule): Record<string, unknown> {
+        // A poll comment is a sentence or two, not a document, and every button beyond these four invites one to be
+        // written as if it were.
+        if ('comment' === this.toolbarValue) {
+            return {
+                licenseKey: 'GPL',
+                plugins: [c.Essentials, c.Paragraph, c.Bold, c.Italic, c.Underline, c.Strikethrough, c.Markdown],
+                toolbar: ['bold', 'italic', 'underline', 'strikethrough'],
+            };
+        }
+
         if ('minimal' === this.toolbarValue) {
             return {
                 licenseKey: 'GPL',

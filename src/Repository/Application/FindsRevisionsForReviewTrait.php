@@ -7,6 +7,8 @@ namespace App\Repository\Application;
 use App\Entity\Application\Enums\RevisionStatus;
 use Doctrine\ORM\QueryBuilder;
 
+use function intval;
+
 /**
  * What "waiting for a reviewer" means, in one place: submitted, or already being looked at. Every revisable domain has
  * a queue built on it, and which statuses belong in one is a property of the workflow rather than of any single domain.
@@ -31,6 +33,22 @@ trait FindsRevisionsForReviewTrait
                     RevisionStatus::InReview->value,
                 ],
             );
+    }
+
+    /**
+     * How many are waiting on a reviewer, for the overviews that only say so rather than list them.
+     */
+    public function countForReview(): int
+    {
+        $builder = $this->createQueryBuilder('r')
+            ->select('COUNT(r.id)');
+
+        $this->whereAwaitingReview($builder);
+
+        return intval(
+            $builder->getQuery()
+                ->getSingleScalarResult(),
+        );
     }
 
     /**

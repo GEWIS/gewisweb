@@ -1,0 +1,52 @@
+{#
+    How a poll was answered. The totals come from the options themselves, so answers that have since been anonymised
+    still count towards them.
+
+    Pass `poll`, and optionally:
+    - `chosen`: the option this reader gave (or null), to mark their own answer
+    - `limit`: show only this many answers, most answered first (the archive cards)
+    - `compact`: the tighter row without vote counts or the closing total line
+#}
+{% set chosen = chosen|default(null) %}
+{% set limit = limit|default(null) %}
+{% set compact = compact|default(false) %}
+{% set total = poll.totalVotesCount %}
+{% set leading = poll.leadingOption %}
+{% set options = limit is null
+    ? poll.options
+    : poll.options|sort((a, b) => b.votesCount <=> a.votesCount)|slice(0, limit) %}
+
+<ul class="list-unstyled {{ compact ? 'mb-0' : 'mb-2' }}">
+    {% for option in options %}
+        {% set share = total > 0 ? (option.votesCount / total * 100)|round : 0 %}
+        {% set isChosen = chosen is not null and chosen.id == option.id %}
+        {% set isLeading = leading is not null and leading.id == option.id %}
+        <li class="poll-result{{ compact ? ' poll-result--compact' }} {{ compact ? 'mb-1' : 'mb-2' }}{{ isChosen ? ' poll-result--chosen' }}{{ isLeading ? ' poll-result--leading' }}">
+            <div class="d-flex justify-content-between align-items-baseline gap-2">
+                <span{% if compact %} class="text-truncate"{% endif %}>
+                    {% if isChosen %}
+                        <span class="fas fa-circle-check" aria-hidden="true"></span>
+                    {% endif %}
+                    {{ option.text|localise_text }}
+                </span>
+                <span class="small text-nowrap">
+                    {{ share }}%
+                    {% if not compact %}
+                        <span class="text-muted">
+                            ({{ '%count% vote|%count% votes'|trans({'%count%': option.votesCount}) }})
+                        </span>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="progress" role="progressbar"
+                 aria-label="{{ option.text|localise_text }}"
+                 aria-valuenow="{{ share }}" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar poll-result__bar" style="width: {{ share }}%"></div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+{% if not compact %}
+    <p class="text-muted small mb-0">{{ '%count% vote|%count% votes'|trans({'%count%': total}) }}</p>
+{% endif %}

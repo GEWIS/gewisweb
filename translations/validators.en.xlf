@@ -25,6 +25,10 @@
         <source>A package cannot expire before it starts.</source>
         <target state="translated">A package cannot expire before it starts.</target>
       </trans-unit>
+      <trans-unit id="TH48MkK" resname="A poll needs at least two answers to choose between.">
+        <source>A poll needs at least two answers to choose between.</source>
+        <target state="translated">A poll needs at least two answers to choose between.</target>
+      </trans-unit>
       <trans-unit id="3T8qjGm" resname="A slug starts with a letter and contains only lowercase letters, digits, underscores and hyphens.">
         <source>A slug starts with a letter and contains only lowercase letters, digits, underscores and hyphens.</source>
         <target state="translated">A slug starts with a letter and contains only lowercase letters, digits, underscores and hyphens.</target>

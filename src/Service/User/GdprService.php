@@ -10,6 +10,7 @@ use App\Repository\Decision\AuthorizationRepository;
 use App\Repository\Education\SummaryRepository;
 use App\Repository\Frontpage\PollCommentRepository;
 use App\Repository\Frontpage\PollRepository;
+use App\Repository\Frontpage\PollRevisionRepository;
 use App\Repository\Frontpage\PollVoteRepository;
 use App\Repository\Photo\MemberTagRepository;
 use App\Repository\Photo\PhotoRepository;
@@ -43,6 +44,7 @@ class GdprService
         private readonly PollVoteRepository $pollVoteRepository,
         private readonly PollCommentRepository $pollCommentRepository,
         private readonly PollRepository $pollRepository,
+        private readonly PollRevisionRepository $pollRevisionRepository,
     ) {
     }
 
@@ -132,9 +134,9 @@ class GdprService
                     static fn ($poll) => $poll->toGdprArray(),
                     $this->pollRepository->findPollsCreatedByMember($member),
                 ),
-                'approved' => array_map(
-                    static fn ($poll) => $poll->toGdprArray(),
-                    $this->pollRepository->findPollsApprovedByMember($member),
+                'reviewed' => array_map(
+                    static fn ($revision) => $revision->getPoll()->toGdprArray(),
+                    $this->pollRevisionRepository->findReviewedByMember($member),
                 ),
             ],
         ];

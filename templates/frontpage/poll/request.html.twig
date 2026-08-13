@@ -1,0 +1,84 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}{{ 'Request a poll'|trans|page_title }}{{ 'Polls'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('poll/index') }}">{{ 'Polls'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Request a poll'|trans }}</li>
+{% endblock %}
+
+{% block contents %}
+    <h2 class="mb-3">{{ 'Request a poll'|trans }}</h2>
+
+    <div class="alert alert-info" role="alert">
+        <strong>{{ 'Heads up!'|trans }}</strong>
+        {{ 'Polls are public and freely accessible, even to non-members. This means you cannot use personal data in the questions or answers. As with infima, always abbreviate family names: write <em>John D.</em> rather than <em>John Doe</em>. The board checks this before agreeing to a poll, and a poll with personal data in it is turned down rather than published.'|trans|raw }}
+    </div>
+
+    {% if previous is not null %}
+        <div class="alert alert-warning">
+            {{ 'The board did not agree to this question. Rewrite it below and it goes back to them with what they refused alongside it.'|trans }}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-lg-9">
+            {{ form_start(form, {'method': 'POST', 'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_errors(form) }}
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'Your question'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {# Both languages are required, so the columns are headed once and every row below lines up under
+                       them rather than repeating the flags per field. #}
+                    <div class="row g-2 mb-2">
+                        <div class="col">
+                            <span class="flag-icon flag-icon-nl"></span> {{ 'Dutch'|trans }}
+                        </div>
+                        <div class="col">
+                            <span class="flag-icon flag-icon-en"></span> {{ 'English'|trans }}
+                        </div>
+                        <div class="col-auto invisible" aria-hidden="true">
+                            <button type="button" class="btn btn-outline-gewis-primary">
+                                <span class="fas fa-trash"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row g-2 align-items-start">
+                        <div class="col">
+                            {{ form_row(form.question.valueNL, {'label': form.question.vars.label}) }}
+                        </div>
+                        <div class="col">
+                            {{ form_row(form.question.valueEN, {'label': form.question.vars.label}) }}
+                        </div>
+                        <div class="col-auto invisible" aria-hidden="true">
+                            <button type="button" class="btn btn-outline-gewis-primary">
+                                <span class="fas fa-trash"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {{ form_widget(form.options) }}
+                    {{ form_errors(form.options) }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-gewis-primary">{{ 'Send to the board'|trans }}</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="col-lg-3">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3>{{ 'How this works'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p class="mb-2">{{ 'The board reads every question before it goes on the website, and decides when it closes.'|trans }}</p>
+                    <p class="mb-0">{{ 'A question cannot be changed once it has been sent, so read it over first.'|trans }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

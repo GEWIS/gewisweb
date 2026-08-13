@@ -18,6 +18,7 @@ use Override;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
+use function preg_replace_callback;
 use function strip_tags;
 
 /**
@@ -40,7 +41,54 @@ final class MarkdownExtension extends AbstractExtension
                 $this->markdown(...),
                 ['is_safe' => ['html']],
             ),
+            new TwigFilter(
+                'markdown_comment',
+                $this->markdownComment(...),
+                ['is_safe' => ['html']],
+            ),
         ];
+    }
+
+    /**
+     * A comment written with the four-button editor: bold, italic, underline and strikethrough, and nothing else.
+     *
+     * Underline is the one of the four that GitHub-flavoured Markdown has no syntax for, so the editor writes it as a
+     * `<u>` tag. Everything the converter is handed is escaped first and its output narrowed to the handful of tags a
+     * comment may carry; only that exact tag is put back afterwards, so no attribute and no other tag can come
+     * through: `&lt;u onclick=...&gt;` simply does not match.
+     */
+    public function markdownComment(?string $text): string
+    {
+        return $this->underline($this->markdown(
+            $text,
+            [
+                'p',
+                'br',
+                'em',
+                'strong',
+                'del',
+                'u',
+                'code',
+                'a',
+            ],
+        ));
+    }
+
+    /**
+     * Turns the escaped `<u>` tags back into real ones, in pairs and never inside code: a member showing what the tag
+     * looks like keeps it as text, and an opening tag whose closing tag never came stays text as well rather than
+     * underlining everything after the comment.
+     */
+    private function underline(string $html): string
+    {
+        return preg_replace_callback(
+            '#<code[^>]*>.*?</code>|&lt;u&gt;(.*?)&lt;/u&gt;#s',
+            /** @param string[] $match */
+            static fn (array $match): string => isset($match[1])
+                ? '<u>' . $match[1] . '</u>'
+                : $match[0],
+            $html,
+        ) ?? $html;
     }
 
     /**

@@ -17,6 +17,13 @@
     {% if decisionForm.message is defined %}
         {{ form_row(decisionForm.message) }}
     {% endif %}
+    {# A domain may put fields of its own on the decision form (a poll's closing date); they render before the
+       buttons, in form order. #}
+    {% for child in decisionForm %}
+        {% if child.vars.name != 'message' and 'submit' not in child.vars.block_prefixes and 'hidden' not in child.vars.block_prefixes %}
+            {{ form_row(child) }}
+        {% endif %}
+    {% endfor %}
     <div class="d-grid gap-2">
         {% if decisionForm.submit is defined %}
             {{ form_widget(decisionForm.submit, {'attr': {'class': 'btn btn-success'}}) }}

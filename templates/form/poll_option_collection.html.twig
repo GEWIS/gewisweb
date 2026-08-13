@@ -1,0 +1,44 @@
+{# Renders a poll's answers as rows of two language columns, under the pair of flags the panel around them already
+   carries. The generic `collection` theme heads every field with its own flag, which on a form that is nothing but
+   the same two languages over and over reads as noise. #}
+
+{% macro answer_row(child, remove_label) %}
+    <div class="poll-answer-row row g-2 align-items-start" data-form-collection-target="entry">
+        <div class="col">{{ form_row(child.text.valueNL, {'label': child.text.vars.label}) }}</div>
+        <div class="col">{{ form_row(child.text.valueEN, {'label': child.text.vars.label}) }}</div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-outline-gewis-primary" data-action="form-collection#remove"
+                    aria-label="{{ remove_label }}" title="{{ remove_label }}">
+                <span class="fas fa-trash"></span>
+            </button>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block poll_option_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block poll_option_collection_widget %}
+    {% import _self as helper %}
+    {% set has_prototype = allow_add and prototype is defined and prototype is not null %}
+    {% set placeholder = has_prototype ? (prototype.vars.name|split('[')|last|trim(']')) : '__option__' %}
+    {% set remove_label = 'Remove answer'|trans %}
+    <div {{ block('widget_container_attributes') }}
+         data-controller="form-collection"
+         {% if has_prototype %}
+             data-form-collection-prototype-value="{{ helper.answer_row(prototype, remove_label)|e('html_attr') }}"
+             data-form-collection-prototype-name-value="{{ placeholder }}"
+         {% endif %}>
+        <div data-form-collection-target="entries">
+            {% for child in form %}
+                {{ helper.answer_row(child, remove_label) }}
+            {% endfor %}
+        </div>
+        {% if allow_add %}
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-2" data-action="form-collection#add">
+                <span class="fas fa-plus"></span> {{ 'Add answer'|trans }}
+            </button>
+        {% endif %}
+    </div>
+{% endblock %}
