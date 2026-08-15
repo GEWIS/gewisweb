@@ -5,6 +5,18 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="AoY3XHY" resname="&quot;%name%&quot; has been given a day. The activity has been started for you and still needs filling in.">
+        <source>"%name%" has been given a day. The activity has been started for you and still needs filling in.</source>
+        <target state="translated">"%name%" has been given a day. The activity has been started for you and still needs filling in.</target>
+      </trans-unit>
+      <trans-unit id="FPSBTz3" resname="&quot;%name%&quot; has been put forward and is waiting for a day.">
+        <source>"%name%" has been put forward and is waiting for a day.</source>
+        <target state="translated">"%name%" has been put forward and is waiting for a day.</target>
+      </trans-unit>
+      <trans-unit id="3WCdvsC" resname="&quot;%name%&quot; has been turned down; its days are free again.">
+        <source>"%name%" has been turned down; its days are free again.</source>
+        <target state="translated">"%name%" has been turned down; its days are free again.</target>
+      </trans-unit>
       <trans-unit id="cO1414V" resname="%actor% added %subject% to the library">
         <source>%actor% added %subject% to the library</source>
         <target state="translated">%actor% added %subject% to the library</target>
@@ -173,6 +185,10 @@
         <source>%count% banners are waiting for a decision.</source>
         <target state="translated">%count% banners are waiting for a decision.</target>
       </trans-unit>
+      <trans-unit id="9OwezIT" resname="%count% bodies are waiting for a day.">
+        <source>%count% bodies are waiting for a day.</source>
+        <target state="translated">%count% bodies are waiting for a day.</target>
+      </trans-unit>
       <trans-unit id="2jo5BH5" resname="%count% bodies have submitted their page for review.">
         <source>%count% bodies have submitted their page for review.</source>
         <target state="translated">%count% bodies have submitted their page for review.</target>
@@ -213,6 +229,10 @@
         <source>%count% hour|%count% hours</source>
         <target>%count% hour|%count% hours</target>
       </trans-unit>
+      <trans-unit id="Ok22ihS" resname="%count% in line">
+        <source>%count% in line</source>
+        <target state="translated">%count% in line</target>
+      </trans-unit>
       <trans-unit id="9W1HhkK" resname="%count% item is waiting for a decision|%count% items are waiting for a decision">
         <source>%count% item is waiting for a decision|%count% items are waiting for a decision</source>
         <target state="translated">%count% item is waiting for a decision|%count% items are waiting for a decision</target>
@@ -220,6 +240,10 @@
       <trans-unit id="30tji6_" resname="%count% minute|%count% minutes">
         <source>%count% minute|%count% minutes</source>
         <target>%count% minute|%count% minutes</target>
+      </trans-unit>
+      <trans-unit id="7q6l7Vp" resname="%count% more">
+        <source>%count% more</source>
+        <target state="translated">%count% more</target>
       </trans-unit>
       <trans-unit id="y.5r2o." resname="%count% more answer|%count% more answers">
         <source>%count% more answer|%count% more answers</source>
@@ -232,6 +256,22 @@
       <trans-unit id="VLcbnTs" resname="%count% new photo albums are online.">
         <source>%count% new photo albums are online.</source>
         <target state="translated">%count% new photo albums are online.</target>
+      </trans-unit>
+      <trans-unit id="iWUpoA7" resname="%count% of the days you are holding are at risk.">
+        <source>%count% of the days you are holding are at risk.</source>
+        <target state="translated">%count% of the days you are holding are at risk.</target>
+      </trans-unit>
+      <trans-unit id="NwGDYOi" resname="%count% of the days you were holding have been released.">
+        <source>%count% of the days you were holding have been released.</source>
+        <target state="translated">%count% of the days you were holding have been released.</target>
+      </trans-unit>
+      <trans-unit id="2M6JhH2" resname="%count% of your proposals have been given a day.">
+        <source>%count% of your proposals have been given a day.</source>
+        <target state="translated">%count% of your proposals have been given a day.</target>
+      </trans-unit>
+      <trans-unit id="NqfOYaT" resname="%count% of your proposals have been turned down.">
+        <source>%count% of your proposals have been turned down.</source>
+        <target state="translated">%count% of your proposals have been turned down.</target>
       </trans-unit>
       <trans-unit id="XJjM_dh" resname="%count% open role|%count% open roles">
         <source>%count% open role|%count% open roles</source>
@@ -357,6 +397,18 @@
         <source>%package% runs out on %date%</source>
         <target state="translated">%package% runs out on %date%</target>
       </trans-unit>
+      <trans-unit id="HJnAXpg" resname="%remaining% of %maximum%">
+        <source>%remaining% of %maximum%</source>
+        <target state="translated">%remaining% of %maximum%</target>
+      </trans-unit>
+      <trans-unit id="jasoMI6" resname="%remaining% of %maximum% left">
+        <source>%remaining% of %maximum% left</source>
+        <target state="translated">%remaining% of %maximum% left</target>
+      </trans-unit>
+      <trans-unit id="zDNkaHa" resname="%round% is taking proposals until %closes%, for activities between %from% and %until%.">
+        <source>%round% is taking proposals until %closes%, for activities between %from% and %until%.</source>
+        <target state="translated">%round% is taking proposals until %closes%, for activities between %from% and %until%.</target>
+      </trans-unit>
       <trans-unit id="FSVrLmg" resname="A banner runs between the news items on the GEWIS home page, so the whole association sees it and not only the students browsing vacancies. Ask your contact at GEWIS what a banner package would cost you.">
         <source>A banner runs between the news items on the GEWIS home page, so the whole association sees it and not only the students browsing vacancies. Ask your contact at GEWIS what a banner package would cost you.</source>
         <target state="translated">A banner runs between the news items on the GEWIS home page, so the whole association sees it and not only the students browsing vacancies. Ask your contact at GEWIS what a banner package would cost you.</target>
@@ -368,6 +420,10 @@
       <trans-unit id="9KB3Qb4" resname="A company cannot change one while it sits with you.">
         <source>A company cannot change one while it sits with you.</source>
         <target state="translated">A company cannot change one while it sits with you.</target>
+      </trans-unit>
+      <trans-unit id="gVglBuS" resname="A dependency on somebody outside the association, how big it is, why this day.">
+        <source>A dependency on somebody outside the association, how big it is, why this day.</source>
+        <target state="translated">A dependency on somebody outside the association, how big it is, why this day.</target>
       </trans-unit>
       <trans-unit id="ii1C5FZ" resname="A draft only goes to GEWIS once you submit it for review.">
         <source>A draft only goes to GEWIS once you submit it for review.</source>
@@ -457,6 +513,10 @@
         <source>About GEWIS</source>
         <target state="translated">About GEWIS</target>
       </trans-unit>
+      <trans-unit id="8XjapXc" resname="About the days your body has asked for">
+        <source>About the days your body has asked for</source>
+        <target state="translated">About the days your body has asked for</target>
+      </trans-unit>
       <trans-unit id="3XnQIRi" resname="About this activity">
         <source>About this activity</source>
         <target state="translated">About this activity</target>
@@ -545,6 +605,22 @@
         <source>Activities awaiting review</source>
         <target state="translated">Activities awaiting review</target>
       </trans-unit>
+      <trans-unit id="mrlXw_3" resname="Activities each body may propose">
+        <source>Activities each body may propose</source>
+        <target state="translated">Activities each body may propose</target>
+      </trans-unit>
+      <trans-unit id="3DaLMoX" resname="Activities it may propose in this round">
+        <source>Activities it may propose in this round</source>
+        <target state="translated">Activities it may propose in this round</target>
+      </trans-unit>
+      <trans-unit id="4VyZ5eI" resname="Activities it may propose per round">
+        <source>Activities it may propose per round</source>
+        <target state="translated">Activities it may propose per round</target>
+      </trans-unit>
+      <trans-unit id="CRd03c8" resname="Activity">
+        <source>Activity</source>
+        <target state="translated">Activity</target>
+      </trans-unit>
       <trans-unit id="YwgVFXF" resname="Activity Policy">
         <source>Activity Policy</source>
         <target>Activity Policy</target>
@@ -604,6 +680,14 @@
       <trans-unit id="UAVz.YN" resname="Add agenda point">
         <source>Add agenda point</source>
         <target state="translated">Add agenda point</target>
+      </trans-unit>
+      <trans-unit id="Y8VuczZ" resname="Add an exception">
+        <source>Add an exception</source>
+        <target state="translated">Add an exception</target>
+      </trans-unit>
+      <trans-unit id="wg6rHsn" resname="Add another day">
+        <source>Add another day</source>
+        <target state="translated">Add another day</target>
       </trans-unit>
       <trans-unit id="3AXboIn" resname="Add answer">
         <source>Add answer</source>
@@ -704,6 +788,10 @@
       <trans-unit id="mfDppNa" resname="After this the application can no longer authenticate. Leave empty for no expiry.">
         <source>After this the application can no longer authenticate. Leave empty for no expiry.</source>
         <target>After this the application can no longer authenticate. Leave empty for no expiry.</target>
+      </trans-unit>
+      <trans-unit id="gXubtqW" resname="Afternoon">
+        <source>Afternoon</source>
+        <target state="translated">Afternoon</target>
       </trans-unit>
       <trans-unit id="iHRAo8z" resname="Agenda">
         <source>Agenda</source>
@@ -817,6 +905,22 @@
         <source>Already being edited</source>
         <target state="translated">Already being edited</target>
       </trans-unit>
+      <trans-unit id="CrcKB8q" resname="Already in the agenda">
+        <source>Already in the agenda</source>
+        <target state="translated">Already in the agenda</target>
+      </trans-unit>
+      <trans-unit id="qh2PXfe" resname="Alternative">
+        <source>Alternative</source>
+        <target state="translated">Alternative</target>
+      </trans-unit>
+      <trans-unit id="aR09SuQ" resname="Alternative %number%">
+        <source>Alternative %number%</source>
+        <target state="translated">Alternative %number%</target>
+      </trans-unit>
+      <trans-unit id="DWJM5IK" resname="Alternatives are only used if the day you would rather have falls through. %count% is the most for one activity.">
+        <source>Alternatives are only used if the day you would rather have falls through. %count% is the most for one activity.</source>
+        <target state="translated">Alternatives are only used if the day you would rather have falls through. %count% is the most for one activity.</target>
+      </trans-unit>
       <trans-unit id="3eX.3WJ" resname="Analytics are currently">
         <source>Analytics are currently</source>
         <target state="translated">Analytics are currently</target>
@@ -888,6 +992,10 @@
       <trans-unit id="mxjIT1l" resname="Anything that needs you shows up here.">
         <source>Anything that needs you shows up here.</source>
         <target state="translated">Anything that needs you shows up here.</target>
+      </trans-unit>
+      <trans-unit id="AUJM2N6" resname="Anything the board should know">
+        <source>Anything the board should know</source>
+        <target state="translated">Anything the board should know</target>
       </trans-unit>
       <trans-unit id="7UQ9ySb" resname="Aperture">
         <source>Aperture</source>
@@ -1025,6 +1133,10 @@
         <source>Avoid RS512 for new applications.</source>
         <target>Avoid RS512 for new applications.</target>
       </trans-unit>
+      <trans-unit id="jEGh.eu" resname="Awaiting a decision">
+        <source>Awaiting a decision</source>
+        <target state="translated">Awaiting a decision</target>
+      </trans-unit>
       <trans-unit id="rw3oYDO" resname="Awaiting review">
         <source>Awaiting review</source>
         <target state="translated">Awaiting review</target>
@@ -1149,6 +1261,14 @@
         <source>Bodies awaiting review</source>
         <target state="translated">Bodies awaiting review</target>
       </trans-unit>
+      <trans-unit id="BpP4IKP" resname="Bodies may propose from">
+        <source>Bodies may propose from</source>
+        <target state="translated">Bodies may propose from</target>
+      </trans-unit>
+      <trans-unit id="QfWBKpb" resname="Bodies may propose until">
+        <source>Bodies may propose until</source>
+        <target state="translated">Bodies may propose until</target>
+      </trans-unit>
       <trans-unit id="cGXWNw." resname="Body">
         <source>Body</source>
         <target>Body</target>
@@ -1173,6 +1293,14 @@
         <source>Browse all</source>
         <target state="translated">Browse all</target>
       </trans-unit>
+      <trans-unit id="TdxGSIT" resname="Budget approved">
+        <source>Budget approved</source>
+        <target state="translated">Budget approved</target>
+      </trans-unit>
+      <trans-unit id="c4Zkzxq" resname="By">
+        <source>By</source>
+        <target state="translated">By</target>
+      </trans-unit>
       <trans-unit id="MbZy9Nf" resname="By type">
         <source>By type</source>
         <target state="translated">By type</target>
@@ -1180,10 +1308,6 @@
       <trans-unit id="xvpeTga" resname="CM">
         <source>CM</source>
         <target state="translated">CM</target>
-      </trans-unit>
-      <trans-unit id="C0vtgUR" resname="Calendar">
-        <source>Calendar</source>
-        <target state="translated">Calendar</target>
       </trans-unit>
       <trans-unit id="_18O2Tg" resname="Callback">
         <source>Callback</source>
@@ -1257,9 +1381,17 @@
         <source>Chair's Meeting</source>
         <target state="translated">Chair's Meeting</target>
       </trans-unit>
+      <trans-unit id="lc4o0_G" resname="Change it">
+        <source>Change it</source>
+        <target state="translated">Change it</target>
+      </trans-unit>
       <trans-unit id="EbzUhXX" resname="Change password">
         <source>Change password</source>
         <target state="translated">Change password</target>
+      </trans-unit>
+      <trans-unit id="qSyfKlF" resname="Change your proposal">
+        <source>Change your proposal</source>
+        <target state="translated">Change your proposal</target>
       </trans-unit>
       <trans-unit id="A4XK4fk" resname="Changes go to your contact at GEWIS first; what is live stays live until they agree.">
         <source>Changes go to your contact at GEWIS first; what is live stays live until they agree.</source>
@@ -1296,6 +1428,14 @@
       <trans-unit id="ARMHX0P" resname="City and postal code">
         <source>City and postal code</source>
         <target>City and postal code</target>
+      </trans-unit>
+      <trans-unit id="iwANrWN" resname="Claim a day">
+        <source>Claim a day</source>
+        <target state="translated">Claim a day</target>
+      </trans-unit>
+      <trans-unit id="XTl6UvI" resname="Claim a day before you plan an activity on it. Whoever asks first has first dibs, and the board decides.">
+        <source>Claim a day before you plan an activity on it. Whoever asks first has first dibs, and the board decides.</source>
+        <target state="translated">Claim a day before you plan an activity on it. Whoever asks first has first dibs, and the board decides.</target>
       </trans-unit>
       <trans-unit id="4WGve3T" resname="Claims">
         <source>Claims</source>
@@ -1709,6 +1849,10 @@
         <source>Date and time</source>
         <target state="translated">Date and time</target>
       </trans-unit>
+      <trans-unit id="P0lysRL" resname="Date reserved">
+        <source>Date reserved</source>
+        <target state="translated">Date reserved</target>
+      </trans-unit>
       <trans-unit id="sZxc4.j" resname="Date synced from GEWISDB">
         <source>Date synced from GEWISDB</source>
         <target state="translated">Date synced from GEWISDB</target>
@@ -1717,6 +1861,50 @@
         <source>Date/time</source>
         <target>Date/time</target>
       </trans-unit>
+      <trans-unit id="qNrAQy0" resname="Day">
+        <source>Day</source>
+        <target state="translated">Day</target>
+      </trans-unit>
+      <trans-unit id="z4RPkim" resname="Day asked for">
+        <source>Day asked for</source>
+        <target state="translated">Day asked for</target>
+      </trans-unit>
+      <trans-unit id="cqkT89S" resname="Day reserved">
+        <source>Day reserved</source>
+        <target state="translated">Day reserved</target>
+      </trans-unit>
+      <trans-unit id="qBy_Aas" resname="Days">
+        <source>Days</source>
+        <target state="translated">Days</target>
+      </trans-unit>
+      <trans-unit id="BfqYXsg" resname="Days asked for">
+        <source>Days asked for</source>
+        <target state="translated">Days asked for</target>
+      </trans-unit>
+      <trans-unit id="v3wZZcN" resname="Days it could be on">
+        <source>Days it could be on</source>
+        <target state="translated">Days it could be on</target>
+      </trans-unit>
+      <trans-unit id="_3Qa52l" resname="Days it covers">
+        <source>Days it covers</source>
+        <target state="translated">Days it covers</target>
+      </trans-unit>
+      <trans-unit id="hK.bxk6" resname="Days more than one body wants">
+        <source>Days more than one body wants</source>
+        <target state="translated">Days more than one body wants</target>
+      </trans-unit>
+      <trans-unit id="lPlzHsW" resname="Days put forward">
+        <source>Days put forward</source>
+        <target state="translated">Days put forward</target>
+      </trans-unit>
+      <trans-unit id="zRpugab" resname="Days you want">
+        <source>Days you want</source>
+        <target state="translated">Days you want</target>
+      </trans-unit>
+      <trans-unit id="ThUAcoN" resname="Decide">
+        <source>Decide</source>
+        <target state="translated">Decide</target>
+      </trans-unit>
       <trans-unit id="ZLKfVS9" resname="Decisions">
         <source>Decisions</source>
         <target state="translated">Decisions</target>
@@ -1724,6 +1912,10 @@
       <trans-unit id="otJlv1i" resname="Decisions here">
         <source>Decisions here</source>
         <target state="translated">Decisions here</target>
+      </trans-unit>
+      <trans-unit id="doggB8h" resname="Declined">
+        <source>Declined</source>
+        <target state="translated">Declined</target>
       </trans-unit>
       <trans-unit id="NR4FjXR" resname="Default">
         <source>Default</source>
@@ -2049,6 +2241,10 @@
         <source>Edit the draft</source>
         <target state="translated">Edit the draft</target>
       </trans-unit>
+      <trans-unit id="9GhhhdM" resname="Edit the round">
+        <source>Edit the round</source>
+        <target state="translated">Edit the round</target>
+      </trans-unit>
       <trans-unit id="5ImdDDP" resname="Edit your profile">
         <source>Edit your profile</source>
         <target state="translated">Edit your profile</target>
@@ -2189,9 +2385,29 @@
         <source>Enter the name in both languages.</source>
         <target state="translated">Enter the name in both languages.</target>
       </trans-unit>
+      <trans-unit id="kpPkG8W" resname="Evening">
+        <source>Evening</source>
+        <target state="translated">Evening</target>
+      </trans-unit>
       <trans-unit id="U3hnjYE" resname="Every active session for this user will be terminated immediately.">
         <source>Every active session for this user will be terminated immediately.</source>
         <target state="translated">Every active session for this user will be terminated immediately.</target>
+      </trans-unit>
+      <trans-unit id=".5iuEig" resname="Every body">
+        <source>Every body</source>
+        <target state="translated">Every body</target>
+      </trans-unit>
+      <trans-unit id="VWsORXp" resname="Every body may propose %count% activities a round unless it is listed here. An exception holds for every round until you change it, so a body that always needs a different number only has to be entered once.">
+        <source>Every body may propose %count% activities a round unless it is listed here. An exception holds for every round until you change it, so a body that always needs a different number only has to be entered once.</source>
+        <target state="translated">Every body may propose %count% activities a round unless it is listed here. An exception holds for every round until you change it, so a body that always needs a different number only has to be entered once.</target>
+      </trans-unit>
+      <trans-unit id="2xiYuF8" resname="Every day it asked for is freed for whoever is next in line. The body can be put back in the running afterwards.">
+        <source>Every day it asked for is freed for whoever is next in line. The body can be put back in the running afterwards.</source>
+        <target state="translated">Every day it asked for is freed for whoever is next in line. The body can be put back in the running afterwards.</target>
+      </trans-unit>
+      <trans-unit id="NAg5eVK" resname="Every day it is standing on is freed for whoever is next in line. You can propose it again while the round is open.">
+        <source>Every day it is standing on is freed for whoever is next in line. You can propose it again while the round is open.</source>
+        <target state="translated">Every day it is standing on is freed for whoever is next in line. You can propose it again while the round is open.</target>
       </trans-unit>
       <trans-unit id="xVvK.Uw" resname="Every input should map to an output. This one got lost.">
         <source>Every input should map to an output. This one got lost.</source>
@@ -2221,6 +2437,10 @@
         <source>Everybody who can act for %company% here. To add somebody, or to remove one of them, ask your contact at GEWIS.</source>
         <target state="translated">Everybody who can act for %company% here. To add somebody, or to remove one of them, ask your contact at GEWIS.</target>
       </trans-unit>
+      <trans-unit id="SJrV1WZ" resname="Everyone reads this on the calendar, so make it say what the activity is.">
+        <source>Everyone reads this on the calendar, so make it say what the activity is.</source>
+        <target state="translated">Everyone reads this on the calendar, so make it say what the activity is.</target>
+      </trans-unit>
       <trans-unit id="4iH0elm" resname="Everything">
         <source>Everything</source>
         <target state="translated">Everything</target>
@@ -2232,6 +2452,10 @@
       <trans-unit id="okg42Xh" resname="Everything happening around the association: news, activities and photos.">
         <source>Everything happening around the association: news, activities and photos.</source>
         <target state="translated">Everything happening around the association: news, activities and photos.</target>
+      </trans-unit>
+      <trans-unit id="KCACVqf" resname="Everything holding a day has been settled.">
+        <source>Everything holding a day has been settled.</source>
+        <target state="translated">Everything holding a day has been settled.</target>
       </trans-unit>
       <trans-unit id="09wa3mW" resname="Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you. Notices about your own account and your privacy are always sent and cannot be turned off.">
         <source>Everything shows up on the website. Pick which topics you also want by email, and how often they should reach you. Notices about your own account and your privacy are always sent and cannot be turned off.</source>
@@ -2272,6 +2496,14 @@
       <trans-unit id="q6.QUqh" resname="Exceptional Members">
         <source>Exceptional Members</source>
         <target state="translated">Exceptional Members</target>
+      </trans-unit>
+      <trans-unit id="pNatU9u" resname="Exceptions">
+        <source>Exceptions</source>
+        <target state="translated">Exceptions</target>
+      </trans-unit>
+      <trans-unit id="IhwzCxR" resname="Exceptions for %period%">
+        <source>Exceptions for %period%</source>
+        <target state="translated">Exceptions for %period%</target>
       </trans-unit>
       <trans-unit id="eQiPQYt" resname="Exit impersonation">
         <source>Exit impersonation</source>
@@ -2389,6 +2621,10 @@
         <source>Financial Audit Committees</source>
         <target state="translated">Financial Audit Committees</target>
       </trans-unit>
+      <trans-unit id="Il02at6" resname="Financially">
+        <source>Financially</source>
+        <target state="translated">Financially</target>
+      </trans-unit>
       <trans-unit id="0qwNq9T" resname="Find a member">
         <source>Find a member</source>
         <target state="translated">Find a member</target>
@@ -2404,6 +2640,14 @@
       <trans-unit id="e1vgw7k" resname="Find the job before you need one.">
         <source>Find the job before you need one.</source>
         <target state="translated">Find the job before you need one.</target>
+      </trans-unit>
+      <trans-unit id="e_5usRB" resname="Finish it">
+        <source>Finish it</source>
+        <target state="translated">Finish it</target>
+      </trans-unit>
+      <trans-unit id="fwGKKQ7" resname="First day activities may fall on">
+        <source>First day activities may fall on</source>
+        <target state="translated">First day activities may fall on</target>
       </trans-unit>
       <trans-unit id="h6eEHVD" resname="First name">
         <source>First name</source>
@@ -2569,6 +2813,10 @@
         <source>Get in touch with your contact at GEWIS to renew.</source>
         <target state="translated">Get in touch with your contact at GEWIS to renew.</target>
       </trans-unit>
+      <trans-unit id="GOgRREV" resname="Give them this day">
+        <source>Give them this day</source>
+        <target state="translated">Give them this day</target>
+      </trans-unit>
       <trans-unit id="3cwxgDa" resname="Given name">
         <source>Given name</source>
         <target state="translated">Given name</target>
@@ -2632,6 +2880,18 @@
       <trans-unit id="pyDpg0q" resname="HS512 (shared secret, legacy)">
         <source>HS512 (shared secret, legacy)</source>
         <target>HS512 (shared secret, legacy)</target>
+      </trans-unit>
+      <trans-unit id="HBZe6l1" resname="Hand it in">
+        <source>Hand it in</source>
+        <target state="translated">Hand it in</target>
+      </trans-unit>
+      <trans-unit id="Vr8hJW8" resname="Handed in">
+        <source>Handed in</source>
+        <target state="translated">Handed in</target>
+      </trans-unit>
+      <trans-unit id="pfLCxTv" resname="Handing proposals in">
+        <source>Handing proposals in</source>
+        <target state="translated">Handing proposals in</target>
       </trans-unit>
       <trans-unit id="yTvE6dJ" resname="Have a GEWIS account? Log in to sign up.">
         <source>Have a GEWIS account? Log in to sign up.</source>
@@ -2720,6 +2980,10 @@
       <trans-unit id="7oKpSxb" resname="History">
         <source>History</source>
         <target state="translated">History</target>
+      </trans-unit>
+      <trans-unit id="HKFF6oH" resname="Holding a day, nothing settled yet">
+        <source>Holding a day, nothing settled yet</source>
+        <target state="translated">Holding a day, nothing settled yet</target>
       </trans-unit>
       <trans-unit id="ExFLJqx" resname="Home">
         <source>Home</source>
@@ -2829,9 +3093,17 @@
         <source>Improve security by signing out of other devices.</source>
         <target state="translated">Improve security by signing out of other devices.</target>
       </trans-unit>
+      <trans-unit id="wTZnZSI" resname="In line">
+        <source>In line</source>
+        <target state="translated">In line</target>
+      </trans-unit>
       <trans-unit id="2XmzEnB" resname="In review">
         <source>In review</source>
         <target state="translated">In review</target>
+      </trans-unit>
+      <trans-unit id="81oq4ve" resname="In the order they asked. Whoever asked first has first dibs, but you decide, and you may always make an exception.">
+        <source>In the order they asked. Whoever asked first has first dibs, but you decide, and you may always make an exception.</source>
+        <target state="translated">In the order they asked. Whoever asked first has first dibs, but you decide, and you may always make an exception.</target>
       </trans-unit>
       <trans-unit id="IkjXe_y" resname="In this photo">
         <source>In this photo</source>
@@ -3061,6 +3333,14 @@
         <source>Language</source>
         <target state="translated">Language</target>
       </trans-unit>
+      <trans-unit id="xkMjr4i" resname="Lapsed">
+        <source>Lapsed</source>
+        <target state="translated">Lapsed</target>
+      </trans-unit>
+      <trans-unit id="lAFS2dQ" resname="Last day activities may fall on">
+        <source>Last day activities may fall on</source>
+        <target state="translated">Last day activities may fall on</target>
+      </trans-unit>
       <trans-unit id="T.8_Q6s" resname="Last edited">
         <source>Last edited</source>
         <target state="translated">Last edited</target>
@@ -3100,6 +3380,10 @@
       <trans-unit id="BmqZUtK" resname="Leave empty to start immediately.">
         <source>Leave empty to start immediately.</source>
         <target state="translated">Leave empty to start immediately.</target>
+      </trans-unit>
+      <trans-unit id="ZyDUONm" resname="Leave empty to use the usual number. A body with an exception is not affected.">
+        <source>Leave empty to use the usual number. A body with an exception is not affected.</source>
+        <target state="translated">Leave empty to use the usual number. A body with an exception is not affected.</target>
       </trans-unit>
       <trans-unit id="gsxxdUb" resname="Leave the start empty to begin at once, and the end empty to keep it on until you turn it off. Windows may not overlap.">
         <source>Leave the start empty to begin at once, and the end empty to keep it on until you turn it off. Windows may not overlap.</source>
@@ -3241,6 +3525,10 @@
         <source>Love</source>
         <target state="translated">Love</target>
       </trans-unit>
+      <trans-unit id="7enjbhR" resname="Lunch break">
+        <source>Lunch break</source>
+        <target state="translated">Lunch break</target>
+      </trans-unit>
       <trans-unit id="Tej.Egk" resname="MFA">
         <source>MFA</source>
         <target state="translated">MFA</target>
@@ -3332,6 +3620,14 @@
       <trans-unit id="5LERsNC" resname="Maximum value (number type)">
         <source>Maximum value (number type)</source>
         <target state="translated">Maximum value (number type)</target>
+      </trans-unit>
+      <trans-unit id="IOIwCSn" resname="May propose">
+        <source>May propose</source>
+        <target state="translated">May propose</target>
+      </trans-unit>
+      <trans-unit id="p9Np28X" resname="May propose per round">
+        <source>May propose per round</source>
+        <target state="translated">May propose per round</target>
       </trans-unit>
       <trans-unit id="dQZZmIL" resname="Meeting">
         <source>Meeting</source>
@@ -3457,6 +3753,10 @@
         <source>More of their photos</source>
         <target>More of their photos</target>
       </trans-unit>
+      <trans-unit id="Ig5aoEB" resname="Morning">
+        <source>Morning</source>
+        <target state="translated">Morning</target>
+      </trans-unit>
       <trans-unit id="gGEyTkQ" resname="Most material">
         <source>Most material</source>
         <target state="translated">Most material</target>
@@ -3504,6 +3804,10 @@
       <trans-unit id="yD48ZTm" resname="Multiple agenda points share the number %numbers%; decisions attach to the first one.">
         <source>Multiple agenda points share the number %numbers%; decisions attach to the first one.</source>
         <target state="translated">Multiple agenda points share the number %numbers%; decisions attach to the first one.</target>
+      </trans-unit>
+      <trans-unit id="_p1Xe1E" resname="Multiple days">
+        <source>Multiple days</source>
+        <target state="translated">Multiple days</target>
       </trans-unit>
       <trans-unit id="eV413P5" resname="My Activities">
         <source>My Activities</source>
@@ -3629,6 +3933,10 @@
         <source>Next</source>
         <target state="translated">Next</target>
       </trans-unit>
+      <trans-unit id="O3MH35V" resname="Next month">
+        <source>Next month</source>
+        <target state="translated">Next month</target>
+      </trans-unit>
       <trans-unit id="wd1MvZW" resname="No">
         <source>No</source>
         <target>No</target>
@@ -3660,6 +3968,10 @@
       <trans-unit id="CasM6.S" resname="No bodies match the current search.">
         <source>No bodies match the current search.</source>
         <target state="translated">No bodies match the current search.</target>
+      </trans-unit>
+      <trans-unit id="p0iyin." resname="No budget needed">
+        <source>No budget needed</source>
+        <target state="translated">No budget needed</target>
       </trans-unit>
       <trans-unit id="WlD_vYJ" resname="No comments yet.">
         <source>No comments yet.</source>
@@ -3720,6 +4032,14 @@
       <trans-unit id="AxexkU1" resname="No end time; meetings run until closed.">
         <source>No end time; meetings run until closed.</source>
         <target state="translated">No end time; meetings run until closed.</target>
+      </trans-unit>
+      <trans-unit id="l8NDDnF" resname="No exceptions in this round. Every body is on the usual number.">
+        <source>No exceptions in this round. Every body is on the usual number.</source>
+        <target state="translated">No exceptions in this round. Every body is on the usual number.</target>
+      </trans-unit>
+      <trans-unit id="OykkPNy" resname="No exceptions. Every body is on the usual number.">
+        <source>No exceptions. Every body is on the usual number.</source>
+        <target state="translated">No exceptions. Every body is on the usual number.</target>
       </trans-unit>
       <trans-unit id="mKUQ6K5" resname="No external applications are registered.">
         <source>No external applications are registered.</source>
@@ -3813,6 +4133,14 @@
         <source>No poll matches what you are looking for.</source>
         <target state="translated">No poll matches what you are looking for.</target>
       </trans-unit>
+      <trans-unit id="pW4SVZG" resname="No round is taking proposals at the moment. The board opens one before each quartile.">
+        <source>No round is taking proposals at the moment. The board opens one before each quartile.</source>
+        <target state="translated">No round is taking proposals at the moment. The board opens one before each quartile.</target>
+      </trans-unit>
+      <trans-unit id="Bvy14kW" resname="No rounds yet. Open one before a quartile so bodies can claim their dates.">
+        <source>No rounds yet. Open one before a quartile so bodies can claim their dates.</source>
+        <target state="translated">No rounds yet. Open one before a quartile so bodies can claim their dates.</target>
+      </trans-unit>
       <trans-unit id="oY5RMDD" resname="No sign-ups found.">
         <source>No sign-ups found.</source>
         <target>No sign-ups found.</target>
@@ -3844,6 +4172,10 @@
       <trans-unit id="2eSNipe" resname="Nobody has said anything yet.">
         <source>Nobody has said anything yet.</source>
         <target state="translated">Nobody has said anything yet.</target>
+      </trans-unit>
+      <trans-unit id="oC6gOVO" resname="Nobody is competing for a day at the moment.">
+        <source>Nobody is competing for a day at the moment.</source>
+        <target state="translated">Nobody is competing for a day at the moment.</target>
       </trans-unit>
       <trans-unit id="C_YTExT" resname="Nobody is installed right now.">
         <source>Nobody is installed right now.</source>
@@ -3877,6 +4209,14 @@
         <source>Not downloadable yet</source>
         <target state="translated">Not downloadable yet</target>
       </trans-unit>
+      <trans-unit id="HJHmtgI" resname="Not open yet">
+        <source>Not open yet</source>
+        <target state="translated">Not open yet</target>
+      </trans-unit>
+      <trans-unit id="iEciM2M" resname="Not picked">
+        <source>Not picked</source>
+        <target state="translated">Not picked</target>
+      </trans-unit>
       <trans-unit id="Tu3_sTz" resname="Not shown">
         <source>Not shown</source>
         <target state="translated">Not shown</target>
@@ -3905,6 +4245,10 @@
         <source>Not yet open</source>
         <target>Not yet open</target>
       </trans-unit>
+      <trans-unit id="5W_WiUK" resname="Nothing at all">
+        <source>Nothing at all</source>
+        <target state="translated">Nothing at all</target>
+      </trans-unit>
       <trans-unit id="keGchhN" resname="Nothing has been added to the archive yet.">
         <source>Nothing has been added to the archive yet.</source>
         <target state="translated">Nothing has been added to the archive yet.</target>
@@ -3912,6 +4256,10 @@
       <trans-unit id="LdKWPjv" resname="Nothing has been filed under this course yet.">
         <source>Nothing has been filed under this course yet.</source>
         <target state="translated">Nothing has been filed under this course yet.</target>
+      </trans-unit>
+      <trans-unit id="OFX2_62" resname="Nothing has been proposed in it, so nothing is lost. Any exception recorded for it goes too.">
+        <source>Nothing has been proposed in it, so nothing is lost. Any exception recorded for it goes too.</source>
+        <target state="translated">Nothing has been proposed in it, so nothing is lost. Any exception recorded for it goes too.</target>
       </trans-unit>
       <trans-unit id="vRTf2Ll" resname="Nothing has been published yet.">
         <source>Nothing has been published yet.</source>
@@ -3957,6 +4305,10 @@
         <source>Nothing is waiting to be published</source>
         <target state="translated">Nothing is waiting to be published</target>
       </trans-unit>
+      <trans-unit id="lpP5F4X" resname="Nothing is waiting.">
+        <source>Nothing is waiting.</source>
+        <target state="translated">Nothing is waiting.</target>
+      </trans-unit>
       <trans-unit id="uVnZbDf" resname="Nothing of this page is on the website yet.">
         <source>Nothing of this page is on the website yet.</source>
         <target state="translated">Nothing of this page is on the website yet.</target>
@@ -3972,6 +4324,10 @@
       <trans-unit id="3KfzYKC" resname="Nothing runs out in the next three months.">
         <source>Nothing runs out in the next three months.</source>
         <target state="translated">Nothing runs out in the next three months.</target>
+      </trans-unit>
+      <trans-unit id=".nH048f" resname="Nothing to claim right now.">
+        <source>Nothing to claim right now.</source>
+        <target state="translated">Nothing to claim right now.</target>
       </trans-unit>
       <trans-unit id="DsNavHJ" resname="Nothing waiting here">
         <source>Nothing waiting here</source>
@@ -4049,6 +4405,10 @@
         <source>One answer per member. Your answer cannot be changed once it is in, and the results are shown either way.</source>
         <target state="translated">One answer per member. Your answer cannot be changed once it is in, and the results are shown either way.</target>
       </trans-unit>
+      <trans-unit id="zPrdSvC" resname="Only bodies that should get a different number in this round. Anything set here beats that body's standing exception and the number set for the round. Every other body is answered without a row.">
+        <source>Only bodies that should get a different number in this round. Anything set here beats that body's standing exception and the number set for the round. Every other body is answered without a row.</source>
+        <target state="translated">Only bodies that should get a different number in this round. Anything set here beats that body's standing exception and the number set for the round. Every other body is answered without a row.</target>
+      </trans-unit>
       <trans-unit id="daKTDU1" resname="Only the first %limit% matches are shown; refine your search to narrow them down.">
         <source>Only the first %limit% matches are shown; refine your search to narrow them down.</source>
         <target state="translated">Only the first %limit% matches are shown; refine your search to narrow them down.</target>
@@ -4064,6 +4424,10 @@
       <trans-unit id="_SqArFZ" resname="Open">
         <source>Open</source>
         <target>Open</target>
+      </trans-unit>
+      <trans-unit id="rQXLfsJ" resname="Open a round">
+        <source>Open a round</source>
+        <target state="translated">Open a round</target>
       </trans-unit>
       <trans-unit id="yp1.RWw" resname="Open for voting">
         <source>Open for voting</source>
@@ -4089,6 +4453,10 @@
         <source>Open the review queue</source>
         <target state="translated">Open the review queue</target>
       </trans-unit>
+      <trans-unit id="8twCL.Q" resname="Open the round">
+        <source>Open the round</source>
+        <target state="translated">Open the round</target>
+      </trans-unit>
       <trans-unit id="cClgY38" resname="Open until %date%">
         <source>Open until %date%</source>
         <target state="translated">Open until %date%</target>
@@ -4096,6 +4464,10 @@
       <trans-unit id="vqA.V8T" resname="Open vacancies">
         <source>Open vacancies</source>
         <target state="translated">Open vacancies</target>
+      </trans-unit>
+      <trans-unit id="z149SUr" resname="Opening a round sets nothing up for any body. Every body may propose straight away, including one founded after the round opened.">
+        <source>Opening a round sets nothing up for any body. Every body may propose straight away, including one founded after the round opened.</source>
+        <target state="translated">Opening a round sets nothing up for any body. Every body may propose straight away, including one founded after the round opened.</target>
       </trans-unit>
       <trans-unit id="3aBUkVa" resname="Opens">
         <source>Opens</source>
@@ -4124,6 +4496,14 @@
       <trans-unit id="8H2plFm" resname="Option calendar">
         <source>Option calendar</source>
         <target state="translated">Option calendar</target>
+      </trans-unit>
+      <trans-unit id="MB4vcbK" resname="Option decisions">
+        <source>Option decisions</source>
+        <target state="translated">Option decisions</target>
+      </trans-unit>
+      <trans-unit id="ap6JYMb" resname="Option rounds">
+        <source>Option rounds</source>
+        <target state="translated">Option rounds</target>
       </trans-unit>
       <trans-unit id="bVgiLEK" resname="Optional. A sign-up list with subscribers can no longer be changed structurally.">
         <source>Optional. A sign-up list with subscribers can no longer be changed structurally.</source>
@@ -4256,6 +4636,10 @@
       <trans-unit id="U_QJfxO" resname="Paid, a few hours a week, on your own schedule.">
         <source>Paid, a few hours a week, on your own schedule.</source>
         <target state="translated">Paid, a few hours a week, on your own schedule.</target>
+      </trans-unit>
+      <trans-unit id="zDglnri" resname="Part of the day">
+        <source>Part of the day</source>
+        <target state="translated">Part of the day</target>
       </trans-unit>
       <trans-unit id="eI1dGQ5" resname="Party">
         <source>Party</source>
@@ -4461,6 +4845,14 @@
         <source>Posting window</source>
         <target state="translated">Posting window</target>
       </trans-unit>
+      <trans-unit id="DT2M6Rn" resname="Preferred">
+        <source>Preferred</source>
+        <target state="translated">Preferred</target>
+      </trans-unit>
+      <trans-unit id="R43hinT" resname="Preferred day">
+        <source>Preferred day</source>
+        <target state="translated">Preferred day</target>
+      </trans-unit>
       <trans-unit id="bLMpw1M" resname="Preparing your download">
         <source>Preparing your download</source>
         <target state="translated">Preparing your download</target>
@@ -4476,6 +4868,10 @@
       <trans-unit id="ouNrIYq" resname="Previous">
         <source>Previous</source>
         <target state="translated">Previous</target>
+      </trans-unit>
+      <trans-unit id="oiwk.U9" resname="Previous month">
+        <source>Previous month</source>
+        <target state="translated">Previous month</target>
       </trans-unit>
       <trans-unit id="1X7oKCl" resname="Previously a member of">
         <source>Previously a member of</source>
@@ -4529,6 +4925,14 @@
         <source>Promoted</source>
         <target>Promoted</target>
       </trans-unit>
+      <trans-unit id="HkhBV3F" resname="Proposal exceptions">
+        <source>Proposal exceptions</source>
+        <target state="translated">Proposal exceptions</target>
+      </trans-unit>
+      <trans-unit id="KyJZWUU" resname="Proposals">
+        <source>Proposals</source>
+        <target state="translated">Proposals</target>
+      </trans-unit>
       <trans-unit id="2heaPyO" resname="Propose a banner">
         <source>Propose a banner</source>
         <target state="translated">Propose a banner</target>
@@ -4544,6 +4948,10 @@
       <trans-unit id="BvTIit9" resname="Proposed on">
         <source>Proposed on</source>
         <target state="translated">Proposed on</target>
+      </trans-unit>
+      <trans-unit id="mXE_47V" resname="Proposing">
+        <source>Proposing</source>
+        <target state="translated">Proposing</target>
       </trans-unit>
       <trans-unit id="t1VBl5F" resname="Provided by Education and Student Affairs">
         <source>Provided by Education and Student Affairs</source>
@@ -4576,6 +4984,10 @@
       <trans-unit id="eu2ddDv" resname="Publishing the outcome of a meeting can take a few weeks, and some meetings take no decisions at all. Documents from the meeting are already available.">
         <source>Publishing the outcome of a meeting can take a few weeks, and some meetings take no decisions at all. Documents from the meeting are already available.</source>
         <target state="translated">Publishing the outcome of a meeting can take a few weeks, and some meetings take no decisions at all. Documents from the meeting are already available.</target>
+      </trans-unit>
+      <trans-unit id="IE0v1jr" resname="Put the day you would rather have first. The board picks one of them.">
+        <source>Put the day you would rather have first. The board picks one of them.</source>
+        <target state="translated">Put the day you would rather have first. The board picks one of them.</target>
       </trans-unit>
       <trans-unit id="YRI5E0j" resname="QR code">
         <source>QR code</source>
@@ -4641,6 +5053,10 @@
         <source>Ready</source>
         <target state="translated">Ready</target>
       </trans-unit>
+      <trans-unit id="nuCsyxU" resname="Ready to go">
+        <source>Ready to go</source>
+        <target state="translated">Ready to go</target>
+      </trans-unit>
       <trans-unit id="9Iuz1j8" resname="Reality collapsed. Please go back before the singularity spreads.">
         <source>Reality collapsed. Please go back before the singularity spreads.</source>
         <target state="translated">Reality collapsed. Please go back before the singularity spreads.</target>
@@ -4664,6 +5080,10 @@
       <trans-unit id="u7Ln3jf" resname="Recipients">
         <source>Recipients</source>
         <target>Recipients</target>
+      </trans-unit>
+      <trans-unit id="sf9RyVP" resname="Recorded. This day will not be chased or released any more.">
+        <source>Recorded. This day will not be chased or released any more.</source>
+        <target state="translated">Recorded. This day will not be chased or released any more.</target>
       </trans-unit>
       <trans-unit id="3BS.OCQ" resname="Recreational">
         <source>Recreational</source>
@@ -4789,6 +5209,10 @@
         <source>Remove this document?</source>
         <target state="translated">Remove this document?</target>
       </trans-unit>
+      <trans-unit id="KDu9Q0t" resname="Remove this exception?">
+        <source>Remove this exception?</source>
+        <target state="translated">Remove this exception?</target>
+      </trans-unit>
       <trans-unit id="Gs1vsDa" resname="Remove this label?">
         <source>Remove this label?</source>
         <target state="translated">Remove this label?</target>
@@ -4804,6 +5228,10 @@
       <trans-unit id="xiAsCnv" resname="Remove this representative?">
         <source>Remove this representative?</source>
         <target state="translated">Remove this representative?</target>
+      </trans-unit>
+      <trans-unit id="fMfbGYv" resname="Remove this round?">
+        <source>Remove this round?</source>
+        <target state="translated">Remove this round?</target>
       </trans-unit>
       <trans-unit id="5yBqYN5" resname="Removed account">
         <source>Removed account</source>
@@ -4884,6 +5312,10 @@
       <trans-unit id="qzciQQH" resname="Reserve a date">
         <source>Reserve a date</source>
         <target state="translated">Reserve a date</target>
+      </trans-unit>
+      <trans-unit id="NS2db7A" resname="Reserved">
+        <source>Reserved</source>
+        <target state="translated">Reserved</target>
       </trans-unit>
       <trans-unit id="gHvOyV9" resname="Reset MFA">
         <source>Reset MFA</source>
@@ -4984,6 +5416,14 @@
       <trans-unit id="3ob7EB6" resname="Room or building">
         <source>Room or building</source>
         <target state="translated">Room or building</target>
+      </trans-unit>
+      <trans-unit id="v2TCMBR" resname="Round">
+        <source>Round</source>
+        <target state="translated">Round</target>
+      </trans-unit>
+      <trans-unit id="sfEjbPs" resname="Rounds">
+        <source>Rounds</source>
+        <target state="translated">Rounds</target>
       </trans-unit>
       <trans-unit id="qqo9Q7f" resname="Run the draw">
         <source>Run the draw</source>
@@ -5212,6 +5652,14 @@
       <trans-unit id="l_d5jYJ" resname="Select">
         <source>Select</source>
         <target>Select</target>
+      </trans-unit>
+      <trans-unit id="hTRxAeK" resname="Select a body">
+        <source>Select a body</source>
+        <target state="translated">Select a body</target>
+      </trans-unit>
+      <trans-unit id="WI1x1ys" resname="Select a round">
+        <source>Select a round</source>
+        <target state="translated">Select a round</target>
       </trans-unit>
       <trans-unit id="Hu8.1pz" resname="Select all">
         <source>Select all</source>
@@ -5553,6 +6001,10 @@
         <source>Stale</source>
         <target state="translated">Stale</target>
       </trans-unit>
+      <trans-unit id="fVnurGY" resname="Standing exceptions">
+        <source>Standing exceptions</source>
+        <target state="translated">Standing exceptions</target>
+      </trans-unit>
       <trans-unit id="qpMwoA4" resname="Start">
         <source>Start</source>
         <target>Start</target>
@@ -5729,9 +6181,25 @@
         <source>Take attendance</source>
         <target>Take attendance</target>
       </trans-unit>
+      <trans-unit id="U2l9yjC" resname="Take it back">
+        <source>Take it back</source>
+        <target state="translated">Take it back</target>
+      </trans-unit>
       <trans-unit id="yUWhscL" resname="Take over editing">
         <source>Take over editing</source>
         <target state="translated">Take over editing</target>
+      </trans-unit>
+      <trans-unit id="qnKTB6P" resname="Take this proposal back?">
+        <source>Take this proposal back?</source>
+        <target state="translated">Take this proposal back?</target>
+      </trans-unit>
+      <trans-unit id="Ry.qvo0" resname="Taken back. The day can be chased and released again.">
+        <source>Taken back. The day can be chased and released again.</source>
+        <target state="translated">Taken back. The day can be chased and released again.</target>
+      </trans-unit>
+      <trans-unit id="0Na.CeY" resname="Taking proposals">
+        <source>Taking proposals</source>
+        <target state="translated">Taking proposals</target>
       </trans-unit>
       <trans-unit id="OyEm9xf" resname="Terminate">
         <source>Terminate</source>
@@ -5805,6 +6273,10 @@
         <source>The activity has been re-published.</source>
         <target>The activity has been re-published.</target>
       </trans-unit>
+      <trans-unit id="DFksRrY" resname="The activity has been started for you and still needs filling in.">
+        <source>The activity has been started for you and still needs filling in.</source>
+        <target state="translated">The activity has been started for you and still needs filling in.</target>
+      </trans-unit>
       <trans-unit id="Gr.1qlA" resname="The activity has been unpublished and is no longer publicly visible.">
         <source>The activity has been unpublished and is no longer publicly visible.</source>
         <target>The activity has been unpublished and is no longer publicly visible.</target>
@@ -5869,6 +6341,10 @@
         <source>The banner is now on the website.</source>
         <target state="translated">The banner is now on the website.</target>
       </trans-unit>
+      <trans-unit id="ZM_LP6v" resname="The board">
+        <source>The board</source>
+        <target state="translated">The board</target>
+      </trans-unit>
       <trans-unit id="CAN_eWO" resname="The board did not agree to this question. Rewrite it below and it goes back to them with what they refused alongside it.">
         <source>The board did not agree to this question. Rewrite it below and it goes back to them with what they refused alongside it.</source>
         <target state="translated">The board did not agree to this question. Rewrite it below and it goes back to them with what they refused alongside it.</target>
@@ -5876,6 +6352,10 @@
       <trans-unit id="SxsXaHR" resname="The board did not agree to this question. You can rewrite it and ask again.">
         <source>The board did not agree to this question. You can rewrite it and ask again.</source>
         <target state="translated">The board did not agree to this question. You can rewrite it and ask again.</target>
+      </trans-unit>
+      <trans-unit id=".H_Oyid" resname="The board itself">
+        <source>The board itself</source>
+        <target state="translated">The board itself</target>
       </trans-unit>
       <trans-unit id="AOiIbTu" resname="The board reads every question before it goes on the website, and decides when it closes.">
         <source>The board reads every question before it goes on the website, and decides when it closes.</source>
@@ -5888,6 +6368,14 @@
       <trans-unit id="7QlSkVv" resname="The board will write to %name% when it needs one answer from this company.">
         <source>The board will write to %name% when it needs one answer from this company.</source>
         <target state="translated">The board will write to %name% when it needs one answer from this company.</target>
+      </trans-unit>
+      <trans-unit id="5U5qIet" resname="The body goes back to the number every body gets.">
+        <source>The body goes back to the number every body gets.</source>
+        <target state="translated">The body goes back to the number every body gets.</target>
+      </trans-unit>
+      <trans-unit id="5wV0giQ" resname="The body goes back to whatever it would have had without it.">
+        <source>The body goes back to whatever it would have had without it.</source>
+        <target state="translated">The body goes back to whatever it would have had without it.</target>
       </trans-unit>
       <trans-unit id="q5YrQGY" resname="The changes in this draft will be lost and the activity will return to its live version.">
         <source>The changes in this draft will be lost and the activity will return to its live version.</source>
@@ -5936,6 +6424,22 @@
       <trans-unit id="A6uQCCE" resname="The data export you asked for is ready.">
         <source>The data export you asked for is ready.</source>
         <target state="translated">The data export you asked for is ready.</target>
+      </trans-unit>
+      <trans-unit id="0zEevCa" resname="The day is reserved and the activity has been started for them.">
+        <source>The day is reserved and the activity has been started for them.</source>
+        <target state="translated">The day is reserved and the activity has been started for them.</target>
+      </trans-unit>
+      <trans-unit id="2ldBXbe" resname="The day you are holding for &quot;%name%&quot; is at risk: the board has not recorded a budget for it, or that it needs none.">
+        <source>The day you are holding for "%name%" is at risk: the board has not recorded a budget for it, or that it needs none.</source>
+        <target state="translated">The day you are holding for "%name%" is at risk: the board has not recorded a budget for it, or that it needs none.</target>
+      </trans-unit>
+      <trans-unit id="Aoc1R1f" resname="The day you were holding for &quot;%name%&quot; has been released, because nothing was settled about its budget in time.">
+        <source>The day you were holding for "%name%" has been released, because nothing was settled about its budget in time.</source>
+        <target state="translated">The day you were holding for "%name%" has been released, because nothing was settled about its budget in time.</target>
+      </trans-unit>
+      <trans-unit id="yBXZbod" resname="The days this round covers">
+        <source>The days this round covers</source>
+        <target state="translated">The days this round covers</target>
       </trans-unit>
       <trans-unit id="FZgEW0R" resname="The decisions below are final; the full minutes follow once they have been written and approved.">
         <source>The decisions below are final; the full minutes follow once they have been written and approved.</source>
@@ -5992,6 +6496,22 @@
       <trans-unit id="KsW5OxZ" resname="The end must be after the start.">
         <source>The end must be after the start.</source>
         <target state="translated">The end must be after the start.</target>
+      </trans-unit>
+      <trans-unit id="SGvdhp5" resname="The exception has been recorded and holds until you change it.">
+        <source>The exception has been recorded and holds until you change it.</source>
+        <target state="translated">The exception has been recorded and holds until you change it.</target>
+      </trans-unit>
+      <trans-unit id="Wwc8Kol" resname="The exception has been recorded.">
+        <source>The exception has been recorded.</source>
+        <target state="translated">The exception has been recorded.</target>
+      </trans-unit>
+      <trans-unit id="kD9pMjz" resname="The exception has been removed; the body is back on the usual number.">
+        <source>The exception has been removed; the body is back on the usual number.</source>
+        <target state="translated">The exception has been removed; the body is back on the usual number.</target>
+      </trans-unit>
+      <trans-unit id="GyItnpS" resname="The exception has been updated.">
+        <source>The exception has been updated.</source>
+        <target state="translated">The exception has been updated.</target>
       </trans-unit>
       <trans-unit id="mTMkPrt" resname="The external application has been created.">
         <source>The external application has been created.</source>
@@ -6157,6 +6677,14 @@
         <source>The primary contact has been changed.</source>
         <target state="translated">The primary contact has been changed.</target>
       </trans-unit>
+      <trans-unit id="HdpNhSB" resname="The proposal has been taken back and its days are free again.">
+        <source>The proposal has been taken back and its days are free again.</source>
+        <target state="translated">The proposal has been taken back and its days are free again.</target>
+      </trans-unit>
+      <trans-unit id="OxGLLr4" resname="The proposal has been turned down and its days are free again.">
+        <source>The proposal has been turned down and its days are free again.</source>
+        <target state="translated">The proposal has been turned down and its days are free again.</target>
+      </trans-unit>
       <trans-unit id="wbwESaX" resname="The proposed banner was rejected.">
         <source>The proposed banner was rejected.</source>
         <target state="translated">The proposed banner was rejected.</target>
@@ -6176,6 +6704,22 @@
       <trans-unit id="Ap4k.G2" resname="The revision was updated.">
         <source>The revision was updated.</source>
         <target state="translated">The revision was updated.</target>
+      </trans-unit>
+      <trans-unit id="zHJ3qhU" resname="The round decides which days you may ask for and which board looks at it.">
+        <source>The round decides which days you may ask for and which board looks at it.</source>
+        <target state="translated">The round decides which days you may ask for and which board looks at it.</target>
+      </trans-unit>
+      <trans-unit id="G_1mRMY" resname="The round has been removed.">
+        <source>The round has been removed.</source>
+        <target state="translated">The round has been removed.</target>
+      </trans-unit>
+      <trans-unit id="kjm90QM" resname="The round has been updated.">
+        <source>The round has been updated.</source>
+        <target state="translated">The round has been updated.</target>
+      </trans-unit>
+      <trans-unit id="CY90hg2" resname="The round is open. Every body may propose without anything being set up for it.">
+        <source>The round is open. Every body may propose without anything being set up for it.</source>
+        <target state="translated">The round is open. Every body may propose without anything being set up for it.</target>
       </trans-unit>
       <trans-unit id="0AhMJmQ" resname="The selected photos are already in that album.">
         <source>The selected photos are already in that album.</source>
@@ -6301,6 +6845,10 @@
         <source>There is no news to show.</source>
         <target state="translated">There is no news to show.</target>
       </trans-unit>
+      <trans-unit id="9XWlSNL" resname="There is no reserved day to settle for this proposal.">
+        <source>There is no reserved day to settle for this proposal.</source>
+        <target state="translated">There is no reserved day to settle for this proposal.</target>
+      </trans-unit>
       <trans-unit id="JBLe5Ny" resname="There is no upcoming GMM planned to authorize someone for.">
         <source>There is no upcoming GMM planned to authorize someone for.</source>
         <target state="translated">There is no upcoming GMM planned to authorize someone for.</target>
@@ -6308,6 +6856,10 @@
       <trans-unit id="veRJHWk" resname="There is nothing here waiting on you. What you can do is in the menu on the left.">
         <source>There is nothing here waiting on you. What you can do is in the menu on the left.</source>
         <target state="translated">There is nothing here waiting on you. What you can do is in the menu on the left.</target>
+      </trans-unit>
+      <trans-unit id=".zpekqD" resname="There is nothing recorded to take back.">
+        <source>There is nothing recorded to take back.</source>
+        <target state="translated">There is nothing recorded to take back.</target>
       </trans-unit>
       <trans-unit id="ENSM6jA" resname="There is nothing to review right now.">
         <source>There is nothing to review right now.</source>
@@ -6320,6 +6872,10 @@
       <trans-unit id=".s2ZOTb" resname="These decisions do not line up with an agenda point above.">
         <source>These decisions do not line up with an agenda point above.</source>
         <target state="translated">These decisions do not line up with an agenda point above.</target>
+      </trans-unit>
+      <trans-unit id="vrGBK83" resname="These lose their day if the financial side is not settled in time. Record an approved budget, or that there is no budget to approve.">
+        <source>These lose their day if the financial side is not settled in time. Record an approved budget, or that there is no budget to approve.</source>
+        <target state="translated">These lose their day if the financial side is not settled in time. Record an approved budget, or that there is no budget to approve.</target>
       </trans-unit>
       <trans-unit id="MvzWOfp" resname="Thesis project">
         <source>Thesis project</source>
@@ -6457,6 +7013,10 @@
         <source>This invitation is no longer valid. Ask your contact at GEWIS for a new one.</source>
         <target state="translated">This invitation is no longer valid. Ask your contact at GEWIS for a new one.</target>
       </trans-unit>
+      <trans-unit id="YD7fBr6" resname="This is %source%.">
+        <source>This is %source%.</source>
+        <target state="translated">This is %source%.</target>
+      </trans-unit>
       <trans-unit id="Kw6uR1y" resname="This is the first revision; nothing to compare against.">
         <source>This is the first revision; nothing to compare against.</source>
         <target state="translated">This is the first revision; nothing to compare against.</target>
@@ -6561,6 +7121,22 @@
         <source>This profile was closed by the board and can no longer be revised.</source>
         <target state="translated">This profile was closed by the board and can no longer be revised.</target>
       </trans-unit>
+      <trans-unit id="mpHmJQM" resname="This proposal">
+        <source>This proposal</source>
+        <target state="translated">This proposal</target>
+      </trans-unit>
+      <trans-unit id="oDwhROd" resname="This proposal can no longer be taken back.">
+        <source>This proposal can no longer be taken back.</source>
+        <target state="translated">This proposal can no longer be taken back.</target>
+      </trans-unit>
+      <trans-unit id="r0L.N38" resname="This proposal is no longer waiting for a day.">
+        <source>This proposal is no longer waiting for a day.</source>
+        <target state="translated">This proposal is no longer waiting for a day.</target>
+      </trans-unit>
+      <trans-unit id="71d4bbe" resname="This proposal is no longer waiting for a decision.">
+        <source>This proposal is no longer waiting for a decision.</source>
+        <target state="translated">This proposal is no longer waiting for a decision.</target>
+      </trans-unit>
       <trans-unit id="3k9kouE" resname="This removes every photo tag of you across all albums, and clears your profile photo. This cannot be undone.">
         <source>This removes every photo tag of you across all albums, and clears your profile photo. This cannot be undone.</source>
         <target>This removes every photo tag of you across all albums, and clears your profile photo. This cannot be undone.</target>
@@ -6580,6 +7156,10 @@
       <trans-unit id="YXcXf9u" resname="This revision was changed elsewhere; reload the page and try again.">
         <source>This revision was changed elsewhere; reload the page and try again.</source>
         <target state="translated">This revision was changed elsewhere; reload the page and try again.</target>
+      </trans-unit>
+      <trans-unit id="g2Ln0ZT" resname="This round cannot be removed: bodies have proposed in it. Move its window instead to stop it taking anything new.">
+        <source>This round cannot be removed: bodies have proposed in it. Move its window instead to stop it taking anything new.</source>
+        <target state="translated">This round cannot be removed: bodies have proposed in it. Move its window instead to stop it taking anything new.</target>
       </trans-unit>
       <trans-unit id="OCKUhV9" resname="This sign-up list is closed, so your sign-up can no longer be changed.">
         <source>This sign-up list is closed, so your sign-up can no longer be changed.</source>
@@ -6649,6 +7229,10 @@
         <source>Title and content</source>
         <target state="translated">Title and content</target>
       </trans-unit>
+      <trans-unit id="swKwU_O" resname="Today">
+        <source>Today</source>
+        <target state="translated">Today</target>
+      </trans-unit>
       <trans-unit id="5DLr8E1" resname="Toggle company menu">
         <source>Toggle company menu</source>
         <target state="translated">Toggle company menu</target>
@@ -6705,9 +7289,21 @@
         <source>Try instead:</source>
         <target state="translated">Try instead:</target>
       </trans-unit>
+      <trans-unit id="2rF6B6T" resname="Turn down">
+        <source>Turn down</source>
+        <target state="translated">Turn down</target>
+      </trans-unit>
       <trans-unit id="m9I6BGv" resname="Turn off the balloons, snow, and fireworks across the website.">
         <source>Turn off the balloons, snow, and fireworks across the website.</source>
         <target>Turn off the balloons, snow, and fireworks across the website.</target>
+      </trans-unit>
+      <trans-unit id="DaAfpuA" resname="Turn this proposal down?">
+        <source>Turn this proposal down?</source>
+        <target state="translated">Turn this proposal down?</target>
+      </trans-unit>
+      <trans-unit id="ex7y5lM" resname="Two windows, and they are not the same: when bodies may hand a proposal in, and which days the activities they propose may fall on. Handing in usually happens well before the quartile itself.">
+        <source>Two windows, and they are not the same: when bodies may hand a proposal in, and which days the activities they propose may fall on. Handing in usually happens well before the quartile itself.</source>
+        <target state="translated">Two windows, and they are not the same: when bodies may hand a proposal in, and which days the activities they propose may fall on. Handing in usually happens well before the quartile itself.</target>
       </trans-unit>
       <trans-unit id="_UPQM5u" resname="Two-factor authentication was disabled on your account from %name%.">
         <source>Two-factor authentication was disabled on your account from %name%.</source>
@@ -6977,6 +7573,10 @@
         <source>View the banners</source>
         <target state="translated">View the banners</target>
       </trans-unit>
+      <trans-unit id="69IqXuH" resname="View the proposal">
+        <source>View the proposal</source>
+        <target state="translated">View the proposal</target>
+      </trans-unit>
       <trans-unit id="kPrgwUx" resname="Virtual Meeting">
         <source>Virtual Meeting</source>
         <target state="translated">Virtual Meeting</target>
@@ -7145,9 +7745,17 @@
         <source>What has happened</source>
         <target state="translated">What has happened</target>
       </trans-unit>
+      <trans-unit id="rxPBP3T" resname="What it is">
+        <source>What it is</source>
+        <target state="translated">What it is</target>
+      </trans-unit>
       <trans-unit id="o2OJeNf" resname="What runs out or starts before %date%.">
         <source>What runs out or starts before %date%.</source>
         <target state="translated">What runs out or starts before %date%.</target>
+      </trans-unit>
+      <trans-unit id="eeqQ7iC" resname="What the board calls this round, for example &quot;Q1 2026-2027&quot;.">
+        <source>What the board calls this round, for example "Q1 2026-2027".</source>
+        <target state="translated">What the board calls this round, for example "Q1 2026-2027".</target>
       </trans-unit>
       <trans-unit id="eVvNiBE" resname="What this revision says">
         <source>What this revision says</source>
@@ -7172,6 +7780,10 @@
       <trans-unit id="7ftXQ1N" resname="What you can reach here follows the body you are in. The board changes who may do what.">
         <source>What you can reach here follows the body you are in. The board changes who may do what.</source>
         <target state="translated">What you can reach here follows the body you are in. The board changes who may do what.</target>
+      </trans-unit>
+      <trans-unit id="hVJUtNn" resname="What you may still claim">
+        <source>What you may still claim</source>
+        <target state="translated">What you may still claim</target>
       </trans-unit>
       <trans-unit id="HfaO6.G" resname="What you upload goes onto the website straight away. Use this when a company sends its artwork to the committee instead of uploading it itself.">
         <source>What you upload goes onto the website straight away. Use this when a company sends its artwork to the committee instead of uploading it itself.</source>
@@ -7245,6 +7857,10 @@
         <source>Which is basically the same thing.</source>
         <target state="translated">Which is basically the same thing.</target>
       </trans-unit>
+      <trans-unit id="WRiNbfh" resname="Who and when">
+        <source>Who and when</source>
+        <target state="translated">Who and when</target>
+      </trans-unit>
       <trans-unit id="3iKym6n" resname="Who can sign in">
         <source>Who can sign in</source>
         <target state="translated">Who can sign in</target>
@@ -7260,6 +7876,10 @@
       <trans-unit id="mfe.B6z" resname="Who may read this page">
         <source>Who may read this page</source>
         <target state="translated">Who may read this page</target>
+      </trans-unit>
+      <trans-unit id="SQiY1a." resname="Whole day">
+        <source>Whole day</source>
+        <target state="translated">Whole day</target>
       </trans-unit>
       <trans-unit id="mukH0bv" resname="With GEWIS">
         <source>With GEWIS</source>
@@ -7280,6 +7900,14 @@
       <trans-unit id="_gCbiBG" resname="Withdraw this invitation?">
         <source>Withdraw this invitation?</source>
         <target state="translated">Withdraw this invitation?</target>
+      </trans-unit>
+      <trans-unit id="nQbJDC6" resname="Withdrawn">
+        <source>Withdrawn</source>
+        <target state="translated">Withdrawn</target>
+      </trans-unit>
+      <trans-unit id="lszYawJ" resname="Working title">
+        <source>Working title</source>
+        <target state="translated">Working title</target>
       </trans-unit>
       <trans-unit id="5TT91ew" resname="Working version">
         <source>Working version</source>
@@ -7485,6 +8113,14 @@
         <source>Your banner runs between the news items on the home page and on the career page, so your contact at GEWIS looks at a new one before it goes up.</source>
         <target state="translated">Your banner runs between the news items on the home page and on the career page, so your contact at GEWIS looks at a new one before it goes up.</target>
       </trans-unit>
+      <trans-unit id="G.te6UJ" resname="Your bodies have not claimed anything in this round yet.">
+        <source>Your bodies have not claimed anything in this round yet.</source>
+        <target state="translated">Your bodies have not claimed anything in this round yet.</target>
+      </trans-unit>
+      <trans-unit id="GmXkJ1m" resname="Your body still has">
+        <source>Your body still has</source>
+        <target state="translated">Your body still has</target>
+      </trans-unit>
       <trans-unit id="4dmVYmo" resname="Your changes are saved, but an image could not be stored. Try uploading it again.">
         <source>Your changes are saved, but an image could not be stored. Try uploading it again.</source>
         <target state="translated">Your changes are saved, but an image could not be stored. Try uploading it again.</target>
@@ -7605,6 +8241,14 @@
         <source>Your profile was updated.</source>
         <target>Your profile was updated.</target>
       </trans-unit>
+      <trans-unit id="_8gjgsN" resname="Your proposal has been updated.">
+        <source>Your proposal has been updated.</source>
+        <target state="translated">Your proposal has been updated.</target>
+      </trans-unit>
+      <trans-unit id="HD1tPVJ" resname="Your proposal is in. The board decides which day you get.">
+        <source>Your proposal is in. The board decides which day you get.</source>
+        <target state="translated">Your proposal is in. The board decides which day you get.</target>
+      </trans-unit>
       <trans-unit id="8grGFhb" resname="Your proposed banner is with GEWIS">
         <source>Your proposed banner is with GEWIS</source>
         <target state="translated">Your proposed banner is with GEWIS</target>
@@ -7665,6 +8309,14 @@
         <source>Yours</source>
         <target state="translated">Yours</target>
       </trans-unit>
+      <trans-unit id="0.cq5XO" resname="Zero stops this body from proposing anything at all.">
+        <source>Zero stops this body from proposing anything at all.</source>
+        <target state="translated">Zero stops this body from proposing anything at all.</target>
+      </trans-unit>
+      <trans-unit id="UpwmdwZ" resname="Zero stops this body from proposing anything in this round.">
+        <source>Zero stops this body from proposing anything in this round.</source>
+        <target state="translated">Zero stops this body from proposing anything in this round.</target>
+      </trans-unit>
       <trans-unit id="ScQ2_ao" resname="Zettle">
         <source>Zettle</source>
         <target state="translated">Zettle</target>
@@ -7685,6 +8337,14 @@
         <source>a former representative</source>
         <target state="translated">a former representative</target>
       </trans-unit>
+      <trans-unit id="LeOGx4h" resname="a limit the board set for your body">
+        <source>a limit the board set for your body</source>
+        <target state="translated">a limit the board set for your body</target>
+      </trans-unit>
+      <trans-unit id="uQVjRbU" resname="a limit the board set for your body in this period">
+        <source>a limit the board set for your body in this period</source>
+        <target state="translated">a limit the board set for your body in this period</target>
+      </trans-unit>
       <trans-unit id="quYa4T8" resname="a newer version exists (%label%)">
         <source>a newer version exists (%label%)</source>
         <target state="translated">a newer version exists (%label%)</target>
@@ -7696,6 +8356,10 @@
       <trans-unit id="mC5UFtS" resname="and">
         <source>and</source>
         <target>and</target>
+      </trans-unit>
+      <trans-unit id="ebzqjdg" resname="asked %when%">
+        <source>asked %when%</source>
+        <target state="translated">asked %when%</target>
       </trans-unit>
       <trans-unit id="dJhCfk." resname="at %company%">
         <source>at %company%</source>
@@ -7728,6 +8392,10 @@
       <trans-unit id="IRk0vUS" resname="enabled">
         <source>enabled</source>
         <target state="translated">enabled</target>
+      </trans-unit>
+      <trans-unit id="9BZOqKp" resname="first in line">
+        <source>first in line</source>
+        <target state="translated">first in line</target>
       </trans-unit>
       <trans-unit id="vT9fsZA" resname="iCal">
         <source>iCal</source>
@@ -7816,6 +8484,14 @@
       <trans-unit id="52y5hzn" resname="the board">
         <source>the board</source>
         <target>the board</target>
+      </trans-unit>
+      <trans-unit id="uJh6OZT" resname="the number every body gets">
+        <source>the number every body gets</source>
+        <target state="translated">the number every body gets</target>
+      </trans-unit>
+      <trans-unit id="LvZbUrg" resname="the number the board set for this period">
+        <source>the number the board set for this period</source>
+        <target state="translated">the number the board set for this period</target>
       </trans-unit>
       <trans-unit id="q7soSeR" resname="the secretary of GEWIS">
         <source>the secretary of GEWIS</source>
