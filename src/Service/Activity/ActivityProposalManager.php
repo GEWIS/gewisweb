@@ -5,11 +5,16 @@ declare(strict_types=1);
 namespace App\Service\Activity;
 
 use App\Entity\Activity\ActivityProposal;
+use App\Entity\Application\Enums\NotificationType;
+use App\Entity\Application\Notification;
 use App\Entity\Decision\Organ;
+use App\Entity\User\Enums\UserRoles;
+use App\Service\Application\NotificationPublisher;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
 
 use function sprintf;
+use function strval;
 
 /**
  * The single home for writing an activity proposal, so the allowance is checked once more where it actually matters.
@@ -32,6 +37,7 @@ final readonly class ActivityProposalManager
     public function __construct(
         private EntityManagerInterface $entityManager,
         private ProposalLimitResolver $limitResolver,
+        private NotificationPublisher $publisher,
     ) {
     }
 
@@ -48,6 +54,7 @@ final readonly class ActivityProposalManager
         if (null === $organ) {
             $this->entityManager->persist($proposal);
             $this->entityManager->flush();
+            $this->tellTheBoard($proposal);
 
             return;
         }
@@ -95,12 +102,40 @@ final readonly class ActivityProposalManager
 
             $this->entityManager->persist($proposal);
             $this->entityManager->flush();
+            $this->tellTheBoard($proposal);
         } finally {
             $connection->executeQuery(
                 'SELECT RELEASE_LOCK(?)',
                 [$mutex],
             );
         }
+    }
+
+    /**
+     * A proposal nobody is told about sits in a queue nobody opens, which is how the old calendar ended up needing a
+     * nightly email to the web committee to notice anything at all.
+     */
+    private function tellTheBoard(ActivityProposal $proposal): void
+    {
+        $proposalId = $proposal->getId();
+
+        if (null === $proposalId) {
+            return;
+        }
+
+        $notification = new Notification();
+        $notification->setType(NotificationType::ActivityProposalAwaitingDecision);
+        $notification->setContext([
+            'proposal' => strval($proposalId),
+            'proposalName' => $proposal->getName(),
+        ]);
+        $notification->setRecipient(
+            null,
+            null,
+            UserRoles::Board,
+        );
+
+        $this->publisher->publish($notification);
     }
 
     private function mutexFor(

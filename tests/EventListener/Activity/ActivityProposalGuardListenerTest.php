@@ -10,11 +10,15 @@ use App\Security\Activity\ActivityProposalVoter;
 use App\Tests\Support\BuildsGuardEvents;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Security\Core\Authentication\Token\NullToken;
 
 use function implode;
 
 /**
  * Which attribute the option calendar's guard asks for, per transition.
+ *
+ * Every case here has somebody signed in, which is what a token stands for. With no token at all the guard steps
+ * aside, because that only happens on the console: see the nightly sweep's own test.
  *
  * Only taking a proposal back is the body's own; deciding which date is reserved, turning a proposal down, recording
  * that the financial side is settled and letting a date lapse are all the board's. The guard asks the generic event
@@ -68,6 +72,7 @@ final class ActivityProposalGuardListenerTest extends TestCase
         );
 
         $security = self::createStub(Security::class);
+        $security->method('getToken')->willReturn(new NullToken());
         $security->method('isGranted')->willReturn(true);
 
         new ActivityProposalGuardListener($security)->onGuard($event);
@@ -88,6 +93,7 @@ final class ActivityProposalGuardListenerTest extends TestCase
         );
 
         $security = $this->createMock(Security::class);
+        $security->method('getToken')->willReturn(new NullToken());
         $security->expects(self::once())
             ->method('isGranted')
             ->with(

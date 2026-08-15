@@ -27,6 +27,7 @@ enum NotificationCategory implements TranslatableInterface
     case BodyReviews;
     case PollReviews;
     case SignupReminders;
+    case OptionCalendar;
 
     public function icon(): string
     {
@@ -39,6 +40,7 @@ enum NotificationCategory implements TranslatableInterface
             self::ActivityReviews, self::CareerReviews, self::BodyReviews => 'fa-clipboard-check',
             self::PollReviews => 'fa-square-poll-vertical',
             self::SignupReminders => 'fa-hourglass-half',
+            self::OptionCalendar => 'fa-calendar-plus',
         };
     }
 
@@ -50,7 +52,7 @@ enum NotificationCategory implements TranslatableInterface
     {
         return match ($this) {
             self::SignIns, self::AccountSecurity, self::DataExports => new TranslatableMessage('Website and email'),
-            self::SignupReminders => new TranslatableMessage('Website only'),
+            self::SignupReminders, self::OptionCalendar => new TranslatableMessage('Website only'),
             self::Albums, self::Activities, self::ActivityReviews, self::CareerReviews,
             self::BodyReviews, self::PollReviews => new TranslatableMessage('Website'),
         };
@@ -76,6 +78,7 @@ enum NotificationCategory implements TranslatableInterface
                 'When a poll has been requested and is waiting to be reviewed',
             ),
             self::SignupReminders => new TranslatableMessage('Shortly before a sign-up you are on closes'),
+            self::OptionCalendar => new TranslatableMessage('About the days your body has asked for'),
         };
     }
 
@@ -123,6 +126,10 @@ enum NotificationCategory implements TranslatableInterface
             ),
             self::SignupReminders => $translator->trans(
                 'Sign-up reminders',
+                locale: $locale,
+            ),
+            self::OptionCalendar => $translator->trans(
+                'Option calendar',
                 locale: $locale,
             ),
         };

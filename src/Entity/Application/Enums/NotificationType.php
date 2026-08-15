@@ -30,6 +30,11 @@ enum NotificationType: string
     case CompanyBannerAwaitingReview = 'company_banner_awaiting_review';
     case OrganInformationRevisionAwaitingReview = 'organ_information_revision_awaiting_review';
     case PollRevisionAwaitingReview = 'poll_revision_awaiting_review';
+    case ActivityProposalAwaitingDecision = 'proposal_awaiting_decision';
+    case ActivityProposalScheduled = 'activity_proposal_scheduled';
+    case ActivityProposalDeclined = 'activity_proposal_declined';
+    case ActivityProposalBudgetDue = 'activity_proposal_budget_due';
+    case ActivityProposalLapsed = 'activity_proposal_lapsed';
 
     public function icon(): string
     {
@@ -48,6 +53,11 @@ enum NotificationType: string
             self::CompanyBannerAwaitingReview => 'fa-image',
             self::OrganInformationRevisionAwaitingReview => 'fa-clipboard-check',
             self::PollRevisionAwaitingReview => 'fa-square-poll-vertical',
+            self::ActivityProposalAwaitingDecision => 'fa-calendar-plus',
+            self::ActivityProposalScheduled => 'fa-calendar-check',
+            self::ActivityProposalDeclined => 'fa-calendar-xmark',
+            self::ActivityProposalBudgetDue => 'fa-hourglass-half',
+            self::ActivityProposalLapsed => 'fa-calendar-xmark',
         };
     }
 
@@ -69,6 +79,9 @@ enum NotificationType: string
             self::CompanyBannerAwaitingReview => NotificationCategory::CareerReviews,
             self::OrganInformationRevisionAwaitingReview => NotificationCategory::BodyReviews,
             self::PollRevisionAwaitingReview => NotificationCategory::PollReviews,
+            self::ActivityProposalAwaitingDecision, self::ActivityProposalScheduled,
+            self::ActivityProposalDeclined, self::ActivityProposalBudgetDue,
+            self::ActivityProposalLapsed => NotificationCategory::OptionCalendar,
         };
     }
 
@@ -85,6 +98,9 @@ enum NotificationType: string
             self::CompanyBannerAwaitingReview => NotificationAddressing::Role,
             self::OrganInformationRevisionAwaitingReview, self::PollRevisionAwaitingReview
                 => NotificationAddressing::Role,
+            self::ActivityProposalAwaitingDecision => NotificationAddressing::Role,
+            self::ActivityProposalScheduled, self::ActivityProposalDeclined,
+            self::ActivityProposalBudgetDue, self::ActivityProposalLapsed => NotificationAddressing::Account,
         };
     }
 
@@ -110,6 +126,10 @@ enum NotificationType: string
             self::CompanyBannerAwaitingReview => 'admin/career/approvals/index',
             self::OrganInformationRevisionAwaitingReview => 'admin/decision/bodies/approvals/review',
             self::PollRevisionAwaitingReview => 'admin/frontpage/polls/approvals/review',
+            self::ActivityProposalAwaitingDecision => 'admin/activities/calendar/decisions/index',
+            self::ActivityProposalScheduled, self::ActivityProposalDeclined,
+            self::ActivityProposalBudgetDue,
+            self::ActivityProposalLapsed => 'admin/activities/calendar/proposal',
         };
     }
 
@@ -131,6 +151,10 @@ enum NotificationType: string
             self::CompanyBannerAwaitingReview => 'admin/career/approvals/index',
             self::OrganInformationRevisionAwaitingReview => 'admin/decision/bodies/approvals/index',
             self::PollRevisionAwaitingReview => 'admin/frontpage/polls/approvals/index',
+            self::ActivityProposalAwaitingDecision => 'admin/activities/calendar/decisions/index',
+            self::ActivityProposalScheduled, self::ActivityProposalDeclined,
+            self::ActivityProposalBudgetDue,
+            self::ActivityProposalLapsed => 'admin/activities/calendar/index',
         };
     }
 
@@ -189,6 +213,26 @@ enum NotificationType: string
                 '%count% polls have been requested.',
                 ['%count%' => $count],
             ),
+            self::ActivityProposalAwaitingDecision => new TranslatableMessage(
+                '%count% bodies are waiting for a day.',
+                ['%count%' => $count],
+            ),
+            self::ActivityProposalScheduled => new TranslatableMessage(
+                '%count% of your proposals have been given a day.',
+                ['%count%' => $count],
+            ),
+            self::ActivityProposalDeclined => new TranslatableMessage(
+                '%count% of your proposals have been turned down.',
+                ['%count%' => $count],
+            ),
+            self::ActivityProposalBudgetDue => new TranslatableMessage(
+                '%count% of the days you are holding are at risk.',
+                ['%count%' => $count],
+            ),
+            self::ActivityProposalLapsed => new TranslatableMessage(
+                '%count% of the days you were holding have been released.',
+                ['%count%' => $count],
+            ),
         };
     }
 
@@ -212,6 +256,19 @@ enum NotificationType: string
                 : [];
         }
 
+        // A proposal can be given a day, lose it and be given one again, so these cannot key on a subject either: the
+        // unique index over (type, subjectId) would refuse the second one.
+        if (
+            self::ActivityProposalScheduled === $this
+            || self::ActivityProposalDeclined === $this
+            || self::ActivityProposalBudgetDue === $this
+            || self::ActivityProposalLapsed === $this
+        ) {
+            return isset($context['proposal'])
+                ? ['proposal' => $context['proposal']]
+                : [];
+        }
+
         // A notification that stands on its own points at a page that needs no parameters.
         if (null === $subjectId) {
             return [];
@@ -229,6 +286,8 @@ enum NotificationType: string
             self::CompanyBannerAwaitingReview => [],
             self::SignIn, self::PasswordChanged, self::MfaEnabled,
             self::MfaDisabled, self::BackupCodesRegenerated, self::DataExportReady => [],
+            // The other four never reach here: they carry the proposal in their context and returned above.
+            self::ActivityProposalAwaitingDecision => [],
         };
     }
 
@@ -251,6 +310,10 @@ enum NotificationType: string
             self::VacancyRevisionAwaitingReview, self::OrganInformationRevisionAwaitingReview,
             self::PollRevisionAwaitingReview => new TranslatableMessage('Review it'),
             self::CompanyBannerAwaitingReview => new TranslatableMessage('View the banners'),
+            self::ActivityProposalAwaitingDecision => new TranslatableMessage('Decide'),
+            self::ActivityProposalScheduled, self::ActivityProposalDeclined,
+            self::ActivityProposalBudgetDue,
+            self::ActivityProposalLapsed => new TranslatableMessage('View the proposal'),
         };
     }
 
@@ -322,6 +385,28 @@ enum NotificationType: string
                 'A poll asking "%name%" has been requested.',
                 ['%name%' => $name],
             ),
+            self::ActivityProposalAwaitingDecision => new TranslatableMessage(
+                '"%name%" has been put forward and is waiting for a day.',
+                ['%name%' => $name],
+            ),
+            self::ActivityProposalScheduled => new TranslatableMessage(
+                '"%name%" has been given a day. The activity has been started for you and still needs filling in.',
+                ['%name%' => $name],
+            ),
+            self::ActivityProposalDeclined => new TranslatableMessage(
+                '"%name%" has been turned down; its days are free again.',
+                ['%name%' => $name],
+            ),
+            self::ActivityProposalBudgetDue => new TranslatableMessage(
+                'The day you are holding for "%name%" is at risk: the board has not recorded a budget for it, or '
+                . 'that it needs none.',
+                ['%name%' => $name],
+            ),
+            self::ActivityProposalLapsed => new TranslatableMessage(
+                'The day you were holding for "%name%" has been released, because nothing was settled about its '
+                . 'budget in time.',
+                ['%name%' => $name],
+            ),
         };
     }
 
@@ -338,7 +423,9 @@ enum NotificationType: string
             self::ActivityAwaitingReview, self::SignupClosing, self::SignupClosingWithFields,
             self::CompanyRevisionAwaitingReview, self::VacancyRevisionAwaitingReview,
             self::CompanyBannerAwaitingReview, self::OrganInformationRevisionAwaitingReview,
-            self::PollRevisionAwaitingReview => null,
+            self::PollRevisionAwaitingReview, self::ActivityProposalAwaitingDecision,
+            self::ActivityProposalScheduled, self::ActivityProposalDeclined,
+            self::ActivityProposalBudgetDue, self::ActivityProposalLapsed => null,
             self::SignIn => 'New sign-in to your GEWIS account',
             self::PasswordChanged => 'Your GEWIS password was changed',
             self::MfaEnabled => 'Two-factor authentication enabled on your GEWIS account',

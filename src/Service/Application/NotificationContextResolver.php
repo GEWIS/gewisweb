@@ -40,6 +40,10 @@ final readonly class NotificationContextResolver
             NotificationType::CompanyBannerAwaitingReview,
             NotificationType::OrganInformationRevisionAwaitingReview,
             NotificationType::PollRevisionAwaitingReview => null,
+            // The proposal's own name travels with it, since these are keyed on nothing the resolver could look up.
+            NotificationType::ActivityProposalAwaitingDecision, NotificationType::ActivityProposalScheduled,
+            NotificationType::ActivityProposalDeclined, NotificationType::ActivityProposalBudgetDue,
+            NotificationType::ActivityProposalLapsed => $context['proposalName'] ?? null,
             // Nothing to fill in: the sentence says all of it on its own.
             NotificationType::DataExportReady => '',
             NotificationType::SignupClosing,
