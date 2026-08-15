@@ -34,10 +34,13 @@ class ActivityRevisionRepository extends ServiceEntityRepository
      */
     public function findForReview(): array
     {
+        // The queue says who put each one forward and what is live while it waits, so both come along with it.
         $builder = $this->createQueryBuilder('r')
             ->addSelect(
                 'n',
                 'a',
+                'au',
+                'lr',
             )
             ->join(
                 'r.name',
@@ -46,6 +49,14 @@ class ActivityRevisionRepository extends ServiceEntityRepository
             ->join(
                 'r.activity',
                 'a',
+            )
+            ->leftJoin(
+                'r.author',
+                'au',
+            )
+            ->leftJoin(
+                'a.liveRevision',
+                'lr',
             );
 
         $this->whereAwaitingReview($builder);

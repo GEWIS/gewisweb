@@ -32,8 +32,132 @@
     }
 }
 
+// The panorama doubles as the front page's hero: the association's name and where to go next are laid over it, with a
+// gradient underneath them so white text stays readable whatever the photo happens to show at the bottom.
+.home-hero {
+    position: relative;
+
+    // Taller than the plain panorama, because the name and the two ways on have to fit above the fold of the image
+    // rather than crowd the navigation.
+    @include media-breakpoint-up(md) {
+        height: 400px;
+        max-height: 400px;
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, .15) 0%, rgba(0, 0, 0, .35) 45%, rgba(0, 0, 0, .86) 100%);
+        pointer-events: none;
+    }
+
+    // The text sits in a `.container` of its own, so it starts on the same line as the page below the image.
+    &__content {
+        position: absolute;
+        inset: auto 0 0 0;
+        padding-bottom: 1.5rem;
+        color: $white;
+    }
+
+    &__kicker {
+        color: rgba($white, .85);
+        font-size: .75rem;
+        font-weight: 700;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+    }
+
+    h1 {
+        color: $white;
+        max-width: 20ch;
+        text-wrap: balance;
+    }
+
+    p {
+        color: rgba($white, .82);
+        max-width: 56ch;
+        text-wrap: pretty;
+    }
+
+    .btn {
+        pointer-events: auto;
+    }
+}
+
+// A news row leads with the date it carries, in a column narrow enough to read as a stamp rather than a heading.
+.news-item {
+    &__date {
+        width: 4.5rem;
+    }
+}
+
+// What the board pinned is set apart by a strip saying so, rather than by being a different kind of thing.
+.news-pinned {
+    &__banner {
+        background-color: rgba($gewis-red, .08);
+        color: $gewis-red;
+        font-size: .75rem;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+    }
+}
+
 /** CKEditor 5 */
 .image.image_resized > img {
     max-width: 100%;
     height: auto !important;
+}
+
+// A member on the birthday panel is shown by the first letter of their name, since the panel is a list of people
+// rather than of pictures.
+.member-avatar {
+    align-items: center;
+    border-radius: 50%;
+    display: inline-flex;
+    flex: none;
+    height: 1.75rem;
+    justify-content: center;
+    width: 1.75rem;
+
+    &-monogram {
+        background-color: rgba($gewis-red, .1);
+        color: $gewis-red;
+        font-size: .7rem;
+        font-weight: 700;
+    }
+}
+
+// The birthday photos are stacked so one can fade into the next without the panel changing height.
+.birthday-rotator {
+    position: relative;
+
+    &__photo {
+        display: block;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        transition: opacity $transition-duration ease-in-out;
+        width: 100%;
+
+        &.is-visible {
+            opacity: 1;
+            position: relative;
+        }
+    }
+}
+
+// The custom pages overview, where a page is set in from the one it lives beneath.
+.page-tree {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding-left: calc(var(--page-tree-depth, 0) * 1.25rem);
+
+    &--nested::before {
+        content: '';
+        width: 0.75rem;
+        border-top: 1px solid var(--#{$prefix}border-color);
+    }
 }

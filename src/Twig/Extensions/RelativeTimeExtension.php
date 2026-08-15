@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Twig\Extensions;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 use Override;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -34,7 +35,34 @@ class RelativeTimeExtension extends AbstractExtension
                 'human_time_diff',
                 $this->humanTimeDiff(...),
             ),
+            new TwigFunction(
+                'relative_time',
+                $this->relativeTime(...),
+            ),
         ];
+    }
+
+    /**
+     * How long ago something happened, for a timestamp whose exact moment matters less than its place in a
+     * conversation. Anything still to come reads as such rather than as a negative age.
+     */
+    public function relativeTime(DateTimeInterface $moment): string
+    {
+        $now = new DateTimeImmutable();
+        $duration = $this->humanTimeDiff(
+            $moment,
+            $now,
+        );
+
+        return $moment > $now
+            ? $this->translator->trans(
+                'in %duration%',
+                ['%duration%' => $duration],
+            )
+            : $this->translator->trans(
+                '%duration% ago',
+                ['%duration%' => $duration],
+            );
     }
 
     public function humanTimeDiff(

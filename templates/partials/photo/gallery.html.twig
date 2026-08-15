@@ -72,7 +72,7 @@
         <p class="text-muted text-center py-4">{{ 'Enable JavaScript to view these photos.'|trans }}</p>
     </noscript>
     <p data-gallery-target="empty" class="text-muted text-center py-4" hidden>
-        {{ empty_message ?? 'This album does not contain any photos.'|trans }}
+        {{ empty_message ?? ('This album does not contain any photos.'|trans) }}
     </p>
     <div class="photo-masonry"
          data-gallery-target="grid"

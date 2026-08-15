@@ -1,0 +1,105 @@
+{% extends 'layout.html.twig' %}
+
+{% set head = poll.currentRevision %}
+{% set question = (poll.question ?? head.question)|localise_text %}
+
+{% block page_title %}{{ question|page_title }}{{ 'Polls'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {# The comment boxes are markdown editors; without this they render unstyled. #}
+    <link rel="stylesheet" href="{{ asset('styles/ckeditor5/ckeditor5.css') }}">
+{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('poll/index') }}">{{ 'Polls'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ question }}</li>
+{% endblock %}
+
+{% block contents %}
+    {% if poll.liveRevision is null %}
+        {# Only the member who asked and the board get this far, so this is a status page rather than a poll. #}
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="panel">
+                    <div class="panel-heading d-flex flex-wrap justify-content-between align-items-baseline gap-2">
+                        <h3>{{ question }}</h3>
+                        <span class="badge {{ head.status.badgeClass }}">{{ head.status|trans }}</span>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-unstyled mb-0">
+                            {% for option in head.options %}
+                                <li>{{ option.text|localise_text }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        {% if canAskAgain %}
+                            <p class="mb-2">{{ 'The board did not agree to this question. You can rewrite it and ask again.'|trans }}</p>
+                            <a href="{{ path('poll/request', {'from': poll.id}) }}" class="btn btn-sm btn-gewis-primary">
+                                {{ 'Ask again'|trans }}
+                            </a>
+                        {% else %}
+                            <p class="text-muted small mb-0">{{ 'The board still has to decide on this question.'|trans }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-lg-8">
+                {{ component('Frontpage:PollWidget', {'poll': poll, 'detailed': true}) }}
+
+                {# The component's own IsGranted only guards its actions over HTTP, so the mount is gated here. #}
+                {% if is_granted('ROLE_USER') %}
+                    {{ component('Frontpage:PollComments', {'poll': poll}) }}
+                {% else %}
+                    <p class="text-muted">{{ 'Sign in to read and join the discussion.'|trans }}</p>
+                {% endif %}
+            </div>
+
+            <aside class="col-lg-4">
+                {% if earlier is not empty %}
+                    <div class="panel">
+                        <div class="panel-heading d-flex justify-content-between align-items-baseline gap-2">
+                            <h3>{{ 'Earlier polls'|trans }}</h3>
+                            <a class="small" href="{{ path('poll/index') }}">{{ 'All'|trans }}</a>
+                        </div>
+                        <div class="panel-body">
+                            {% for other in earlier %}
+                                {% set winner = other.leadingOption %}
+                                <a class="d-block py-2 {{ not loop.last ? 'border-bottom' }}"
+                                   href="{{ path('poll/view', {'poll': other.id}) }}">
+                                    <span class="d-block fw-semibold">{{ other.question|localise_text }}</span>
+                                    <span class="d-flex gap-2 small">
+                                        {% if winner is not null %}
+                                            <span class="text-success">{{ winner.text|localise_text }}</span>
+                                        {% endif %}
+                                        <span class="text-muted ms-auto">
+                                            {{ '%count% vote|%count% votes'|trans({'%count%': other.totalVotesCount}) }}
+                                        </span>
+                                    </span>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if is_granted('ROLE_USER') %}
+                    <div class="panel poll-invite">
+                        <div class="panel-body">
+                            <h3 class="h6">{{ 'Got a question?'|trans }}</h3>
+                            <p class="mb-3">
+                                {{ 'Any member can put a question forward. The board reads it and publishes the ones it agrees to.'|trans }}
+                            </p>
+                            <a href="{{ path('poll/request') }}" class="btn btn-sm btn-gewis-primary">
+                                {{ 'Request a poll'|trans }} <span class="fas fa-arrow-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            </aside>
+        </div>
+    {% endif %}
+{% endblock %}

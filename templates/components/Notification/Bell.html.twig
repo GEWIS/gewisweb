@@ -37,7 +37,7 @@
                             {% endif %}
                             <span class="d-block small notification-link">{{ notification.type.linkLabel|trans }}</span>
                             <small class="d-block text-muted">
-                                {{ '%duration% ago'|trans({'%duration%': human_time_diff(notification.createdAt, date())}) }}
+                                {{ relative_time(notification.createdAt) }}
                             </small>
                         </span>
                     </a>

@@ -109,6 +109,7 @@ class CareerReviewFixture extends Fixture implements DependentFixtureInterface
     ): void {
         $draft = $this->nextProfileDraft($company);
         $draft->setStatus(RevisionStatus::Submitted);
+        $draft->setSubmittedAt(new DateTime('-2 days'));
         $draft->setAuthorCompanyUser($author);
         $draft->setSlogan(new CareerLocalisedText(
             self::SUBMITTED_SLOGAN,

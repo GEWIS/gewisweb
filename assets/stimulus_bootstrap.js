@@ -30,6 +30,11 @@ import ActivityItemController from './controllers/activity/activity_item_control
 import SignupFieldController from './controllers/activity/signup_field_controller.ts';
 import SignupListController from './controllers/activity/signup_list_controller.ts';
 
+// Frontpage-specific controllers.
+import BirthdayRotatorController from './controllers/frontpage/birthday_rotator_controller.ts';
+import InfimumController from './controllers/frontpage/infimum_controller.ts';
+import PageEditorController from './controllers/frontpage/page_editor_controller.ts';
+
 // Decision-specific controllers.
 import DocumentUploadController from './controllers/decision/document_upload_controller.ts';
 import LiveSortableController from './controllers/decision/live_sortable_controller.ts';
@@ -77,6 +82,10 @@ app.register('external-app-signing', ExternalAppSigningController);
 app.register('activity-item', ActivityItemController);
 app.register('signup-field', SignupFieldController);
 app.register('signup-list', SignupListController);
+
+app.register('birthday-rotator', BirthdayRotatorController);
+app.register('infimum', InfimumController);
+app.register('page-editor', PageEditorController);
 
 app.register('album-search', AlbumSearchController);
 app.register('photo-cover', CoverController);

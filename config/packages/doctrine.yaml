@@ -34,6 +34,7 @@ doctrine:
                                 pool: cache.app
                 dql:
                     numeric_functions:
+                        MONTH: App\Doctrine\Functions\Month
                         RAND: App\Doctrine\Functions\Rand
                         YEAR: App\Doctrine\Functions\Year
                 mappings:

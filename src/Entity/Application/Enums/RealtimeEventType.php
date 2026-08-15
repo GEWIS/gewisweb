@@ -12,4 +12,5 @@ enum RealtimeEventType: string
     case SessionInvalidate = 'session.invalidate';
     case ForceReload = 'force_reload';
     case Toast = 'toast';
+    case InfimumRotate = 'infimum.rotate';
 }

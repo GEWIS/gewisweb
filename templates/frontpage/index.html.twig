@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block pre_body %}
-    <div class="container-fluid p-0 m-0 w-100 jumbotron">
+    <div class="container-fluid p-0 m-0 w-100 jumbotron home-hero">
         <img
             alt="{{ 'GEWIS room impression'|trans }}"
             src="{{ asset('images/panorama-960.webp') }}"
@@ -17,71 +17,85 @@
             {{ asset('images/panorama-4480.webp') }} 4480w,
             {{ asset('images/panorama-5120.webp') }} 5120w"
             class="img-fluid">
+        <div class="home-hero__overlay"></div>
+        <div class="home-hero__content">
+            <div class="container">
+                <p class="home-hero__kicker mb-1">{{ 'Study Association GEWIS'|trans }}</p>
+                <h1 class="display-6 fw-bold mb-2">
+                    {{ 'The association of Mathematics & Computer Science at TU/e'|trans }}
+                </h1>
+                <p class="mb-3">{{ 'Everything happening around the association: news, activities and photos.'|trans }}</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{{ path('activity/index') }}" class="btn btn-gewis-primary">
+                        <span class="far fa-calendar"></span> {{ 'Upcoming activities'|trans }}
+                    </a>
+                    <a href="{{ page_path(
+                        category: 'vereniging',
+                        categoryEn: 'association',
+                        sub_category: 'lid-worden',
+                        sub_categoryEn: 'become-member',
+                    ) }}" class="btn btn-outline-light">
+                        <span class="fas fa-door-open"></span> {{ 'Become a member'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
 {% block contents %}
     <div class="row">
         <main class="col-sm-7 col-md-8">
-            <section class="my-2">
-                <h2 class="display-6">{{ 'Study Association GEWIS'|trans }}</h2>
-                <p class="lead">
-                    {{ 'Welcome to the website of study association GEWIS, the study association of the department of Mathematics & Computer Science at Eindhoven University of Technology.'|trans }}
-                </p>
-            </section>
-            <section class="mb-2">
-                <h2>{{ 'News'|trans }}</h2>
-            </section>
-            {# Where the banners go once there are news items to put them between. #}
-            <section class="my-2">
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                <h2 class="h5 text-uppercase text-primary-emphasis mb-0">{{ 'News'|trans }}</h2>
+                <a href="{{ path('news/index') }}" class="ms-auto small fw-bold">
+                    {{ 'All posts'|trans }} <span class="fas fa-arrow-right"></span>
+                </a>
+            </div>
+
+            {% if newsFeed is empty %}
+                <div class="panel">
+                    <div class="panel-body">
+                        <p class="text-muted mb-0">{{ 'There is no news here yet.'|trans }}</p>
+                    </div>
+                </div>
+
                 {% include 'partials/career/banner-strip.html.twig' with {'banners': company_banners()} only %}
-            </section>
-            {# Birthday data is member-only, so the block is gated on an authenticated session. #}
-            {% if birthdays is not empty and is_granted('ROLE_USER') %}
-                <section class="my-2">
-                    <div class="panel overflow-hidden">
-                        <div class="row g-0">
-                            {% if birthdayPhoto is not null %}
-                                {% set birthday_url = path('photo/album', { type: 'album', album: birthdayPhoto.album.id }) ~ '#pid=' ~ birthdayPhoto.id %}
-                                <div class="col-md-6">
-                                    <a href="{{ birthday_url }}">
-                                        <img class="img-fluid w-100" alt=""
-                                             src="{{ image_url(birthdayPhoto.path, 'w320') }}"
-                                             srcset="{{ image_srcset(birthdayPhoto.path, ['w320', 'w640']) }}"
-                                             sizes="(min-width: 768px) 33vw, 100vw">
-                                    </a>
-                                </div>
-                            {% endif %}
-                            <div class="col-md-{{ birthdayPhoto is null ? '12' : '6' }}">
-                                <div class="panel-heading">
-                                    <h3>{{ 'Birthdays'|trans }}</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <ul class="mb-0">
-                                        {% for birthday in birthdays %}
-                                            {# The age is null when the viewer may not see this member's year of birth;
-                                               the member still appears, only ageless. #}
-                                            <li>
-                                                {%- if birthday.age is not null -%}
-                                                    {{ '%name% turns %age% today!'|trans({
-                                                        '%name%': birthday.member.fullName,
-                                                        '%age%': birthday.age,
-                                                    }) }}
-                                                {%- else -%}
-                                                    {{ "It's %name%'s birthday!"|trans({
-                                                        '%name%': birthday.member.fullName,
-                                                    }) }}
-                                                {%- endif -%}
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
+            {% else %}
+                {% set pinned = newsFeed|filter(item => item.pinned) %}
+                {% set regular = newsFeed|filter(item => not item.pinned) %}
+
+                {% for item in pinned %}
+                    {% include 'partials/frontpage/news-pinned.html.twig' with {'item': item} %}
+                {% endfor %}
+
+                {# The banners sit in the feed rather than under it. They follow what the board pinned, and where
+                   nothing is pinned they come after the second item. #}
+                {% set adAfter = pinned is empty ? min(2, regular|length) : 0 %}
+                {% if 0 == adAfter %}
+                    {% include 'partials/career/banner-strip.html.twig' with {'banners': company_banners()} only %}
+                {% endif %}
+
+                {% for item in regular %}
+                    <div class="panel">
+                        <div class="panel-body">
+                            {% include 'partials/frontpage/news-item.html.twig' with {'item': item} %}
                         </div>
                     </div>
-                </section>
+
+                    {% if loop.index == adAfter %}
+                        {% include 'partials/career/banner-strip.html.twig' with {'banners': company_banners()} only %}
+                    {% endif %}
+                {% endfor %}
+
+                <div class="d-flex justify-content-center">
+                    <a href="{{ path('news/index') }}" class="btn btn-outline-secondary">
+                        {{ 'Older posts'|trans }} <span class="fas fa-arrow-down"></span>
+                    </a>
+                </div>
             {% endif %}
         </main>
+
         <aside class="col-sm-5 col-md-4 ps-md-5">
             <div class="panel">
                 <div class="panel-heading">
@@ -132,10 +146,27 @@
                             <img class="img-fluid" alt=""
                                  src="{{ image_url(potw_path, 'w320') }}"
                                  srcset="{{ image_srcset(potw_path, ['w320', 'w640']) }}"
-                                 sizes="(min-width: 768px) 33vw, 100vw">
+                                 sizes="(min-width: 992px) 320px, 100vw">
                         </a>
                     </div>
                 </div>
+            {% endif %}
+
+            {# Birthday data is member-only, so the block is gated on an authenticated session. #}
+            {% if birthdays is not empty and is_granted('ROLE_USER') %}
+                {% include 'partials/frontpage/birthdays-panel.html.twig' with {
+                    'birthdays': birthdays,
+                    'birthdayTags': birthdayTags,
+                } only %}
+            {% endif %}
+
+            {% if currentPoll is not null %}
+                {{ component('Frontpage:PollWidget', {'poll': currentPoll}) }}
+            {% endif %}
+
+            {# The infimum is a members-only thing, and the topic it rotates over is subscribed to on the same terms. #}
+            {% if is_granted('ROLE_USER') %}
+                {% include 'partials/frontpage/infimum-panel.html.twig' only %}
             {% endif %}
         </aside>
     </div>

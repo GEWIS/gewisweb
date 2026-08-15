@@ -25,6 +25,7 @@ enum NotificationCategory implements TranslatableInterface
     case ActivityReviews;
     case CareerReviews;
     case BodyReviews;
+    case PollReviews;
     case SignupReminders;
 
     public function icon(): string
@@ -36,6 +37,7 @@ enum NotificationCategory implements TranslatableInterface
             self::AccountSecurity => 'fa-shield-halved',
             self::DataExports => 'fa-file-arrow-down',
             self::ActivityReviews, self::CareerReviews, self::BodyReviews => 'fa-clipboard-check',
+            self::PollReviews => 'fa-square-poll-vertical',
             self::SignupReminders => 'fa-hourglass-half',
         };
     }
@@ -49,8 +51,8 @@ enum NotificationCategory implements TranslatableInterface
         return match ($this) {
             self::SignIns, self::AccountSecurity, self::DataExports => new TranslatableMessage('Website and email'),
             self::SignupReminders => new TranslatableMessage('Website only'),
-            self::Albums, self::Activities, self::ActivityReviews,
-            self::CareerReviews, self::BodyReviews => new TranslatableMessage('Website'),
+            self::Albums, self::Activities, self::ActivityReviews, self::CareerReviews,
+            self::BodyReviews, self::PollReviews => new TranslatableMessage('Website'),
         };
     }
 
@@ -69,6 +71,9 @@ enum NotificationCategory implements TranslatableInterface
             self::CareerReviews => new TranslatableMessage('When a company has something waiting to be reviewed'),
             self::BodyReviews => new TranslatableMessage(
                 'When a body has changed its page and is waiting to be reviewed',
+            ),
+            self::PollReviews => new TranslatableMessage(
+                'When a poll has been requested and is waiting to be reviewed',
             ),
             self::SignupReminders => new TranslatableMessage('Shortly before a sign-up you are on closes'),
         };
@@ -110,6 +115,10 @@ enum NotificationCategory implements TranslatableInterface
             ),
             self::BodyReviews => $translator->trans(
                 'Bodies awaiting review',
+                locale: $locale,
+            ),
+            self::PollReviews => $translator->trans(
+                'Polls awaiting review',
                 locale: $locale,
             ),
             self::SignupReminders => $translator->trans(

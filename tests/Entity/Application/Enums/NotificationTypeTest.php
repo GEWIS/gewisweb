@@ -51,6 +51,7 @@ final class NotificationTypeTest extends TestCase
                 NotificationType::VacancyRevisionAwaitingReview,
                 NotificationType::CompanyBannerAwaitingReview,
                 NotificationType::OrganInformationRevisionAwaitingReview,
+                NotificationType::PollRevisionAwaitingReview,
             ],
             $this->addressedTo(NotificationAddressing::Role),
         );

@@ -170,7 +170,7 @@ class AdminController extends AbstractController
             'career/admin/vacancies.html.twig',
             [
                 'company' => $company,
-                'awaitingReview' => $this->vacancyRevisionRepository->countForReview($company),
+                'awaitingReview' => $this->vacancyRevisionRepository->countForReviewOf($company),
             ],
         );
     }

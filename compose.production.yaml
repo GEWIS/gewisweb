@@ -53,7 +53,7 @@ x-app-build: &app_build
         DOCKER_GOOGLE_API_KEY: "${DOCKER_GOOGLE_API_KEY:?DOCKER_GOOGLE_API_KEY must be set in production}"
         DOCKER_GOOGLE_CALENDAR_KEY: "${DOCKER_GOOGLE_CALENDAR_KEY:?DOCKER_GOOGLE_CALENDAR_KEY must be set in production}"
         # Supremum Infima API
-        DOCKER_SUPREMUM_API_KEY: "${DOCKER_SUPREMUM_API_KEY:?DOCKER_SUPREMUM_API_KEY must be set in production}"
+        SUPREMUM_API_KEY: "${SUPREMUM_API_KEY:?SUPREMUM_API_KEY must be set in production}"
         # Course documents watermarking
         WATERMARK_TAG: "${WATERMARK_TAG:?WATERMARK_TAG must be set in production}"
         # Activity creation / organ update / poll creation mail routing

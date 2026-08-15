@@ -1,0 +1,120 @@
+{% macro optionRow(option, share, isChosen) %}
+    <span class="poll-option__fill" style="width: {{ share }}%"></span>
+    <span class="{{ isChosen ? 'fas fa-circle-check' : 'far fa-circle' }}" aria-hidden="true"></span>
+    <span class="flex-grow-1">{{ option.text|localise_text }}</span>
+    <span class="poll-option__share">{{ share }}%</span>
+    <span class="poll-option__votes">
+        {{ '%count% vote|%count% votes'|trans({'%count%': option.votesCount}) }}
+    </span>
+{% endmacro %}
+
+{% set poll = this.poll %}
+{% set chosen = this.chosen %}
+{% set detailed = this.detailed %}
+{% set total = poll.totalVotesCount %}
+{% set leading = poll.leadingOption %}
+{% set daysLeft = this.daysLeft %}
+
+<div{{ attributes }}>
+    <div class="panel">
+        <div class="panel-heading">
+            {% if detailed %}
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                    {% if poll.isActive %}
+                        <span class="badge badge-success">
+                            <span class="fas fa-circle" aria-hidden="true"></span> {{ 'Open for voting'|trans }}
+                        </span>
+                    {% else %}
+                        <span class="badge badge-secondary">{{ 'Closed'|trans }}</span>
+                    {% endif %}
+                    {% if daysLeft is not null %}
+                        <span class="text-primary-emphasis small fw-bold ms-auto">
+                            {{ 'Closes in %count% day|Closes in %count% days'|trans({'%count%': daysLeft}) }}
+                        </span>
+                    {% endif %}
+                </div>
+                <h2>{{ poll.question|localise_text }}</h2>
+                <p class="text-muted mb-0">
+                    {{ 'One answer per member. Your answer cannot be changed once it is in, and the results are shown either way.'|trans }}
+                </p>
+            {% else %}
+                <h3>{{ 'Poll'|trans }}</h3>
+            {% endif %}
+        </div>
+
+        <div class="panel-body">
+            {% if not detailed %}
+                <p class="fw-semibold mb-3">{{ poll.question|localise_text }}</p>
+            {% endif %}
+
+            {% if this.problem %}
+                <div class="alert alert-warning py-2">{{ this.problem }}</div>
+            {% endif %}
+
+            {% if detailed %}
+                <div class="d-flex flex-column gap-2">
+                    {% for option in poll.options %}
+                        {% set share = total > 0 ? (option.votesCount / total * 100)|round : 0 %}
+                        {% set isChosen = chosen is not null and chosen.id == option.id %}
+                        {% set isLeading = leading is not null and leading.id == option.id %}
+                        {% set classes = 'poll-option'
+                            ~ (isChosen ? ' poll-option--chosen' : '')
+                            ~ (isLeading and not isChosen ? ' poll-option--leading' : '') %}
+                        {% if this.canAnswer %}
+                            <button type="button" class="{{ classes }} btn"
+                                    data-action="live#action"
+                                    data-live-action-param="vote"
+                                    data-live-option-param="{{ option.id }}">
+                                {{ _self.optionRow(option, share, isChosen) }}
+                            </button>
+                        {% else %}
+                            <div class="{{ classes }}">
+                                {{ _self.optionRow(option, share, isChosen) }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                <p class="text-muted small mt-3 mb-0">
+                    {% if chosen is not null %}
+                        {{ 'You answered "%answer%".'|trans({'%answer%': chosen.text|localise_text}) }}
+                    {% elseif this.canAnswer %}
+                        {{ 'Pick an answer to cast your vote.'|trans }}
+                    {% elseif not is_granted('ROLE_USER') %}
+                        {{ 'Sign in to answer this poll.'|trans }}
+                    {% else %}
+                        {{ 'This poll is closed.'|trans }}
+                    {% endif %}
+                </p>
+            {% elseif this.canAnswer %}
+                <div class="d-grid gap-2">
+                    {% for option in poll.options %}
+                        <button type="button" class="btn btn-sm btn-outline-gewis-primary text-start"
+                                data-action="live#action"
+                                data-live-action-param="vote"
+                                data-live-option-param="{{ option.id }}">
+                            {{ option.text|localise_text }}
+                        </button>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {% include 'partials/frontpage/poll-results.html.twig' with {'poll': poll, 'chosen': chosen} only %}
+
+                {% if poll.isActive and not is_granted('ROLE_USER') %}
+                    <p class="text-muted small mt-2 mb-0">{{ 'Sign in to answer this poll.'|trans }}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        {% if not detailed %}
+            <div class="panel-footer">
+                <a href="{{ path('poll/view', {'poll': poll.id}) }}" class="panel-footer-link">
+                    {{ 'Discussion'|trans }}
+                </a>
+                <a href="{{ path('poll/index') }}" class="panel-footer-link">
+                    {{ 'All polls'|trans }}
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>

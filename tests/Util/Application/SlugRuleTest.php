@@ -8,6 +8,9 @@ use App\Util\Application\SlugRule;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
+use function preg_match;
+use function str_repeat;
+
 final class SlugRuleTest extends TestCase
 {
     /**
@@ -84,6 +87,60 @@ final class SlugRuleTest extends TestCase
         self::assertSame(
             $acceptable,
             SlugRule::matches($slug),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{string, bool}>
+     */
+    public static function boundedSlugs(): iterable
+    {
+        yield 'the shortest one that is worth typing' => [
+            'wie',
+            true,
+        ];
+
+        yield 'the longest one worth passing on' => [
+            'a' . str_repeat(
+                'b',
+                31,
+            ),
+            true,
+        ];
+
+        yield 'one letter short' => [
+            'wi',
+            false,
+        ];
+
+        yield 'one character too long' => [
+            'a' . str_repeat(
+                'b',
+                32,
+            ),
+            false,
+        ];
+
+        yield 'still not upper case' => [
+            'Vereniging',
+            false,
+        ];
+    }
+
+    /**
+     * Where the slug is the whole address, it is held between three and thirty-two characters as well.
+     */
+    #[DataProvider('boundedSlugs')]
+    public function testWhatCountsAsABoundedSlug(
+        string $slug,
+        bool $acceptable,
+    ): void {
+        self::assertSame(
+            $acceptable,
+            1 === preg_match(
+                SlugRule::BOUNDED_PATTERN,
+                $slug,
+            ),
         );
     }
 }

@@ -89,6 +89,16 @@ abstract class AbstractRevision implements RevisionInterface
     private ?DateTime $reviewedAt = null;
 
     /**
+     * When this revision was handed to its reviewers, which is a different moment from when it was written: a draft
+     * can be worked on for a week before it is submitted. Null while it never has been.
+     */
+    #[Column(
+        type: Types::DATETIME_MUTABLE,
+        nullable: true,
+    )]
+    private ?DateTime $submittedAt = null;
+
+    /**
      * Optimistic-locking version, bumped on every flush. A backstop against lost updates if two edits ever race past
      * the edit lock ({@see \App\Service\Application\EditLockService}): the second flush fails with an
      * OptimisticLockException, which the edit controller turns into a "changed by someone else" message.
@@ -226,6 +236,18 @@ abstract class AbstractRevision implements RevisionInterface
     public function setReviewedAt(?DateTime $reviewedAt): void
     {
         $this->reviewedAt = $reviewedAt;
+    }
+
+    #[Override]
+    public function getSubmittedAt(): ?DateTime
+    {
+        return $this->submittedAt;
+    }
+
+    #[Override]
+    public function setSubmittedAt(?DateTime $submittedAt): void
+    {
+        $this->submittedAt = $submittedAt;
     }
 
     public function getVersion(): int

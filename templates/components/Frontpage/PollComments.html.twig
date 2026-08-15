@@ -1,0 +1,167 @@
+{% macro reactions(comment, types, mine, open) %}
+    <div class="d-flex flex-wrap gap-1 mt-2">
+        {% set counts = comment.reactionCounts %}
+        {% for type in types %}
+            {% set count = counts[type.value]|default(0) %}
+            {% if open or count > 0 %}
+                <button type="button"
+                        class="btn btn-sm {{ mine == type ? 'btn-gewis-primary' : 'btn-outline-secondary' }}"
+                        {% if open %}
+                            data-action="live#action"
+                            data-live-action-param="react"
+                            data-live-comment-param="{{ comment.id }}"
+                            data-live-type-param="{{ type.value }}"
+                        {% else %}disabled{% endif %}
+                        title="{{ type|trans }}">
+                    <span class="fas {{ type.icon }}" aria-hidden="true"></span>
+                    <span class="visually-hidden">{{ type|trans }}</span>
+                    {{ count }}
+                </button>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{#
+    One comment and everything written under it, however deep that goes. Past `maxDepth` the replies stop moving
+    right, so a long back and forth does not walk off the edge of the panel.
+#}
+{% macro thread(comment, component, depth) %}
+    {% import _self as self %}
+    {% set maxDepth = 4 %}
+    {% set replies = comment.replies %}
+    {% set repliesId = 'poll-replies-' ~ comment.id %}
+    {% set repliesOpen = component.expanded == comment.id %}
+    <div class="poll-comment d-flex gap-3">
+        {% include 'partials/application/image-or-monogram.html.twig' with {
+            'path': null,
+            'name': comment.author,
+            'baseClass': 'poll-comment__avatar',
+        } only %}
+        <div class="flex-grow-1 min-w-0">
+            <div class="d-flex flex-wrap align-items-baseline gap-2">
+                <strong>{{ comment.author }}</strong>
+                {% if component.showsMembers %}
+                    <span class="text-muted small">({{ comment.user.fullName }})</span>
+                {% endif %}
+                <span class="text-muted small">{{ relative_time(comment.createdOn) }}</span>
+            </div>
+            <div class="poll-comment__body">{{ comment.content|markdown_comment }}</div>
+            {{ self.reactions(comment, component.reactionTypes, component.myReaction(comment), component.isOpen) }}
+
+            {% if component.isOpen and component.replyTo != comment.id %}
+                <button type="button" class="btn btn-link btn-sm px-0"
+                        data-action="live#action"
+                        data-live-action-param="startReply"
+                        data-live-comment-param="{{ comment.id }}">
+                    {{ 'Reply'|trans }}
+                </button>
+            {% endif %}
+
+            {% if component.isOpen and component.replyTo == comment.id %}
+                <div class="mt-2">
+                    <label class="form-label" for="poll-reply-{{ comment.id }}">{{ 'Your reply'|trans }}</label>
+                    {# data-live-ignore: the editor replaces the textarea with markup of its own, which the re-render
+                       morph would otherwise take back out from under it. #}
+                    <div data-live-ignore>
+                        <textarea class="form-control" id="poll-reply-{{ comment.id }}" rows="2"
+                                  data-model="norender|replyContent"
+                                  data-controller="markdown-editor"
+                                  data-markdown-editor-toolbar-value="comment"
+                                  data-markdown-editor-language-value="{{ app.request.locale }}"
+                                  data-action="poll-comment:posted@window->markdown-editor#clear"></textarea>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 mt-2">
+                        <button type="button" class="btn btn-sm btn-gewis-primary"
+                                data-action="live#action"
+                                data-live-action-param="reply"
+                                data-live-comment-param="{{ comment.id }}">
+                            {{ 'Post reply'|trans }}
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                data-action="live#action"
+                                data-live-action-param="cancelReply">
+                            {{ 'Cancel'|trans }}
+                        </button>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if replies is not empty %}
+        {# Client-side Bootstrap collapse; what the reader opened survives a live re-render because
+           ExternalMutationTracker re-applies the show and collapsed classes across the DOM morph. #}
+        <div class="poll-thread{{ depth >= maxDepth ? ' poll-thread--flat' }}">
+            <button type="button" class="btn btn-link btn-sm px-0 {{ repliesOpen ? '' : 'collapsed' }}"
+                    data-bs-toggle="collapse" data-bs-target="#{{ repliesId }}"
+                    aria-expanded="{{ repliesOpen ? 'true' : 'false' }}" aria-controls="{{ repliesId }}">
+                <span class="panel-collapse-chevron fas fa-chevron-down" aria-hidden="true"></span>
+                {{ '%count% reply|%count% replies'|trans({'%count%': replies|length}) }}
+            </button>
+            <div class="collapse {{ repliesOpen ? 'show' }}" id="{{ repliesId }}">
+                {% for reply in replies %}
+                    {{ self.thread(reply, component, depth + 1) }}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% import _self as thread %}
+
+<div{{ attributes }}>
+    <div class="panel">
+        <div class="panel-heading">
+            <h3>{{ 'Discussion'|trans }}</h3>
+        </div>
+        <div class="panel-body">
+            {% if this.problem %}
+                <div class="alert alert-warning py-2">{{ this.problem }}</div>
+            {% endif %}
+
+            {% set comments = this.topLevelComments %}
+            {% if comments is empty %}
+                <p class="text-muted">{{ 'Nobody has said anything yet.'|trans }}</p>
+            {% endif %}
+
+            {% for comment in comments %}
+                <div class="mb-4">
+                    {{ thread.thread(comment, this, 0) }}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if this.isOpen %}
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <label class="form-label" for="poll-comment-author">{{ 'Sign it as'|trans }}</label>
+                        <input type="text" class="form-control" id="poll-comment-author" data-model="author">
+                        <div class="form-text">{{ 'Your member name is never shown to other members.'|trans }}</div>
+                    </div>
+                    <div class="col-md-8 mb-2">
+                        <label class="form-label" for="poll-comment-content">{{ 'Your comment'|trans }}</label>
+                        {# data-live-ignore: see the reply box above. #}
+                        <div data-live-ignore>
+                            <textarea class="form-control" id="poll-comment-content" rows="3"
+                                      data-model="norender|content"
+                                      data-controller="markdown-editor"
+                                      data-markdown-editor-toolbar-value="comment"
+                                      data-markdown-editor-language-value="{{ app.request.locale }}"
+                                      data-action="poll-comment:posted@window->markdown-editor#clear"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-gewis-primary"
+                        data-action="live#action" data-live-action-param="post">
+                    {{ 'Post comment'|trans }}
+                </button>
+            </div>
+        {% else %}
+            <div class="panel-footer">
+                <p class="text-muted small mb-0">{{ 'This poll is closed, so the discussion is finished.'|trans }}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>

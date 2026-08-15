@@ -18,7 +18,12 @@ use Override;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
+use function html_entity_decode;
+use function mb_strlen;
+use function mb_substr;
+use function preg_replace_callback;
 use function strip_tags;
+use function trim;
 
 /**
  * Renders Markdown to safe HTML: raw HTML is escaped, unsafe links are dropped, external links open safely in a new
@@ -26,6 +31,9 @@ use function strip_tags;
  */
 final class MarkdownExtension extends AbstractExtension
 {
+    /** How much of an article an excerpt is taken from: well past the longest one any list row shows. */
+    private const int EXCERPT_SOURCE_LENGTH = 1500;
+
     private ?MarkdownConverter $converter = null;
 
     /**
@@ -40,7 +48,89 @@ final class MarkdownExtension extends AbstractExtension
                 $this->markdown(...),
                 ['is_safe' => ['html']],
             ),
+            new TwigFilter(
+                'markdown_comment',
+                $this->markdownComment(...),
+                ['is_safe' => ['html']],
+            ),
+            new TwigFilter(
+                'markdown_excerpt',
+                $this->markdownExcerpt(...),
+            ),
         ];
+    }
+
+    /**
+     * The opening words of a piece of Markdown as plain text, for a list row that shows what an article is about
+     * before the reader opens it. Longer than the excerpt gets an ellipsis.
+     *
+     * What comes back is text and not HTML: the escaping the converter did is undone, so an ampersand somebody wrote
+     * is an ampersand again by the time Twig escapes it the once. Deliberately not marked safe for that reason.
+     */
+    public function markdownExcerpt(
+        ?string $text,
+        int $length,
+    ): string {
+        // Only the opening of the article is converted: a list row should not pay for a full render of a long one.
+        $body = trim(html_entity_decode(strip_tags($this->markdown(
+            mb_substr(
+                $text ?? '',
+                0,
+                self::EXCERPT_SOURCE_LENGTH,
+            ),
+        ))));
+
+        if (mb_strlen($body) <= $length) {
+            return $body;
+        }
+
+        return trim(mb_substr(
+            $body,
+            0,
+            $length,
+        )) . '…';
+    }
+
+    /**
+     * A comment written with the four-button editor: bold, italic, underline and strikethrough, and nothing else.
+     *
+     * Underline is the one of the four that GitHub-flavoured Markdown has no syntax for, so the editor writes it as a
+     * `<u>` tag. Everything the converter is handed is escaped first and its output narrowed to the handful of tags a
+     * comment may carry; only that exact tag is put back afterwards, so no attribute and no other tag can come
+     * through: `&lt;u onclick=...&gt;` simply does not match.
+     */
+    public function markdownComment(?string $text): string
+    {
+        return $this->underline($this->markdown(
+            $text,
+            [
+                'p',
+                'br',
+                'em',
+                'strong',
+                'del',
+                'u',
+                'code',
+                'a',
+            ],
+        ));
+    }
+
+    /**
+     * Turns the escaped `<u>` tags back into real ones, in pairs and never inside code: a member showing what the tag
+     * looks like keeps it as text, and an opening tag whose closing tag never came stays text as well rather than
+     * underlining everything after the comment.
+     */
+    private function underline(string $html): string
+    {
+        return preg_replace_callback(
+            '#<code[^>]*>.*?</code>|&lt;u&gt;(.*?)&lt;/u&gt;#s',
+            /** @param string[] $match */
+            static fn (array $match): string => isset($match[1])
+                ? '<u>' . $match[1] . '</u>'
+                : $match[0],
+            $html,
+        ) ?? $html;
     }
 
     /**

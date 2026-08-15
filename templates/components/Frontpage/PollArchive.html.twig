@@ -1,0 +1,100 @@
+{# The number of answers a card shows before it says how many more there are. #}
+{% set shown = 3 %}
+
+<div {{ attributes }}>
+    <div class="collapse mb-3" id="poll-filters">
+        <div class="panel my-0">
+            <div class="panel-body">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-6">
+                        <label class="form-label" for="poll-archive-search">{{ 'Search'|trans }}</label>
+                        <input type="search" class="form-control" id="poll-archive-search"
+                               placeholder="{{ 'Search questions and answers'|trans }}"
+                               data-model="debounce(300)|search" value="{{ this.search }}">
+                    </div>
+                    {% if this.knowsTheReader %}
+                        <div class="col-md-3">
+                            <label class="form-label" for="poll-archive-answered">{{ 'Your answer'|trans }}</label>
+                            <select class="form-select" id="poll-archive-answered" data-model="answered">
+                                <option value="all" {% if this.answered == 'all' %}selected{% endif %}>{{ 'Any'|trans }}</option>
+                                <option value="answered" {% if this.answered == 'answered' %}selected{% endif %}>{{ 'Answered by me'|trans }}</option>
+                                <option value="unanswered" {% if this.answered == 'unanswered' %}selected{% endif %}>{{ 'Not answered by me'|trans }}</option>
+                            </select>
+                        </div>
+                    {% endif %}
+                    <div class="col-md-3">
+                        <label class="form-label" for="poll-archive-order">{{ 'Order'|trans }}</label>
+                        <select class="form-select" id="poll-archive-order" data-model="oldestFirst">
+                            <option value="0" {% if not this.oldestFirst %}selected{% endif %}>{{ 'Newest first'|trans }}</option>
+                            <option value="1" {% if this.oldestFirst %}selected{% endif %}>{{ 'Oldest first'|trans }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        {% set commentCounts = this.commentCounts %}
+        {% for poll in this.polls %}
+            <div class="col-md-6">
+                <div class="panel h-100 my-0">
+                    <div class="panel-body d-flex flex-column gap-2">
+                        <div class="d-flex flex-wrap align-items-center gap-2">
+                            <span class="badge {{ poll.isActive ? 'badge-success' : 'badge-secondary' }}">
+                                {{ poll.isActive ? 'Running'|trans : 'Closed'|trans }}
+                            </span>
+                            <span class="text-muted small">{{ poll.expiryDate|format_date(pattern: 'd MMM yyyy', locale: app.request.locale) }}</span>
+                            <span class="text-muted small ms-auto">
+                                {{ '%count% vote|%count% votes'|trans({'%count%': poll.totalVotesCount}) }}
+                            </span>
+                        </div>
+
+                        <h3 class="h5 mb-0">
+                            <a href="{{ path('poll/view', {'poll': poll.id}) }}">{{ poll.question|localise_text }}</a>
+                        </h3>
+
+                        {% include 'partials/frontpage/poll-results.html.twig' with {
+                            'poll': poll,
+                            'limit': shown,
+                            'compact': true,
+                        } only %}
+
+                        <div class="d-flex flex-wrap align-items-center gap-3 pt-2 border-top">
+                            {% if poll.options|length > shown %}
+                                <span class="text-muted small">
+                                    {{ '%count% more answer|%count% more answers'|trans({'%count%': poll.options|length - shown}) }}
+                                </span>
+                            {% endif %}
+                            <span class="text-muted small">
+                                <span class="far fa-comment" aria-hidden="true"></span>
+                                {{ commentCounts[poll.id]|default(0) }}
+                            </span>
+                            <a class="ms-auto small fw-bold" href="{{ path('poll/view', {'poll': poll.id}) }}">
+                                {{ 'Discussion'|trans }} <span class="fas fa-arrow-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <div class="panel my-0">
+                    <div class="panel-body text-center py-5">
+                        <p class="fw-bold mb-1">{{ 'No poll matches what you are looking for.'|trans }}</p>
+                        <p class="text-muted mb-0">
+                            {{ 'Try a shorter search, or ask the question you were hoping to find.'|trans }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% include 'partials/application/pagination.html.twig' with {
+        'page': this.page,
+        'pageSize': this.pageSize,
+        'totalCount': this.totalCount,
+        'totalPages': this.totalPages,
+    } only %}
+</div>

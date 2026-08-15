@@ -19,12 +19,21 @@ use Override;
 use function array_map;
 use function explode;
 use function implode;
+use function in_array;
 use function intval;
 use function mb_substr;
 use function range;
 
 class MemberFixture extends Fixture
 {
+    /**
+     * The ordinary members whose birthday falls on the day the seed is loaded.
+     */
+    private const array BORN_TODAY = [
+        8006,
+        8007,
+    ];
+
     private Generator $faker;
     private DateTimeImmutable $now;
 
@@ -343,8 +352,22 @@ class MemberFixture extends Fixture
         $member->setMiddleName('');
         $member->setLastName($this->faker->lastName());
 
-        $member->setEmail($this->faker->email());
-        $member->setBirth($this->faker->dateTimeThisCentury('-16 years'));
+        // One ordinary member is reachable only at their university address, so the notice telling them to change it
+        // has somebody to appear for without anybody editing a row by hand.
+        $member->setEmail(8005 === $member->getLidnr()
+            ? 'student@student.tue.nl'
+            : $this->faker->email());
+        // Two members were born on the day the seed is loaded, so the front page's birthday panel has somebody to
+        // show without a row being edited by hand.
+        $member->setBirth(
+            in_array(
+                $member->getLidnr(),
+                self::BORN_TODAY,
+                true,
+            )
+                ? DateTime::createFromImmutable($this->now)->sub(new DateInterval('P21Y'))
+                : $this->faker->dateTimeThisCentury('-16 years'),
+        );
 
         $member->setGeneration(intval($this->faker->year()));
         $member->setType($membershipType);

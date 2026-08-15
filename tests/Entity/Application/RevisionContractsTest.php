@@ -19,6 +19,9 @@ use App\Entity\Career\VacancyRevisionComment;
 use App\Entity\Decision\OrganInformation;
 use App\Entity\Decision\OrganInformationRevision;
 use App\Entity\Decision\OrganInformationRevisionComment;
+use App\Entity\Frontpage\Poll;
+use App\Entity\Frontpage\PollRevision;
+use App\Entity\Frontpage\PollRevisionComment;
 use App\Entity\User\Enums\UserRoles;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -94,6 +97,22 @@ final class RevisionContractsTest extends TestCase
             $informationLive,
             $informationDraft,
         ];
+
+        // A poll is never edited, so its chain only ever grows by a question being asked again after it was turned
+        // down; the two revisions here are the rejected one and the one that replaced it.
+        $poll = new Poll();
+        $pollLive = new PollRevision();
+        $pollNext = new PollRevision();
+        $poll->addRevision($pollLive);
+        $poll->addRevision($pollNext);
+        $poll->setLiveRevision($pollLive);
+        $poll->setCurrentRevision($pollNext);
+
+        yield 'poll' => [
+            $poll,
+            $pollLive,
+            $pollNext,
+        ];
     }
 
     #[DataProvider('domains')]
@@ -165,6 +184,10 @@ final class RevisionContractsTest extends TestCase
             [],
             new OrganInformation()->getReviewerRoles(),
         );
+        self::assertSame(
+            [],
+            new Poll()->getReviewerRoles(),
+        );
     }
 
     public function testTheCommentClassesAreDistinctPerDomain(): void
@@ -185,6 +208,10 @@ final class RevisionContractsTest extends TestCase
             OrganInformationRevisionComment::class,
             new OrganInformationRevision()->getCommentClass(),
         );
+        self::assertSame(
+            PollRevisionComment::class,
+            new PollRevision()->getCommentClass(),
+        );
     }
 
     /**
@@ -198,6 +225,7 @@ final class RevisionContractsTest extends TestCase
             new Company()->getResourceId(),
             new Vacancy()->getResourceId(),
             new OrganInformation()->getResourceId(),
+            new Poll()->getResourceId(),
         ];
 
         self::assertSame(

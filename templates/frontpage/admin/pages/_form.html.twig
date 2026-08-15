@@ -1,0 +1,138 @@
+{#
+    The page form, shared by the create and edit pages. Every field is written per language, because a page is
+    addressed by its own words: the Dutch address leads to the Dutch page and the English one to the English page.
+#}
+{% macro address(prefix, category, subCategory, name, flag, language) %}
+    <label class="form-label">
+        <span class="flag-icon flag-icon-{{ flag }}"></span> {{ language }}
+    </label>
+    <div class="input-group mb-1">
+        <span class="input-group-text">{{ prefix }}</span>
+        {{ form_widget(category, {'label': 'category'|trans}) }}
+        <span class="input-group-text">/</span>
+        {{ form_widget(subCategory, {'label': 'sub-category'|trans}) }}
+        <span class="input-group-text">/</span>
+        {{ form_widget(name, {'label': 'page-name'|trans}) }}
+    </div>
+    {{ form_errors(category) }}
+    {{ form_errors(subCategory) }}
+    {{ form_errors(name) }}
+{% endmacro %}
+
+{{ form_start(form, {'method': 'POST', 'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_errors(form) }}
+
+{# Every step stays in the DOM (hidden, never disabled) so the single POST carries all fields. #}
+<div data-controller="form-stepper">
+    <ol class="form-stepper" role="tablist">
+        <li class="form-stepper__step" role="presentation">
+            <button type="button" class="form-stepper__btn" role="tab"
+                    data-form-stepper-target="tab"
+                    data-action="form-stepper#goto" data-form-stepper-index-param="0">
+                <span class="form-stepper__num">1</span>
+                <span class="form-stepper__label">{{ 'Where the page lives'|trans }}</span>
+            </button>
+        </li>
+        <li class="form-stepper__step" role="presentation">
+            <button type="button" class="form-stepper__btn" role="tab"
+                    data-form-stepper-target="tab"
+                    data-action="form-stepper#goto" data-form-stepper-index-param="1">
+                <span class="form-stepper__num">2</span>
+                <span class="form-stepper__label">{{ 'Title and content'|trans }}</span>
+            </button>
+        </li>
+    </ol>
+
+    <div data-form-stepper-target="step">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'The address'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <p class="text-muted">
+                    {{ 'A page is found by its own words rather than by a number, so what is written here is the address it answers to. Leave the parts a page higher up the tree does not have empty.'|trans }}
+                </p>
+
+                {% import _self as helper %}
+                {{ helper.address(
+                    app.request.schemeAndHttpHost ~ '/nl/',
+                    form.category.valueNL,
+                    form.subCategory.valueNL,
+                    form.name.valueNL,
+                    'nl',
+                    'Dutch'|trans,
+                ) }}
+                {{ helper.address(
+                    app.request.schemeAndHttpHost ~ '/en/',
+                    form.category.valueEN,
+                    form.subCategory.valueEN,
+                    form.name.valueEN,
+                    'en',
+                    'English'|trans,
+                ) }}
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'Who may read it'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">{{ form_row(form.requiredRole) }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-form-stepper-target="step">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3>{{ 'The page itself'|trans }}</h3>
+            </div>
+            <div class="panel-body page-content">
+                {# The textarea stays the form field; the editor writes its HTML back into it on every change. Without
+                   JavaScript it is an ordinary box and the page saves exactly as it always did. #}
+                <div class="row">
+                    {% for language in [
+                        {'code': 'nl', 'label': 'Dutch'|trans, 'title': form.title.valueNL, 'content': form.content.valueNL},
+                        {'code': 'en', 'label': 'English'|trans, 'title': form.title.valueEN, 'content': form.content.valueEN},
+                    ] %}
+                        <div class="col-lg-6">
+                            <div class="mb-1">
+                                <span class="flag-icon flag-icon-{{ language.code }}"></span> {{ language.label }}
+                            </div>
+                            {{ form_row(language.title, {'label': 'Title'|trans}) }}
+                            {{ form_row(language.content, {
+                                'label': 'Content'|trans,
+                                'attr': {
+                                    'data-controller': 'page-editor',
+                                    'data-page-editor-upload-url-value': path('admin/frontpage/pages/upload'),
+                                    'data-page-editor-upload-token-value': csrf_token('page_image_upload'),
+                                    'data-page-editor-language-value': app.request.locale,
+                                },
+                            }) }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3 d-flex justify-content-end gap-2">
+        <a href="{{ path('admin/frontpage/pages/index') }}" class="btn btn-link">{{ 'Cancel'|trans }}</a>
+        <button type="button" class="btn btn-outline-secondary"
+                data-form-stepper-target="back" data-action="form-stepper#previous">
+            {{ 'Back'|trans }}
+        </button>
+        <button type="button" class="btn btn-gewis-primary"
+                data-form-stepper-target="next" data-action="form-stepper#next">
+            {{ 'Next'|trans }}
+        </button>
+        <button type="submit" class="btn btn-gewis-primary" data-form-stepper-target="submit">
+            {{ 'Save'|trans }}
+        </button>
+    </div>
+</div>
+
+{{ form_end(form) }}

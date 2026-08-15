@@ -11,6 +11,25 @@
                 </div>
             </div>
         {% endif %}
+        {#
+            A member reachable only at their university address loses touch with the association the day they
+            graduate. The notice rides along with the real announcements so it is closed the same way and stays
+            closed; its id is a word rather than a number, so it can never collide with an announcement's own.
+        #}
+        {% if show_student_email_notice() %}
+            <div class="toast toast-{{ enum('App\\Entity\\Application\\Enums\\AlertTypes').Info.value }}" role="alert"
+                 aria-live="assertive" aria-atomic="true"
+                 data-dismissible-target="banner" data-announcement-id="student-email-notice">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <strong>{{ 'Your email address will expire'|trans }}</strong>
+                        {{ 'You are only reachable at your university address, which stops working once you graduate. Ask the board or the secretary to change it to one that outlives your studies.'|trans }}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" aria-label="{{ 'Close'|trans }}"
+                            data-action="dismissible#dismiss"></button>
+                </div>
+            </div>
+        {% endif %}
         {% for announcement in announcements %}
             {% set title = announcement.title|localise_text %}
             {% set body = announcement.body|localise_text %}

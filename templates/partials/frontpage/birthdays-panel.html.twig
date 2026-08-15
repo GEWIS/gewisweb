@@ -1,0 +1,47 @@
+{#
+    Who has a birthday today, with a photo of each of them there is one of rotating above the list. Every photo is
+    rendered here and all but the first hidden, so a reader without JavaScript still sees one of them.
+
+    The age is null when the reader may not see this member's year of birth; the member still appears, only ageless.
+
+    Pass `birthdays` and `birthdayTags`.
+#}
+<div class="panel overflow-hidden">
+    <div class="panel-heading">
+        <h3>{{ 'Birthdays'|trans }}</h3>
+    </div>
+
+    {% if birthdayTags is not empty %}
+        <div class="panel-thumb birthday-rotator" data-controller="birthday-rotator">
+            {% for tag in birthdayTags %}
+                {% set photo = tag.photo %}
+                <a class="birthday-rotator__photo{% if loop.first %} is-visible{% endif %}"
+                   data-birthday-rotator-target="photo"
+                   href="{{ path('photo/album', { type: 'album', album: photo.album.id }) }}#pid={{ photo.id }}">
+                    <img class="img-fluid w-100" alt=""
+                         src="{{ image_url(photo.path, 'w320') }}"
+                         srcset="{{ image_srcset(photo.path, ['w320', 'w640']) }}"
+                         sizes="(min-width: 992px) 320px, 100vw">
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="panel-body">
+        {% for birthday in birthdays %}
+            <div class="d-flex align-items-center gap-2 py-1">
+                {% include 'partials/application/image-or-monogram.html.twig' with {
+                    'path': null,
+                    'name': birthday.member.fullName,
+                    'baseClass': 'member-avatar',
+                } only %}
+                <span>{{ birthday.member.fullName }}</span>
+                {% if birthday.age is not null %}
+                    <span class="ms-auto text-muted small">
+                        {{ 'turns %age%'|trans({'%age%': birthday.age}) }}
+                    </span>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,149 @@
+// Poll
+//
+// The bars underneath a poll's answers. Three weights: an ordinary answer is tinted, the answer in front is full
+// strength, and the answer this reader gave is full strength and named as theirs.
+
+.poll-result {
+    &__bar {
+        --#{$prefix}progress-bar-bg: #{rgba($gewis-red, .32)};
+    }
+
+    &--leading &__bar,
+    &--chosen &__bar {
+        --#{$prefix}progress-bar-bg: #{$gewis-red};
+    }
+
+    &--chosen {
+        color: $gewis-red;
+        font-weight: 600;
+    }
+
+    // On a card in the archive the bars are a summary rather than the point of the page.
+    &--compact {
+        .progress {
+            height: 0.4rem;
+        }
+    }
+}
+
+// The answers on the poll's own page are pressable rows, so the whole row carries the state and the bar sits behind
+// the label rather than under it.
+.poll-option {
+    align-items: center;
+    // The pressable variant is a button, which Bootstrap centres and pads for itself.
+    --#{$prefix}btn-padding-x: 1rem;
+    --#{$prefix}btn-padding-y: 0.75rem;
+    --#{$prefix}btn-border-radius: var(--#{$prefix}border-radius);
+
+    border: 1px solid var(--#{$prefix}border-color);
+    border-radius: var(--#{$prefix}border-radius);
+    display: flex;
+    gap: 0.75rem;
+    overflow: hidden;
+    padding: 0.75rem 1rem;
+    position: relative;
+    text-align: left;
+    width: 100%;
+
+    // Everything but the fill sits above it; the fill itself is taken out of the flow so the row lays out as if it
+    // were not there at all.
+    > * {
+        position: relative;
+    }
+
+    &__fill {
+        background-color: rgba($gewis-red, .1);
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        top: 0;
+        transition: width $transition-duration ease-in-out;
+    }
+
+    &--chosen {
+        border-color: $gewis-red;
+
+        .poll-option__fill {
+            background-color: rgba($gewis-red, .18);
+        }
+    }
+
+    &--leading .poll-option__fill {
+        background-color: rgba($gewis-red, .16);
+    }
+
+    &__share {
+        font-weight: 700;
+        min-width: 3.5rem;
+        text-align: right;
+    }
+
+    &__votes {
+        color: var(--#{$prefix}secondary-color);
+        font-size: 0.8125rem;
+        min-width: 5rem;
+        text-align: right;
+    }
+}
+
+// The poll that is open right now, at the top of the archive.
+.poll-hero {
+    background-color: $gewis-gray-dark;
+    border-color: $gewis-gray-dark;
+    color: $white;
+
+    &__question {
+        color: $white;
+        max-width: 30ch;
+        text-wrap: balance;
+    }
+
+    &__meta {
+        color: rgba($white, .7);
+    }
+}
+
+.poll-invite {
+    background-color: $gewis-gray-dark;
+    border-color: $gewis-gray-dark;
+    color: rgba($white, .8);
+
+    h3 {
+        color: $white;
+    }
+}
+
+// A comment under a poll: the pseudonym's initial beside what was written.
+.poll-comment {
+    padding-top: 0.75rem;
+
+    &__avatar {
+        align-items: center;
+        background-color: rgba($gewis-red, .1);
+        border-radius: var(--#{$prefix}border-radius);
+        color: $gewis-red;
+        display: inline-flex;
+        flex: none;
+        font-size: 0.75rem;
+        font-weight: 700;
+        height: 2.125rem;
+        justify-content: center;
+        width: 2.125rem;
+    }
+
+    // What a comment may contain is four inline marks, so it never needs the spacing a document would.
+    &__body p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// Replies to a comment, set in from it behind the same accent line the navigation uses for a sub-section.
+.poll-thread {
+    margin-left: $nav-row-sublist-margin-start;
+    padding-left: $nav-row-sublist-padding-start;
+    border-left: $nav-row-sublist-accent-width solid #{$nav-menu-active-bg};
+
+    &--flat {
+        margin-left: 0;
+    }
+}

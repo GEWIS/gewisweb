@@ -25,6 +25,9 @@ parameters:
     # The education officer: who a member sends a summary to, and who takes a complaint about a course to the
     # department. Read by the education pages through the `education_email` Twig global.
     app.email.education: 'co@gewis.nl'
+    # A university address stops working once somebody graduates, and the association loses touch with them the day it
+    # does. Members on one of these are told to give the board an address that outlives their studies.
+    app.user.student_email_domain: '@student.tue.nl'
     # Regulations on the members-area dashboard: slug (used in the URL) to the document's path inside the
     # SFTP-mirrored public archive (`data/public-archive/`), without the `.pdf` extension.
     app.regulations:

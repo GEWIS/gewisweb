@@ -104,8 +104,35 @@
         </div>
 
         <div class="col-lg-5">
+            <div class="panel mt-0">
+                <div class="panel-heading">
+                    <h3>{{ 'News'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% for item in latestNews %}
+                        <a href="{{ path('news/view', {'item': item.id}) }}"
+                           class="d-flex align-items-center gap-3 py-2 text-body {% if not loop.first %}border-top{% endif %}">
+                            <span class="badge {{ item.category.badgeClass }}">{{ item.category|trans }}</span>
+                            <span class="flex-grow-1 fw-semibold text-truncate">
+                                {{ item.title }}
+                            </span>
+                            <span class="small text-muted text-nowrap">
+                                {{ item.date|format_date(pattern: 'd MMM yyyy', locale: app.request.locale) }}
+                            </span>
+                            <span class="fas fa-chevron-right text-muted small" aria-hidden="true"></span>
+                        </a>
+                    {% else %}
+                        <span class="text-muted small">{{ 'There is no news here yet.'|trans }}</span>
+                    {% endfor %}
+                    <a href="{{ path('news/index') }}" class="d-inline-flex align-items-center gap-2 fw-semibold mt-2">
+                        {{ 'All posts'|trans }}
+                        <span class="fas fa-arrow-right small" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+
             {% if upcomingMeetings is not empty %}
-                <div class="panel mt-0">
+                <div class="panel">
                     <div class="panel-heading">
                         <h3>{{ 'Upcoming meetings'|trans }}</h3>
                     </div>
@@ -123,7 +150,7 @@
                 </div>
             {% endif %}
 
-            <div class="panel {% if upcomingMeetings is empty %}mt-0{% endif %}">
+            <div class="panel">
                 <div class="panel-heading d-flex flex-wrap justify-content-between align-items-center gap-2">
                     <h3>{{ 'Meetings'|trans }}</h3>
                     <ul class="nav nav-pills nav-pills-compact" role="tablist">

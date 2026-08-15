@@ -34,12 +34,25 @@ class CompanyBannerPackageRepository extends ServiceEntityRepository
      */
     public function findActiveBanners(): array
     {
-        // The banner links through to the company it belongs to, so that comes along with it.
+        // The banner links through to the company it belongs to, and deciding whether it may be linked to at all
+        // reads that company's approved revision and every package it holds. All of it comes along with the banner.
         $qb = $this->createQueryBuilder('p')
-            ->addSelect('c')
+            ->addSelect(
+                'c',
+                'lr',
+                'pkg',
+            )
             ->join(
                 'p.company',
                 'c',
+            )
+            ->leftJoin(
+                'c.liveRevision',
+                'lr',
+            )
+            ->leftJoin(
+                'c.packages',
+                'pkg',
             )
             ->where('p.published = true')
             ->andWhere('p.starts <= CURRENT_DATE()')

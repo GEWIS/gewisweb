@@ -1,0 +1,23 @@
+{#
+    The infimum, fetched once the page is up and swapped again whenever the cron pushes a fresh one over the connection
+    the base layout already holds.
+
+    Members only, so the including template gates it.
+#}
+<div class="panel"
+     data-controller="infimum"
+     data-infimum-url-value="{{ path('infimum') }}"
+     data-infimum-unavailable-value="{{ 'No infimum could be fetched right now.'|trans }}">
+    <div class="panel-heading">
+        <h3>{{ 'Infimum'|trans }}</h3>
+    </div>
+    <div class="panel-body">
+        <p class="fst-italic" data-infimum-target="quote">{{ 'Loading an infimum...'|trans }}</p>
+    </div>
+    <div class="panel-footer d-flex gap-2">
+        <a href="https://supremum.gewis.nl/infimum/submit" class="btn btn-sm btn-outline-secondary flex-fill"
+           target="_blank" rel="noopener">{{ 'Submit'|trans }}</a>
+        <a href="https://supremum.gewis.nl/infimum" class="btn btn-sm btn-outline-secondary flex-fill"
+           target="_blank" rel="noopener">{{ 'Search'|trans }}</a>
+    </div>
+</div>

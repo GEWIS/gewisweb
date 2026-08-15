@@ -10,6 +10,7 @@ use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Decision\MeetingRepository;
 use App\Repository\Decision\MemberRepository;
+use App\Repository\Frontpage\NewsItemRepository;
 use App\Repository\Photo\ProfilePhotoRepository;
 use App\Service\Application\FileDownloadHelper;
 use App\Service\Application\FileStorage;
@@ -48,6 +49,7 @@ class MemberController extends AbstractController
     public function __construct(
         private readonly MemberRepository $memberRepository,
         private readonly MeetingRepository $meetingRepository,
+        private readonly NewsItemRepository $newsItemRepository,
         private readonly MemberInfoService $memberInfoService,
         private readonly ProfilePhotoRepository $profilePhotoRepository,
         private readonly FileStorage $fileStorage,
@@ -90,6 +92,7 @@ class MemberController extends AbstractController
                 'member' => $member,
                 'recentMeetings' => $recentMeetings,
                 'upcomingMeetings' => $this->meetingRepository->findUpcomingAnnouncedMeetings(),
+                'latestNews' => $this->newsItemRepository->findFeed(limit: 4),
                 'links' => $this->membersAreaLinks,
             ],
         );

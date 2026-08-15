@@ -10,8 +10,7 @@ use App\Entity\Decision\OrganInformationRevision;
 use App\Entity\User\Enums\UserRoles;
 use App\Entity\User\User;
 use App\Repository\Decision\OrganInformationRevisionCommentRepository;
-use App\Repository\Decision\OrganInformationRevisionRepository;
-use App\ViewModel\Application\ReviewQueueRow;
+use App\Service\Decision\OrganInformationReviewQueueProvider;
 use App\ViewModel\Application\RevisionActions;
 use Override;
 use Symfony\Component\ExpressionLanguage\Expression;
@@ -40,7 +39,7 @@ use function assert;
 class AdminBodyApprovalController extends AbstractRevisionReviewController
 {
     public function __construct(
-        private readonly OrganInformationRevisionRepository $revisionRepository,
+        private readonly OrganInformationReviewQueueProvider $queueProvider,
         private readonly OrganInformationRevisionCommentRepository $commentRepository,
     ) {
     }
@@ -54,17 +53,7 @@ class AdminBodyApprovalController extends AbstractRevisionReviewController
     {
         return $this->render(
             'decision/admin/bodies/approvals/index.html.twig',
-            [
-                'rows' => ReviewQueueRow::fromRevisions(
-                    $this->revisionRepository->findForReview(),
-                    static function (RevisionInterface $revision): string {
-                        assert($revision instanceof OrganInformationRevision);
-
-                        return $revision->getOrgan()->getAbbr();
-                    },
-                    'admin/decision/bodies/approvals/review',
-                ),
-            ],
+            ['rows' => $this->queueProvider->queue()->rows],
         );
     }
 

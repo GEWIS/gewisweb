@@ -1,0 +1,43 @@
+{% extends 'layout-admin.html.twig' %}
+
+{% block page_title %}{{ subjectName|page_title }}{{ 'Review'|trans|page_title }}{{ 'Polls'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>{{ diff_styles() }}</style>
+{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/frontpage/polls/index') }}">{{ 'Polls'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/frontpage/polls/approvals/index') }}">{{ 'Review'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{ subjectName }}</li>
+{% endblock %}
+
+{% block contents %}
+    {% embed 'partials/application/review-screen.html.twig' with {
+        'subjectName': subjectName,
+        'revision': revision,
+        'previous': previous,
+        'sections': sections,
+        'comments': comments,
+        'decisionForm': decisionForm,
+        'canDiscard': false,
+        'showAuthor': true,
+        'firstRevisionNote': 'This is the first time this question is asked; nothing to compare against.'|trans,
+        'actionsHeading': 'Actions'|trans,
+        'decideAction': path('admin/frontpage/polls/approvals/decide', {'revision': revision.getId}),
+        'commentAction': path('admin/frontpage/polls/approvals/comment', {'revision': revision.getId}),
+        'commentToken': csrf_token('poll_review_comment-' ~ revision.getId),
+        'commentAudienceNote': 'Visible to whoever asked and to the board. Use it to explain a decision.'|trans,
+    } only %}
+        {% block review_notices %}
+            <p class="text-muted small">
+                {{ 'A poll cannot be sent back for changes. Turning it down lets the member rewrite the question and ask again.'|trans }}
+            </p>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
