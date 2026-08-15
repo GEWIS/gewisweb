@@ -649,6 +649,53 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
+     * The activities that are already fixed in the agenda anywhere in the given stretch of days, whether they start
+     * before it, end after it, or cover it whole.
+     *
+     * This is what the option calendar draws behind the days bodies are asking for: a day that already carries the
+     * weekly drink or an exam week is not really free, however empty the option side of it looks.
+     *
+     * @return Activity[]
+     */
+    public function findLiveBetween(
+        DateTime $from,
+        DateTime $until,
+    ): array {
+        return $this->createQueryBuilder('a')
+            ->addSelect(
+                'lr',
+                'n',
+            )
+            ->join(
+                'a.liveRevision',
+                'lr',
+            )
+            ->join(
+                'lr.name',
+                'n',
+            )
+            ->andWhere('a.unpublishedAt IS NULL')
+            ->andWhere('lr.beginTime <= :until')
+            ->andWhere('lr.endTime >= :from')
+            ->setParameter(
+                'from',
+                $from,
+                Types::DATETIME_MUTABLE,
+            )
+            ->setParameter(
+                'until',
+                $until,
+                Types::DATETIME_MUTABLE,
+            )
+            ->orderBy(
+                'lr.beginTime',
+                'ASC',
+            )
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Eager-loads the live revision's sign-up lists for the given activities in a single query, hydrating each
      * activity's (otherwise lazy) live-revision `signupLists` collection. This avoids the N+1 that the overview's
      * per-activity accessors ({@see Activity::getRelevantSignupList()}, {@see Activity::countPendingSignupLists()},
