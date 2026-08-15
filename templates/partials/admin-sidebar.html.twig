@@ -42,6 +42,16 @@
                     'label': 'Option Calendar'|trans,
                     'active': is_module_active(['activity', 'adminactivitycalendar']),
                 },
+                is_granted('ROLE_BOARD') ? {
+                    'href': path('admin/activities/calendar/periods/index'),
+                    'label': 'Option rounds'|trans,
+                    'active': is_module_active(['activity', 'adminoptionperiod']),
+                } : null,
+                is_granted('ROLE_BOARD') ? {
+                    'href': path('admin/activities/calendar/limits/index'),
+                    'label': 'Proposal exceptions'|trans,
+                    'active': is_module_active(['activity', 'adminproposallimit']),
+                } : null,
             ]|filter(child => child is not null)) }}
 
             {{ sidebar.section('bodies', 'fa-sitemap', 'Bodies'|trans, is_module_active(['decision', 'adminbody']) or is_module_active(['decision', 'adminbodyapproval']), [
