@@ -3390,16 +3390,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "4.2.0",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "830907fc5397dfc2a51a4e90322d586989fc8364"
+                "reference": "0a5aa57ad56887f24967d735457471db7c0ea1f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/830907fc5397dfc2a51a4e90322d586989fc8364",
-                "reference": "830907fc5397dfc2a51a4e90322d586989fc8364",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/0a5aa57ad56887f24967d735457471db7c0ea1f5",
+                "reference": "0a5aa57ad56887f24967d735457471db7c0ea1f5",
                 "shasum": ""
             },
             "require": {
@@ -3446,7 +3446,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Intervention/image/issues",
-                "source": "https://github.com/Intervention/image/tree/4.2.0"
+                "source": "https://github.com/Intervention/image/tree/4.2.1"
             },
             "funding": [
                 {
@@ -3462,20 +3462,20 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2026-07-09T13:07:14+00:00"
+            "time": "2026-08-08T07:55:25+00:00"
         },
         {
             "name": "intervention/image-driver-vips",
-            "version": "4.1.0",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image-driver-vips.git",
-                "reference": "93ac16415dc7020edc9707926d08310be71d902b"
+                "reference": "3ff49f4301a4e54196fa06f63af47060ba24500a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image-driver-vips/zipball/93ac16415dc7020edc9707926d08310be71d902b",
-                "reference": "93ac16415dc7020edc9707926d08310be71d902b",
+                "url": "https://api.github.com/repos/Intervention/image-driver-vips/zipball/3ff49f4301a4e54196fa06f63af47060ba24500a",
+                "reference": "3ff49f4301a4e54196fa06f63af47060ba24500a",
                 "shasum": ""
             },
             "require": {
@@ -3520,7 +3520,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Intervention/image-driver-vips/issues",
-                "source": "https://github.com/Intervention/image-driver-vips/tree/4.1.0"
+                "source": "https://github.com/Intervention/image-driver-vips/tree/4.1.1"
             },
             "funding": [
                 {
@@ -3536,7 +3536,7 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2026-07-11T07:34:41+00:00"
+            "time": "2026-08-06T06:32:18+00:00"
         },
         {
             "name": "jcupitt/vips",
