@@ -33,6 +33,14 @@
     </div>
 {% endmacro %}
 
+{# Bootstrap renders a compound field's label as a `<legend>`, which here would repeat the panel heading right above
+   it. Dropping it in this block rather than globally: for a group of radios or checkboxes the legend is the group's
+   accessible name, and three forms in this app rely on that. Same approach as the poll answers collection. #}
+{% block date_option_collection_row %}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+{% endblock %}
+
 {% block date_option_collection_widget %}
     {% import _self as helper %}
     {% set has_prototype = allow_add and prototype is defined and prototype is not null %}

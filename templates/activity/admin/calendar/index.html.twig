@@ -24,11 +24,27 @@
                             {{ 'Claim a day before you plan an activity on it. Whoever asks first has first dibs, and the board decides.'|trans }}
                         </p>
                     </div>
-                    {% if openPeriods is not empty %}
-                        <a href="{{ path('admin/activities/calendar/propose') }}" class="btn btn-gewis-primary">
-                            <span class="fas fa-plus"></span> {{ 'Claim a day'|trans }}
-                        </a>
-                    {% endif %}
+                    <div class="d-flex flex-wrap gap-2">
+                        {% if is_granted('ROLE_BOARD') %}
+                            <a href="{{ path('admin/activities/calendar/decisions/index') }}"
+                               class="btn btn-outline-secondary">
+                                <span class="fas fa-gavel"></span> {{ 'Decisions'|trans }}
+                            </a>
+                            <a href="{{ path('admin/activities/calendar/periods/index') }}"
+                               class="btn btn-outline-secondary">
+                                <span class="fas fa-calendar-week"></span> {{ 'Rounds'|trans }}
+                            </a>
+                            <a href="{{ path('admin/activities/calendar/limits/index') }}"
+                               class="btn btn-outline-secondary">
+                                <span class="fas fa-scale-balanced"></span> {{ 'Exceptions'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if openPeriods is not empty %}
+                            <a href="{{ path('admin/activities/calendar/propose') }}" class="btn btn-gewis-primary">
+                                <span class="fas fa-plus"></span> {{ 'Claim a day'|trans }}
+                            </a>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="panel-body">
                     {% if openPeriods is empty %}

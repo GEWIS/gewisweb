@@ -21,6 +21,8 @@
 {% elseif enum('App\\Entity\\User\\Enums\\UserTypes').User == app.user.getUserType %}
     <ul class="sidebar-list">
         {% if is_granted('ROLE_ACTIVE_MEMBER') or is_granted('ROLE_BOARD') %}
+            {# The board's option rounds, decisions and exceptions hang off the calendar page itself rather than
+               getting an entry each: they are all one job, and four entries for one feature crowd out the module. #}
             {{ sidebar.section('activities', 'fa-calendar-days', 'Activities'|trans, is_module_active(['activity']), [
                 {
                     'href': path('admin/activities/index'),
@@ -40,23 +42,11 @@
                 {
                     'href': path('admin/activities/calendar/index'),
                     'label': 'Option Calendar'|trans,
-                    'active': is_module_active(['activity', 'adminactivitycalendar']),
+                    'active': is_module_active(['activity', 'adminactivitycalendar'])
+                        or is_module_active(['activity', 'adminproposaldecision'])
+                        or is_module_active(['activity', 'adminoptionperiod'])
+                        or is_module_active(['activity', 'adminproposallimit']),
                 },
-                is_granted('ROLE_BOARD') ? {
-                    'href': path('admin/activities/calendar/decisions/index'),
-                    'label': 'Option decisions'|trans,
-                    'active': is_module_active(['activity', 'adminproposaldecision']),
-                } : null,
-                is_granted('ROLE_BOARD') ? {
-                    'href': path('admin/activities/calendar/periods/index'),
-                    'label': 'Option rounds'|trans,
-                    'active': is_module_active(['activity', 'adminoptionperiod']),
-                } : null,
-                is_granted('ROLE_BOARD') ? {
-                    'href': path('admin/activities/calendar/limits/index'),
-                    'label': 'Proposal exceptions'|trans,
-                    'active': is_module_active(['activity', 'adminproposallimit']),
-                } : null,
             ]|filter(child => child is not null)) }}
 
             {{ sidebar.section('bodies', 'fa-sitemap', 'Bodies'|trans, is_module_active(['decision', 'adminbody']) or is_module_active(['decision', 'adminbodyapproval']), [

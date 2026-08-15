@@ -4497,14 +4497,6 @@
         <source>Option calendar</source>
         <target state="translated">Option calendar</target>
       </trans-unit>
-      <trans-unit id="MB4vcbK" resname="Option decisions">
-        <source>Option decisions</source>
-        <target state="translated">Option decisions</target>
-      </trans-unit>
-      <trans-unit id="ap6JYMb" resname="Option rounds">
-        <source>Option rounds</source>
-        <target state="translated">Option rounds</target>
-      </trans-unit>
       <trans-unit id="bVgiLEK" resname="Optional. A sign-up list with subscribers can no longer be changed structurally.">
         <source>Optional. A sign-up list with subscribers can no longer be changed structurally.</source>
         <target state="translated">Optional. A sign-up list with subscribers can no longer be changed structurally.</target>
@@ -4924,10 +4916,6 @@
       <trans-unit id="R2eeY_o" resname="Promoted">
         <source>Promoted</source>
         <target>Promoted</target>
-      </trans-unit>
-      <trans-unit id="HkhBV3F" resname="Proposal exceptions">
-        <source>Proposal exceptions</source>
-        <target state="translated">Proposal exceptions</target>
       </trans-unit>
       <trans-unit id="KyJZWUU" resname="Proposals">
         <source>Proposals</source>
