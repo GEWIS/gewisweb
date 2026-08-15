@@ -6,9 +6,7 @@ namespace App\Controller\Activity;
 
 use App\Controller\Application\HoldsEditLockTrait;
 use App\Entity\Activity\Activity;
-use App\Entity\Activity\ActivityLocalisedText;
 use App\Entity\Activity\ActivityRevision;
-use App\Entity\Activity\Enums\ActivityCategories;
 use App\Entity\Activity\SignupList;
 use App\Entity\Application\Enums\AlertTypes;
 use App\Entity\Application\Enums\ReviseRefusal;
@@ -19,6 +17,7 @@ use App\Form\Activity\SignupType;
 use App\Repository\Activity\ActivityRevisionCommentRepository;
 use App\Repository\Activity\ExternalSignupRepository;
 use App\Security\Application\RevisionVoter;
+use App\Service\Activity\ActivityDraftFactory;
 use App\Service\Activity\SignupManager;
 use App\Service\Application\RevisionReviser;
 use App\Util\Activity\PastActivityRule;
@@ -56,6 +55,7 @@ class AdminController extends AbstractController
         private readonly EntityManagerInterface $entityManager,
         private readonly TranslatorInterface $translator,
         private readonly RevisionReviser $reviser,
+        private readonly ActivityDraftFactory $activityDraftFactory,
     ) {
     }
 
@@ -83,13 +83,7 @@ class AdminController extends AbstractController
         #[CurrentUser]
         User $user,
     ): Response {
-        $activity = new Activity();
-        $activity->setCreator($user->getMember());
-
-        $revision = $this->newDraftRevision();
-        $revision->setAuthor($user->getMember());
-        $activity->addRevision($revision);
-        $activity->setCurrentRevision($revision);
+        $activity = $this->activityDraftFactory->newActivity($user->getMember());
 
         $form = $this->createForm(ActivityType::class, $activity)->handleRequest($request);
 
@@ -103,8 +97,8 @@ class AdminController extends AbstractController
             );
         }
 
+        // The revision rides along: Activity::$revisions cascades persist.
         $this->entityManager->persist($activity);
-        $this->entityManager->persist($revision);
         $this->entityManager->flush();
 
         $this->addFlash(
@@ -834,22 +828,5 @@ class AdminController extends AbstractController
     private function editVersionKey(Activity $activity): string
     {
         return 'activity-edit-base-version-' . strval($activity->getId());
-    }
-
-    /**
-     * A blank draft revision with its localised texts and required scalar fields initialised, so the create form can
-     * bind to it.
-     */
-    private function newDraftRevision(): ActivityRevision
-    {
-        $revision = new ActivityRevision();
-        $revision->setName(new ActivityLocalisedText());
-        $revision->setLocation(new ActivityLocalisedText());
-        $revision->setCosts(new ActivityLocalisedText());
-        $revision->setDescription(new ActivityLocalisedText());
-        $revision->setCategory(ActivityCategories::Other);
-
-        // The schedule is intentionally left empty (not pre-filled with "now"); the form requires it via NotBlank.
-        return $revision;
     }
 }

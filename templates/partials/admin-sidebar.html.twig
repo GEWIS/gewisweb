@@ -43,6 +43,11 @@
                     'active': is_module_active(['activity', 'adminactivitycalendar']),
                 },
                 is_granted('ROLE_BOARD') ? {
+                    'href': path('admin/activities/calendar/decisions/index'),
+                    'label': 'Option decisions'|trans,
+                    'active': is_module_active(['activity', 'adminproposaldecision']),
+                } : null,
+                is_granted('ROLE_BOARD') ? {
                     'href': path('admin/activities/calendar/periods/index'),
                     'label': 'Option rounds'|trans,
                     'active': is_module_active(['activity', 'adminoptionperiod']),

@@ -1,0 +1,198 @@
+{% extends 'layout-admin.html.twig' %}
+{% import 'partials/application/confirm-post-modal.html.twig' as modals %}
+
+{% block page_title %}{{ 'Decisions'|trans|page_title }}{{ 'Option calendar'|trans|page_title }}{{ 'Activities'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/activities/index') }}">{{ 'Activities'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/activities/calendar/index') }}">{{ 'Option calendar'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Decisions'|trans }}
+    </li>
+{% endblock %}
+
+{% macro option_row(option, rank) %}
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 border-top py-2">
+        <div>
+            <span class="badge {{ rank == 1 ? 'text-bg-primary' : 'text-bg-secondary' }}">{{ rank }}</span>
+            <strong>{{ option.proposal.name }}</strong>
+            <div class="text-muted small">
+                {{ option.proposal.organ ? option.proposal.organ.abbr : 'The board'|trans }}
+                &middot; {{ option.timeOfDay|trans }}
+                &middot; {{ 'asked %when%'|trans({'%when%': option.proposal.createdAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale)}) }}
+                {% if rank == 1 %}
+                    &middot; {{ 'first in line'|trans }}
+                {% endif %}
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{{ path('admin/activities/calendar/proposal', {'proposal': option.proposal.id}) }}"
+               class="btn btn-sm btn-outline-secondary">{{ 'Open'|trans }}</a>
+            <form method="post" class="mb-0"
+                  action="{{ path('admin/activities/calendar/decisions/option_approve', {'option': option.id}) }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('activity_date_option_approve-' ~ option.id) }}">
+                <button type="submit" class="btn btn-sm btn-gewis-primary">{{ 'Give them this day'|trans }}</button>
+            </form>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block contents %}
+    {% import _self as queue %}
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="mb-0">{{ 'Days more than one body wants'|trans }}</h3>
+            <p class="text-muted small mb-0">
+                {{ 'In the order they asked. Whoever asked first has first dibs, but you decide, and you may always make an exception.'|trans }}
+            </p>
+        </div>
+        <div class="panel-body">
+            {% if contested is empty %}
+                <p class="text-muted mb-0">{{ 'Nobody is competing for a day at the moment.'|trans }}</p>
+            {% else %}
+                {% for day, options in contested %}
+                    <h4 class="h6 mt-3">
+                        {{ day|date('Y-m-d')|format_date(pattern: 'EEEE d MMMM yyyy', locale: app.request.locale) }}
+                        <span class="badge text-bg-light">{{ '%count% in line'|trans({'%count%': options|length}) }}</span>
+                    </h4>
+                    {% for option in options %}
+                        {{ queue.option_row(option, loop.index) }}
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="mb-0">{{ 'Waiting for a decision'|trans }}</h3>
+        </div>
+        <div class="panel-body">
+            {% if waiting is empty %}
+                <p class="text-muted mb-0">{{ 'Nothing is waiting.'|trans }}</p>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Activity'|trans }}</th>
+                                <th>{{ 'Body'|trans }}</th>
+                                <th>{{ 'Round'|trans }}</th>
+                                <th>{{ 'Days asked for'|trans }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for proposal in waiting %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('admin/activities/calendar/proposal', {'proposal': proposal.id}) }}">
+                                            {{ proposal.name }}
+                                        </a>
+                                    </td>
+                                    <td>{{ proposal.organ ? proposal.organ.abbr : 'The board'|trans }}</td>
+                                    <td>{{ proposal.period.name }}</td>
+                                    <td>
+                                        {% for option in proposal.dateOptions %}
+                                            <form method="post" class="d-inline mb-0"
+                                                  action="{{ path('admin/activities/calendar/decisions/option_approve', {'option': option.id}) }}">
+                                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('activity_date_option_approve-' ~ option.id) }}">
+                                                <button type="submit" class="btn btn-sm btn-outline-gewis-primary">
+                                                    {{ option.beginsAt|format_date(pattern: 'd MMM', locale: app.request.locale) }}
+                                                    <small>{{ option.timeOfDay|trans }}</small>
+                                                </button>
+                                            </form>
+                                        {% endfor %}
+                                    </td>
+                                    <td class="text-end">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary text-danger"
+                                                data-bs-toggle="modal" data-bs-target="#decline-{{ proposal.id }}">
+                                            {{ 'Turn down'|trans }}
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% for proposal in waiting %}
+                    {{ modals.confirm_modal(
+                        'decline-' ~ proposal.id,
+                        path('admin/activities/calendar/decisions/decline', {'proposal': proposal.id}),
+                        csrf_token('activity_proposal_decline-' ~ proposal.id),
+                        'Turn this proposal down?'|trans,
+                        'Every day it asked for is freed for whoever is next in line. The body can be put back in the running afterwards.'|trans,
+                        'Turn down'|trans,
+                        'danger',
+                    ) }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="mb-0">{{ 'Holding a day, nothing settled yet'|trans }}</h3>
+            <p class="text-muted small mb-0">
+                {{ 'These lose their day if the financial side is not settled in time. Record an approved budget, or that there is no budget to approve.'|trans }}
+            </p>
+        </div>
+        <div class="panel-body">
+            {% if holding is empty %}
+                <p class="text-muted mb-0">{{ 'Everything holding a day has been settled.'|trans }}</p>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Activity'|trans }}</th>
+                                <th>{{ 'Body'|trans }}</th>
+                                <th>{{ 'Day'|trans }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for proposal in holding %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('admin/activities/calendar/proposal', {'proposal': proposal.id}) }}">
+                                            {{ proposal.name }}
+                                        </a>
+                                    </td>
+                                    <td>{{ proposal.organ ? proposal.organ.abbr : 'The board'|trans }}</td>
+                                    <td>
+                                        {{ proposal.chosenOption.beginsAt|format_date(pattern: 'd MMM yyyy', locale: app.request.locale) }}
+                                    </td>
+                                    <td class="text-end">
+                                        <form method="post" class="d-inline mb-0"
+                                              action="{{ path('admin/activities/calendar/decisions/clearance', {'proposal': proposal.id}) }}">
+                                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('activity_proposal_clearance-' ~ proposal.id) }}">
+                                            <input type="hidden" name="clearance" value="approved">
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                                {{ 'Budget approved'|trans }}
+                                            </button>
+                                        </form>
+                                        <form method="post" class="d-inline mb-0"
+                                              action="{{ path('admin/activities/calendar/decisions/clearance', {'proposal': proposal.id}) }}">
+                                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('activity_proposal_clearance-' ~ proposal.id) }}">
+                                            <input type="hidden" name="clearance" value="not-required">
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                                {{ 'No budget needed'|trans }}
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
