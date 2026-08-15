@@ -50,6 +50,11 @@ parameters:
     app.education.watermark_tag: '%env(string:WATERMARK_TAG)%'
     # The face the red watermark is drawn in. Shipped by `fonts-dejavu-core`, which the Dockerfile installs explicitly.
     app.education.watermark_font: '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
+    # How many activities a body may put forward in one option period when nobody has said otherwise. The board can
+    # set a different number for a single period, and a standing or one-off exception for a single body; this is what
+    # answers when none of those apply, which is the usual case. No row is ever written per body, so a body founded
+    # halfway through a period lands here rather than on nothing.
+    app.activity.default_max_proposals: 3
     # External tools linked from the members-area dashboard.
     app.members_area_links:
         webmail: '/webmail'
@@ -72,6 +77,7 @@ services:
             $watermarkTag: '%app.education.watermark_tag%' # string
             $watermarkFontPath: '%app.education.watermark_font%' # string
             $siteUrl: '%env(string:DEFAULT_URI)%' # string
+            $defaultMaxProposals: '%app.activity.default_max_proposals%' # int
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

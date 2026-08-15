@@ -1,12 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Property App\\Entity\\Activity\\MaxActivities\:\:\$period type mapping mismatch\: database can contain App\\Entity\\Activity\\ActivityOptionCreationPeriod\|null but property expects App\\Entity\\Activity\\ActivityOptionCreationPeriod\.$#'
-			identifier: doctrine.associationType
-			count: 1
-			path: src/Entity/Activity/MaxActivities.php
-
-		-
 			message: '#^Property App\\Entity\\Activity\\UserSignup\:\:\$user type mapping mismatch\: database can contain App\\Entity\\Decision\\Member\|null but property expects App\\Entity\\Decision\\Member\.$#'
 			identifier: doctrine.associationType
 			count: 1
