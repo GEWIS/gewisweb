@@ -12,6 +12,13 @@
 <p>GEWISWEB is the <a href="https://gewis.nl" target="_blank">website</a> created by and for the members of GEWIS - <em>GEmeenschap van Wiskunde en Informatica Studenten</em>.</p>
 </div>
 
+> [!IMPORTANT]
+> **This repository is archived.** GEWISWEB and [GEWISDB](https://github.com/GEWIS/gewisdb) have been combined into
+> [`radix`](https://github.com/GEWIS/radix), a single application that carries both the decision and membership
+> database and the website. All further development, issues, and pull requests happen there.
+>
+> The code here remains available for reference, but it no longer receives updates or security fixes.
+
 ## Features
 The GEWIS website provides its members and other visitors with lots of functionality:
 
@@ -39,7 +46,7 @@ The GEWIS website provides its members and other visitors with lots of functiona
     - Maintains a comprehensive photo archive of the numerous activities organised by GEWIS.
     - Helps preserve and share memories of events and gatherings with the community.
 
-And there is plenty more! GEWISWEB continuously evolves to meet the needs of the association's members, offering a broad array of tools and features to enrich their time at the university.
+And there is plenty more! All of this now lives on in [radix](https://github.com/GEWIS/radix).
 
 ## Getting Started
 GEWISWEB is built on PHP and the [Symfony framework](https://symfony.com/). The Symfony framework provides a solid foundation for building scalable and maintainable web applications.
