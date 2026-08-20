@@ -96,6 +96,14 @@
             color: #FFFFFF;
         }
 
+        // On the association's agenda but not held here: an exam week, the intro week, somebody else's booking. Drawn
+        // quieter than our own activities, because nobody can act on it from this page.
+        &--agenda {
+            background-color: var(--bs-secondary-bg);
+            color: var(--bs-secondary-color);
+            border: 1px dashed var(--bs-border-color);
+        }
+
         // A day a body has been given.
         &--reserved {
             background-color: var(--bs-info);

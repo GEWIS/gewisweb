@@ -2265,6 +2265,10 @@
         <source>Education Officer</source>
         <target state="translated">Onderwijscommissaris</target>
       </trans-unit>
+      <trans-unit id="5NeYT8E" resname="Elsewhere in the agenda">
+        <source>Elsewhere in the agenda</source>
+        <target state="translated">Staat elders in de agenda</target>
+      </trans-unit>
       <trans-unit id="JZi_tm0" resname="Email">
         <source>Email</source>
         <target state="translated">E-mail</target>

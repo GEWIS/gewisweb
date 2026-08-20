@@ -12,6 +12,7 @@ use App\Entity\Application\Enums\Languages;
 use App\Entity\Decision\Organ;
 use App\Repository\Activity\ActivityDateOptionRepository;
 use App\Repository\Activity\ActivityRepository;
+use App\ViewModel\Activity\Calendar\AgendaEvent;
 use App\ViewModel\Activity\Calendar\CalendarDay;
 use App\ViewModel\Activity\Calendar\CalendarEntry;
 use App\ViewModel\Activity\Calendar\CalendarMonth;
@@ -22,10 +23,10 @@ use DateTimeImmutable;
  * Lays a month of the option calendar out: six weeks of days, each carrying what is already in the agenda and what
  * bodies are asking for.
  *
- * Two queries, whatever the month holds. Everything that touches the visible stretch is fetched once and then spread
- * across the days it covers, so something running from a Friday to a Sunday really is drawn on all three days rather
- * than only on the day it starts. That is what makes a week worth looking at: a body deciding whether to ask for the
- * Saturday needs to see the thing that started on the Friday.
+ * Two queries and a cached agenda, whatever the month holds. Everything that touches the visible stretch is read once
+ * and then spread across the days it covers, so something running from a Friday to a Sunday really is drawn on all
+ * three days rather than only on the day it starts. That is what makes a week worth looking at: a body deciding
+ * whether to ask for the Saturday needs to see the thing that started on the Friday.
  *
  * Rank is the order the bodies asked in, which is what first dibs means. It is worked out per day rather than stored,
  * because it changes the moment somebody withdraws, and it is never enforced anywhere: the board decides.
@@ -37,6 +38,7 @@ final readonly class CalendarMonthBuilder
     public function __construct(
         private ActivityDateOptionRepository $dateOptionRepository,
         private ActivityRepository $activityRepository,
+        private AgendaFeed $agendaFeed,
     ) {
     }
 
@@ -64,6 +66,14 @@ final readonly class CalendarMonthBuilder
             $gridEnd,
             $organ,
         );
+        // Filtering by body hides this layer: an exam week belongs to nobody, and showing it under one body's name
+        // would be a lie.
+        $agendaByDay = null === $organ
+            ? $this->agendaByDay(
+                $gridStart,
+                $gridEnd,
+            )
+            : [];
 
         $today = new DateTimeImmutable('today');
         $weeks = [];
@@ -82,6 +92,7 @@ final readonly class CalendarMonthBuilder
                     5 <= $weekday,
                     [
                         ...($activitiesByDay[$key] ?? []),
+                        ...($agendaByDay[$key] ?? []),
                         ...($optionsByDay[$key] ?? []),
                     ],
                 );
@@ -190,6 +201,62 @@ final readonly class CalendarMonthBuilder
         }
 
         return $byDay;
+    }
+
+    /**
+     * What the association's own agenda has in this stretch, spread over the days it covers. Read from the copy the
+     * sync command keeps; nothing here ever waits on somebody else's server.
+     *
+     * @return array<string, CalendarEntry[]>
+     */
+    private function agendaByDay(
+        DateTimeImmutable $from,
+        DateTimeImmutable $until,
+    ): array {
+        $byDay = [];
+
+        foreach (
+            $this->agendaFeed->eventsBetween(
+                $from,
+                $until,
+            ) as $event
+        ) {
+            $cursor = $event->startsOn;
+
+            while ($cursor <= $event->endsOn) {
+                if (
+                    $cursor >= $from
+                    && $cursor <= $until
+                ) {
+                    $byDay[$cursor->format('Y-m-d')][] = $this->agendaEntry(
+                        $event,
+                        $cursor > $event->startsOn,
+                        $cursor < $event->endsOn,
+                    );
+                }
+
+                $cursor = $cursor->modify('+1 day');
+            }
+        }
+
+        return $byDay;
+    }
+
+    private function agendaEntry(
+        AgendaEvent $event,
+        bool $continuesBefore,
+        bool $continuesAfter,
+    ): CalendarEntry {
+        return new CalendarEntry(
+            CalendarEntryKind::AgendaItem,
+            $event->title,
+            '',
+            null,
+            null,
+            null,
+            $continuesBefore,
+            $continuesAfter,
+        );
     }
 
     /**

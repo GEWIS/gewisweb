@@ -27,6 +27,14 @@ framework:
                     X-Api-Key: '%env(SUPREMUM_API_KEY)%'
                 timeout: 2
                 max_duration: 4
+            # The association agenda the option calendar draws behind the days bodies ask for. Only the sync command
+            # ever calls it, never a page render, so the timeouts are for a cron rather than for somebody waiting.
+            google_calendar.client:
+                base_uri: 'https://www.googleapis.com/calendar/v3/'
+                query:
+                    key: '%env(DOCKER_GOOGLE_API_KEY)%'
+                timeout: 5
+                max_duration: 15
 
 when@test:
     framework:

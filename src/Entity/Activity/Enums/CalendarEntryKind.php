@@ -11,13 +11,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * What a block on the option calendar stands for.
  *
- * Three things share the grid and must not be mistaken for one another: an activity that is already in the agenda, a
- * day a body has been given, and a day a body is still asking for. The paper calendar made the same distinction with
- * two colours of pen.
+ * Four things share the grid and must not be mistaken for one another: an activity the website itself holds, an item
+ * from the association's own agenda that it does not, a day a body has been given, and a day a body is still asking
+ * for. The paper calendar made much the same distinction with two colours of pen.
  */
 enum CalendarEntryKind: string implements TranslatableInterface
 {
     case FixedActivity = 'fixed';
+    case AgendaItem = 'agenda';
     case ReservedDay = 'reserved';
     case RequestedDay = 'requested';
 
@@ -37,6 +38,10 @@ enum CalendarEntryKind: string implements TranslatableInterface
         return match ($this) {
             self::FixedActivity => $translator->trans(
                 'Already in the agenda',
+                locale: $locale,
+            ),
+            self::AgendaItem => $translator->trans(
+                'Elsewhere in the agenda',
                 locale: $locale,
             ),
             self::ReservedDay => $translator->trans(
