@@ -5,6 +5,10 @@
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
     <body>
+      <trans-unit id="pet0iNb" resname="A body cannot be allowed a negative number of activities.">
+        <source>A body cannot be allowed a negative number of activities.</source>
+        <target state="translated">A body cannot be allowed a negative number of activities.</target>
+      </trans-unit>
       <trans-unit id="6xn2oL6" resname="A course code contains only letters and digits.">
         <source>A course code contains only letters and digits.</source>
         <target state="translated">A course code contains only letters and digits.</target>
@@ -20,6 +24,10 @@
       <trans-unit id="qdAGayA" resname="A course name is at most {{ limit }} characters.">
         <source>A course name is at most {{ limit }} characters.</source>
         <target state="translated">A course name is at most {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="rp3sXE8" resname="A day cannot end before it starts.">
+        <source>A day cannot end before it starts.</source>
+        <target state="translated">A day cannot end before it starts.</target>
       </trans-unit>
       <trans-unit id="MvaasYM" resname="A package cannot expire before it starts.">
         <source>A package cannot expire before it starts.</source>
@@ -161,6 +169,30 @@
         <source>Enter the day the vacancy closes.</source>
         <target state="translated">Enter the day the vacancy closes.</target>
       </trans-unit>
+      <trans-unit id="qPDkg5l" resname="Enter the day this would end on.">
+        <source>Enter the day this would end on.</source>
+        <target state="translated">Enter the day this would end on.</target>
+      </trans-unit>
+      <trans-unit id="mb_ZTmd" resname="Enter the day this would start on.">
+        <source>Enter the day this would start on.</source>
+        <target state="translated">Enter the day this would start on.</target>
+      </trans-unit>
+      <trans-unit id="471SL38" resname="Enter the first day of this round.">
+        <source>Enter the first day of this round.</source>
+        <target state="translated">Enter the first day of this round.</target>
+      </trans-unit>
+      <trans-unit id="Rc4ASTv" resname="Enter the last day of this round.">
+        <source>Enter the last day of this round.</source>
+        <target state="translated">Enter the last day of this round.</target>
+      </trans-unit>
+      <trans-unit id="2X4xmPw" resname="Enter when bodies may start proposing.">
+        <source>Enter when bodies may start proposing.</source>
+        <target state="translated">Enter when bodies may start proposing.</target>
+      </trans-unit>
+      <trans-unit id="9leU3Iv" resname="Enter when proposing closes.">
+        <source>Enter when proposing closes.</source>
+        <target state="translated">Enter when proposing closes.</target>
+      </trans-unit>
       <trans-unit id="B9r0Hn5" resname="Error">
         <source>Error</source>
         <target>Error</target>
@@ -185,13 +217,33 @@
         <source>Fill this in for both languages.</source>
         <target state="translated">Fill this in for both languages.</target>
       </trans-unit>
+      <trans-unit id="4.0.q14" resname="Give the activity a name.">
+        <source>Give the activity a name.</source>
+        <target state="translated">Give the activity a name.</target>
+      </trans-unit>
+      <trans-unit id="f5mswYK" resname="Give this round a name.">
+        <source>Give this round a name.</source>
+        <target state="translated">Give this round a name.</target>
+      </trans-unit>
       <trans-unit id="Dtm28Py" resname="Only one option can be preselected as the default.">
         <source>Only one option can be preselected as the default.</source>
         <target state="translated">Only one option can be preselected as the default.</target>
       </trans-unit>
+      <trans-unit id="kt2r1Zi" resname="Pick the body that would host this activity.">
+        <source>Pick the body that would host this activity.</source>
+        <target state="translated">Pick the body that would host this activity.</target>
+      </trans-unit>
+      <trans-unit id="iI02jBF" resname="Pick the body this applies to.">
+        <source>Pick the body this applies to.</source>
+        <target state="translated">Pick the body this applies to.</target>
+      </trans-unit>
       <trans-unit id="RoGveoO" resname="Pick the member you want to authorize.">
         <source>Pick the member you want to authorize.</source>
         <target state="translated">Pick the member you want to authorize.</target>
+      </trans-unit>
+      <trans-unit id="hR3hyb0" resname="Pick the round this is for.">
+        <source>Pick the round this is for.</source>
+        <target state="translated">Pick the round this is for.</target>
       </trans-unit>
       <trans-unit id="vWblsZz" resname="Please enter a name.">
         <source>Please enter a name.</source>
@@ -217,6 +269,26 @@
         <source>Please enter your verification code.</source>
         <target state="translated">Please enter your verification code.</target>
       </trans-unit>
+      <trans-unit id="XX4tO9x" resname="Proposing must close after it opens.">
+        <source>Proposing must close after it opens.</source>
+        <target state="translated">Proposing must close after it opens.</target>
+      </trans-unit>
+      <trans-unit id="SaWtPcz" resname="Put forward at least one day.">
+        <source>Put forward at least one day.</source>
+        <target state="translated">Put forward at least one day.</target>
+      </trans-unit>
+      <trans-unit id="WRQYWSD" resname="Put forward at most {{ limit }} days for one activity.">
+        <source>Put forward at most {{ limit }} days for one activity.</source>
+        <target state="translated">Put forward at most {{ limit }} days for one activity.</target>
+      </trans-unit>
+      <trans-unit id="w7xSVwj" resname="Say which part of the day this would take.">
+        <source>Say which part of the day this would take.</source>
+        <target state="translated">Say which part of the day this would take.</target>
+      </trans-unit>
+      <trans-unit id="kXDD7uN" resname="That day has already been.">
+        <source>That day has already been.</source>
+        <target state="translated">That day has already been.</target>
+      </trans-unit>
       <trans-unit id="pVi97xU" resname="The activity must start in the future.">
         <source>The activity must start in the future.</source>
         <target state="translated">The activity must start in the future.</target>
@@ -240,6 +312,22 @@
       <trans-unit id="Oed6bKp" resname="The full name may not be longer than {{ limit }} characters.">
         <source>The full name may not be longer than {{ limit }} characters.</source>
         <target>The full name may not be longer than {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="SHUCT3j" resname="The last day of the round must not be before the first.">
+        <source>The last day of the round must not be before the first.</source>
+        <target state="translated">The last day of the round must not be before the first.</target>
+      </trans-unit>
+      <trans-unit id="Nmcbq7y" resname="The limit is %maximum% and %used% have been used.">
+        <source>The limit is %maximum% and %used% have been used.</source>
+        <target state="translated">The limit is %maximum% and %used% have been used.</target>
+      </trans-unit>
+      <trans-unit id="SVFtOlO" resname="The name should be at least {{ limit }} characters.">
+        <source>The name should be at least {{ limit }} characters.</source>
+        <target state="translated">The name should be at least {{ limit }} characters.</target>
+      </trans-unit>
+      <trans-unit id="XWYGJxG" resname="The name should be at most {{ limit }} characters.">
+        <source>The name should be at most {{ limit }} characters.</source>
+        <target state="translated">The name should be at most {{ limit }} characters.</target>
       </trans-unit>
       <trans-unit id="k8QayhA" resname="The sign-up list must close before the activity starts.">
         <source>The sign-up list must close before the activity starts.</source>
@@ -265,6 +353,18 @@
         <source>The website already answers to this address, so a page cannot take it.</source>
         <target state="translated">The website already answers to this address, so a page cannot take it.</target>
       </trans-unit>
+      <trans-unit id="fQO92TH" resname="This body already has a limit for this period.">
+        <source>This body already has a limit for this period.</source>
+        <target state="translated">This body already has a limit for this period.</target>
+      </trans-unit>
+      <trans-unit id="omxW16Y" resname="This body already has a standing limit.">
+        <source>This body already has a standing limit.</source>
+        <target state="translated">This body already has a standing limit.</target>
+      </trans-unit>
+      <trans-unit id="Dw.PYh4" resname="This body has already put forward everything it may in this round.">
+        <source>This body has already put forward everything it may in this round.</source>
+        <target state="translated">This body has already put forward everything it may in this round.</target>
+      </trans-unit>
       <trans-unit id="z.p0Rex" resname="This field is required.">
         <source>This field is required.</source>
         <target>This field is required.</target>
@@ -276,6 +376,14 @@
       <trans-unit id="2l0C8FY" resname="This is not a valid username.">
         <source>This is not a valid username.</source>
         <target state="translated">This is not a valid username.</target>
+      </trans-unit>
+      <trans-unit id="KqkVsGc" resname="This round is not taking proposals at the moment.">
+        <source>This round is not taking proposals at the moment.</source>
+        <target state="translated">This round is not taking proposals at the moment.</target>
+      </trans-unit>
+      <trans-unit id="i_1P4DK" resname="This round only covers %from% to %until%.">
+        <source>This round only covers %from% to %until%.</source>
+        <target state="translated">This round only covers %from% to %until%.</target>
       </trans-unit>
       <trans-unit id="Q5RHBE_" resname="Upload a JPEG, PNG or WebP image.">
         <source>Upload a JPEG, PNG or WebP image.</source>
@@ -296,6 +404,10 @@
       <trans-unit id="fcfNWQJ" resname="You can only highlight your own vacancies that are currently shown on the website.">
         <source>You can only highlight your own vacancies that are currently shown on the website.</source>
         <target state="translated">You can only highlight your own vacancies that are currently shown on the website.</target>
+      </trans-unit>
+      <trans-unit id="WZfD5UV" resname="You cannot propose an activity for this body.">
+        <source>You cannot propose an activity for this body.</source>
+        <target state="translated">You cannot propose an activity for this body.</target>
       </trans-unit>
       <trans-unit id="vZye7vY" resname="You have to agree to the authorization statement.">
         <source>You have to agree to the authorization statement.</source>

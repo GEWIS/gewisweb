@@ -100,7 +100,7 @@ when@prod:
             enforce:
                 script-src: ['self', 'strict-dynamic', 'https://analytics.gewis.nl/'] # strict-dynamic breaks API platform docs
                 img-src: ['self', 'data:', 'https://images.gewis.nl']
-                connect-src: ['self', 'https://analytics.gewis.nl/', 'https://www.googleapis.com/calendar/']
+                connect-src: ['self', 'https://analytics.gewis.nl/']
                 child-src: ['self', 'https://analytics.gewis.nl/', 'https://www.youtube-nocookie.com/embed/', 'https://player.vimeo.com/video/']
                 upgrade-insecure-requests: true
                 block-all-mixed-content: true
@@ -111,5 +111,5 @@ when@dev:
             enforce:
                 script-src: ['self', 'http://localhost:82/', 'https://analytics.test.gewis.nl/'] # strict-dynamic breaks API platform docs
                 img-src: ['self', 'data:', 'http://localhost:81/', 'https://images.test.gewis.nl']
-                connect-src: ['self', 'http://localhost:82/', 'https://analytics.test.gewis.nl/', 'https://www.googleapis.com/calendar/']
+                connect-src: ['self', 'http://localhost:82/', 'https://analytics.test.gewis.nl/']
                 child-src: ['self', 'http://localhost:82/', 'https://analytics.test.gewis.nl/', 'https://www.youtube-nocookie.com/embed/', 'https://player.vimeo.com/video/']

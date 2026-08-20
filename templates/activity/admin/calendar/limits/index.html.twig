@@ -1,0 +1,95 @@
+{% extends 'layout-admin.html.twig' %}
+{% import 'partials/application/confirm-post-modal.html.twig' as modals %}
+
+{% block page_title %}{{ 'Standing exceptions'|trans|page_title }}{{ 'Option calendar'|trans|page_title }}{{ 'Activities'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/activities/index') }}">{{ 'Activities'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/activities/calendar/index') }}">{{ 'Option calendar'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Standing exceptions'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="mb-0">{{ 'Standing exceptions'|trans }}</h3>
+            <p class="text-muted small mb-0">
+                {{ 'Every body may propose %count% activities a round unless it is listed here. An exception holds for every round until you change it, so a body that always needs a different number only has to be entered once.'|trans({'%count%': defaultMaxProposals}) }}
+            </p>
+        </div>
+        <div class="panel-body">
+            {% if limits is empty %}
+                <p class="text-muted">
+                    {{ 'No exceptions. Every body is on the usual number.'|trans }}
+                </p>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Body'|trans }}</th>
+                                <th>{{ 'May propose per round'|trans }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for limit in limits %}
+                                <tr>
+                                    <td>{{ limit.organ.abbr }} <small class="text-muted">{{ limit.organ.name }}</small></td>
+                                    <td>
+                                        {{ limit.maxProposals }}
+                                        {% if limit.maxProposals == 0 %}
+                                            <span class="badge text-bg-danger">{{ 'Nothing at all'|trans }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="{{ path('admin/activities/calendar/limits/edit', {'limit': limit.id}) }}"
+                                           class="btn btn-sm btn-outline-secondary">
+                                            <span class="fas fa-pen"></span> {{ 'Edit'|trans }}
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary text-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#delete-limit-{{ limit.id }}">
+                                            <span class="fas fa-trash"></span> {{ 'Remove'|trans }}
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% for limit in limits %}
+                    {{ modals.confirm_modal(
+                        'delete-limit-' ~ limit.id,
+                        path('admin/activities/calendar/limits/delete', {'limit': limit.id}),
+                        csrf_token('proposal_limit_delete-' ~ limit.id),
+                        'Remove this exception?'|trans,
+                        'The body goes back to the number every body gets.'|trans,
+                        'Remove'|trans,
+                        'danger',
+                    ) }}
+                {% endfor %}
+            {% endif %}
+
+            <hr>
+            <h4 class="h6 text-muted text-uppercase">{{ 'Add an exception'|trans }}</h4>
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="row align-items-end">
+                <div class="col-md-6">{{ form_row(form.organ) }}</div>
+                <div class="col-md-4">{{ form_row(form.maxProposals) }}</div>
+                <div class="col-md-2 mb-3">
+                    <button type="submit" class="btn btn-gewis-primary w-100">{{ 'Add'|trans }}</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

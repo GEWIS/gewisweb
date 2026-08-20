@@ -1,0 +1,73 @@
+{# The days a body puts forward for one activity, as a collection with add/remove wired to the `form-collection`
+   Stimulus controller.
+
+   Two things this needs that the generic collection theme does not give it. The rows are an order of preference, so
+   the first is headed differently from the rest, and there is a hard house limit of three, so the add button goes
+   away once they are all used. The server refuses a fourth either way; hiding the button only stops the form offering
+   something it would then reject.
+
+   Pass `max_entries` (an integer) to cap it; without one it behaves like any other collection. #}
+{% macro date_option_entry(child, index, allow_delete) %}
+    <div data-form-collection-target="entry" class="border rounded p-3 mb-2">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <h4 class="h6 mb-0" data-date-option-heading>
+                {% if index == 0 %}
+                    {{ 'Preferred day'|trans }}
+                {% else %}
+                    {{ 'Alternative %number%'|trans({'%number%': index}) }}
+                {% endif %}
+            </h4>
+            {% if allow_delete %}
+                <button type="button" class="btn btn-sm btn-link text-danger p-0"
+                        data-action="form-collection#remove">
+                    <span class="fas fa-trash"></span> {{ 'Remove'|trans }}
+                </button>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col-md-4">{{ form_row(child.timeOfDay) }}</div>
+            <div class="col-md-4">{{ form_row(child.beginsAt) }}</div>
+            <div class="col-md-4">{{ form_row(child.endsAt) }}</div>
+        </div>
+        {{ form_errors(child) }}
+    </div>
+{% endmacro %}
+
+{# Bootstrap renders a compound field's label as a `<legend>`, which here would repeat the panel heading right above
+   it. Dropping it in this block rather than globally: for a group of radios or checkboxes the legend is the group's
+   accessible name, and three forms in this app rely on that. Same approach as the poll answers collection. #}
+{% block date_option_collection_row %}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block date_option_collection_widget %}
+    {% import _self as helper %}
+    {% set has_prototype = allow_add and prototype is defined and prototype is not null %}
+    {% set placeholder = has_prototype ? (prototype.vars.name|split('[')|last|trim(']')) : '__option__' %}
+    {% set max_entries = max_entries|default(null) %}
+    <div {{ block('widget_container_attributes') }}
+         data-controller="form-collection"
+         {% if max_entries is not null %}data-form-collection-max-value="{{ max_entries }}"{% endif %}
+         {% if has_prototype %}
+             data-form-collection-prototype-value="{{ helper.date_option_entry(prototype, 1, allow_delete)|e('html_attr') }}"
+             data-form-collection-prototype-name-value="{{ placeholder }}"
+         {% endif %}>
+        <div data-form-collection-target="entries">
+            {% for child in form %}
+                {{ helper.date_option_entry(child, loop.index0, allow_delete) }}
+            {% endfor %}
+        </div>
+        {% if allow_add %}
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-2"
+                    data-form-collection-target="add" data-action="form-collection#add">
+                <span class="fas fa-plus"></span> {{ 'Add another day'|trans }}
+            </button>
+        {% endif %}
+        {% if max_entries is not null %}
+            <p class="form-text mb-0">
+                {{ 'Alternatives are only used if the day you would rather have falls through. %count% is the most for one activity.'|trans({'%count%': max_entries}) }}
+            </p>
+        {% endif %}
+    </div>
+{% endblock %}

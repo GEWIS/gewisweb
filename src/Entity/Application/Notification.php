@@ -59,7 +59,7 @@ class Notification
 
     #[Column(
         type: Types::STRING,
-        length: 32,
+        length: 64,
         enumType: NotificationType::class,
     )]
     private NotificationType $type;

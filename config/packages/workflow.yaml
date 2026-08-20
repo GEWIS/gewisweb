@@ -47,3 +47,58 @@ framework:
                 close:
                     from: rejected
                     to: closed
+
+        # The option calendar. A proposal is not a revisable aggregate: it has no revision chain, no draft and no
+        # review discussion, so it does not belong on the `revision` machine, but claiming a date is an approval
+        # lifecycle all the same and belongs on a machine rather than in a service full of status assignments.
+        #
+        # Places are the string values of App\Entity\Activity\Enums\ProposalStatus, stored on the proposal's `status`
+        # column through App\Workflow\ProposalStatusMarkingStore.
+        #
+        # Handing a proposal in is entity instantiation at the `submitted` place, not a transition, for the same reason
+        # as a revision's draft: what a body handed in stays a record of what it handed in.
+        #
+        # `clear_budget` covers both ways the financial side is settled, an approved budget and an activity that costs
+        # nothing, because a free activity has nothing to hand in and must not be chased for it. Board meetings are not
+        # known in advance, so the board records the outcome here rather than the website working out a deadline from
+        # one. Only a proposal still holding an unsettled date can `lapse`.
+        #
+        # `reopen`, `revoke_clearance` and withdrawing a cleared proposal exist so nothing is a dead end: a lapsed date
+        # can be put back in the running, a clearance recorded by mistake can be taken back, and a wrong approval is
+        # undone by reopening and picking another date.
+        activity_proposal:
+            type: state_machine
+            marking_store:
+                service: App\Workflow\ProposalStatusMarkingStore
+            supports:
+                - App\Entity\Activity\ActivityProposal
+            initial_marking: submitted
+            places:
+                - submitted
+                - scheduled
+                - cleared
+                - declined
+                - withdrawn
+                - lapsed
+            transitions:
+                schedule:
+                    from: submitted
+                    to: scheduled
+                decline:
+                    from: submitted
+                    to: declined
+                clear_budget:
+                    from: scheduled
+                    to: cleared
+                revoke_clearance:
+                    from: cleared
+                    to: scheduled
+                withdraw:
+                    from: [submitted, scheduled, cleared]
+                    to: withdrawn
+                lapse:
+                    from: scheduled
+                    to: lapsed
+                reopen:
+                    from: [declined, withdrawn, lapsed]
+                    to: submitted

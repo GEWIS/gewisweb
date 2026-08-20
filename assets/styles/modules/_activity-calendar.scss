@@ -1,40 +1,159 @@
-.activity-global {
-    background-color: darken($brand-primary, 7%) !important;
-    border-color: darken($brand-primary, 7%) !important;
-    color: #FFFFFF;
+// The option calendar's month grid. Server-rendered, so this is a plain CSS grid rather than overrides for a calendar
+// library: the one that used to live here was written for FullCalendar, which the site no longer ships.
+//
+// Colours come from Bootstrap's own custom properties so the grid follows the theme, including dark mode, instead of
+// hard-coding a second palette that would drift from the rest of the site.
+.option-calendar {
+    &__grid {
+        --option-calendar-day-min-height: 7rem;
 
-    &:hover {
-        color: #FFFFFF;
-    }
-}
-
-.activity-option-approved {
-    background-color: #D029FF !important;
-    border-color: #D029FF !important;
-    color: #FFFFFF;
-}
-
-.activity-option-unapproved {
-    background-color: #0077EA !important;
-    border-color: #0077EA !important;
-    color: #FFFFFF;
-}
-
-.fc-daygrid-block-event .fc-event-title-container {
-    margin: 0 4px;
-}
-
-.fc-daygrid-event-dot {
-    border: none !important;
-    border-radius: 0 !important;
-}
-
-.fc {
-    tr {
-        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--bs-border-color);
+        border-radius: var(--bs-border-radius);
+        overflow: hidden;
     }
 
-    .fc-daygrid-day-frame {
-        min-height: 116.867px !important;
+    &__head,
+    &__week {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+
+    &__weekday {
+        padding: 0.35rem 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--bs-secondary-color);
+        background-color: var(--bs-tertiary-bg);
+        border-bottom: 1px solid var(--bs-border-color);
+    }
+
+    &__day {
+        min-height: var(--option-calendar-day-min-height);
+        padding: 0.35rem;
+        border-top: 1px solid var(--bs-border-color);
+        border-left: 1px solid var(--bs-border-color);
+        overflow: hidden;
+
+        &:first-child {
+            border-left: 0;
+        }
+
+        // A day of a neighbouring month still carries its blocks: a week runs across the turn of a month, and a body
+        // asking for the 31st has to see it from both sides. Only the emphasis changes.
+        &--outside {
+            background-color: var(--bs-tertiary-bg);
+
+            .option-calendar__daynumber {
+                color: var(--bs-secondary-color);
+            }
+        }
+
+        &--weekend {
+            background-color: var(--bs-secondary-bg);
+        }
+
+        &--today {
+            box-shadow: inset 0 0 0 2px var(--bs-primary);
+
+            .option-calendar__daynumber {
+                color: var(--bs-primary);
+                font-weight: 700;
+            }
+        }
+    }
+
+    &__daynumber {
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+    }
+
+    &__entry {
+        display: flex;
+        align-items: center;
+        gap: 0.2rem;
+        margin-bottom: 0.15rem;
+        padding: 0.1rem 0.3rem;
+        border-radius: var(--bs-border-radius-sm);
+        font-size: 0.75rem;
+        line-height: 1.3;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        a {
+            color: inherit;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        // Already in the agenda: settled, and drawn in the association's own red.
+        &--fixed {
+            background-color: var(--bs-primary);
+            color: #FFFFFF;
+        }
+
+        // On the association's agenda but not held here: an exam week, the intro week, somebody else's booking. Drawn
+        // quieter than our own activities, because nobody can act on it from this page.
+        &--agenda {
+            background-color: var(--bs-secondary-bg);
+            color: var(--bs-secondary-color);
+            border: 1px dashed var(--bs-border-color);
+        }
+
+        // A day a body has been given.
+        &--reserved {
+            background-color: var(--bs-info);
+            color: #FFFFFF;
+        }
+
+        // A day a body is still asking for.
+        &--requested {
+            background-color: var(--bs-secondary-bg);
+            color: var(--bs-body-color);
+            border: 1px solid var(--bs-border-color);
+        }
+    }
+
+    &__rank {
+        flex: 0 0 auto;
+        min-width: 1rem;
+        text-align: center;
+        border-radius: var(--bs-border-radius-sm);
+        background-color: rgba(255, 255, 255, 0.25);
+        font-variant-numeric: tabular-nums;
+    }
+
+    &__entry--requested &__rank {
+        background-color: var(--bs-tertiary-bg);
+    }
+
+    &__more {
+        font-size: 0.7rem;
+        color: var(--bs-secondary-color);
+    }
+
+    &__legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        font-size: 0.75rem;
+        color: var(--bs-secondary-color);
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+    }
+
+    &__swatch {
+        display: inline-block;
+        width: 0.75rem;
+        height: 0.75rem;
+        border-radius: var(--bs-border-radius-sm);
     }
 }

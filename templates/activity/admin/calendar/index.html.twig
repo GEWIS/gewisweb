@@ -1,27 +1,147 @@
 {% extends 'layout-admin.html.twig' %}
 
-{% block page_title %}{{ 'Overview'|trans|page_title }}{{ 'Calendar'|trans|page_title }}{{ 'Activities'|trans|page_title }}{{ parent() }}{% endblock %}
+{% block page_title %}{{ 'Option calendar'|trans|page_title }}{{ 'Activities'|trans|page_title }}{{ parent() }}{% endblock %}
 
 {% block admin_breadcrumbs %}
-    <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('admin/activities/index') }}">
-            {{ 'Activities'|trans }}
-        </a>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/activities/index') }}">{{ 'Activities'|trans }}</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
-        <a href="{{ path('admin/activities/calendar/index') }}">
-            {{ 'Calendar'|trans }}
-        </a>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">
-        {{ 'Overview'|trans }}
+        {{ 'Option calendar'|trans }}
     </li>
 {% endblock %}
 
 {% block contents %}
+    {{ component('Activity:Admin:OptionCalendar') }}
+
     <div class="row">
-        <div class="col-md-12">
-            {# TODO #}
+        <div class="col-lg-8">
+            <div class="panel">
+                <div class="panel-heading d-flex flex-wrap align-items-center justify-content-between gap-2">
+                    <div>
+                        <h3 class="mb-0">{{ 'Option calendar'|trans }}</h3>
+                        <p class="text-muted small mb-0">
+                            {{ 'Claim a day before you plan an activity on it. Whoever asks first has first dibs, and the board decides.'|trans }}
+                        </p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% if is_granted('ROLE_BOARD') %}
+                            <a href="{{ path('admin/activities/calendar/decisions/index') }}"
+                               class="btn btn-outline-secondary">
+                                <span class="fas fa-gavel"></span> {{ 'Decisions'|trans }}
+                            </a>
+                            <a href="{{ path('admin/activities/calendar/periods/index') }}"
+                               class="btn btn-outline-secondary">
+                                <span class="fas fa-calendar-week"></span> {{ 'Rounds'|trans }}
+                            </a>
+                            <a href="{{ path('admin/activities/calendar/limits/index') }}"
+                               class="btn btn-outline-secondary">
+                                <span class="fas fa-scale-balanced"></span> {{ 'Exceptions'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if openPeriods is not empty %}
+                            <a href="{{ path('admin/activities/calendar/propose') }}" class="btn btn-gewis-primary">
+                                <span class="fas fa-plus"></span> {{ 'Claim a day'|trans }}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="panel-body">
+                    {% if openPeriods is empty %}
+                        <p class="text-muted mb-0">
+                            {{ 'No round is taking proposals at the moment. The board opens one before each quartile.'|trans }}
+                        </p>
+                    {% else %}
+                        {% set period = openPeriods|first %}
+                        <p class="mb-3">
+                            {{ '%round% is taking proposals until %closes%, for activities between %from% and %until%.'|trans({
+                                '%round%': period.name,
+                                '%closes%': period.submissionClosesAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale),
+                                '%from%': period.startsAt|format_date(pattern: 'd MMM yyyy', locale: app.request.locale),
+                                '%until%': period.endsAt|format_date(pattern: 'd MMM yyyy', locale: app.request.locale),
+                            }) }}
+                        </p>
+
+                        {% if mine is empty %}
+                            <p class="text-muted mb-0">
+                                {{ 'Your bodies have not claimed anything in this round yet.'|trans }}
+                            </p>
+                        {% else %}
+                            <div class="table-responsive">
+                                <table class="table align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ 'Activity'|trans }}</th>
+                                            <th>{{ 'Body'|trans }}</th>
+                                            <th>{{ 'Days'|trans }}</th>
+                                            <th>{{ 'Status'|trans }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for proposal in mine %}
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ path('admin/activities/calendar/proposal', {'proposal': proposal.id}) }}">
+                                                        {{ proposal.name }}
+                                                    </a>
+                                                </td>
+                                                <td>{{ proposal.organ ? proposal.organ.abbr : 'The board'|trans }}</td>
+                                                <td>
+                                                    {% for option in proposal.dateOptions %}
+                                                        <span class="badge text-bg-light">
+                                                            {{ option.beginsAt|format_date(pattern: 'd MMM', locale: app.request.locale) }}
+                                                        </span>
+                                                    {% endfor %}
+                                                </td>
+                                                <td>
+                                                    <span class="badge {{ proposal.status.badgeClass }}">
+                                                        {{ proposal.status|trans }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="mb-0">{{ 'What you may still claim'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if openPeriods is empty or organs is empty %}
+                        <p class="text-muted mb-0">
+                            {{ 'Nothing to claim right now.'|trans }}
+                        </p>
+                    {% else %}
+                        <ul class="list-unstyled mb-0">
+                            {% for organ in organs %}
+                                {% set allowance = allowances[organ.id]|default(null) %}
+                                {% if allowance is not null %}
+                                    <li class="mb-3">
+                                        <strong>{{ organ.abbr }}</strong>
+                                        <div class="small">
+                                            {{ '%remaining% of %maximum% left'|trans({
+                                                '%remaining%': allowance.remaining,
+                                                '%maximum%': allowance.maximum,
+                                            }) }}
+                                        </div>
+                                        <div class="text-muted small">
+                                            {{ 'This is %source%.'|trans({'%source%': allowance.source|trans}) }}
+                                        </div>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

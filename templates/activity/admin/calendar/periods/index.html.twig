@@ -1,0 +1,113 @@
+{% extends 'layout-admin.html.twig' %}
+{% import 'partials/application/confirm-post-modal.html.twig' as modals %}
+
+{% block page_title %}{{ 'Rounds'|trans|page_title }}{{ 'Option calendar'|trans|page_title }}{{ 'Activities'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/activities/index') }}">{{ 'Activities'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/activities/calendar/index') }}">{{ 'Option calendar'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ 'Rounds'|trans }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="panel">
+        <div class="panel-heading d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <div>
+                <h3 class="mb-0">{{ 'Rounds'|trans }}</h3>
+                <p class="text-muted small mb-0">
+                    {{ 'Opening a round sets nothing up for any body. Every body may propose straight away, including one founded after the round opened.'|trans }}
+                </p>
+            </div>
+            <a href="{{ path('admin/activities/calendar/periods/create') }}" class="btn btn-gewis-primary">
+                <span class="fas fa-plus"></span> {{ 'Open a round'|trans }}
+            </a>
+        </div>
+        <div class="panel-body">
+            {% if periods is empty %}
+                <p class="text-muted mb-0">
+                    {{ 'No rounds yet. Open one before a quartile so bodies can claim their dates.'|trans }}
+                </p>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>{{ 'Name'|trans }}</th>
+                                <th>{{ 'Proposing'|trans }}</th>
+                                <th>{{ 'Days it covers'|trans }}</th>
+                                <th>{{ 'Proposals'|trans }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for period in periods %}
+                                <tr>
+                                    <td>
+                                        {{ period.name }}
+                                        {% if period.isOpenAt(now) %}
+                                            <span class="badge text-bg-success">{{ 'Taking proposals'|trans }}</span>
+                                        {% elseif period.submissionOpensAt > now %}
+                                            <span class="badge text-bg-info">{{ 'Not open yet'|trans }}</span>
+                                        {% else %}
+                                            <span class="badge text-bg-secondary">{{ 'Closed'|trans }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">
+                                            {{ period.submissionOpensAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
+                                            &ndash;
+                                            {{ period.submissionClosesAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">
+                                            {{ period.startsAt|format_date(pattern: 'd MMM yyyy', locale: app.request.locale) }}
+                                            &ndash;
+                                            {{ period.endsAt|format_date(pattern: 'd MMM yyyy', locale: app.request.locale) }}
+                                        </small>
+                                    </td>
+                                    <td>{{ period.proposals|length }}</td>
+                                    <td class="text-end">
+                                        <a href="{{ path('admin/activities/calendar/periods/limits', {'period': period.id}) }}"
+                                           class="btn btn-sm btn-outline-secondary">
+                                            <span class="fas fa-scale-balanced"></span> {{ 'Exceptions'|trans }}
+                                        </a>
+                                        <a href="{{ path('admin/activities/calendar/periods/edit', {'period': period.id}) }}"
+                                           class="btn btn-sm btn-outline-secondary">
+                                            <span class="fas fa-pen"></span> {{ 'Edit'|trans }}
+                                        </a>
+                                        {% if period.proposals is empty %}
+                                            <button type="button" class="btn btn-sm btn-outline-secondary text-danger"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#delete-period-{{ period.id }}">
+                                                <span class="fas fa-trash"></span> {{ 'Remove'|trans }}
+                                            </button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% for period in periods|filter(period => period.proposals is empty) %}
+                    {{ modals.confirm_modal(
+                        'delete-period-' ~ period.id,
+                        path('admin/activities/calendar/periods/delete', {'period': period.id}),
+                        csrf_token('option_period_delete-' ~ period.id),
+                        'Remove this round?'|trans,
+                        'Nothing has been proposed in it, so nothing is lost. Any exception recorded for it goes too.'|trans,
+                        'Remove'|trans,
+                        'danger',
+                    ) }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

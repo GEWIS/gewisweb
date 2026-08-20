@@ -35,7 +35,8 @@
             {% endfor %}
         </div>
         {% if allow_add %}
-            <button type="button" class="btn btn-sm btn-outline-secondary mt-2" data-action="form-collection#add">
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-2"
+                    data-form-collection-target="add" data-action="form-collection#add">
                 {{ add_label }}
             </button>
         {% endif %}

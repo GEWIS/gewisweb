@@ -1,0 +1,145 @@
+{% extends 'layout-admin.html.twig' %}
+{% import 'partials/application/confirm-post-modal.html.twig' as modals %}
+
+{% block page_title %}{{ proposal.name|page_title }}{{ 'Option calendar'|trans|page_title }}{{ 'Activities'|trans|page_title }}{{ parent() }}{% endblock %}
+
+{% block admin_breadcrumbs %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/activities/index') }}">{{ 'Activities'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="{{ path('admin/activities/calendar/index') }}">{{ 'Option calendar'|trans }}</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {{ proposal.name }}
+    </li>
+{% endblock %}
+
+{% block contents %}
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="panel">
+                <div class="panel-heading d-flex flex-wrap align-items-center justify-content-between gap-2">
+                    <div>
+                        <h3 class="mb-0">{{ proposal.name }}</h3>
+                        <p class="text-muted small mb-0">
+                            {{ proposal.organ ? proposal.organ.abbr : 'The board'|trans }}
+                            &middot; {{ proposal.period.name }}
+                        </p>
+                    </div>
+                    <span class="badge {{ proposal.status.badgeClass }}">{{ proposal.status|trans }}</span>
+                </div>
+                <div class="panel-body">
+                    {% if proposal.description is not empty %}
+                        <p>{{ proposal.description|nl2br }}</p>
+                        <hr>
+                    {% endif %}
+
+                    <h4 class="h6 text-muted text-uppercase">{{ 'Days put forward'|trans }}</h4>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>{{ 'Day'|trans }}</th>
+                                    <th>{{ 'Part of the day'|trans }}</th>
+                                    <th>{{ 'Status'|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for option in proposal.dateOptions %}
+                                    <tr{{ proposal.chosenOption is same as(option) ? ' class="table-success"' : '' }}>
+                                        <td class="text-muted">
+                                            {{ loop.first ? 'Preferred'|trans : 'Alternative'|trans }}
+                                        </td>
+                                        <td>
+                                            {{ option.beginsAt|format_date(pattern: 'd MMM yyyy', locale: app.request.locale) }}
+                                            {% if option.spansMultipleDays %}
+                                                &ndash; {{ option.endsAt|format_date(pattern: 'd MMM yyyy', locale: app.request.locale) }}
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ option.timeOfDay|trans }}</td>
+                                        <td>{{ option.status|trans }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {% if proposal.activity is not null %}
+                        <hr>
+                        <p class="mb-0">
+                            {{ 'The activity has been started for you and still needs filling in.'|trans }}
+                            <a href="{{ path('admin/activities/edit', {'activity': proposal.activity.id}) }}">
+                                {{ 'Finish it'|trans }}
+                            </a>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="mb-0">{{ 'This proposal'|trans }}</h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="mb-0">
+                        <dt>{{ 'Handed in'|trans }}</dt>
+                        <dd>{{ proposal.createdAt|format_datetime(pattern: 'd MMM yyyy HH:mm', locale: app.request.locale) }}</dd>
+                        <dt>{{ 'By'|trans }}</dt>
+                        <dd>{{ proposal.createdBy.fullName }}</dd>
+                        {% if allowance is not null %}
+                            <dt>{{ 'Your body still has'|trans }}</dt>
+                            <dd>
+                                {{ '%remaining% of %maximum%'|trans({
+                                    '%remaining%': allowance.remaining,
+                                    '%maximum%': allowance.maximum,
+                                }) }}
+                                <div class="text-muted small">
+                                    {{ 'This is %source%.'|trans({'%source%': allowance.source|trans}) }}
+                                </div>
+                            </dd>
+                        {% endif %}
+                        {% if proposal.budgetClearance is not null %}
+                            <dt>{{ 'Financially'|trans }}</dt>
+                            <dd>{{ proposal.budgetClearance|trans }}</dd>
+                        {% endif %}
+                    </dl>
+                </div>
+            </div>
+
+            {% if is_granted('PROPOSAL_EDIT', proposal) or canWithdraw %}
+                <div class="panel">
+                    <div class="panel-body d-grid gap-2">
+                        {% if is_granted('PROPOSAL_EDIT', proposal) %}
+                            <a href="{{ path('admin/activities/calendar/proposal_edit', {'proposal': proposal.id}) }}"
+                               class="btn btn-outline-secondary">
+                                <span class="fas fa-pen"></span> {{ 'Change it'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if canWithdraw %}
+                            <button type="button" class="btn btn-outline-secondary text-danger"
+                                    data-bs-toggle="modal" data-bs-target="#withdraw-proposal">
+                                <span class="fas fa-rotate-left"></span> {{ 'Take it back'|trans }}
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if canWithdraw %}
+        {{ modals.confirm_modal(
+            'withdraw-proposal',
+            path('admin/activities/calendar/proposal_withdraw', {'proposal': proposal.id}),
+            csrf_token('activity_proposal_withdraw-' ~ proposal.id),
+            'Take this proposal back?'|trans,
+            'Every day it is standing on is freed for whoever is next in line. You can propose it again while the round is open.'|trans,
+            'Take it back'|trans,
+            'danger',
+        ) }}
+    {% endif %}
+{% endblock %}

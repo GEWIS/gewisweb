@@ -50,6 +50,16 @@ parameters:
     app.education.watermark_tag: '%env(string:WATERMARK_TAG)%'
     # The face the red watermark is drawn in. Shipped by `fonts-dejavu-core`, which the Dockerfile installs explicitly.
     app.education.watermark_font: '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
+    # The association's own agenda, which the option calendar draws behind the days bodies ask for. Defaulted so a
+    # machine without a key runs perfectly well with that layer simply absent; production requires both for real
+    # (see compose.production.yaml).
+    env(DOCKER_GOOGLE_API_KEY): 'unknown'
+    env(DOCKER_GOOGLE_CALENDAR_KEY): 'unknown'
+    # How many activities a body may put forward in one option period when nobody has said otherwise. The board can
+    # set a different number for a single period, and a standing or one-off exception for a single body; this is what
+    # answers when none of those apply, which is the usual case. No row is ever written per body, so a body founded
+    # halfway through a period lands here rather than on nothing.
+    app.activity.default_max_proposals: 3
     # External tools linked from the members-area dashboard.
     app.members_area_links:
         webmail: '/webmail'
@@ -72,6 +82,9 @@ services:
             $watermarkTag: '%app.education.watermark_tag%' # string
             $watermarkFontPath: '%app.education.watermark_font%' # string
             $siteUrl: '%env(string:DEFAULT_URI)%' # string
+            $defaultMaxProposals: '%app.activity.default_max_proposals%' # int
+            $googleCalendarId: '%env(string:DOCKER_GOOGLE_CALENDAR_KEY)%' # string
+            $googleApiKey: '%env(string:DOCKER_GOOGLE_API_KEY)%' # string
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

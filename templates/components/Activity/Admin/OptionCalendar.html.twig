@@ -1,0 +1,93 @@
+{% set month = this.grid %}
+{% set selected = this.selectedOrgan %}
+
+<div{{ attributes }} class="option-calendar">
+    <div class="panel">
+        <div class="panel-heading d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <div class="d-flex align-items-center gap-3">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                            data-action="live#action" data-live-action-param="previousMonth"
+                            aria-label="{{ 'Previous month'|trans }}">
+                        <span class="fas fa-chevron-left"></span>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                            data-action="live#action" data-live-action-param="today">
+                        {{ 'Today'|trans }}
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                            data-action="live#action" data-live-action-param="nextMonth"
+                            aria-label="{{ 'Next month'|trans }}">
+                        <span class="fas fa-chevron-right"></span>
+                    </button>
+                </div>
+                <h3 class="mb-0">
+                    {{ month.firstDay|format_date(pattern: 'MMMM yyyy', locale: app.request.locale) }}
+                </h3>
+            </div>
+
+            <div class="d-flex flex-wrap align-items-center gap-3">
+                <ul class="option-calendar__legend list-unstyled mb-0">
+                    <li><span class="option-calendar__swatch option-calendar__entry--fixed"></span> {{ 'Already in the agenda'|trans }}</li>
+                    <li><span class="option-calendar__swatch option-calendar__entry--agenda"></span> {{ 'Elsewhere in the agenda'|trans }}</li>
+                    <li><span class="option-calendar__swatch option-calendar__entry--reserved"></span> {{ 'Day reserved'|trans }}</li>
+                    <li><span class="option-calendar__swatch option-calendar__entry--requested"></span> {{ 'Day asked for'|trans }}</li>
+                </ul>
+                <select class="form-select form-select-sm w-auto" data-model="organ"
+                        aria-label="{{ 'Body'|trans }}">
+                    <option value="">{{ 'Every body'|trans }}</option>
+                    {% for organ in this.organs %}
+                        <option value="{{ organ.id }}"{{ selected is not null and selected.id == organ.id ? ' selected' : '' }}>
+                            {{ organ.abbr }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="option-calendar__grid" role="table">
+                <div class="option-calendar__head" role="row">
+                    {% for weekday in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] %}
+                        <div class="option-calendar__weekday" role="columnheader">
+                            {{ ('2026-01-05'|date_modify('+' ~ loop.index0 ~ ' days'))|format_date(pattern: 'EEE', locale: app.request.locale) }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% for week in month.weeks %}
+                    <div class="option-calendar__week" role="row">
+                        {% for day in week %}
+                            <div role="cell"
+                                 class="option-calendar__day{{ day.inMonth ? '' : ' option-calendar__day--outside' }}{{ day.isWeekend ? ' option-calendar__day--weekend' : '' }}{{ day.isToday ? ' option-calendar__day--today' : '' }}">
+                                <div class="option-calendar__daynumber">
+                                    {{ day.date|format_date(pattern: 'd', locale: app.request.locale) }}
+                                </div>
+                                {% for entry in day.entries|slice(0, 4) %}
+                                    <div class="option-calendar__entry {{ entry.kind.modifier }}"
+                                         title="{{ entry.title }}{{ entry.by ? ' — ' ~ entry.by : '' }}">
+                                        {% if entry.continuesBefore %}<span aria-hidden="true">&lsaquo;</span>{% endif %}
+                                        {% if entry.rank is not null %}
+                                            <span class="option-calendar__rank">{{ entry.rank }}</span>
+                                        {% endif %}
+                                        {% if entry.proposalId is not null %}
+                                            <a href="{{ path('admin/activities/calendar/proposal', {'proposal': entry.proposalId}) }}">{{ entry.title }}</a>
+                                        {% else %}
+                                            {{ entry.title }}
+                                        {% endif %}
+                                        {% if entry.continuesAfter %}<span aria-hidden="true">&rsaquo;</span>{% endif %}
+                                    </div>
+                                {% endfor %}
+                                {% if day.count > 4 %}
+                                    <div class="option-calendar__more">
+                                        {{ '%count% more'|trans({'%count%': day.count - 4}) }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

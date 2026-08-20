@@ -5,6 +5,7 @@ twig:
         - 'bootstrap_5_layout.html.twig'
         - 'form/bootstrap_floating.html.twig'
         - 'form/collection.html.twig'
+        - 'form/date_option_collection.html.twig'
         - 'form/localised_text.html.twig'
         - 'form/poll_option_collection.html.twig'
         - 'form/signup_list_collection.html.twig'
