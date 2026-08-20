@@ -173,7 +173,7 @@
         "doctrine/doctrine-fixtures-bundle": "^4.3.1",
         "fakerphp/faker": "^1.24.1",
         "gewis/gewisphp-coding-standards": "2.1.1",
-        "igor-php/igor-php": "^0.8.9",
+        "igor-php/igor-php": "^0.9.5",
         "league/flysystem-memory": "^3.31",
         "phpstan/extension-installer": "^1.4.3",
         "phpstan/phpstan": "^2.2.8",
