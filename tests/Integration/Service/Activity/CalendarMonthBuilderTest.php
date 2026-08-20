@@ -114,10 +114,11 @@ final class CalendarMonthBuilderTest extends DatabaseTestCase
      */
     public function testTheDayEveryBodyWantsRanksThemInTheOrderTheyAsked(): void
     {
-        $month = $this->builder()->build(new DateTimeImmutable('2026-11-19'));
+        $contested = $this->contestedDay();
+        $month = $this->builder()->build($contested);
 
         foreach ($this->allDays($month->weeks) as $day) {
-            if ('2026-11-19' !== $day->date->format('Y-m-d')) {
+            if ($contested->format('Y-m-d') !== $day->date->format('Y-m-d')) {
                 continue;
             }
 
@@ -143,7 +144,35 @@ final class CalendarMonthBuilderTest extends DatabaseTestCase
             return;
         }
 
-        self::fail('The grid for November 2026 has to contain the nineteenth.');
+        self::fail('The grid has to contain the day it was built around.');
+    }
+
+    /**
+     * The day the seed has three bodies asking for. Looked up rather than written down here, because the fixture
+     * places it a fixed distance after whatever day the seed was loaded on.
+     */
+    private function contestedDay(): DateTimeImmutable
+    {
+        $option = $this->entityManager->getRepository(ActivityDateOption::class)
+            ->createQueryBuilder('o')
+            ->join(
+                'o.proposal',
+                'p',
+            )
+            ->where('p.name = :name')
+            ->andWhere('o.position = 1')
+            ->setParameter(
+                'name',
+                'Lasergamecompetitie',
+            )
+            ->getQuery()
+            ->getSingleResult();
+        self::assertInstanceOf(
+            ActivityDateOption::class,
+            $option,
+        );
+
+        return DateTimeImmutable::createFromInterface($option->getBeginsAt());
     }
 
     private function aProposalSpanning(
