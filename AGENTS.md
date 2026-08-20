@@ -4,7 +4,7 @@ Guidance for AI coding agents working in this repository. Humans should read `RE
 
 ## What this project is
 
-GEWISWEB is the GEWIS member-facing website. It serves activities, decisions, photos, education materials, custom pages, and a careers portal for partner companies. The codebase was recently migrated from Laminas MVC to Symfony 8; some structure is still settling — `tests/` is empty save for bootstrap files, `src/ApiResource/` is empty, and the `src/Service/{Decision,Education,Photo}/` directories are still `.gitignore`-only placeholders. Treat the present-day layout as authoritative, but expect to see Laminas-shaped patterns lurking in older code paths.
+GEWISWEB is the GEWIS member-facing website. It serves activities, decisions, photos, education materials, custom pages, and a careers portal for partner companies. The codebase was migrated from Laminas MVC to Symfony 8. `src/ApiResource/` is still empty; everything else named here is filled in. Treat the present-day layout as authoritative, but expect to see Laminas-shaped patterns lurking in older code paths.
 
 ## Pre-migration reference
 
@@ -17,7 +17,7 @@ GEWISWEB is the GEWIS member-facing website. It serves activities, decisions, ph
 ## Stack
 
 - **PHP 8.5** with `declare(strict_types=1)` required in every file.
-- **Symfony 8.0.*** across the board (framework-bundle, security-bundle, messenger, scheduler, asset-mapper, stimulus, ux-live-component, etc.).
+- **Symfony 8.1.*** across the board (framework-bundle, security-bundle, messenger, scheduler, asset-mapper, stimulus, ux-live-component, etc.).
 - **Doctrine ORM 3** with attribute mapping. Patched at install for sub-decision joins — see `composer.json` `extra.patches`.
 - **Doctrine Migrations** — schema files live at repo-root `migrations/`. Migrations run automatically (one-shot) on container start, so there is no `make migrate` target; if you need to run them by hand, use `make sf c=doctrine:migrations:migrate`.
 - **FrankenPHP worker mode** (Dockerfile `FROM dunglas/frankenphp`). Worker-mode safety is non-negotiable here — see the Care section below.
